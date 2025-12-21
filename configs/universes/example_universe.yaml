@@ -1,0 +1,9 @@
+name: example_etf_universe
+source:
+  type: static_list
+  tickers: ["SPY", "IVV", "QQQ", "IWM"]
+
+eligibility:
+  min_history_days: 252
+  min_avg_dollar_volume: 5_000_000
+  min_aum: 100_000_000

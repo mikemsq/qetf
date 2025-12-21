@@ -1,0 +1,36 @@
+[project]
+name = "quantetf"
+version = "0.1.0"
+description = "ETF strategy research, backtesting, and production recommendation platform."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "polars>=1.0",
+  "pyarrow>=15.0",
+  "pydantic>=2.7",
+  "python-dateutil>=2.9",
+  "PyYAML>=6.0",
+  "typer>=0.12",
+  "rich>=13.7",
+  "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2",
+  "ruff>=0.6",
+  "mypy>=1.10",
+]
+
+[project.scripts]
+quantetf = "quantetf.cli.app:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

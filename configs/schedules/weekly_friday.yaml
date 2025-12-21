@@ -1,0 +1,4 @@
+name: weekly_friday
+type: weekly
+weekday: FRI
+timezone: America/New_York

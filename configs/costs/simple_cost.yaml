@@ -1,0 +1,4 @@
+name: simple_linear_cost
+commission_bps: 0.0
+slippage_bps: 5.0
+bid_ask_bps: 2.0
