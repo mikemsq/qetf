@@ -1,0 +1,1257 @@
+ticker,name,provider,issuer_family,inception_date,expense_ratio_pct,asset_class,sub_asset_class,region,market,location,investment_style,category,structure,isin,cusip,source
+AADR,WCM/BNY Mellon Focused Growth ADR ETF,AdvisorShares,AdvisorShares,2010-07-20,1.25,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AAXJ,iShares MSCI All Country Asia ex Japan ETF,iShares,iShares,2008-08-13,0.72,Equity,,Asia Pacific,,,,,,,,both
+ACCU,Accuvest Global Opportunities ETF,AdvisorShares,AdvisorShares,2012-01-26,1.25,Equity,,North America,,,,,,,,etf_list
+ACIM,SPDR MSCI ACWI IMI ETF,State Street SPDR,SPDR,2012-02-28,0.25,Equity,,Global,,,,,,,,etf_list
+ACWI,iShares MSCI ACWI ETF,iShares,iShares,2008-03-26,0.32,Equity,,Global,,,,,,,,both
+ACWV,iShares MSCI Global Min Vol Factor ETF,iShares,iShares,2011-10-18,0.2,Equity,,Global,,,,,,,,both
+ACWX,iShares MSCI ACWI ex U.S. ETF,iShares,iShares,2008-03-26,0.32,Equity,,Global,,,,,,,,both
+ADRA,BLDRS Asia 50 ADR Index Fund,Invesco PowerShares,Invesco,2002-11-13,0.3,Equity,,Broad Asia,,,,,,,,etf_list
+ADRE,BLDRS Emerging Markets 50 ADR Index Fund,Invesco PowerShares,Invesco,2002-11-13,0.3,Equity,,Emerging Markets,,,,,,,,etf_list
+ADZ,DB Agriculture Short ETN,Invesco PowerShares,Invesco,2008-04-14,0.75,Commodity,,,,,,,,,,etf_list
+AFK,Market Vectors-Africa Index ETF,Van Eck,VanEck,2008-07-10,0.78,Equity,,Africa,,,,,,,,etf_list
+AGF,DB Agriculture Long ETN,Invesco PowerShares,Invesco,2008-04-14,0.75,Commodity,,,,,,,,,,etf_list
+AGG,iShares Core U.S. Aggregate Bond ETF,iShares,iShares,2003-09-22,0.03,Fixed Income,,North America,,,,,,,,both
+AGQ,Ultra Silver,ProShares,ProShares,2008-12-01,0.95,Commodity,,,,,,,,,,etf_list
+AGRH,iShares Interest Rate Hedged U.S. Aggregate Bond ETF,iShares,iShares,2022-06-22,0.16,Fixed Income,,North America,,,,,,,,ishares_list
+AGZ,iShares Agency Bond ETF,iShares,iShares,2008-11-05,0.2,Fixed Income,,North America,,,,,,,,both
+AGZD,Barclays U.S. Aggregate Bond Zero Duration Fund,WisdomTree,WisdomTree,2013-12-18,0.23,Bond,,,,,,,,,,etf_list
+AIA,iShares Asia 50 ETF,iShares,iShares,2007-11-13,0.5,Equity,,Asia Pacific,,,,,,,,both
+ALT,Diversified Alternatives Trust,iShares,iShares,2009-10-06,1.02,Alternatives,,Global,,,,,,,,etf_list
+ALTL,US Large Cap Alternator ETN,RBS,RBS,2012-09-06,1.0,Equity,,North America,,,,,,,,etf_list
+AMJ,Alerian MLP Index ETN,JP Morgan,JP Morgan,2009-04-02,0.85,Equity,,North America,,,,,,,,etf_list
+AMLP,Alerian MLP ETF,ALPS,ALPS,2010-08-25,0.85,Equity,,North America,,,,,,,,etf_list
+AMPS,iShares Utilities Bond ETF,iShares,iShares,2012-02-16,0.3,Bond,,North America,,,,,,,,etf_list
+ANGL,Market Vectors Fallen Angel ETF,Van Eck,VanEck,2012-04-11,0.4,Bond,,North America,,,,,,,,etf_list
+AOA,iShares Core 80/20 Aggressive Allocation ETF,iShares,iShares,2008-11-04,0.19,Multi Asset,,Global,,,,,,,,both
+AOK,iShares Core 30/70 Conservative Allocation ETF,iShares,iShares,2008-11-04,0.2,Multi Asset,,Global,,,,,,,,both
+AOM,iShares Core 40/60 Moderate Allocation ETF,iShares,iShares,2008-11-04,0.2,Multi Asset,,Global,,,,,,,,both
+AOR,iShares Core 60/40 Balanced Allocation ETF,iShares,iShares,2008-11-04,0.2,Multi Asset,,Global,,,,,,,,both
+AQLT,iShares MSCI Global Quality Factor ETF,iShares,iShares,2024-12-11,0.21,Equity,,Global,,,,,,,,ishares_list
+ARGT,FTSE Argentina 20 ETF,Global X,Global X,2011-03-03,0.75,Equity,,Latin America,,,,,,,,etf_list
+ARTY,iShares Future AI & Tech ETF,iShares,iShares,2018-06-26,0.47,Equity,,Global,,,,,,,,ishares_list
+ASEA,FTSE ASEAN 40 ETF,Global X,Global X,2011-02-17,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+ASHR,Harvest CSI 300 China A-Shares Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2013-11-06,1.08,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+ASO,AirShares EU Carbon Allowances,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2008-12-15,0.85,Commodity,,,,,,,,,,etf_list
+ATMP,Barclays ETN+ Select MLP ETN,Barclays iPath,Barclays iPath,2013-03-12,0.95,Equity,,North America,,,,,,,,etf_list
+AUD,Australia Bond Index Fund,PIMCO,PIMCO,2011-11-01,0.45,Bond,,Developed Asia Pacific,,,,,,,,etf_list
+AXDI,iShares MSCI ACWI ex U.S. Consumer Discretionary ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXEN,iShares MSCI ACWI ex U.S. Energy ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXFN,MSCI ACWI ex US Financials Sector Index Fund,iShares,iShares,2010-01-20,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXHE,iShares MSCI ACWI ex U.S. Healthcare ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXID,iShares MSCI ACWI ex U.S. Industrials ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXIT,iShares MSCI ACWI ex U.S. Information Technology ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXMT,iShares MSCI ACWI ex U.S. Materials ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXSL,iShares MSCI ACWI ex U.S. Consumer Staples ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXTE,iShares MSCI ACWI ex U.S. Telecommunication Services ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AXUT,iShares MSCI ACWI ex U.S. Utilities ETF,iShares,iShares,2010-07-13,0.48,Equity,,Global ex-U.S.,,,,,,,,etf_list
+AZIA,Global X Central Asia & Mongolia Index ETF,Global X,Global X,2013-04-02,0.69,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+BAB,Build America Bond Portfolio,Invesco PowerShares,Invesco,2009-11-17,0.35,Bond,,North America,,,,,,,,etf_list
+BAI,iShares A.I. Innovation and Tech Active ETF,iShares,iShares,2024-10-21,0.65,Equity,,Global,,,,,,,,ishares_list
+BAL,Dow Jones-UBS Cotton Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+BALI,iShares U.S. Large Cap Premium Income Active ETF,iShares,iShares,2023-09-26,0.35,Equity,,North America,,,,,,,,ishares_list
+BBH,Market Vectors Biotech ETF,Van Eck,VanEck,2011-12-20,0.35,Equity,,North America,,,,,,,,etf_list
+BCLO,iShares BBB-B CLO Active ETF,iShares,iShares,2025-01-29,0.45,Fixed Income,,North America,,,,,,,,ishares_list
+BCM,Pure Beta Broad Commodity ETN,Barclays iPath,Barclays iPath,2011-04-21,0.75,Commodity,,,,,,,,,,etf_list
+BDVL,iShares Disciplined Volatility Equity Active ETF,iShares,iShares,2017-06-01,0.41,Equity,,Global,,,,,,,,ishares_list
+BDYN,iShares Dynamic Equity Active ETF,iShares,iShares,2017-06-01,0.42,Equity,,Global,,,,,,,,ishares_list
+BELT,iShares U.S. Select Equity Active ETF,iShares,iShares,2024-06-17,0.75,Equity,,North America,,,,,,,,ishares_list
+BEMB,iShares J.P. Morgan Broad USD Emerging Markets Bond ETF,iShares,iShares,2023-02-22,0.15,Fixed Income,,Global,,,,,,,,ishares_list
+BFOR,Barron's 400 ETF,ALPS,ALPS,2013-06-04,0.65,Equity,,North America,,,,,,,,etf_list
+BGRN,iShares USD Green Bond ETF,iShares,iShares,2018-11-13,0.2,Fixed Income,,North America,,,,,,,,ishares_list
+BGRO,iShares Large Cap Growth Active ETF,iShares,iShares,2024-06-04,0.55,Equity,,North America,,,,,,,,ishares_list
+BIB,Ultra Nasdaq Biotechnology,ProShares,ProShares,2010-04-06,0.95,Equity,,North America,,,,,,,,etf_list
+BICK,BICK Index Fund,First Trust,First Trust,2010-04-12,0.64,Equity,,Emerging Markets,,,,,,,,etf_list
+BIDD,iShares International Dividend Active ETF,iShares,iShares,1997-09-26,0.6,Equity,,Global,,,,,,,,ishares_list
+BIL,SPDR Barclays 1-3 Month T-Bill ETF,State Street SPDR,SPDR,2007-05-25,0.13,Bond,,,,,,,,,,etf_list
+BILT,iShares Infrastructure Active ETF,iShares,iShares,2025-07-29,0.6,Equity,,Global,,,,,,,,ishares_list
+BINC,iShares Flexible Income Active ETF,iShares,iShares,2023-05-19,0.52,Fixed Income,,Global,,,,,,,,ishares_list
+BIS,UltraShort Nasdaq Biotechnology,ProShares,ProShares,2010-04-06,0.95,Equity,,North America,,,,,,,,etf_list
+BIV,Intermediate-Term Bond ETF,Vanguard,Vanguard,2007-04-03,0.11,Bond,,,,,,,,,,etf_list
+BIZD,Market Vectors BDC Income ETF,Van Eck,VanEck,2013-02-11,0.4,Equity,,North America,,,,,,,,etf_list
+BJK,Market Vectors Gaming ETF,Van Eck,VanEck,2008-01-22,0.65,Equity,,Global,,,,,,,,etf_list
+BKF,iShares MSCI BIC ETF,iShares,iShares,2007-11-12,0.72,Equity,,Global,,,,,,,,both
+BKLN,Senior Loan Portfolio,Invesco PowerShares,Invesco,2011-03-03,0.66,Bond,,,,,,,,,,etf_list
+BLCR,iShares Large Cap Core Active ETF,iShares,iShares,2023-10-24,0.38,Equity,,North America,,,,,,,,ishares_list
+BLCV,iShares Large Cap Value Active ETF,iShares,iShares,2023-05-19,0.55,Equity,,North America,,,,,,,,ishares_list
+BLND,DJ-UBS Commodity Index 2-4-6 Blended Futures ETN,UBS,UBS,2012-04-26,0.7,Commodity,,,,,,,,,,etf_list
+BLNG,Pure Beta Precious Metals ETN,Barclays iPath,Barclays iPath,2011-04-21,0.75,Commodity,,,,,,,,,,etf_list
+BLV,Long-Term Bond ETF,Vanguard,Vanguard,2007-04-03,0.11,Bond,,,,,,,,,,etf_list
+BMED,iShares Health Innovation Active ETF,iShares,iShares,2020-09-29,0.77,Equity,,Global,,,,,,,,ishares_list
+BND,Total Bond Market ETF,Vanguard,Vanguard,2007-04-03,0.1,Bond,,,,,,,,,,etf_list
+BNDX,Total International Bond ETF,Vanguard,Vanguard,2013-06-04,0.2,Bond,,Global ex-U.S.,,,,,,,,etf_list
+BNO,United States Brent Oil Fund,US Commodity Funds,US Commodity Funds,2010-06-02,0.94,Commodity,,,,,,,,,,etf_list
+BOIL,Ultra DJ-UBS Natural Gas,ProShares,ProShares,2011-10-06,0.95,Commodity,,,,,,,,,,etf_list
+BOND,Total Return Exchange-Traded Fund,PIMCO,PIMCO,2012-03-01,0.55,Bond,,North America,,,,,,,,etf_list
+BPAY,iShares FinTech Active ETF,iShares,iShares,2022-08-16,0.66,Equity,,Global,,,,,,,,ishares_list
+BRAF,Brazil Financials ETF,Global X,Global X,2010-07-29,0.77,Equity,,Latin America,,,,,,,,etf_list
+BREM,iShares Emerging Markets Bond Active ETF,iShares,iShares,2025-10-15,0.5,Fixed Income,,Global,,,,,,,,ishares_list
+BRF,Market Vectors Brazil Small-Cap ETF,Van Eck,VanEck,2009-05-12,0.59,Equity,,Latin America,,,,,,,,etf_list
+BRHY,iShares High Yield Active ETF,iShares,iShares,2024-06-17,0.46,Fixed Income,,Global,,,,,,,,ishares_list
+BRLN,iShares Floating Rate Loan Active ETF,iShares,iShares,2022-10-04,0.63,Fixed Income,,North America,,,,,,,,ishares_list
+BRTR,iShares Total Return Active ETF,iShares,iShares,2023-12-12,0.41,Fixed Income,,Global,,,,,,,,ishares_list
+BRZU,Direxion Daily Brazil Bull 3x Shares,Direxion,Direxion,2013-04-10,1.08,Equity,,Latin America,,,,,,,,etf_list
+BSV,Short-Term Bond ETF,Vanguard,Vanguard,2007-04-03,0.11,Bond,,,,,,,,,,etf_list
+BTAL,U.S. Market Neutral Anti-Beta Fund,QuantShares,QuantShares,2011-09-13,0.81,Alternatives,,North America,,,,,,,,etf_list
+BWV,CBOE S&P 500 BuyWrite Index ETN,Barclays iPath,Barclays iPath,2007-05-22,0.75,Alternatives,,North America,,,,,,,,etf_list
+BWX,SPDR Barclays Intl Treasury Bond,State Street SPDR,SPDR,2007-10-02,0.5,Bond,,,,,,,,,,etf_list
+BWZ,SPDR Barclays Capital Short Term International Treasury Bond ETF,State Street SPDR,SPDR,2009-01-15,0.5,Bond,,,,,,,,,,etf_list
+BYLD,iShares Yield Optimized Bond ETF,iShares,iShares,2014-04-22,0.45,Fixed Income,,North America,,,,,,,,ishares_list
+BZQ,UltraShort MSCI Brazil,ProShares,ProShares,2009-06-16,0.95,Equity,,Latin America,,,,,,,,etf_list
+CALI,iShares Short-Term California Muni Active ETF,iShares,iShares,2023-07-11,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+CANE,Sugar Fund,Teucrium,Teucrium,2011-09-19,2.32,Commodity,,,,,,,,,,etf_list
+CAPE,The Barclays ETN + Shiller CAPE ETN,Barclays iPath,Barclays iPath,2012-10-12,0.45,Equity,,North America,,,,,,,,etf_list
+CARZ,NASDAQ Global Auto Index Fund,First Trust,First Trust,2011-05-10,0.7,Equity,,Global,,,,,,,,etf_list
+CBND,SPDR Barclays Capital Issuer Scored Corporate Bond ETF,State Street SPDR,SPDR,2011-04-07,0.16,Bond,,,,,,,,,,etf_list
+CEMB,iShares J.P. Morgan EM Corporate Bond ETF,iShares,iShares,2012-04-17,0.5,Fixed Income,,Global,,,,,,,,both
+CEW,Dreyfus Emerging Currency Fund,WisdomTree,WisdomTree,2009-05-06,0.55,Currency,,,,,,,,,,etf_list
+CGW,S&P Global Water Index ETF,Guggenheim,Guggenheim,2007-05-14,0.65,Equity,,Global,,,,,,,,etf_list
+CHIE,China Energy ETF,Global X,Global X,2009-12-15,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHII,China Industrials ETF,Global X,Global X,2009-11-30,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHIM,China Materials ETF,Global X,Global X,2010-01-12,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHIQ,China Consumer ETF,Global X,Global X,2009-11-30,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHIX,China Financials ETF,Global X,Global X,2009-12-10,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHLC,Market Vectors Renminbi Bond ETF,Van Eck,VanEck,2011-10-12,0.39,Bond,,Emerging Asia Pacific,,,,,,,,etf_list
+CHNA,China A-Share Portfolio,Invesco PowerShares,Invesco,2013-10-09,0.5,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CHXF,China Dividend ex-Financials ETF,WisdomTree,WisdomTree,2012-09-19,0.63,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CLOA,iShares AAA CLO Active ETF,iShares,iShares,2023-01-10,0.2,Fixed Income,,North America,,,,,,,,ishares_list
+CMBS,iShares CMBS ETF,iShares,iShares,2012-02-14,0.25,Fixed Income,,North America,,,,,,,,both
+CMDY,iShares Bloomberg Roll Select Commodity Strategy ETF,iShares,iShares,2018-04-03,0.29,Commodity,,Global,,,,,,,,ishares_list
+CMF,iShares California Muni Bond ETF,iShares,iShares,2007-10-04,0.08,Fixed Income,,North America,,,,,,,,both
+CNDA,IQ Canada Small Cap ETF,IndexIQ,IndexIQ,2010-03-23,0.69,Equity,,North America,,,,,,,,etf_list
+CNYA,iShares MSCI China A ETF,iShares,iShares,2016-06-13,0.6,Equity,,Asia Pacific,,,,,,,,ishares_list
+COBO,USD Covered Bond,ProShares,ProShares,2012-05-23,0.35,Bond,,,,,,,,,,etf_list
+COMT,iShares GSCI Commodity Dynamic Roll Strategy ETF,iShares,iShares,2014-10-15,0.49,Commodity,,Global,,,,,,,,ishares_list
+COPX,Copper Miners ETF,Global X,Global X,2010-04-19,0.65,Equity,,Global,,,,,,,,etf_list
+CORN,Corn Fund,Teucrium,Teucrium,2010-06-08,1.0,Commodity,,,,,,,,,,etf_list
+CORO,iShares International Country Rotation Active ETF,iShares,iShares,2024-12-03,1.06,Equity,,Global,,,,,,,,ishares_list
+CORP,Investment Grade Corporate Bond Index Fund,PIMCO,PIMCO,2010-09-20,0.2,Bond,,North America,,,,,,,,etf_list
+COW,DJ-UBS Livestock Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+CPER,United States Copper Index Fund,US Commodity Funds,US Commodity Funds,2011-11-15,0.65,Commodity,,,,,,,,,,etf_list
+CPI,IQ Real Return ETF,IndexIQ,IndexIQ,2009-10-27,0.48,Alternatives,,Global,,,,,,,,etf_list
+CQQQ,China Technology ETF,Guggenheim,Guggenheim,2009-12-08,0.7,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+CRBN,iShares Low Carbon Optimized MSCI ACWI ETF,iShares,iShares,2014-12-08,0.2,Equity,,Global,,,,,,,,ishares_list
+CSD,Spin-Off ETF,Guggenheim,Guggenheim,2006-12-15,0.6,Equity,,North America,,,,,,,,etf_list
+CSHP,iShares Enhanced Short-Term Bond Active ETF,iShares,iShares,2024-07-17,0.2,Fixed Income,,Global,,,,,,,,ishares_list
+CSM,ProShares Large Cap Core Plus ETF,ProShares,ProShares,2009-07-13,0.45,Alternatives,,North America,,,,,,,,etf_list
+CURE,Daily Healthcare Bull 3X Shares,Direxion,Direxion,2011-06-15,0.95,Equity,,North America,,,,,,,,etf_list
+CUT,Timber ETF,Guggenheim,Guggenheim,2007-11-09,0.65,Equity,,Global,,,,,,,,etf_list
+CVY,Multi-Asset Income ETF,Guggenheim,Guggenheim,2006-09-21,0.6,Equity,,Global,,,,,,,,etf_list
+CWB,SPDR Barclays Capital Convertible Bond ETF,State Street SPDR,SPDR,2009-04-14,0.4,Bond,,,,,,,,,,etf_list
+CWI,SPDR MSCI ACWI ex-US ETF,State Street SPDR,SPDR,2007-01-10,0.34,Equity,,Global ex-U.S.,,,,,,,,etf_list
+CXA,SPDR Barclays California Municipal Bond ETF,State Street SPDR,SPDR,2007-10-10,0.2,Bond,,,,,,,,,,etf_list
+CYB,Dreyfus Chinese Yuan Fund,WisdomTree,WisdomTree,2008-05-14,0.45,Currency,,,,,,,,,,etf_list
+CZA,Mid-Cap Core ETF,Guggenheim,Guggenheim,2007-04-02,0.6,Equity,,North America,,,,,,,,etf_list
+DAG,DB Agriculture Double Long ETN,Invesco PowerShares,Invesco,2008-04-14,0.75,Commodity,,,,,,,,,,etf_list
+DBA,DB Agriculture Fund,Invesco PowerShares,Invesco,2007-01-05,1.01,Commodity,,,,,,,,,,etf_list
+DBB,DB Base Metals Fund,Invesco PowerShares,Invesco,2007-01-05,0.78,Commodity,,,,,,,,,,etf_list
+DBC,DB Commodity Index Tracking Fund,Invesco PowerShares,Invesco,2006-02-03,0.93,Commodity,,,,,,,,,,etf_list
+DBE,DB Energy Fund,Invesco PowerShares,Invesco,2007-01-05,0.78,Commodity,,,,,,,,,,etf_list
+DBEF,MSCI EAFE Hedged Equity Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2011-06-09,0.36,Equity,,Developed Markets,,,,,,,,etf_list
+DBEM,MSCI Emerging Markets Equity Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2011-06-09,0.69,Equity,,Emerging Markets,,,,,,,,etf_list
+DBEU,MSCI Europe Hedged Equity Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2013-10-01,0.45,Equity,,Developed Europe,,,,,,,,etf_list
+DBGR,db X-trackers MSCI Germany Hedged Equity Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2013-05-31,1.04,Equity,,Developed Europe,,,,,,,,etf_list
+DBJP,MSCI Japan Hedged Equity Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2011-06-09,0.51,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+DBO,DB Oil Fund,Invesco PowerShares,Invesco,2007-01-05,0.79,Commodity,,,,,,,,,,etf_list
+DBP,DB Precious Metals Fund,Invesco PowerShares,Invesco,2007-01-05,0.79,Commodity,,,,,,,,,,etf_list
+DBS,DB Silver Fund,Invesco PowerShares,Invesco,2007-01-05,0.79,Commodity,,,,,,,,,,etf_list
+DBV,DB G10 Currency Harvest,Invesco PowerShares,Invesco,2006-09-18,0.81,Currency,,,,,,,,,,etf_list
+DDI,International Industrial Sector Fund,WisdomTree,WisdomTree,2006-10-13,0.58,Equity,,Developed Markets,,,,,,,,etf_list
+DDM,Ultra Dow30,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+DDP,DB Commodity Short ETN,Invesco PowerShares,Invesco,2008-04-28,0.75,Commodity,,,,,,,,,,etf_list
+DEE,DB Commodity Double Short ETN,Invesco PowerShares,Invesco,2008-04-28,0.75,Commodity,,,,,,,,,,etf_list
+DEF,Defensive Equity ETF,Guggenheim,Guggenheim,2006-12-15,0.6,Equity,,Global,,,,,,,,etf_list
+DEM,Emerging Markets Equity Income Fund,WisdomTree,WisdomTree,2007-07-13,0.63,Equity,,Emerging Markets,,,,,,,,etf_list
+DES,SmallCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.38,Equity,,North America,,,,,,,,etf_list
+DEW,Global Equity Income Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Global,,,,,,,,etf_list
+DFE,Europe SmallCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Europe,,,,,,,,etf_list
+DFJ,Japan SmallCap Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+DGL,DB Gold Fund,Invesco PowerShares,Invesco,2007-01-05,0.79,Commodity,,,,,,,,,,etf_list
+DGLD,3x Inverse Gold ETN,VelocityShares,VelocityShares,2011-10-17,1.35,Commodity,,,,,,,,,,etf_list
+DGP,DB Gold Double Long ETN,Invesco PowerShares,Invesco,2008-02-27,0.75,Commodity,,,,,,,,,,etf_list
+DGRE,WisdomTree Emerging Markets Dividend Growth Fund,WisdomTree,WisdomTree,2013-08-01,0.63,Equity,,Emerging Markets,,,,,,,,etf_list
+DGRO,iShares Core Dividend Growth ETF,iShares,iShares,2014-06-10,0.08,Equity,,North America,,,,,,,,ishares_list
+DGRS,WisdomTree U.S. SmallCap Dividend Growth Fund,WisdomTree,WisdomTree,2013-07-25,0.38,Equity,,North America,,,,,,,,etf_list
+DGRW,U.S. Dividend Growth Fund,WisdomTree,WisdomTree,2013-05-22,0.28,Equity,,North America,,,,,,,,etf_list
+DGS,Emerging Market SmallCap Fund,WisdomTree,WisdomTree,2007-10-30,0.64,Equity,,Emerging Markets,,,,,,,,etf_list
+DGT,SPDR Global Dow ETF,State Street SPDR,SPDR,2000-09-25,0.5,Equity,,Global,,,,,,,,etf_list
+DGZ,DB Gold Short ETN,Invesco PowerShares,Invesco,2008-02-27,0.75,Commodity,,,,,,,,,,etf_list
+DHS,Equity Income Fund,WisdomTree,WisdomTree,2006-06-16,0.38,Equity,,North America,,,,,,,,etf_list
+DIA,Dow Jones Industrial Average ETF,State Street SPDR,SPDR,1998-01-13,0.16,Equity,,North America,,,,,,,,etf_list
+DIG,Ultra Oil & Gas,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+DIM,International MidCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Markets,,,,,,,,etf_list
+DIV,SuperDividend U.S. ETF,Global X,Global X,2013-03-12,0.45,Equity,,North America,,,,,,,,etf_list
+DIVB,iShares Core Dividend ETF,iShares,iShares,2017-11-07,0.05,Equity,,North America,,,,,,,,ishares_list
+DIVS,Small Cap High Dividend Yield ETF,Russell,Russell,2012-03-15,0.38,Equity,,North America,,,,,,,,etf_list
+DJP,Dow Jones-UBS Commodity Index TR ETN,Barclays iPath,Barclays iPath,2006-06-06,0.75,Commodity,,,,,,,,,,etf_list
+DLN,LargeCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.28,Equity,,North America,,,,,,,,etf_list
+DLS,International SmallCap Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Markets,,,,,,,,etf_list
+DMAX,iShares Large Cap Max Buffer Dec ETF,iShares,iShares,2024-12-31,0.53,Equity,,North America,,,,,,,,ishares_list
+DMXF,iShares ESG Advanced MSCI EAFE ETF,iShares,iShares,2020-06-16,0.12,Equity,,Global,,,,,,,,ishares_list
+DNL,Global ex-U.S. Growth Fund,WisdomTree,WisdomTree,2006-06-16,0.6,Equity,,Global ex-U.S.,,,,,,,,etf_list
+DOG,Short Dow30,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+DOL,International LargeCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.48,Equity,,Developed Markets,,,,,,,,etf_list
+DON,MidCap Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.38,Equity,,North America,,,,,,,,etf_list
+DOO,International Dividend ex-Financials Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Markets,,,,,,,,etf_list
+DRN,Daily Real Estate Bull 3x Shares,Direxion,Direxion,2009-07-16,0.95,Real Estate,,North America,,,,,,,,etf_list
+DRV,Daily Real Estate Bear 3x Shares,Direxion,Direxion,2009-07-16,0.95,Real Estate,,North America,,,,,,,,etf_list
+DRW,Global ex-US Real Estate Fund,WisdomTree,WisdomTree,2007-06-05,0.58,Real Estate,,Global ex-U.S.,,,,,,,,etf_list
+DSI,iShares ESG MSCI KLD 400 ETF,iShares,iShares,2006-11-14,0.25,Equity,,North America,,,,,,,,both
+DSLV,3x Inverse Silver ETN,VelocityShares,VelocityShares,2011-10-17,1.65,Commodity,,,,,,,,,,etf_list
+DTD,Total Dividend Fund,WisdomTree,WisdomTree,2006-06-16,0.28,Equity,,North America,,,,,,,,etf_list
+DTH,DEFA High-Yielding Equity Fund,WisdomTree,WisdomTree,2006-06-16,0.58,Equity,,Developed Markets,,,,,,,,etf_list
+DTN,Dividend ex-Financials Fund,WisdomTree,WisdomTree,2006-06-16,0.38,Equity,,North America,,,,,,,,etf_list
+DVY,iShares Select Dividend ETF,iShares,iShares,2003-11-03,0.38,Equity,,North America,,,,,,,,ishares_list
+DVYA,iShares Asia/Pacific Dividend ETF,iShares,iShares,2012-02-23,0.49,Equity,,Asia Pacific,,,,,,,,ishares_list
+DVYE,iShares Emerging Markets Dividend ETF,iShares,iShares,2012-02-23,0.5,Equity,,Global,,,,,,,,ishares_list
+DYNF,iShares U.S. Equity Factor Rotation Active ETF,iShares,iShares,2019-03-19,0.26,Equity,,North America,,,,,,,,ishares_list
+EAGG,iShares ESG Aware U.S. Aggregate Bond ETF,iShares,iShares,2018-10-18,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+EAOA,iShares ESG Aware 80/20 Aggressive Allocation ETF,iShares,iShares,2020-06-12,0.34,Multi Asset,,North America,,,,,,,,ishares_list
+EAOK,iShares ESG Aware 30/70 Conservative Allocation ETF,iShares,iShares,2020-06-12,0.3,Multi Asset,,North America,,,,,,,,ishares_list
+EAOM,iShares ESG Aware 40/60 Moderate Allocation ETF,iShares,iShares,2020-06-12,0.31,Multi Asset,,North America,,,,,,,,ishares_list
+EAOR,iShares ESG Aware 60/40 Balanced Allocation ETF,iShares,iShares,2020-06-12,0.32,Multi Asset,,North America,,,,,,,,ishares_list
+EAPS,Europe MSCI EAFE ESG Index ETF,Pax World,Pax World,2011-01-28,0.55,Equity,,Developed Markets,,,,,,,,etf_list
+EBND,SPDR Barclays Capital Emerging Markets Local Bond ETF,State Street SPDR,SPDR,2011-02-23,0.5,Bond,,,,,,,,,,etf_list
+ECH,iShares MSCI Chile ETF,iShares,iShares,2007-11-12,0.6,Equity,,Latin America,,,,,,,,both
+ECNS,iShares MSCI China Small-Cap ETF,iShares,iShares,2010-09-28,0.59,Equity,,Asia Pacific,,,,,,,,both
+ECON,EGShares Emerging Markets Consumer,EG Shares,EG Shares,2010-09-14,0.85,Equity,,Emerging Markets,,,,,,,,etf_list
+EDC,Daily Emerging Markets Bull 3X Shares,Direxion,Direxion,2008-12-17,0.95,Equity,,Emerging Markets,,,,,,,,etf_list
+EDEN,iShares MSCI Denmark ETF,iShares,iShares,2012-01-25,0.53,Equity,,Europe,,,,,,,,both
+EDIV,SPDR S&P Emerging Markets Dividend ETF,State Street SPDR,SPDR,2011-02-23,0.59,Equity,,Emerging Markets,,,,,,,,etf_list
+EDV,Extended Duration Treasury ETF,Vanguard,Vanguard,2007-12-06,0.12,Bond,,,,,,,,,,etf_list
+EDZ,Daily Emerging Markets Bear 3X Shares,Direxion,Direxion,2008-12-17,0.95,Equity,,Emerging Markets,,,,,,,,etf_list
+EELV,S&P Emerging Markets Low Volatility Portfolio,Invesco PowerShares,Invesco,2012-01-13,0.29,Equity,,Emerging Markets,,,,,,,,etf_list
+EEM,iShares MSCI Emerging Markets ETF,iShares,iShares,2003-04-07,0.72,Equity,,Global,,,,,,,,both
+EEMA,iShares MSCI Emerging Markets Asia ETF,iShares,iShares,2012-02-08,0.49,Equity,,Asia Pacific,,,,,,,,ishares_list
+EEMS,iShares MSCI Emerging Markets Small-Cap ETF,iShares,iShares,2011-08-16,0.73,Equity,,Global,,,,,,,,both
+EEMV,iShares MSCI Emerging Markets Min Vol Factor ETF,iShares,iShares,2011-10-18,0.26,Equity,,Global,,,,,,,,both
+EES,SmallCap Earnings Fund,WisdomTree,WisdomTree,2007-02-23,0.38,Equity,,North America,,,,,,,,etf_list
+EET,Ultra MSCI Emerging Markets,ProShares,ProShares,2009-06-02,0.95,Equity,,Emerging Markets,,,,,,,,etf_list
+EEV,UltraShort MSCI Emerging Markets,ProShares,ProShares,2007-10-30,0.95,Equity,,Emerging Markets,,,,,,,,etf_list
+EFA,iShares MSCI EAFE ETF,iShares,iShares,2001-08-14,0.32,Equity,,Global,,,,,,,,both
+EFAV,iShares MSCI EAFE Min Vol Factor ETF,iShares,iShares,2011-10-18,0.2,Equity,,Global,,,,,,,,both
+EFG,iShares MSCI EAFE Growth ETF,iShares,iShares,2005-08-01,0.34,Equity,,Global,,,,,,,,both
+EFNL,iShares MSCI Finland ETF,iShares,iShares,2012-01-25,0.55,Equity,,Europe,,,,,,,,both
+EFO,Ultra MSCI EAFE,ProShares,ProShares,2009-06-04,0.95,Equity,,Developed Markets,,,,,,,,etf_list
+EFRA,iShares Environmental Infrastructure and Industrials ETF,iShares,iShares,2022-11-01,0.47,Equity,,Global,,,,,,,,ishares_list
+EFU,UltraShort MSCI EAFE,ProShares,ProShares,2007-10-23,0.95,Equity,,Developed Markets,,,,,,,,etf_list
+EFV,iShares MSCI EAFE Value ETF,iShares,iShares,2005-08-01,0.31,Equity,,Global,,,,,,,,both
+EFZ,Short MSCI EAFE,ProShares,ProShares,2007-10-23,0.95,Equity,,Developed Markets,,,,,,,,etf_list
+EGPT,Egypt Index ETF,Van Eck,VanEck,2010-02-16,0.94,Equity,,Africa,,,,,,,,etf_list
+EGUS,iShares ESG Aware MSCI USA Growth ETF,iShares,iShares,2023-01-31,0.18,Equity,,North America,,,,,,,,ishares_list
+EIDO,iShares MSCI Indonesia ETF,iShares,iShares,2010-05-05,0.59,Equity,,Asia Pacific,,,,,,,,both
+EIRL,iShares MSCI Ireland ETF,iShares,iShares,2010-05-05,0.5,Equity,,Europe,,,,,,,,both
+EIS,iShares MSCI Israel ETF,iShares,iShares,2008-03-26,0.59,Equity,,Europe,,,,,,,,both
+ELD,Emerging Markets Local Debt Fund,WisdomTree,WisdomTree,2010-08-09,0.55,Bond,,Emerging Markets,,,,,,,,etf_list
+ELV,SPDR DJ Wilshire Large Cap Value ET,State Street SPDR,SPDR,2000-09-25,0.2,Equity,,North America,,,,,,,,etf_list
+EMB,iShares J.P. Morgan USD Emerging Markets Bond ETF,iShares,iShares,2007-12-17,0.39,Fixed Income,,Global,,,,,,,,both
+EMCB,Emerging Markets Corporate Bond Fund,WisdomTree,WisdomTree,2012-03-08,0.6,Bond,,Emerging Markets,,,,,,,,etf_list
+EMCG,Emerging Markets Consumer Growth Fund,WisdomTree,WisdomTree,2013-09-26,0.63,Equity,,Emerging Markets,,,,,,,,etf_list
+EMCR,Emerging Markets Core ETF,EG Shares,EG Shares,2012-10-16,0.7,Equity,,Emerging Markets,,,,,,,,etf_list
+EMFM,Next Emerging & Frontier ETF,Global X,Global X,2013-11-07,0.58,Equity,,Frontier Markets,,,,,,,,etf_list
+EMGF,iShares Emerging Markets Equity Factor ETF,iShares,iShares,2015-12-08,0.26,Equity,,Global,,,,,,,,ishares_list
+EMHY,iShares J.P. Morgan EM High Yield Bond ETF,iShares,iShares,2012-04-03,0.5,Fixed Income,,Global,,,,,,,,both
+EMIF,iShares Emerging Markets Infrastructure ETF,iShares,iShares,2009-06-16,0.6,Equity,,Global,,,,,,,,both
+EMLC,Market Vectors Emerging Markets Local Currency Bond ETF,Van Eck,VanEck,2010-07-22,0.47,Bond,,,,,,,,,,etf_list
+EMLP,North American Energy Infrastructure Fund,First Trust,First Trust,2012-06-21,0.95,Equity,,North America,,,,,,,,etf_list
+EMM,SPDR DJ Wilshire Mid Cap ETF,State Street SPDR,SPDR,2005-11-08,0.25,Equity,,North America,,,,,,,,etf_list
+EMXC,iShares MSCI Emerging Markets ex China ETF,iShares,iShares,2017-07-18,0.25,Equity,,Global,,,,,,,,ishares_list
+EMXF,iShares ESG Advanced MSCI EM ETF,iShares,iShares,2020-10-06,0.17,Equity,,Global,,,,,,,,ishares_list
+ENFR,Alerian Energy Infrastructure ETF,ALPS,ALPS,2013-11-01,0.65,Equity,,North America,,,,,,,,etf_list
+ENHU,iShares Enhanced Large Cap Core Active ETF,iShares,iShares,2025-11-04,0.22,Equity,,North America,,,,,,,,ishares_list
+ENOR,iShares MSCI Norway ETF,iShares,iShares,2012-01-23,0.53,Equity,,Europe,,,,,,,,both
+ENZL,iShares MSCI New Zealand ETF,iShares,iShares,2010-09-01,0.5,Equity,,Asia Pacific,,,,,,,,both
+EPHE,iShares MSCI Philippines ETF,iShares,iShares,2010-09-28,0.59,Equity,,Asia Pacific,,,,,,,,both
+EPI,India Earnings Fund,WisdomTree,WisdomTree,2008-02-22,0.83,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+EPOL,iShares MSCI Poland ETF,iShares,iShares,2010-05-25,0.6,Equity,,Europe,,,,,,,,both
+EPP,iShares MSCI Pacific ex Japan ETF,iShares,iShares,2001-10-25,0.48,Equity,,Asia Pacific,,,,,,,,both
+EPS,Earnings 500 Fund,WisdomTree,WisdomTree,2007-02-23,0.28,Equity,,North America,,,,,,,,etf_list
+EPU,iShares MSCI Peru and Global Exposure ETF,iShares,iShares,2009-06-19,0.59,Equity,,Latin America,,,,,,,,both
+EPV,UltraShort MSCI Europe ETF,ProShares,ProShares,2009-06-16,0.95,Equity,,Developed Europe,,,,,,,,etf_list
+EQL,Equal Sector Weight ETF,ALPS,ALPS,2009-07-06,0.52,Equity,,North America,,,,,,,,etf_list
+EQLT,iShares MSCI Emerging Markets Quality Factor ETF,iShares,iShares,2024-09-04,0.35,Equity,,Global,,,,,,,,ishares_list
+ERET,iShares Environmentally Aware Real Estate ETF,iShares,iShares,2022-11-15,0.3,Real Estate,,Global,,,,,,,,ishares_list
+ERO,EUR/USD Exchange Rate ETN,Barclays iPath,Barclays iPath,2007-05-08,0.4,Currency,,,,,,,,,,etf_list
+ERUS,iShares MSCI Russia Capped ETF,iShares,iShares,2010-11-10,0.61,Equity,,Emerging Europe,,,,,,,,etf_list
+ERX,Daily Energy Bull 3X Shares,Direxion,Direxion,2008-11-06,0.95,Equity,,North America,,,,,,,,etf_list
+ERY,Daily Energy Bear 3X Shares,Direxion,Direxion,2008-11-06,0.95,Equity,,North America,,,,,,,,etf_list
+ESGD,iShares ESG Aware MSCI EAFE ETF,iShares,iShares,2016-06-28,0.21,Equity,,Global,,,,,,,,ishares_list
+ESGE,iShares ESG Aware MSCI EM ETF,iShares,iShares,2016-06-28,0.26,Equity,,Global,,,,,,,,ishares_list
+ESGU,iShares ESG Aware MSCI USA ETF,iShares,iShares,2016-12-01,0.15,Equity,,North America,,,,,,,,ishares_list
+ESML,iShares ESG Aware MSCI USA Small-Cap ETF,iShares,iShares,2018-04-10,0.17,Equity,,North America,,,,,,,,ishares_list
+ESMV,iShares ESG Optimized MSCI USA Min Vol Factor ETF,iShares,iShares,2021-11-02,0.18,Equity,,North America,,,,,,,,ishares_list
+ETEC,iShares Breakthrough Environmental Solutions ETF,iShares,iShares,2023-03-28,0.47,Equity,,Global,,,,,,,,ishares_list
+ETHA,iShares Ethereum Trust ETF,iShares,iShares,2024-06-24,0.25,Digital Assets,,North America,,,,,,,,ishares_list
+EUFN,iShares MSCI Europe Financials ETF,iShares,iShares,2010-01-20,0.49,Equity,,Europe,,,,,,,,ishares_list
+EUHY,iShares Euro High Yield Corporate Bond USD Hedged ETF,iShares,iShares,2012-04-03,0.35,Fixed Income,,Global,,,,,,,,ishares_list
+EUIG,iShares Euro Investment Grade Corporate Bond USD Hedged ETF,iShares,iShares,2025-11-04,0.18,Fixed Income,,Global,,,,,,,,ishares_list
+EUSA,iShares MSCI USA Equal Weighted ETF,iShares,iShares,2010-05-05,0.09,Equity,,North America,,,,,,,,ishares_list
+EUSB,iShares ESG Advanced Universal USD Bond ETF,iShares,iShares,2020-06-23,0.12,Fixed Income,,North America,,,,,,,,ishares_list
+EVLU,iShares MSCI Emerging Markets Value Factor ETF,iShares,iShares,2024-09-04,0.35,Equity,,Global,,,,,,,,ishares_list
+EVUS,iShares ESG Aware MSCI USA Value ETF,iShares,iShares,2023-01-31,0.18,Equity,,North America,,,,,,,,ishares_list
+EWA,iShares MSCI Australia ETF,iShares,iShares,1996-03-12,0.5,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWC,iShares MSCI Canada ETF,iShares,iShares,1996-03-12,0.5,Equity,,North America,,,,,,,,ishares_list
+EWD,iShares MSCI Sweden ETF,iShares,iShares,1996-03-12,0.54,Equity,,Europe,,,,,,,,ishares_list
+EWG,iShares MSCI Germany ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWH,iShares MSCI Hong Kong ETF,iShares,iShares,1996-03-12,0.5,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWI,iShares MSCI Italy ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWJ,iShares MSCI Japan ETF,iShares,iShares,1996-03-12,0.5,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWJV,iShares MSCI Japan Value ETF,iShares,iShares,2019-03-05,0.15,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWK,iShares MSCI Belgium ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWL,iShares MSCI Switzerland ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWM,iShares MSCI Malaysia ETF,iShares,iShares,1996-03-12,0.5,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWN,iShares MSCI Netherlands ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWO,iShares MSCI Austria ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWP,iShares MSCI Spain ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWQ,iShares MSCI France ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWS,iShares MSCI Singapore ETF,iShares,iShares,1996-03-12,0.5,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWT,iShares MSCI Taiwan ETF,iShares,iShares,2000-06-20,0.59,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWU,iShares MSCI United Kingdom ETF,iShares,iShares,1996-03-12,0.5,Equity,,Europe,,,,,,,,ishares_list
+EWUS,iShares MSCI United Kingdom Small-Cap ETF,iShares,iShares,2012-01-25,0.59,Equity,,Europe,,,,,,,,ishares_list
+EWW,iShares MSCI Mexico ETF,iShares,iShares,1996-03-12,0.5,Equity,,Latin America,,,,,,,,ishares_list
+EWY,iShares MSCI South Korea ETF,iShares,iShares,2000-05-09,0.59,Equity,,Asia Pacific,,,,,,,,ishares_list
+EWZ,iShares MSCI Brazil ETF,iShares,iShares,2000-07-10,0.59,Equity,,Latin America,,,,,,,,ishares_list
+EWZS,iShares MSCI Brazil Small-Cap ETF,iShares,iShares,2010-09-28,0.6,Equity,,Latin America,,,,,,,,ishares_list
+EXI,iShares Global Industrials ETF,iShares,iShares,2006-09-12,0.39,Equity,,Global,,,,,,,,ishares_list
+EZA,iShares MSCI South Africa ETF,iShares,iShares,2003-02-03,0.59,Equity,,Middle East and Africa,,,,,,,,ishares_list
+EZU,iShares MSCI Eurozone ETF,iShares,iShares,2000-07-25,0.51,Equity,,Europe,,,,,,,,ishares_list
+FAB,Multi Cap Value AlphaDEX Fund,First Trust,First Trust,2007-05-08,0.7,Equity,,North America,,,,,,,,etf_list
+FAD,Multi Cap Growth AlphaDEX Fund,First Trust,First Trust,2007-05-08,0.7,Equity,,North America,,,,,,,,etf_list
+FALN,iShares Fallen Angels USD Bond ETF,iShares,iShares,2016-06-14,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+FAN,ISE Global Wind Energy Index Fund,First Trust,First Trust,2008-06-16,0.6,Equity,,Global,,,,,,,,etf_list
+FAS,Daily Financial Bull 3X Shares,Direxion,Direxion,2008-11-06,0.95,Equity,,North America,,,,,,,,etf_list
+FAZ,Daily Financial Bear 3X Shares,Direxion,Direxion,2008-11-06,0.95,Equity,,North America,,,,,,,,etf_list
+FBT,NYSE Arca Biotechnology Index Fund,First Trust,First Trust,2006-06-19,0.6,Equity,,North America,,,,,,,,etf_list
+FBZ,Brazil AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.82,Equity,,Latin America,,,,,,,,etf_list
+FCA,China AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+FCG,ISE-Revere Natural Gas Index Fund,First Trust,First Trust,2007-05-08,0.6,Equity,,North America,,,,,,,,etf_list
+FCOM,MSCI Telecommunications Services Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FDD,STOXX European Select Dividend Index Fund,First Trust,First Trust,2007-08-27,0.6,Equity,,Developed Europe,,,,,,,,etf_list
+FDIS,MSCI Consumer Discretionary Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FDL,Morningstar Dividend Leaders Index Fund,First Trust,First Trust,2006-03-09,0.45,Equity,,North America,,,,,,,,etf_list
+FDM,DJ Select MicroCap Index Fund,First Trust,First Trust,2005-09-27,0.6,Equity,,North America,,,,,,,,etf_list
+FDN,DJ Internet Index Fund,First Trust,First Trust,2006-06-19,0.6,Equity,,North America,,,,,,,,etf_list
+FDT,Developed Markets Ex-US AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Developed Markets,,,,,,,,etf_list
+FDTS,Developed Markets ex-US Small Cap AlphaDEX Fund,First Trust,First Trust,2012-02-16,0.8,Equity,,Developed Markets,,,,,,,,etf_list
+FDV,Strategic Value Index Fund,First Trust,First Trust,2006-07-06,0.65,Equity,,North America,,,,,,,,etf_list
+FEM,Emerging Markets AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Emerging Markets,,,,,,,,etf_list
+FEMS,Emerging Markets Small Cap AlphaDEX Fund,First Trust,First Trust,2012-02-16,0.8,Equity,,Emerging Markets,,,,,,,,etf_list
+FENY,MSCI Energy Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FEP,Europe AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Developed Europe,,,,,,,,etf_list
+FEU,SPDR STOXX Europe 50 ETF,State Street SPDR,SPDR,2002-10-15,0.29,Equity,,Developed Europe,,,,,,,,etf_list
+FEX,Large Cap Core AlphaDEX Fund,First Trust,First Trust,2007-05-08,0.7,Equity,,North America,,,,,,,,etf_list
+FEZ,SPDR Euro STOXX 50 ETF,State Street SPDR,SPDR,2002-10-15,0.29,Equity,,Developed Europe,,,,,,,,etf_list
+FFR,FTSE EPRA/NAREIT Developed Markets Real Estate Index Fund,First Trust,First Trust,2007-08-27,0.6,Real Estate,,Developed Markets,,,,,,,,etf_list
+FGD,DJ Global Select Dividend Index Fund,First Trust,First Trust,2007-11-21,0.6,Equity,,Global,,,,,,,,etf_list
+FGM,Germany AlphaDEX Fund,First Trust,First Trust,2012-02-15,0.8,Equity,,Developed Europe,,,,,,,,etf_list
+FHLC,MSCI Health Care Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FIDU,MSCI Industrials Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FILL,iShares MSCI Global Energy Producers ETF,iShares,iShares,2012-01-31,0.39,Equity,,Global,,,,,,,,etf_list
+FINF,Short 30 Year TIPS/TSY Spread,ProShares,ProShares,2012-01-12,0.75,Alternatives,,,,,,,,,,etf_list
+FIVZ,3-7 Year U.S. Treasury Index Fund,PIMCO,PIMCO,2009-10-30,0.15,Bond,,North America,,,,,,,,etf_list
+FIW,ISE Water Index Fund,First Trust,First Trust,2007-05-08,0.6,Equity,,Global,,,,,,,,etf_list
+FJP,Japan AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+FKU,United Kingdom AlphaDEX Fund,First Trust,First Trust,2012-02-15,0.8,Equity,,Developed Europe,,,,,,,,etf_list
+FLAG,The Forensic Accounting ETF,Exchange Traded Concepts,Exchange Traded Concepts,2013-01-30,0.85,Equity,,North America,,,,,,,,etf_list
+FLM,ISE Global Engineering and Construction Index Fund,First Trust,First Trust,2008-10-13,0.7,Equity,,Global,,,,,,,,etf_list
+FLN,Latin America AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.8,Equity,,Latin America,,,,,,,,etf_list
+FLOT,iShares Floating Rate Bond ETF,iShares,iShares,2011-06-14,0.15,Fixed Income,,North America,,,,,,,,both
+FLRN,SPDR Barclays Capital Investment Grade Floating Rate ETF,State Street SPDR,SPDR,2011-12-01,0.15,Bond,,North America,,,,,,,,etf_list
+FLTR,Market Vectors Investment Grade Floating Rate Bond ETF,Van Eck,VanEck,2011-04-26,0.19,Bond,,,,,,,,,,etf_list
+FM,MSCI Frontier 100 Index Fund,iShares,iShares,2012-09-12,0.79,Equity,,Frontier Markets,,,,,,,,etf_list
+FMAT,MSCI Materials Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FMF,First Trust Morningstar Managed Futures Strategy Fund,First Trust,First Trust,2013-08-02,0.95,Alternatives,,,,,,,,,,etf_list
+FNCL,MSCI Financials Index ETF,Fidelity,Fidelity,2013-10-24,0.12,Equity,,North America,,,,,,,,etf_list
+FNDA,Fundamental U.S. Small Company Index ETF,Charles Schwab,Schwab,2013-08-15,0.32,Equity,,North America,,,,,,,,etf_list
+FNDB,Fundamental U.S. Broad Market Index ETF,Charles Schwab,Schwab,2013-08-15,0.32,Equity,,North America,,,,,,,,etf_list
+FNDC,Fundamental International Small Company Index ETF,Charles Schwab,Schwab,2013-08-15,0.46,Equity,,Global ex-U.S.,,,,,,,,etf_list
+FNDE,Fundamental Emerging Markets Large Company Index ETF,Charles Schwab,Schwab,2013-08-15,0.46,Equity,,Emerging Markets,,,,,,,,etf_list
+FNDF,Fundamental International Large Company Index ETF,Charles Schwab,Schwab,2013-08-15,0.32,Equity,,,,,,,,,,etf_list
+FNDX,Fundamental U.S. Large Company Index ETF,Charles Schwab,Schwab,2013-08-15,0.32,Equity,,North America,,,,,,,,etf_list
+FNK,Mid Cap Value AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.7,Equity,,North America,,,,,,,,etf_list
+FNX,Mid Cap Core AlphaDEX,First Trust,First Trust,2007-05-08,0.7,Equity,,North America,,,,,,,,etf_list
+FNY,Mid Cap Growth AlphaDEX Fund,First Trust,First Trust,2011-04-19,0.7,Equity,,North America,,,,,,,,etf_list
+FPA,Asia Pacific Ex-Japan AlphaDEX Fund,First Trust,First Trust,2011-04-18,0.8,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+FPE,First Trust Preferred Securities and Income ETF,First Trust,First Trust,2013-02-12,0.85,Preferred Stock,,North America,,,,,,,,etf_list
+FXI,iShares China Large-Cap ETF,iShares,iShares,2004-10-05,0.73,Equity,,Asia Pacific,,,,,,,,ishares_list
+GAL,SPDR Global Allocation ETF,State Street SPDR,SPDR,2012-04-26,0.35,Multi-Asset,,,,,,,,,,etf_list
+GARP,iShares MSCI USA Quality GARP ETF,iShares,iShares,2020-01-14,0.15,Equity,,North America,,,,,,,,ishares_list
+GAZ,DJ-UBS Natural Gas Subindex Total Return ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+GBF,iShares Government/Credit Bond ETF,iShares,iShares,2007-01-05,0.2,Fixed Income,,North America,,,,,,,,both
+GCC,Continuous Commodity Index Fund,GreenHaven,GreenHaven,2008-01-24,0.85,Commodity,,,,,,,,,,etf_list
+GCE,Claymore CEF GS Connect ETN,Goldman Sachs,Goldman Sachs,2007-12-10,0.95,Multi-Asset,,Global,,,,,,,,etf_list
+GDX,Market Vectors TR Gold Miners,Van Eck,VanEck,2006-05-16,0.52,Equity,,Global,,,,,,,,etf_list
+GDXJ,Market Vectors Junior Gold Miners ETF,Van Eck,VanEck,2009-11-10,0.54,Equity,,Global,,,,,,,,etf_list
+GEX,Market Vectors Global Alternative Energy ETF,Van Eck,VanEck,2007-05-03,0.62,Equity,,Global,,,,,,,,etf_list
+GGOV,iShares Global Government Bond USD Hedged Active ETF,iShares,iShares,2025-06-25,0.4,Fixed Income,,Global,,,,,,,,ishares_list
+GHYG,iShares US & Intl High Yield Corp Bond ETF,iShares,iShares,2012-04-03,0.4,Fixed Income,,Global,,,,,,,,both
+GII,SPDR FTSE/Macquarie GI 100 ETF,State Street SPDR,SPDR,2007-01-25,0.59,Equity,,Global,,,,,,,,etf_list
+GIY,Enhanced Core Bond ETF,Guggenheim,Guggenheim,2008-02-12,0.27,Bond,,North America,,,,,,,,etf_list
+GLCB,WisdomTree Global Corporate Bond Fund,WisdomTree,WisdomTree,2013-01-31,0.45,Bond,,,,,,,,,,etf_list
+GLD,SPDR Gold Trust,State Street SPDR,SPDR,2004-11-18,0.4,Commodity,,,,,,,,,,etf_list
+GLDI,Gold Shares Covered Call ETN,Credit Suisse,Credit Suisse,2013-01-29,0.65,Commodity,,,,,,,,,,etf_list
+GLDX,Gold Explorers ETF,Global X,Global X,2010-11-04,0.65,Equity,,Global,,,,,,,,etf_list
+GLL,UltraShort Gold,ProShares,ProShares,2008-12-01,0.95,Commodity,,,,,,,,,,etf_list
+GLOF,iShares Global Equity Factor ETF,iShares,iShares,2015-04-28,0.2,Equity,,Global,,,,,,,,ishares_list
+GLTR,Physical Precious Metal Basket Shares,ETF Securities,ETF Securities,2010-10-22,0.6,Commodity,,,,,,,,,,etf_list
+GMF,SPDR S&P Emerging Asia Pacific ETF,State Street SPDR,SPDR,2007-03-19,0.59,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+GMFS,SPDR S&P Small Cap Emerging Asia Pacific ETF,State Street SPDR,SPDR,2012-01-12,0.65,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+GMM,SPDR S&P Emerging Markets ETF,State Street SPDR,SPDR,2007-03-19,0.59,Equity,,Emerging Markets,,,,,,,,etf_list
+GMMB,Intermediate Municipal Bond Strategy Fund,Columbia,Columbia,2010-01-29,0.35,Bond,,North America,,,,,,,,etf_list
+GMMF,iShares Government Money Market ETF,iShares,iShares,2025-02-04,0.2,Cash,,North America,,,,,,,,ishares_list
+GMTB,Core Bond Strategy Fund,Columbia,Columbia,2010-01-29,0.35,Bond,,North America,,,,,,,,etf_list
+GNMA,iShares GNMA Bond ETF,iShares,iShares,2012-02-14,0.11,Fixed Income,,North America,,,,,,,,both
+GNR,SPDR S&P Global Natural Resources ETF,State Street SPDR,SPDR,2010-09-13,0.4,Equity,,Global,,,,,,,,etf_list
+GOVT,iShares U.S. Treasury Bond ETF,iShares,iShares,2012-02-14,0.05,Fixed Income,,North America,,,,,,,,both
+GOVZ,iShares 25+ Year Treasury STRIPS Bond ETF,iShares,iShares,2020-09-22,0.15,Fixed Income,,North America,,,,,,,,ishares_list
+GQRE,Global Quality Real Estate Index Fund,FlexShares,FlexShares,2013-11-05,0.45,Real Estate,,Global,,,,,,,,etf_list
+GREK,FTSE Greece 20 ETF,Global X,Global X,2011-12-08,0.69,Equity,,Developed Europe,,,,,,,,etf_list
+GRES,IQ Global Resources ETF,IndexIQ,IndexIQ,2009-10-27,0.75,Equity,,Global,,,,,,,,etf_list
+GRID,NASDAQ Clean Edge Smart Grid Infrastructure Index Fund,First Trust,First Trust,2009-11-16,0.7,Equity,,Global,,,,,,,,etf_list
+GRN,Global Carbon ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+GSD,FTSE Developed Countries ex US Fund,GlobalShares,GlobalShares,2010-02-11,0.35,Equity,,Developed Markets,,,,,,,,etf_list
+GSG,iShares S&P GSCI Commodity-Indexed Trust,iShares,iShares,2006-07-10,0.75,Commodity,,Global,,,,,,,,both
+GSP,S&P GSCI Total Return Index ETN,Barclays iPath,Barclays iPath,2006-06-06,0.75,Commodity,,,,,,,,,,etf_list
+GSY,Enhanced Ultra-Short Bond ETF,Guggenheim,Guggenheim,2008-02-12,0.27,Bond,,North America,,,,,,,,etf_list
+GTIP,iShares Global Inflation-Linked Bond ETF,iShares,iShares,2011-05-20,0.4,Bond,,Global,,,,,,,,etf_list
+GUNR,Morningstar Global Upstream Natural Resources Index Fund,FlexShares,FlexShares,2011-09-22,0.48,Equity,,Global,,,,,,,,etf_list
+GUR,SPDR S&P Emerging Europe ETF,State Street SPDR,SPDR,2007-03-19,0.59,Equity,,Emerging Europe,,,,,,,,etf_list
+GURU,Top Guru Holdings Index ETF,Global X,Global X,2012-06-04,0.75,Alternatives,,Global,,,,,,,,etf_list
+GVI,iShares Intermediate Government/Credit Bond ETF,iShares,iShares,2007-01-05,0.2,Fixed Income,,North America,,,,,,,,both
+GWX,SPDR S&P International SmallCap ETF,State Street SPDR,SPDR,2007-04-20,0.59,Equity,,Developed Markets,,,,,,,,etf_list
+GXC,SPDR S&P China ETF,State Street SPDR,SPDR,2007-03-19,0.59,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+GXG,InterBolsa FTSE Colombia 20 ETF,Global X,Global X,2009-02-05,0.78,Equity,,Latin America,,,,,,,,etf_list
+GYLD,Dow Jones Global Yield ETF,ArrowShares,ArrowShares,2012-05-08,0.75,Multi-Asset,,Global,,,,,,,,etf_list
+HAP,Market Vectors Hard Assets Producers ETF,Van Eck,VanEck,2008-08-29,0.49,Equity,,Global,,,,,,,,etf_list
+HAWX,iShares Currency Hedged MSCI ACWI ex U.S. ETF,iShares,iShares,2015-06-29,0.7,Equity,,Global,,,,,,,,ishares_list
+HDG,Hedge Replication ETF,ProShares,ProShares,2011-07-14,0.95,Alternatives,,,,,,,,,,etf_list
+HDGE,Active Bear ETF,AdvisorShares,AdvisorShares,2011-01-27,1.85,Equity,,North America,,,,,,,,etf_list
+HDGI,Athena International Bear ETF,AdvisorShares,AdvisorShares,2013-07-18,1.5,Equity,,Global ex-U.S.,,,,,,,,etf_list
+HDV,iShares Core High Dividend ETF,iShares,iShares,2011-03-29,0.08,Equity,,North America,,,,,,,,both
+HEDJ,Europe Hedged Equity Fund,WisdomTree,WisdomTree,2009-12-31,0.58,Equity,,Developed Europe,,,,,,,,etf_list
+HEEM,iShares Currency Hedged MSCI Emerging Markets ETF,iShares,iShares,2014-09-23,1.5,Equity,,Global,,,,,,,,ishares_list
+HEFA,iShares Currency Hedged MSCI EAFE ETF,iShares,iShares,2014-01-31,0.7,Equity,,Global,,,,,,,,ishares_list
+HEWJ,iShares Currency Hedged MSCI Japan ETF,iShares,iShares,2014-01-31,1.03,Equity,,Asia Pacific,,,,,,,,ishares_list
+HEZU,iShares Currency Hedged MSCI Eurozone ETF,iShares,iShares,2014-07-09,1.12,Equity,,Europe,,,,,,,,ishares_list
+HFIN,S&P Financial Select Sector Covered Call ETF,Horizons,Horizons,2013-11-18,0.7,Alternatives,,North America,,,,,,,,etf_list
+HIMU,iShares High Yield Muni Active ETF,iShares,iShares,2006-08-01,0.43,Fixed Income,,North America,,,,,,,,ishares_list
+HSCZ,iShares Currency Hedged MSCI EAFE Small-Cap ETF,iShares,iShares,2015-06-29,0.83,Equity,,Global,,,,,,,,ishares_list
+HSPX,Horizons S&P 500 Covered Call ETF,Horizons,Horizons,2013-06-24,0.65,Alternatives,,North America,,,,,,,,etf_list
+HYBB,iShares BB Rated Corporate Bond ETF,iShares,iShares,2020-10-06,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+HYD,Market Vectors High Yield Municipal Index ETF,Van Eck,VanEck,2009-02-04,0.35,Bond,,,,,,,,,,etf_list
+HYDB,iShares High Yield Systematic Bond ETF,iShares,iShares,2017-07-11,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+HYEM,Market Vectors Emerging Markets High Yield Bond ETF,Van Eck,VanEck,2012-05-09,0.4,Bond,,Emerging Markets,,,,,,,,etf_list
+HYG,iShares iBoxx $ High Yield Corporate Bond ETF,iShares,iShares,2007-04-04,0.49,Fixed Income,,North America,,,,,,,,both
+HYGH,iShares Interest Rate Hedged High Yield Bond ETF,iShares,iShares,2014-05-27,1.12,Fixed Income,,North America,,,,,,,,ishares_list
+HYGW,iShares High Yield Corporate Bond BuyWrite Strategy ETF,iShares,iShares,2022-08-18,0.69,Fixed Income,,North America,,,,,,,,ishares_list
+HYHG,High Yield Interest Rate Hedged ETF,ProShares,ProShares,2013-05-21,0.5,Bond,,,,,,,,,,etf_list
+HYLD,Peritus High Yield ETF,AdvisorShares,AdvisorShares,2010-12-02,1.25,Bond,,North America,,,,,,,,etf_list
+HYLS,High Yield Long/Short ETF,First Trust,First Trust,2013-02-25,1.19,Bond,,,,,,,,,,etf_list
+HYMB,SPDR Nuveen S&P High Yield Municipal Bond ETF,State Street SPDR,SPDR,2011-04-14,0.45,Bond,,,,,,,,,,etf_list
+HYS,0-5 Year High Yield Corporate Bond Index Fund,PIMCO,PIMCO,2011-06-17,0.55,Bond,,North America,,,,,,,,etf_list
+HYXF,iShares ESG Advanced High Yield Corporate Bond ETF,iShares,iShares,2016-06-14,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+HYXU,Global ex USD High Yield Corporate Bond Fund,iShares,iShares,2012-04-03,0.4,Bond,,Global ex-U.S.,,,,,,,,etf_list
+HYZD,BofA Merrill Lynch High Yield Bond Zero Duration Fund,WisdomTree,WisdomTree,2013-12-18,0.43,Bond,,North America,,,,,,,,etf_list
+IAGG,iShares Core International Aggregate Bond ETF,iShares,iShares,2015-11-10,0.07,Fixed Income,,Global,,,,,,,,ishares_list
+IAI,iShares U.S. Broker-Dealers & Securities Exchanges ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IAK,iShares U.S. Insurance ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IAT,iShares U.S. Regional Banks ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IAU,iShares Gold Trust,iShares,iShares,2005-01-21,0.25,Commodity,,Global,,,,,,,,both
+IAUM,iShares Gold Trust Micro,iShares,iShares,2021-06-15,0.09,Commodity,,Global,,,,,,,,ishares_list
+IBAT,iShares Energy Storage & Materials ETF,iShares,iShares,2024-03-19,0.47,Equity,,Global,,,,,,,,ishares_list
+IBB,iShares Biotechnology ETF,iShares,iShares,2001-02-05,0.44,Equity,,North America,,,,,,,,both
+IBCA,iShares® iBonds® Dec 2035 Term Corporate ETF,iShares,iShares,2025-03-25,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBCE,iSharesBond 2023 Corporate ex-Financials Term ETF,iShares,iShares,2013-04-19,0.1,Bond,,,,,,,,,,etf_list
+IBDD,iSharesBond 2023 Corporate Term ETF,iShares,iShares,2013-07-09,0.1,Bond,,Global,,,,,,,,etf_list
+IBDQ,iShares® iBonds® Dec 2025 Term Corporate ETF,iShares,iShares,2015-03-11,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDR,iShares® iBonds® Dec 2026 Term Corporate ETF,iShares,iShares,2016-09-13,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDS,iShares® iBonds® Dec 2027 Term Corporate ETF,iShares,iShares,2017-09-12,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDT,iShares® iBonds® Dec 2028 Term Corporate ETF,iShares,iShares,2018-09-18,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDU,iShares® iBonds® Dec 2029 Term Corporate ETF,iShares,iShares,2019-09-17,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDV,iShares® iBonds® Dec 2030 Term Corporate ETF,iShares,iShares,2020-06-23,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDW,iShares® iBonds® Dec 2031 Term Corporate ETF,iShares,iShares,2021-06-22,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDX,iShares® iBonds® Dec 2032 Term Corporate ETF,iShares,iShares,2022-06-28,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDY,iShares® iBonds® Dec 2033 Term Corporate ETF,iShares,iShares,2023-06-21,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBDZ,iShares® iBonds® Dec 2034 Term Corporate ETF,iShares,iShares,2024-05-22,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBGA,iShares® iBonds® Dec 2044 Term Treasury ETF,iShares,iShares,2024-06-11,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBGB,iShares® iBonds® Dec 2045 Term Treasury ETF,iShares,iShares,2025-03-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBGK,iShares® iBonds® Dec 2054 Term Treasury ETF,iShares,iShares,2024-06-11,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBGL,iShares® iBonds® Dec 2055 Term Treasury ETF,iShares,iShares,2025-03-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBHE,iShares® iBonds® 2025 Term High Yield and Income ETF,iShares,iShares,2019-05-07,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHF,iShares® iBonds® 2026 Term High Yield and Income ETF,iShares,iShares,2020-11-10,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHG,iShares® iBonds® 2027 Term High Yield and Income ETF,iShares,iShares,2021-07-07,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHH,iShares® iBonds® 2028 Term High Yield and Income ETF,iShares,iShares,2022-03-08,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHI,iShares® iBonds® 2029 Term High Yield and Income ETF,iShares,iShares,2022-03-08,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHJ,iShares® iBonds® 2030 Term High Yield and Income ETF,iShares,iShares,2023-06-21,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHK,iShares® iBonds® 2031 Term High Yield and Income ETF,iShares,iShares,2024-05-22,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBHL,iShares® iBonds® 2032 Term High Yield and Income ETF,iShares,iShares,2025-03-25,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+IBIC,iShares® iBonds® Oct 2026 Term TIPS ETF,iShares,iShares,2023-09-13,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBID,iShares® iBonds® Oct 2027 Term TIPS ETF,iShares,iShares,2023-09-13,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIE,iShares® iBonds® Oct 2028 Term TIPS ETF,iShares,iShares,2023-09-13,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIF,iShares® iBonds® Oct 2029 Term TIPS ETF,iShares,iShares,2023-09-19,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIG,iShares® iBonds® Oct 2030 Term TIPS ETF,iShares,iShares,2023-09-19,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIH,iShares® iBonds® Oct 2031 Term TIPS ETF,iShares,iShares,2023-09-19,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBII,iShares® iBonds® Oct 2032 Term TIPS ETF,iShares,iShares,2023-09-19,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIJ,iShares® iBonds® Oct 2033 Term TIPS ETF,iShares,iShares,2023-09-19,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIK,iShares® iBonds® Oct 2034 Term TIPS ETF,iShares,iShares,2024-05-22,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIL,iShares® iBonds® Oct 2035 Term TIPS ETF,iShares,iShares,2025-03-25,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+IBIT,iShares Bitcoin Trust ETF,iShares,iShares,2024-01-05,0.25,Digital Assets,,North America,,,,,,,,ishares_list
+IBLC,iShares Blockchain and Tech ETF,iShares,iShares,2022-04-25,0.47,Equity,,Global,,,,,,,,ishares_list
+IBMN,iShares® iBonds® Dec 2025 Term Muni Bond ETF,iShares,iShares,2018-11-13,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMO,iShares® iBonds® Dec 2026 Term Muni Bond ETF,iShares,iShares,2019-04-02,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMP,iShares® iBonds® Dec 2027 Term Muni Bond ETF,iShares,iShares,2019-04-09,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMQ,iShares® iBonds® Dec 2028 Term Muni Bond ETF,iShares,iShares,2019-04-16,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMR,iShares® iBonds® Dec 2029 Term Muni Bond ETF,iShares,iShares,2023-05-09,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMS,iShares® iBonds® Dec 2030 Term Muni Bond ETF,iShares,iShares,2024-05-22,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBMT,iShares® iBonds® Dec 2031 Term Muni Bond ETF,iShares,iShares,2025-03-25,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IBND,SPDR Barclays Capital International Corporate Bond ETF,State Street SPDR,SPDR,2010-05-19,0.55,Bond,,,,,,,,,,etf_list
+IBRN,iShares Neuroscience and Healthcare ETF,iShares,iShares,2022-08-24,0.47,Equity,,Global,,,,,,,,ishares_list
+IBTF,iShares® iBonds® Dec 2025 Term Treasury ETF,iShares,iShares,2020-02-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTG,iShares® iBonds® Dec 2026 Term Treasury ETF,iShares,iShares,2020-02-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTH,iShares® iBonds® Dec 2027 Term Treasury ETF,iShares,iShares,2020-02-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTI,iShares® iBonds® Dec 2028 Term Treasury ETF,iShares,iShares,2020-02-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTJ,iShares® iBonds® Dec 2029 Term Treasury ETF,iShares,iShares,2020-02-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTK,iShares® iBonds® Dec 2030 Term Treasury ETF,iShares,iShares,2020-07-14,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTL,iShares® iBonds® Dec 2031 Term Treasury ETF,iShares,iShares,2021-07-13,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTM,iShares® iBonds® Dec 2032 Term Treasury ETF,iShares,iShares,2022-07-06,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTO,iShares® iBonds® Dec 2033 Term Treasury ETF,iShares,iShares,2023-06-27,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTP,iShares® iBonds® Dec 2034 Term Treasury ETF,iShares,iShares,2024-06-11,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IBTQ,iShares® iBonds® Dec 2035 Term Treasury ETF,iShares,iShares,2025-03-25,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+ICF,iShares Select U.S. REIT ETF,iShares,iShares,2001-01-29,0.32,Real Estate,,North America,,,,,,,,both
+ICLN,iShares Global Clean Energy ETF,iShares,iShares,2008-06-24,0.39,Equity,,Global,,,,,,,,both
+ICOP,iShares Copper and Metals Mining ETF,iShares,iShares,2023-06-21,0.47,Equity,,Global,,,,,,,,ishares_list
+ICPI,iShares 0-1 Year TIPS Bond ETF,iShares,iShares,2025-11-19,0.09,Fixed Income,,North America,,,,,,,,ishares_list
+ICSH,iShares Ultra Short Duration Bond Active ETF,iShares,iShares,2013-12-11,0.08,Fixed Income,,North America,,,,,,,,ishares_list
+ICVT,iShares Convertible Bond ETF,iShares,iShares,2015-06-02,0.2,Fixed Income,,North America,,,,,,,,ishares_list
+IDEF,iShares Defense Industrials Active ETF,iShares,iShares,2025-05-19,0.55,Equity,,Global,,,,,,,,ishares_list
+IDEV,iShares Core MSCI International Developed Markets ETF,iShares,iShares,2017-03-21,0.04,Equity,,Global,,,,,,,,ishares_list
+IDGT,iShares U.S. Digital Infrastructure and Real Estate ETF,iShares,iShares,2001-07-10,0.39,Equity,,North America,,,,,,,,ishares_list
+IDHQ,S&P International Developed High Quality Portfolio Fund,Invesco PowerShares,Invesco,2007-06-13,0.45,Equity,,Developed Markets,,,,,,,,etf_list
+IDLV,S&P International Developed Low Volatility Portfolio,Invesco PowerShares,Invesco,2012-01-13,0.25,Equity,,Developed Markets,,,,,,,,etf_list
+IDNA,iShares Genomics Immunology and Healthcare ETF,iShares,iShares,2019-06-11,0.47,Equity,,Global,,,,,,,,ishares_list
+IDOG,ALPS International Sector  Dividend Dogs ETF,ALPS,ALPS,2013-06-28,0.5,Equity,,Global ex-U.S.,,,,,,,,etf_list
+IDRV,iShares Self-Driving EV and Tech ETF,iShares,iShares,2019-04-16,0.48,Equity,,Global,,,,,,,,ishares_list
+IDU,iShares U.S. Utilities ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,both
+IDV,iShares International Select Dividend ETF,iShares,iShares,2007-06-11,0.5,Equity,,Global,,,,,,,,both
+IDX,Market Vectors Indonesia Index ETF,Van Eck,VanEck,2009-01-15,0.57,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+IDYN,iShares International Equity Factor Rotation Active ETF,iShares,iShares,2025-08-05,0.45,Equity,,Global,,,,,,,,ishares_list
+IEDI,iShares U.S. Consumer Focused ETF,iShares,iShares,2018-03-21,0.18,Equity,,North America,,,,,,,,ishares_list
+IEF,iShares 7-10 Year Treasury Bond ETF,iShares,iShares,2002-07-22,0.15,Fixed Income,,North America,,,,,,,,both
+IEFA,iShares Core MSCI EAFE ETF,iShares,iShares,2012-10-18,0.07,Equity,,Global,,,,,,,,both
+IEI,iShares 3-7 Year Treasury Bond ETF,iShares,iShares,2007-01-05,0.15,Fixed Income,,North America,,,,,,,,both
+IEMG,iShares Core MSCI Emerging Markets ETF,iShares,iShares,2012-10-18,0.09,Equity,,Global,,,,,,,,both
+IEO,iShares U.S. Oil & Gas Exploration & Production ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IETC,iShares U.S. Tech Independence Focused ETF,iShares,iShares,2018-03-21,0.18,Equity,,North America,,,,,,,,ishares_list
+IEUR,iShares Core MSCI Europe ETF,iShares,iShares,2014-06-10,0.1,Equity,,Europe,,,,,,,,ishares_list
+IEUS,iShares MSCI Europe Small-Cap ETF,iShares,iShares,2007-11-12,0.41,Equity,,Europe,,,,,,,,ishares_list
+IEV,iShares Europe ETF,iShares,iShares,2000-07-25,0.6,Equity,,Europe,,,,,,,,both
+IEZ,iShares U.S. Oil Equipment & Services ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IFGL,iShares International Developed Real Estate ETF,iShares,iShares,2007-11-12,0.48,Real Estate,,Global,,,,,,,,both
+IFRA,iShares U.S. Infrastructure ETF,iShares,iShares,2018-04-03,0.3,Equity,,North America,,,,,,,,ishares_list
+IGBH,iShares Interest Rate Hedged Long-Term Corporate Bond ETF,iShares,iShares,2015-07-22,0.39,Fixed Income,,North America,,,,,,,,ishares_list
+IGE,iShares North American Natural Resources ETF,iShares,iShares,2001-10-22,0.39,Equity,,North America,,,,,,,,both
+IGEB,iShares Investment Grade Systematic Bond ETF,iShares,iShares,2017-07-11,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+IGF,iShares Global Infrastructure ETF,iShares,iShares,2007-12-10,0.39,Equity,,Global,,,,,,,,both
+IGHG,Investment Grade Interest Rate Hedged ETF,ProShares,ProShares,2013-11-05,0.3,Bond,,,,,,,,,,etf_list
+IGIB,iShares 5-10 Year Investment Grade Corporate Bond ETF,iShares,iShares,2007-01-05,0.04,Fixed Income,,North America,,,,,,,,ishares_list
+IGLB,iShares 10+ Year Investment Grade Corporate Bond ETF,iShares,iShares,2009-12-08,0.04,Fixed Income,,North America,,,,,,,,ishares_list
+IGM,iShares Expanded Tech Sector ETF,iShares,iShares,2001-03-13,0.39,Equity,,North America,,,,,,,,both
+IGN,iShares North American Tech-Multimedia Networking ETF,iShares,iShares,2001-07-10,0.48,Equity,,North America,,,,,,,,etf_list
+IGOV,iShares International Treasury Bond ETF,iShares,iShares,2009-01-21,0.35,Fixed Income,,Global,,,,,,,,both
+IGRO,iShares International Dividend Growth ETF,iShares,iShares,2016-05-17,0.15,Equity,,Global,,,,,,,,ishares_list
+IGSB,iShares 1-5 Year Investment Grade Corporate Bond ETF,iShares,iShares,2007-01-05,0.04,Fixed Income,,North America,,,,,,,,ishares_list
+IGV,iShares Expanded Tech-Software Sector ETF,iShares,iShares,2001-07-10,0.39,Equity,,North America,,,,,,,,both
+IHAK,iShares Cybersecurity and Tech ETF,iShares,iShares,2019-06-11,0.47,Equity,,Global,,,,,,,,ishares_list
+IHE,iShares U.S. Pharmaceuticals ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IHF,iShares U.S. Healthcare Providers ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IHI,iShares U.S. Medical Devices ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,both
+IHY,Market Vectors International High Yield Bond ETF,Van Eck,VanEck,2012-04-03,0.4,Bond,,Global ex-U.S.,,,,,,,,etf_list
+IJH,iShares Core S&P Mid-Cap ETF,iShares,iShares,2000-05-22,0.05,Equity,,North America,,,,,,,,both
+IJJ,iShares S&P Mid-Cap 400 Value ETF,iShares,iShares,2000-07-24,0.18,Equity,,North America,,,,,,,,both
+IJK,iShares S&P Mid-Cap 400 Growth ETF,iShares,iShares,2000-07-24,0.17,Equity,,North America,,,,,,,,both
+IJR,iShares Core S&P Small-Cap ETF,iShares,iShares,2000-05-22,0.06,Equity,,North America,,,,,,,,both
+IJS,iShares S&P Small-Cap 600 Value ETF,iShares,iShares,2000-07-24,0.18,Equity,,North America,,,,,,,,both
+IJT,iShares S&P Small-Cap 600 Growth ETF,iShares,iShares,2000-07-24,0.18,Equity,,North America,,,,,,,,both
+ILCB,iShares Morningstar U.S. Equity ETF,iShares,iShares,2004-06-28,0.03,Equity,,North America,,,,,,,,ishares_list
+ILCG,iShares Morningstar Growth ETF,iShares,iShares,2004-06-28,0.04,Equity,,North America,,,,,,,,ishares_list
+ILCV,iShares Morningstar Value ETF,iShares,iShares,2004-06-28,0.04,Equity,,North America,,,,,,,,ishares_list
+ILF,iShares Latin America 40 ETF,iShares,iShares,2001-10-25,0.47,Equity,,Latin America,,,,,,,,both
+ILIT,iShares Lithium Miners and Producers ETF,iShares,iShares,2023-06-21,0.47,Equity,,Global,,,,,,,,ishares_list
+ILTB,iShares Core 10+ Year USD Bond ETF,iShares,iShares,2009-12-08,0.06,Fixed Income,,North America,,,,,,,,both
+IMCB,iShares Morningstar Mid-Cap ETF,iShares,iShares,2004-06-28,0.04,Equity,,North America,,,,,,,,ishares_list
+IMCG,iShares Morningstar Mid-Cap Growth ETF,iShares,iShares,2004-06-28,0.06,Equity,,North America,,,,,,,,ishares_list
+IMCV,iShares Morningstar Mid-Cap Value ETF,iShares,iShares,2004-06-28,0.06,Equity,,North America,,,,,,,,ishares_list
+IMTB,iShares Core 5-10 Year USD Bond ETF,iShares,iShares,2016-11-01,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IMTM,iShares MSCI Intl Momentum Factor ETF,iShares,iShares,2015-01-13,0.3,Equity,,Global,,,,,,,,ishares_list
+INCO,India Consumer ETF,EG Shares,EG Shares,2011-08-10,0.89,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+INDA,iShares MSCI India ETF,iShares,iShares,2012-02-02,0.62,Equity,,Asia Pacific,,,,,,,,both
+INDL,Daily India Bull 2x Shares,Direxion,Direxion,2010-03-11,0.95,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+INDY,iShares India 50 ETF,iShares,iShares,2009-11-18,0.65,Equity,,Asia Pacific,,,,,,,,both
+INFL,DB US Inflation ETN,Invesco PowerShares,Invesco,2011-12-05,0.75,Alternatives,,,,,,,,,,etf_list
+INKM,SPDR Income Allocation ETF,State Street SPDR,SPDR,2012-04-26,0.7,Multi-Asset,,,,,,,,,,etf_list
+INMU,iShares Intermediate Muni Income Active ETF,iShares,iShares,2021-03-16,0.41,Fixed Income,,North America,,,,,,,,ishares_list
+INRO,iShares U.S. Industry Rotation Active ETF,iShares,iShares,2024-03-26,0.42,Equity,,North America,,,,,,,,ishares_list
+INSD,Large Cap Insider Sentiment Shares,Direxion,Direxion,2011-12-08,0.65,Equity,,North America,,,,,,,,etf_list
+INTF,iShares International Equity Factor ETF,iShares,iShares,2015-04-28,0.16,Equity,,Global,,,,,,,,ishares_list
+IOO,iShares Global 100 ETF,iShares,iShares,2000-12-05,0.4,Equity,,Global,,,,,,,,both
+IPAC,iShares Core MSCI Pacific ETF,iShares,iShares,2014-06-10,0.09,Equity,,Asia Pacific,,,,,,,,ishares_list
+IPD,SPDR S&P International Consumer Discretionary Sector ETF,State Street SPDR,SPDR,2008-07-16,0.5,Equity,,Developed Markets,,,,,,,,etf_list
+IPE,SPDR Barclays Capital TIPS ETF,State Street SPDR,SPDR,2007-05-25,0.18,Bond,,,,,,,,,,etf_list
+IPN,SPDR S&P International Industrial Sector ETF,State Street SPDR,SPDR,2008-07-16,0.5,Equity,,Developed Markets,,,,,,,,etf_list
+IPO,Renaissance IPO ETF,Renaissance Capital,Renaissance Capital,2013-10-16,0.6,Equity,,North America,,,,,,,,etf_list
+IPW,SPDR S&P International Energy Sector ETF,State Street SPDR,SPDR,2008-07-16,0.5,Equity,,Developed Markets,,,,,,,,etf_list
+IQDE,FlexShares International Quality Dividend Defensive Index Fund,FlexShares,FlexShares,2013-04-16,0.47,Equity,,Global ex-U.S.,,,,,,,,etf_list
+IQDF,FlexShares International Quality Dividend Index Fund,FlexShares,FlexShares,2013-04-16,0.47,Equity,,Global ex-U.S.,,,,,,,,etf_list
+IQDY,FlexShares International Quality Dividend Dynamic Index Fund,FlexShares,FlexShares,2013-04-16,0.47,Equity,,Global ex-U.S.,,,,,,,,etf_list
+IQLT,iShares MSCI Intl Quality Factor ETF,iShares,iShares,2015-01-13,0.3,Equity,,Global,,,,,,,,ishares_list
+IRTR,iShares® LifePath® Retirement ETF,iShares,iShares,2023-10-17,0.08,Multi Asset,,Global,,,,,,,,ishares_list
+IRY,SPDR S&P International Health Care Sector ETF,State Street SPDR,SPDR,2008-07-16,0.5,Equity,,Developed Markets,,,,,,,,etf_list
+ISCB,iShares Morningstar Small-Cap ETF,iShares,iShares,2004-06-28,0.04,Equity,,North America,,,,,,,,ishares_list
+ISCF,iShares International Small-Cap Equity Factor ETF,iShares,iShares,2015-04-28,0.24,Equity,,Global,,,,,,,,ishares_list
+ISCG,iShares Morningstar Small-Cap Growth ETF,iShares,iShares,2004-06-28,0.06,Equity,,North America,,,,,,,,ishares_list
+ISCV,iShares Morningstar Small-Cap Value ETF,iShares,iShares,2004-06-28,0.06,Equity,,North America,,,,,,,,ishares_list
+ISHG,iShares 1-3 Year International Treasury Bond ETF,iShares,iShares,2009-01-21,0.35,Fixed Income,,Global,,,,,,,,ishares_list
+ISMF,iShares Managed Futures Active ETF,iShares,iShares,2025-03-12,0.8,Multi Asset,,Global,,,,,,,,ishares_list
+ISTB,iShares Core 1-5 Year USD Bond ETF,iShares,iShares,2012-10-18,0.06,Fixed Income,,North America,,,,,,,,ishares_list
+ISVL,iShares International Developed Small Cap Value Factor ETF,iShares,iShares,2021-03-23,0.31,Equity,,Global,,,,,,,,ishares_list
+ITA,iShares U.S. Aerospace & Defense ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,ishares_list
+ITB,iShares U.S. Home Construction ETF,iShares,iShares,2006-05-01,0.38,Equity,,North America,,,,,,,,ishares_list
+ITDB,iShares® LifePath® Target Date 2030 ETF,iShares,iShares,2023-10-17,0.09,Multi Asset,,Global,,,,,,,,ishares_list
+ITDC,iShares® LifePath® Target Date 2035 ETF,iShares,iShares,2023-10-17,0.1,Multi Asset,,Global,,,,,,,,ishares_list
+ITDD,iShares® LifePath® Target Date 2040 ETF,iShares,iShares,2023-10-17,0.11,Multi Asset,,Global,,,,,,,,ishares_list
+ITDE,iShares® LifePath® Target Date 2045 ETF,iShares,iShares,2023-10-17,0.11,Multi Asset,,Global,,,,,,,,ishares_list
+ITDF,iShares® LifePath® Target Date 2050 ETF,iShares,iShares,2023-10-17,0.11,Multi Asset,,Global,,,,,,,,ishares_list
+ITDG,iShares® LifePath® Target Date 2055 ETF,iShares,iShares,2023-10-17,0.12,Multi Asset,,Global,,,,,,,,ishares_list
+ITDH,iShares® LifePath® Target Date 2060 ETF,iShares,iShares,2023-10-17,0.12,Multi Asset,,Global,,,,,,,,ishares_list
+ITDI,iShares® LifePath® Target Date 2065 ETF,iShares,iShares,2023-10-17,0.12,Multi Asset,,Global,,,,,,,,ishares_list
+ITDJ,iShares® LifePath® Target Date 2070 ETF,iShares,iShares,2024-11-12,0.12,Multi Asset,,Global,,,,,,,,ishares_list
+ITOT,iShares Core S&P Total U.S. Stock Market ETF,iShares,iShares,2004-01-20,0.03,Equity,,North America,,,,,,,,ishares_list
+IUSB,iShares Core Universal USD Bond ETF,iShares,iShares,2014-06-10,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+IUSG,iShares Core S&P U.S. Growth ETF,iShares,iShares,2000-07-24,0.04,Equity,,North America,,,,,,,,ishares_list
+IUSV,iShares Core S&P U.S. Value ETF,iShares,iShares,2000-07-24,0.04,Equity,,North America,,,,,,,,ishares_list
+IVE,iShares S&P 500 Value ETF,iShares,iShares,2000-05-22,0.18,Equity,,North America,,,,,,,,ishares_list
+IVLU,iShares MSCI Intl Value Factor ETF,iShares,iShares,2015-06-16,0.31,Equity,,Global,,,,,,,,ishares_list
+IVRS,iShares Future Metaverse Tech and Communications ETF,iShares,iShares,2023-02-14,0.47,Equity,,Global,,,,,,,,ishares_list
+IVV,iShares Core S&P 500 ETF,iShares,iShares,2000-05-15,0.03,Equity,,North America,,,,,,,,ishares_list
+IVVB,iShares Large Cap Deep Quarterly Laddered ETF,iShares,iShares,2023-06-28,0.54,Equity,,North America,,,,,,,,ishares_list
+IVVM, iShares Large Cap Moderate Quarterly Laddered ETF,iShares,iShares,2023-06-28,0.53,Equity,,North America,,,,,,,,ishares_list
+IVVW,iShares S&P 500 BuyWrite ETF,iShares,iShares,2024-03-14,0.25,Equity,,North America,,,,,,,,ishares_list
+IVW,iShares S&P 500 Growth ETF,iShares,iShares,2000-05-22,0.18,Equity,,North America,,,,,,,,ishares_list
+IWB,iShares Russell 1000 ETF,iShares,iShares,2000-05-15,0.15,Equity,,North America,,,,,,,,ishares_list
+IWC,iShares Micro-Cap ETF,iShares,iShares,2005-08-12,0.6,Equity,,North America,,,,,,,,ishares_list
+IWD,iShares Russell 1000 Value ETF,iShares,iShares,2000-05-22,0.18,Equity,,North America,,,,,,,,ishares_list
+IWF,iShares Russell 1000 Growth ETF,iShares,iShares,2000-05-22,0.18,Equity,,North America,,,,,,,,ishares_list
+IWL,iShares Russell Top 200 ETF,iShares,iShares,2009-09-22,0.15,Equity,,North America,,,,,,,,ishares_list
+IWM,iShares Russell 2000 ETF,iShares,iShares,2000-05-22,0.19,Equity,,North America,,,,,,,,ishares_list
+IWMW,iShares Russell 2000 BuyWrite ETF,iShares,iShares,2024-03-14,0.39,Equity,,North America,,,,,,,,ishares_list
+IWN,iShares Russell 2000 Value ETF,iShares,iShares,2000-07-24,0.24,Equity,,North America,,,,,,,,ishares_list
+IWO,iShares Russell 2000 Growth ETF,iShares,iShares,2000-07-24,0.24,Equity,,North America,,,,,,,,ishares_list
+IWP,iShares Russell Mid-Cap Growth ETF,iShares,iShares,2001-07-17,0.23,Equity,,North America,,,,,,,,ishares_list
+IWR,iShares Russell Mid-Cap ETF,iShares,iShares,2001-07-17,0.18,Equity,,North America,,,,,,,,ishares_list
+IWS,iShares Russell Mid-Cap Value ETF,iShares,iShares,2001-07-17,0.23,Equity,,North America,,,,,,,,ishares_list
+IWV,iShares Russell 3000 ETF,iShares,iShares,2000-05-22,0.2,Equity,,North America,,,,,,,,ishares_list
+IWX,iShares Russell Top 200 Value ETF,iShares,iShares,2009-09-22,0.2,Equity,,North America,,,,,,,,ishares_list
+IWY,iShares Russell Top 200 Growth ETF,iShares,iShares,2009-09-22,0.2,Equity,,North America,,,,,,,,ishares_list
+IXC,iShares Global Energy ETF,iShares,iShares,2001-11-12,0.4,Equity,,Global,,,,,,,,ishares_list
+IXG,iShares Global Financials ETF,iShares,iShares,2001-11-12,0.41,Equity,,Global,,,,,,,,ishares_list
+IXJ,iShares Global Healthcare ETF,iShares,iShares,2001-11-13,0.4,Equity,,Global,,,,,,,,ishares_list
+IXN,iShares Global Tech ETF,iShares,iShares,2001-11-12,0.39,Equity,,Global,,,,,,,,ishares_list
+IXP,iShares Global Comm Services ETF,iShares,iShares,2001-11-12,0.4,Equity,,Global,,,,,,,,ishares_list
+IXUS,iShares Core MSCI Total International Stock ETF,iShares,iShares,2012-10-18,0.07,Equity,,Global,,,,,,,,ishares_list
+IYC,iShares U.S. Consumer Discretionary ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYE,iShares U.S. Energy ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYF,iShares U.S. Financials ETF,iShares,iShares,2000-05-22,0.38,Equity,,North America,,,,,,,,ishares_list
+IYG,iShares U.S. Financial Services ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYH,iShares U.S. Healthcare ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYJ,iShares U.S. Industrials ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYK,iShares U.S. Consumer Staples ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYLD,iShares Morningstar Multi-Asset Income ETF,iShares,iShares,2012-04-03,0.5,Multi Asset,,Global,,,,,,,,ishares_list
+IYM,iShares U.S. Basic Materials ETF,iShares,iShares,2000-06-12,0.38,Equity,,North America,,,,,,,,ishares_list
+IYR,iShares U.S. Real Estate ETF,iShares,iShares,2000-06-12,0.38,Real Estate,,North America,,,,,,,,ishares_list
+IYT,iShares U.S. Transportation ETF,iShares,iShares,2003-10-06,0.38,Equity,,North America,,,,,,,,ishares_list
+IYW,iShares U.S. Technology ETF,iShares,iShares,2000-05-15,0.38,Equity,,North America,,,,,,,,ishares_list
+IYY,iShares Dow Jones U.S. ETF,iShares,iShares,2000-06-12,0.2,Equity,,North America,,,,,,,,ishares_list
+IYZ,iShares U.S. Telecommunications ETF,iShares,iShares,2000-05-22,0.38,Equity,,North America,,,,,,,,ishares_list
+JDST,Daily Junior Gold Miners Index Bear 3x Shares,Direxion,Direxion,2013-10-03,0.95,Equity,,Global,,,,,,,,etf_list
+JJA,DJ-UBS Agriculture Subindex Total Return ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJC,DJ-UBS Copper Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJE,DJ-UBS Energy Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJG,DJ-UBS Grains Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJM,DJ-UBS Industrial Metals Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJN,DJ-UBS Nickel Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2007-10-23,0.75,Commodity,,,,,,,,,,etf_list
+JJP,Dow Jones-UBS Precious Metals Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+JJS,Dow Jones-UBS Softs Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+JJT,Dow Jones-UBS Tin Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+JJU,Dow Jones-UBS Aluminum Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+JKD,iShares Morningstar Large-Cap ETF,iShares,iShares,2004-06-28,0.2,Equity,,North America,,,,,,,,etf_list
+JKE,iShares Morningstar Large-Cap Value ETF,iShares,iShares,2004-06-28,0.25,Equity,,North America,,,,,,,,etf_list
+JKF,Morningstar Large Value Index Fund,iShares,iShares,2004-06-28,0.25,Equity,,North America,,,,,,,,etf_list
+JKG,iShares Morningstar Mid-Cap ETF,iShares,iShares,2004-06-28,0.25,Equity,,North America,,,,,,,,etf_list
+JKH,iShares Morningstar Mid-Cap Growth ETF,iShares,iShares,2004-06-28,0.3,Equity,,North America,,,,,,,,etf_list
+JKI,iShares Morningstar Mid-Cap Value ETF,iShares,iShares,2004-06-28,0.3,Equity,,North America,,,,,,,,etf_list
+JKJ,iShares Morningstar Small-Cap ETF,iShares,iShares,2004-06-28,0.25,Equity,,North America,,,,,,,,etf_list
+JKK,iShares Morningstar Small-Cap Growth ETF,iShares,iShares,2004-06-28,0.3,Equity,,North America,,,,,,,,etf_list
+JKL,iShares Morningstar Small-Cap Value ETF,iShares,iShares,2004-06-28,0.3,Equity,,North America,,,,,,,,etf_list
+JNK,SPDR Barclays Capital High Yield Bond ETF,State Street SPDR,SPDR,2007-11-28,0.4,Bond,,,,,,,,,,etf_list
+JNUG,Daily Junior Gold Miners Index Bull 3x Shares,Direxion,Direxion,2013-10-03,0.95,Equity,,Global,,,,,,,,etf_list
+JO,Dow Jones-UBS Coffee ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+JPXN,iShares JPX-Nikkei 400 ETF,iShares,iShares,2001-10-23,0.48,Equity,,Asia Pacific,,,,,,,,ishares_list
+JUNR,Junior Miners ETF,Global X,Global X,2011-03-16,0.69,Equity,,Global,,,,,,,,etf_list
+JXI,iShares Global Utilities ETF,iShares,iShares,2006-09-12,0.39,Equity,,Global,,,,,,,,both
+KBE,SPDR S&P Bank ETF,State Street SPDR,SPDR,2005-11-08,0.35,Equity,,North America,,,,,,,,etf_list
+KBWB,KBW Bank Portfolio,Invesco PowerShares,Invesco,2011-11-01,0.35,Equity,,North America,,,,,,,,etf_list
+KBWD,KBW High Dividend Yield Financial Portfolio,Invesco PowerShares,Invesco,2010-12-02,0.35,Equity,,North America,,,,,,,,etf_list
+KBWP,KBW Property & Casualty Insurance Portfolio,Invesco PowerShares,Invesco,2010-12-02,0.35,Equity,,North America,,,,,,,,etf_list
+KBWR,KBW Regional Banking Portfolio,Invesco PowerShares,Invesco,2011-11-01,0.35,Equity,,North America,,,,,,,,etf_list
+KBWX,KBW International Financial Portfolio,Invesco PowerShares,Invesco,2010-12-02,0.4,Equity,,Global ex-U.S.,,,,,,,,etf_list
+KBWY,KBW Premium Yield Equity REIT Portfolio,Invesco PowerShares,Invesco,2010-12-02,0.35,Real Estate,,North America,,,,,,,,etf_list
+KCE,SPDR S&P Capital Markets ETF,State Street SPDR,SPDR,2005-11-08,0.35,Equity,,North America,,,,,,,,etf_list
+KFYP,CSI China Five Year Plan ETF,KraneShares,KraneShares,2013-07-23,0.68,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+KIE,SPDR S&P Insurance ETF,State Street SPDR,SPDR,2005-11-08,0.35,Equity,,North America,,,,,,,,etf_list
+KLD,iShares MSCI USA ESG Select ETF,iShares,iShares,2005-01-24,0.5,Equity,,North America,,,,,,,,etf_list
+KOLD,UltraShort DJ-UBS Natural Gas,ProShares,ProShares,2011-10-06,0.95,Commodity,,,,,,,,,,etf_list
+KORU,Direxion Daily South Korea Bull 3X Shares,Direxion,Direxion,2013-04-10,0.95,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+KRE,SPDR S&P Regional Banking ETF,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+KSA,iShares MSCI Saudi Arabia ETF,iShares,iShares,2015-09-16,0.75,Equity,,Middle East and Africa,,,,,,,,ishares_list
+KWT,iShares MSCI Kuwait ETF,iShares,iShares,2020-09-01,0.74,Equity,,Kuwait,,,,,,,,both
+KXI,iShares Global Consumer Staples ETF,iShares,iShares,2006-09-12,0.39,Equity,,Global,,,,,,,,both
+LCTD,iShares World ex U.S. Carbon Transition Readiness Aware Active ETF,iShares,iShares,2021-04-06,0.37,Equity,,Global,,,,,,,,ishares_list
+LCTU,iShares U.S. Carbon Transition Readiness Aware Active ETF,iShares,iShares,2021-04-06,0.3,Equity,,North America,,,,,,,,ishares_list
+LD,Dow Jones-UBS Lead Total Return Sub-Index,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+LDEM,iShares ESG MSCI EM Leaders ETF,iShares,iShares,2020-02-05,0.17,Equity,,Global,,,,,,,,ishares_list
+LDRC,iShares® iBonds® 1-5 Year Corporate Ladder ETF,iShares,iShares,2024-11-07,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+LDRH,iShares® iBonds® 1-5 Year High Yield and Income Ladder ETF,iShares,iShares,2024-11-07,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+LDRI,iShares® iBonds® 1-5 Year TIPS Ladder ETF,iShares,iShares,2024-11-07,0.1,Fixed Income,,North America,,,,,,,,ishares_list
+LDRT,iShares® iBonds® 1-5 Year Treasury Ladder ETF,iShares,iShares,2024-11-07,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+LEMB,iShares J.P. Morgan EM Local Currency Bond ETF,iShares,iShares,2011-10-18,0.3,Fixed Income,,Global,,,,,,,,both
+LGLV,SPDR Russell 1000 Low Volatility ETF,State Street SPDR,SPDR,2013-02-20,0.2,Equity,,North America,,,,,,,,etf_list
+LIT,Lithium ETF,Global X,Global X,2010-07-23,0.75,Equity,,Global,,,,,,,,etf_list
+LMUB,iShares Long-Term National Muni Bond ETF,iShares,iShares,2025-03-17,0.09,Fixed Income,,North America,,,,,,,,ishares_list
+LQD,iShares iBoxx $ Investment Grade Corporate Bond ETF,iShares,iShares,2002-07-22,0.14,Fixed Income,,North America,,,,,,,,both
+LQDB,iShares BBB Rated Corporate Bond ETF,iShares,iShares,2021-05-18,0.15,Fixed Income,,North America,,,,,,,,ishares_list
+LQDH,iShares Interest Rate Hedged Corporate Bond ETF,iShares,iShares,2014-05-27,0.44,Fixed Income,,North America,,,,,,,,ishares_list
+LQDI,iShares Inflation Hedged Corporate Bond ETF,iShares,iShares,2018-05-08,0.33,Fixed Income,,North America,,,,,,,,ishares_list
+LQDW,iShares Investment Grade Corporate Bond BuyWrite Strategy ETF,iShares,iShares,2022-08-18,0.34,Fixed Income,,North America,,,,,,,,ishares_list
+LRGF,iShares U.S. Equity Factor ETF,iShares,iShares,2015-04-28,0.08,Equity,,North America,,,,,,,,ishares_list
+LTL,Ultra Telecommunications ProShares,ProShares,ProShares,2008-03-27,0.95,Equity,,North America,,,,,,,,etf_list
+LTPZ,15+ Year U.S. TIPS Index Fund,PIMCO,PIMCO,2009-09-03,0.2,Bond,,North America,,,,,,,,etf_list
+LVOL,Russell 1000 Low Volatility ETF,Russell,Russell,2011-05-26,0.2,Equity,,North America,,,,,,,,etf_list
+LWC,SPDR Barclays Capital Long Term Corporate Bond ETF,State Street SPDR,SPDR,2009-03-10,0.15,Bond,,,,,,,,,,etf_list
+MADE,iShares U.S. Manufacturing ETF,iShares,iShares,2024-07-17,0.4,Equity,,North America,,,,,,,,ishares_list
+MATH,Meidell Tactical Advantage ETF,AdvisorShares,AdvisorShares,2011-06-23,1.58,Multi-Asset,,Global,,,,,,,,etf_list
+MATL,Daily Basic Materials Bull 3X Shares,Direxion,Direxion,2011-06-15,0.95,Equity,,North America,,,,,,,,etf_list
+MAXJ,iShares Large Cap Max Buffer Jun ETF,iShares,iShares,2024-06-28,0.53,Equity,,North America,,,,,,,,ishares_list
+MBB,iShares MBS ETF,iShares,iShares,2007-03-13,0.04,Fixed Income,,North America,,,,,,,,both
+MBG,SPDR Barclays Capital Mortgage Backed Bond ETF,State Street SPDR,SPDR,2009-01-15,0.2,Bond,,,,,,,,,,etf_list
+MCHI,iShares MSCI China ETF,iShares,iShares,2011-03-29,0.59,Equity,,Asia Pacific,,,,,,,,both
+MDIV,Multi-Asset Diversified Income Index Fund,First Trust,First Trust,2012-08-14,0.6,Multi-Asset,,Global,,,,,,,,etf_list
+MDY,SPDR MidCap Trust Series I,State Street SPDR,SPDR,1995-04-27,0.25,Equity,,North America,,,,,,,,etf_list
+MDYG,SPDR S&P 400 Mid Cap Growth ETF,State Street SPDR,SPDR,2005-08-11,0.25,Equity,,North America,,,,,,,,etf_list
+MDYV,SPDR S&P 400 Mid Cap Value ETF,State Street SPDR,SPDR,2005-08-11,0.25,Equity,,North America,,,,,,,,etf_list
+MEAR,iShares Short Maturity Municipal Bond Active ETF,iShares,iShares,2015-03-03,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+MFLA,Long Enhanced MSCI EAFE Index ETN,Barclays iPath,Barclays iPath,2010-11-29,0.8,Equity,,Developed Markets,,,,,,,,etf_list
+MGC,Mega Cap 300 ETF,Vanguard,Vanguard,2007-12-17,0.12,Equity,,North America,,,,,,,,etf_list
+MGK,Mega Cap 300 Growth,Vanguard,Vanguard,2007-12-17,0.12,Equity,,North America,,,,,,,,etf_list
+MGV,Mega Cap 300 Value,Vanguard,Vanguard,2007-12-17,0.12,Equity,,North America,,,,,,,,etf_list
+MIDU,Daily Mid Cap Bull 3x Shares,Direxion,Direxion,2009-01-08,0.95,Equity,,North America,,,,,,,,etf_list
+MINC,Newfleet Multi-Sector Income ETF,AdvisorShares,AdvisorShares,2013-03-20,0.75,Bond,,,,,,,,,,etf_list
+MINT,Enhanced Short Maturity Strategy Fund,PIMCO,PIMCO,2009-11-16,0.35,Bond,,North America,,,,,,,,etf_list
+MLN,Market Vectors-Long Municipal Index ETF,Van Eck,VanEck,2008-01-02,0.24,Bond,,,,,,,,,,etf_list
+MLPA,MLP ETF,Global X,Global X,2012-04-19,0.45,Equity,,North America,,,,,,,,etf_list
+MLPX,Global X MLP & Energy Infrastructure ETF,Global X,Global X,2013-08-07,0.45,Equity,,North America,,,,,,,,etf_list
+MMAX,iShares Large Cap Max Buffer Mar ETF,iShares,iShares,2025-03-31,0.53,Equity,,North America,,,,,,,,ishares_list
+MMTM,SPDR S&P 1500 Momentum Tilt ETF,State Street SPDR,SPDR,2012-10-24,0.35,Equity,,North America,,,,,,,,etf_list
+MNA,IQ Merger Arbitrage ETF,IndexIQ,IndexIQ,2009-11-17,0.75,Alternatives,,Global,,,,,,,,etf_list
+MOAT,Market Vectors Wide Moat Research ETF,Van Eck,VanEck,2012-04-25,0.49,Equity,,North America,,,,,,,,etf_list
+MOO,Market Vectors-Agribusiness ETF,Van Eck,VanEck,2007-08-31,0.53,Equity,,Global,,,,,,,,etf_list
+MORT,Market Vector Mortgage REIT Income ETF,Van Eck,VanEck,2011-08-17,0.4,Real Estate,,Global,,,,,,,,etf_list
+MRGR,Merger ETF,ProShares,ProShares,2012-12-13,0.75,Alternatives,,,,,,,,,,etf_list
+MTUM,iShares MSCI USA Momentum Factor ETF,iShares,iShares,2013-04-16,0.15,Equity,,North America,,,,,,,,both
+MUAD,iShares 2015 AMT-Free Muni Term ETF,iShares,iShares,2010-01-07,0.3,Bond,,,,,,,,,,etf_list
+MUAE,iShares 2016 AMT-Free Muni Term ETF,iShares,iShares,2010-01-07,0.3,Bond,,,,,,,,,,etf_list
+MUAF,iShares 2017 AMT-Free Muni Term ETF,iShares,iShares,2010-01-07,0.3,Bond,,,,,,,,,,etf_list
+MUB,iShares National Muni Bond ETF,iShares,iShares,2007-09-07,0.05,Fixed Income,,North America,,,,,,,,both
+MUNI,Intermediate Municipal Bond Strategy Fund,PIMCO,PIMCO,2009-11-30,0.35,Bond,,North America,,,,,,,,etf_list
+MVV,Ultra MidCap400,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+MXI,iShares Global Materials ETF,iShares,iShares,2006-09-12,0.39,Equity,,Global,,,,,,,,both
+MYY,Short MidCap400,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+MZZ,UltraShort MidCap400,ProShares,ProShares,2006-07-11,0.95,Equity,,North America,,,,,,,,etf_list
+NEAR,iShares Short Duration Bond Active ETF,iShares,iShares,2013-09-25,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+NFRA,STOXX Global Broad Infrastructure Index Fund,FlexShares,FlexShares,2013-10-08,0.47,Equity,,Global,,,,,,,,etf_list
+NGE,Global X Nigeria Index ETF,Global X,Global X,2013-04-02,0.68,Equity,,Africa,,,,,,,,etf_list
+NIB,Dow Jones-UBS Cocoa Total Return Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+NLR,Market Vectors Uranium+Nuclear Energy ETF,Van Eck,VanEck,2007-08-13,0.6,Equity,,Global,,,,,,,,etf_list
+NOBL,S&P 500 Aristocrats ETF,ProShares,ProShares,2013-10-09,0.35,Equity,,North America,,,,,,,,etf_list
+NORW,FTSE Norway 30 ETF,Global X,Global X,2010-11-10,0.5,Equity,,Developed Europe,,,,,,,,etf_list
+NUGT,Daily Gold Miners Bull 3x Shares,Direxion,Direxion,2010-12-08,0.95,Equity,,Global,,,,,,,,etf_list
+NYC,iShares NYSE Composite ETF,iShares,iShares,2004-03-30,0.25,Equity,,North America,,,,,,,,etf_list
+NYF,iShares New York Muni Bond ETF,iShares,iShares,2007-10-04,0.09,Fixed Income,,North America,,,,,,,,both
+OEF,iShares S&P 100 ETF,iShares,iShares,2000-10-23,0.2,Equity,,North America,,,,,,,,both
+OIH,Market Vectors Oil Services ETF,Van Eck,VanEck,2011-12-20,0.35,Equity,,North America,,,,,,,,etf_list
+OIL,S&P GSCI Crude Oil Tot Ret Idx ETN,Barclays iPath,Barclays iPath,2006-08-15,0.75,Commodity,,,,,,,,,,etf_list
+OLEM,Pure Beta Crude Oil ETN,Barclays iPath,Barclays iPath,2011-04-20,0.75,Commodity,,,,,,,,,,etf_list
+OLO,DB Crude Oil Long ETN,Invesco PowerShares,Invesco,2008-06-16,0.75,Commodity,,,,,,,,,,etf_list
+ONEF,Russell Equity ETF,Russell,Russell,2010-05-11,0.51,Equity,,Global,,,,,,,,etf_list
+ONEQ,Nasdaq Composite Index Tracking Stock,Fidelity,Fidelity,2003-09-25,0.3,Equity,,North America,,,,,,,,etf_list
+ONG,Pure Beta Energy ETN,Barclays iPath,Barclays iPath,2011-04-20,0.75,Commodity,,,,,,,,,,etf_list
+PABD,iShares Paris-Aligned Climate Optimized MSCI World ex USA ETF,iShares,iShares,2024-01-17,0.12,Equity,,Global,,,,,,,,ishares_list
+PABU,iShares Paris-Aligned Climate Optimized MSCI USA ETF,iShares,iShares,2022-02-08,0.1,Equity,,North America,,,,,,,,ishares_list
+PALL,Physical Palladium Shares,ETF Securities,ETF Securities,2010-01-08,0.6,Commodity,,,,,,,,,,etf_list
+PBD,Global Clean Energy Portfolio,Invesco PowerShares,Invesco,2007-06-13,0.75,Equity,,Global,,,,,,,,etf_list
+PBE,Dynamic Biotech &Genome,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PBJ,Dynamic Food & Beverage,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PBP,S&P 500 BuyWrite Portfolio,Invesco PowerShares,Invesco,2007-12-20,0.75,Alternatives,,North America,,,,,,,,etf_list
+PBS,Dynamic Media,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PBW,WilderHill Clean Energy Portfolio,Invesco PowerShares,Invesco,2005-03-03,0.6,Equity,,Global,,,,,,,,etf_list
+PCEF,CEF Income Composite Portfolio,Invesco PowerShares,Invesco,2010-02-19,0.5,Bond,,North America,,,,,,,,etf_list
+PCY,Emerging Markets Sovereign Debt Portfolio,Invesco PowerShares,Invesco,2007-10-11,0.5,Bond,,,,,,,,,,etf_list
+PDN,FTSE RAFI Developed Markets ex-U.S. Small-Mid Portfolio,Invesco PowerShares,Invesco,2007-09-27,0.49,Equity,,Developed Markets,,,,,,,,etf_list
+PDP,DWA Technical Leaders Portfolio,Invesco PowerShares,Invesco,2007-03-01,0.6,Equity,,North America,,,,,,,,etf_list
+PEJ,Dynamic Leisure & Entertainment Portfolio,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PEK,Market Vectors China ETF,Van Eck,VanEck,2010-10-13,0.72,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+PEX,Global Listed Private Equity ETF,ProShares,ProShares,2013-02-26,0.6,Equity,,Global,,,,,,,,etf_list
+PEY,High Yield Dividend Achievers,Invesco PowerShares,Invesco,2004-12-09,0.5,Equity,,North America,,,,,,,,etf_list
+PEZ,Dynamic Consumer Discretionary,Invesco PowerShares,Invesco,2006-10-12,0.6,Equity,,North America,,,,,,,,etf_list
+PFF,iShares Preferred and Income Securities ETF,iShares,iShares,2007-03-26,0.45,Equity,,North America,,,,,,,,both
+PFI,Dynamic Financial,Invesco PowerShares,Invesco,2006-10-12,0.6,Equity,,North America,,,,,,,,etf_list
+PFIG,Fundamental Investment Grade Corporate Bond Portfolio,Invesco PowerShares,Invesco,2011-09-15,0.22,Bond,,North America,,,,,,,,etf_list
+PFM,Dividend Achievers,Invesco PowerShares,Invesco,2005-09-15,0.5,Equity,,North America,,,,,,,,etf_list
+PFXF,Market Vectors Preferred Securities ex Financials ETF,Van Eck,VanEck,2012-07-17,0.4,Preferred Stock,,North America,,,,,,,,etf_list
+PGAL,FTSE Portugal 20 ETF,Global X,Global X,2013-11-12,0.61,Equity,,Developed Europe,,,,,,,,etf_list
+PGF,Financial Preferred Portfolio,Invesco PowerShares,Invesco,2006-12-01,0.6,Preferred Stock,,North America,,,,,,,,etf_list
+PGHY,PowerShares Global Short Term High Yield Bond Portfolio,Invesco PowerShares,Invesco,2013-06-20,0.35,Bond,,,,,,,,,,etf_list
+PGJ,Golden Dragon Halter USX China Portfolio,Invesco PowerShares,Invesco,2004-12-09,0.6,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+PGM,DJ UBS Platinum Trust Sub-Index ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+PGX,Preferred Portfolio,Invesco PowerShares,Invesco,2008-01-31,0.5,Preferred Stock,,North America,,,,,,,,etf_list
+PHB,Fundamental High Yield Corporate Bond Portfolio,Invesco PowerShares,Invesco,2007-11-15,0.5,Bond,,,,,,,,,,etf_list
+PHDG,PowerShares S&P 500 Downside Hedged Portfolio,Invesco PowerShares,Invesco,2012-12-06,0.39,Equity,,North America,,,,,,,,etf_list
+PHO,Water Resource Portfolio,Invesco PowerShares,Invesco,2005-12-06,0.6,Equity,,North America,,,,,,,,etf_list
+PICB,International Corporate Bond Portfolio,Invesco PowerShares,Invesco,2010-06-03,0.5,Bond,,,,,,,,,,etf_list
+PICK,iShares MSCI Global Metals & Mining Producers ETF,iShares,iShares,2012-01-31,0.39,Equity,,Global,,,,,,,,both
+PID,Intl Dividend Achievers,Invesco PowerShares,Invesco,2005-09-15,0.5,Equity,,Global,,,,,,,,etf_list
+PIE,DWA Emerging Market Technical Leaders Portfolio,Invesco PowerShares,Invesco,2007-12-28,0.9,Equity,,Emerging Markets,,,,,,,,etf_list
+PIN,India Portfolio,Invesco PowerShares,Invesco,2008-03-05,0.78,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+PIO,Global Water Portfolio,Invesco PowerShares,Invesco,2007-06-13,0.75,Equity,,Global,,,,,,,,etf_list
+PIQ,Dynamic MagniQuant,Invesco PowerShares,Invesco,2006-10-12,0.6,Equity,,North America,,,,,,,,etf_list
+PIZ,DWA Developed Market Technical Leaders Portfolio,Invesco PowerShares,Invesco,2007-12-28,0.8,Equity,,Developed Markets,,,,,,,,etf_list
+PJP,Dynamic Pharmaceuticals,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PKB,Dynamic Build & Construction,Invesco PowerShares,Invesco,2005-10-26,0.6,Equity,,North America,,,,,,,,etf_list
+PKW,Buyback Achievers,Invesco PowerShares,Invesco,2006-12-20,0.6,Equity,,North America,,,,,,,,etf_list
+PLTM,ISE Global Platinum Index Fund,First Trust,First Trust,2010-03-11,0.7,Equity,,Global,,,,,,,,etf_list
+PLW,1-30 Treasury Ladder Portfolio,Invesco PowerShares,Invesco,2007-10-11,0.25,Bond,,,,,,,,,,etf_list
+PMMF,iShares Prime Money Market ETF,iShares,iShares,2025-02-04,0.2,Cash,,North America,,,,,,,,ishares_list
+PMNA,MENA Frontier Countries Portfolio,Invesco PowerShares,Invesco,2008-07-09,0.7,Equity,,Frontier Markets,,,,,,,,etf_list
+PNQI,Nasdaq Internet Portfolio,Invesco PowerShares,Invesco,2008-06-12,0.6,Equity,,North America,,,,,,,,etf_list
+POWR,iShares U.S. Power Infrastructure ETF,iShares,iShares,2012-01-31,0.4,Equity,,North America,,,,,,,,ishares_list
+PPA,Aerospace & Defense,Invesco PowerShares,Invesco,2005-10-26,0.6,Equity,,North America,,,,,,,,etf_list
+PPH,Market Vectors Pharmaceutical ETF,Van Eck,VanEck,2011-12-20,0.35,Equity,,North America,,,,,,,,etf_list
+PPLT,Physical Platinum Shares,ETF Securities,ETF Securities,2010-01-08,0.6,Commodity,,,,,,,,,,etf_list
+PRF,FTSE RAFI US 1000 Portfolio,Invesco PowerShares,Invesco,2005-12-19,0.39,Equity,,North America,,,,,,,,etf_list
+PRFZ,FTSE RAFI US 1500 Small-Mid Portfolio,Invesco PowerShares,Invesco,2006-09-20,0.39,Equity,,North America,,,,,,,,etf_list
+PRN,Dynamic Industrials,Invesco PowerShares,Invesco,2006-10-12,0.6,Equity,,North America,,,,,,,,etf_list
+PSCC,S&P SmallCap Consumer Staples Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCD,S&P SmallCap Consumer Discretionary Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCE,S&P SmallCap Energy Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCF,S&P SmallCap Financials Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCH,S&P SmallCap Health Care Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCI,S&P SmallCap Industrials Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCM,S&P SmallCap Materials Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCT,S&P SmallCap Information Technology Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSCU,S&P SmallCap Utilities Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+PSI,Dynamic Semiconductors,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PSJ,Dynamic Software,Invesco PowerShares,Invesco,2005-06-23,0.6,Equity,,North America,,,,,,,,etf_list
+PSK,SPDR Wells Fargo Preferred Stock ETF,State Street SPDR,SPDR,2009-09-16,0.45,Preferred Stock,,North America,,,,,,,,etf_list
+PSL,Dynamic Consumer Staples,Invesco PowerShares,Invesco,2006-10-12,0.6,Equity,,North America,,,,,,,,etf_list
+PSP,Listed Private Equity,Invesco PowerShares,Invesco,2006-10-24,0.6,Equity,,North America,,,,,,,,etf_list
+PSQ,Short QQQ,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+PSR,Active U.S. Real Estate Fund,Invesco PowerShares,Invesco,2008-11-20,0.8,Real Estate,,North America,,,,,,,,etf_list
+PST,UltraShort Barclays 7-10 Year Treasury,ProShares,ProShares,2008-04-29,0.95,Bond,,,,,,,,,,etf_list
+PSTL,Global Steel Portfolio,Invesco PowerShares,Invesco,2008-09-18,0.75,Equity,,Global,,,,,,,,etf_list
+QABA,NASDAQ ABA Community Bank Index Fund,First Trust,First Trust,2009-06-29,0.6,Equity,,North America,,,,,,,,etf_list
+QAI,IQ Hedge Multi-Strategy Tracker ETF,IndexIQ,IndexIQ,2009-03-25,0.75,Alternatives,,Global,,,,,,,,etf_list
+QAT,iShares MSCI Qatar ETF,iShares,iShares,2014-04-29,0.6,Equity,,Middle East and Africa,,,,,,,,ishares_list
+QCLN,NASDAQ Clean Edge Green Energy Index Fund,First Trust,First Trust,2007-02-08,0.6,Equity,,North America,,,,,,,,etf_list
+QDEF,Northern Trust Quality Dividend Defensive Index,FlexShares,FlexShares,2012-12-19,0.37,Equity,,North America,,,,,,,,etf_list
+QDF,FlexShares Quality Dividend Index Fund,FlexShares,FlexShares,2012-12-19,0.37,Equity,,North America,,,,,,,,etf_list
+QDYN,FlexShares Quality Dividend Dynamic Index Fund,FlexShares,FlexShares,2012-12-19,0.37,Equity,,North America,,,,,,,,etf_list
+QID,UltraShort QQQ,ProShares,ProShares,2006-07-11,0.95,Equity,,North America,,,,,,,,etf_list
+QLD,Ultra QQQ,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+QLTA,iShares Aaa - A Rated Corporate Bond ETF,iShares,iShares,2012-02-14,0.15,Fixed Income,,North America,,,,,,,,both
+QNXT,iShares Nasdaq-100 ex Top 30 ETF,iShares,iShares,2024-10-23,0.2,Equity,,North America,,,,,,,,ishares_list
+QQEW,NASDAQ-100 Equal Weighted Index Fund,First Trust,First Trust,2006-04-19,0.6,Equity,,North America,,,,,,,,etf_list
+QQQ,QQQ,Invesco PowerShares,Invesco,1999-03-10,0.2,Equity,,North America,,,,,,,,etf_list
+QQQE,NASDAQ-100 Equal Weighted Index Shares,Direxion,Direxion,2012-03-21,0.35,Equity,,North America,,,,,,,,etf_list
+QQQM,NASDAQ 400 Mid Cap ETF,Global X,Global X,2011-12-06,0.48,Equity,,North America,,,,,,,,etf_list
+QQXT,NASDAQ-100 Ex-Technology Sector Index,First Trust,First Trust,2007-02-08,0.6,Equity,,North America,,,,,,,,etf_list
+QTEC,NASDAQ-100-Technology Sector Index Fund,First Trust,First Trust,2006-04-19,0.6,Equity,,North America,,,,,,,,etf_list
+QTOP,iShares Nasdaq Top 30 Stocks ETF,iShares,iShares,2024-10-23,0.2,Equity,,North America,,,,,,,,ishares_list
+QUAL,iShares MSCI USA Quality Factor ETF,iShares,iShares,2013-07-16,0.15,Equity,,North America,,,,,,,,both
+RAVI,Ready Access Variable Income Fund,FlexShares,FlexShares,2012-10-11,0.25,Bond,,,,,,,,,,etf_list
+RCD,S&P Equal Weight Consumer Discretionary,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RDIV,Ultra Dividend Fund,RevenueShares,RevenueShares,2013-10-01,0.49,Equity,,North America,,,,,,,,etf_list
+REET,iShares Global REIT ETF,iShares,iShares,2014-07-08,0.14,Real Estate,,Global,,,,,,,,ishares_list
+REK,Short Real Estate,ProShares,ProShares,2010-03-16,0.95,Real Estate,,North America,,,,,,,,etf_list
+REM,iShares Mortgage Real Estate ETF,iShares,iShares,2007-05-01,0.48,Real Estate,,North America,,,,,,,,both
+REMX,Market Vectors Rare Earth/Strategic Metals ETF,Van Eck,VanEck,2010-10-28,0.57,Equity,,Global,,,,,,,,etf_list
+RETL,Daily Retail Bull 3x Shares,Direxion,Direxion,2010-07-14,0.95,Equity,,North America,,,,,,,,etf_list
+REW,UltraShort Technology,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+REZ,iShares Residential and Multisector Real Estate ETF,iShares,iShares,2007-05-01,0.48,Real Estate,,North America,,,,,,,,both
+RFG,S&P Midcap 400 Pure Growth,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+RFL,2x S&P Select Sector Financial ETF,Rydex,Rydex,2008-06-16,0.7,Equity,,North America,,,,,,,,etf_list
+RFV,S&P Midcap 400 Pure Value,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+RGI,S&P Equal Weight Industrials ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RHS,S&P Equal Weight Consumer Staples ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RIGS,RiverFront Strategic Income Fund,ALPS,ALPS,2013-10-09,0.22,Bond,,,,,,,,,,etf_list
+RINF,30 Year TIPS/TSY Spread,ProShares,ProShares,2012-01-12,0.75,Alternatives,,,,,,,,,,etf_list
+RING,iShares MSCI Global Gold Miners ETF,iShares,iShares,2012-01-31,0.39,Equity,,Global,,,,,,,,both
+RLY,SPDR Multi-Asset Real Return ETF,State Street SPDR,SPDR,2012-04-26,0.7,Alternatives,,,,,,,,,,etf_list
+RMM,2x S&P MidCap 400 ETF,Rydex,Rydex,2007-11-07,0.7,Equity,,North America,,,,,,,,etf_list
+ROBO,Robo-Stox Global Robotics and Automation Index ETF,Exchange Traded Concepts,Exchange Traded Concepts,2013-10-22,0.95,Equity,,Global,,,,,,,,etf_list
+ROM,Ultra Technology,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+ROOF,IQ US Real Estate Small Cap ETF,IndexIQ,IndexIQ,2011-06-14,0.69,Real Estate,,North America,,,,,,,,etf_list
+RPG,S&P 500 Pure Growth ETF,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+RPV,S&P 500 Pure Value ETF,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+RSP,S&P Equal Weight ETF,Guggenheim,Guggenheim,2003-04-24,0.4,Equity,,North America,,,,,,,,etf_list
+RSX,Market Vectors Russia ETF,Van Eck,VanEck,2007-04-24,0.62,Equity,,Emerging Europe,,,,,,,,etf_list
+RSXJ,Market Vectors Russia Small-Cap ETF,Van Eck,VanEck,2011-04-14,0.67,Equity,,Emerging Europe,,,,,,,,etf_list
+RTH,Market Vectors Retail ETF,Van Eck,VanEck,2011-12-20,0.35,Equity,,North America,,,,,,,,etf_list
+RTL,iShares Retail Real Estate Capped ETF,iShares,iShares,2007-05-01,0.48,Real Estate,,North America,,,,,,,,etf_list
+RTM,S&P Equal Weight Materials ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RVNU,db X-trackers Municipal Infrastructure Revenue Bond Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2013-06-04,0.3,Bond,,,,,,,,,,etf_list
+RWJ,Small Cap Fund,RevenueShares,RevenueShares,2008-02-22,0.54,Equity,,North America,,,,,,,,etf_list
+RWK,Mid Cap Fund,RevenueShares,RevenueShares,2008-02-22,0.54,Equity,,North America,,,,,,,,etf_list
+RWL,Large Cap Fund,RevenueShares,RevenueShares,2008-02-22,0.49,Equity,,North America,,,,,,,,etf_list
+RWM,Short Russell2000,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+RWO,SPDR DJ Wilshire Global Real Estate ETF,State Street SPDR,SPDR,2008-05-07,0.5,Real Estate,,Global,,,,,,,,etf_list
+RWR,SPDR DJ Wilshire REIT ETF,State Street SPDR,SPDR,2001-04-23,0.25,Real Estate,,North America,,,,,,,,etf_list
+RWX,SPDR DJ Wilshire Intl Real Estate,State Street SPDR,SPDR,2006-12-15,0.59,Real Estate,,Global ex-U.S.,,,,,,,,etf_list
+RXD,UltraShort Health Care,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+RXI,iShares Global Consumer Discretionary ETF,iShares,iShares,2006-09-12,0.39,Equity,,Global,,,,,,,,both
+RXL,Ultra Health Care,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+RYE,S&P Equal Weight Energy ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RYF,S&P Equal Weight Financial ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RYH,S&P Equal Weight Health Care ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RYJ,Raymond James SB-1 Equity ETF,Guggenheim,Guggenheim,2006-05-19,0.75,Equity,,North America,,,,,,,,etf_list
+RYT,S&P Equal Weight Technology ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RYU,S&P Equal Weight Utilities ETF,Guggenheim,Guggenheim,2006-11-01,0.5,Equity,,North America,,,,,,,,etf_list
+RZG,S&P Smallcap 600 Pure Growth,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+RZV,S&P Smallcap 600 Pure Value,Guggenheim,Guggenheim,2006-03-01,0.35,Equity,,North America,,,,,,,,etf_list
+SAA,Ultra SmallCap600,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+SBB,Short SmallCap600,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+SBND,3x Short 25+ Year Treasury Bond ETN,Invesco PowerShares,Invesco,2010-06-28,0.95,Bond,,,,,,,,,,etf_list
+SCC,UltraShort Consumer Services,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+SCHA,U.S. Small-Cap ETF,Charles Schwab,Schwab,2009-11-03,0.1,Equity,,North America,,,,,,,,etf_list
+SCHB,U.S. Broad Market ETF,Charles Schwab,Schwab,2009-11-03,0.04,Equity,,North America,,,,,,,,etf_list
+SCHC,International Small-Cap Equity ETF,Charles Schwab,Schwab,2010-01-14,0.2,Equity,,Developed Markets,,,,,,,,etf_list
+SCHD,US Dividend Equity ETF,Charles Schwab,Schwab,2011-10-18,0.07,Equity,,North America,,,,,,,,etf_list
+SCHE,Emerging Markets Equity ETF,Charles Schwab,Schwab,2010-01-14,0.15,Equity,,Emerging Markets,,,,,,,,etf_list
+SCHF,International Equity ETF,Charles Schwab,Schwab,2009-11-03,0.09,Equity,,Developed Markets,,,,,,,,etf_list
+SCHG,U.S. Large-Cap Growth ETF,Charles Schwab,Schwab,2009-12-11,0.07,Equity,,North America,,,,,,,,etf_list
+SCHH,U.S. REIT ETF,Charles Schwab,Schwab,2011-01-13,0.07,Real Estate,,North America,,,,,,,,etf_list
+SCHM,U.S. Mid-Cap ETF,Charles Schwab,Schwab,2011-01-13,0.07,Equity,,North America,,,,,,,,etf_list
+SCHO,Short-Term U.S. Treasury ETF,Charles Schwab,Schwab,2010-08-05,0.08,Bond,,,,,,,,,,etf_list
+SCHP,U.S. TIPS ETF,Charles Schwab,Schwab,2010-08-05,0.07,Bond,,,,,,,,,,etf_list
+SCHR,Intermediate-Term U.S. Treasury ETF,Charles Schwab,Schwab,2010-08-05,0.1,Bond,,,,,,,,,,etf_list
+SCHV,U.S. Large-Cap Value ETF,Charles Schwab,Schwab,2009-12-11,0.07,Equity,,North America,,,,,,,,etf_list
+SCHX,U.S. Large-Cap ETF,Charles Schwab,Schwab,2009-11-03,0.04,Equity,,North America,,,,,,,,etf_list
+SCHZ,U.S. Aggregate Bond ETF,Charles Schwab,Schwab,2011-07-14,0.05,Bond,,North America,,,,,,,,etf_list
+SCIF,India Small-Cap Index ETF,Van Eck,VanEck,2010-08-23,0.85,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+SCJ,iShares MSCI Japan Small-Cap ETF,iShares,iShares,2007-12-20,0.5,Equity,,Asia Pacific,,,,,,,,both
+SCO,UltraShort DJ-UBS Crude Oil,ProShares,ProShares,2008-11-24,0.95,Commodity,,,,,,,,,,etf_list
+SCPB,SPDR Barclays Capital Short Term Corporate Bond ETF,State Street SPDR,SPDR,2009-12-16,0.12,Bond,,North America,,,,,,,,etf_list
+SCZ,iShares MSCI EAFE Small-Cap ETF,iShares,iShares,2007-12-10,0.4,Equity,,Global,,,,,,,,both
+SDD,UltraShort SmallCap600,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+SDG,iShares MSCI Global Sustainable Development Goals ETF,iShares,iShares,2016-04-20,0.49,Equity,,Global,,,,,,,,ishares_list
+SDIV,SuperDividend ETF,Global X,Global X,2011-06-09,0.58,Equity,,Global,,,,,,,,etf_list
+SDK,UltraShort Russell MidCap Growth,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+SDOG,Sector Dividend Dogs ETF,ALPS,ALPS,2012-06-29,0.4,Equity,,North America,,,,,,,,etf_list
+SDOW,UltraPro Short Dow30,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+SDP,UltraShort Utilities,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+SDS,UltraShort S&P500,ProShares,ProShares,2006-07-11,0.95,Equity,,North America,,,,,,,,etf_list
+SDY,SPDR S&P Dividend ETF,State Street SPDR,SPDR,2005-11-08,0.35,Equity,,North America,,,,,,,,etf_list
+SEA,Shipping ETF,Guggenheim,Guggenheim,2010-11-06,0.65,Equity,,Global,,,,,,,,etf_list
+SEF,Short Financials,ProShares,ProShares,2008-06-10,0.95,Equity,,North America,,,,,,,,etf_list
+SGG,Dow Jones-UBS Sugar Subindex Total Return ETN,Barclays iPath,Barclays iPath,2008-06-24,0.75,Commodity,,,,,,,,,,etf_list
+SGOL,Physical Swiss Gold Shares,ETF Securities,ETF Securities,2009-09-09,0.39,Commodity,,,,,,,,,,etf_list
+SGOV,iShares 0-3 Month Treasury Bond ETF,iShares,iShares,2020-05-26,0.09,Fixed Income,,North America,,,,,,,,ishares_list
+SH,Short S&P500,ProShares,ProShares,2006-06-19,0.95,Equity,,North America,,,,,,,,etf_list
+SHM,SPDR Barclays Short Term Municipal Bond ETF,State Street SPDR,SPDR,2007-10-10,0.2,Bond,,,,,,,,,,etf_list
+SHV,iShares Short Treasury Bond ETF,iShares,iShares,2007-01-05,0.15,Fixed Income,,North America,,,,,,,,both
+SHY,iShares 1-3 Year Treasury Bond ETF,iShares,iShares,2002-07-22,0.15,Fixed Income,,North America,,,,,,,,both
+SHYG,iShares 0-5 Year High Yield Corporate Bond ETF,iShares,iShares,2013-10-15,0.3,Fixed Income,,North America,,,,,,,,both
+SHYM,iShares Short Duration High Yield Muni Active ETF,iShares,iShares,2021-03-16,0.42,Fixed Income,,North America,,,,,,,,ishares_list
+SIJ,UltraShort Industrials,ProShares,ProShares,2007-01-30,0.0,Equity,,North America,,,,,,,,etf_list
+SIL,Silver Miners ETF,Global X,Global X,2010-04-19,0.65,Equity,,Global,,,,,,,,etf_list
+SILJ,PureFunds ISE Junior Silver ETF,FactorShares,FactorShares,2012-11-29,0.69,Equity,,Global,,,,,,,,etf_list
+SINF,UltraPro Short 10 Year TIPS/TSY Spread,ProShares,ProShares,2012-02-08,0.75,Alternatives,,,,,,,,,,etf_list
+SIVR,Physical Silver Shares,ETF Securities,ETF Securities,2009-07-24,0.3,Commodity,,,,,,,,,,etf_list
+SIZE,iShares MSCI USA Size Factor ETF,iShares,iShares,2013-04-16,0.15,Equity,,North America,,,,,,,,both
+SJB,Short High Yield,ProShares,ProShares,2011-03-22,0.95,Bond,,,,,,,,,,etf_list
+SJNK,SPDR Barclays Capital Short Term High Yield Bond ETF,State Street SPDR,SPDR,2012-03-15,0.4,Bond,,,,,,,,,,etf_list
+SKF,UltraShort Financials,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+SKOR,IQ South Korea Small Cap ETF,IndexIQ,IndexIQ,2010-04-14,0.79,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+SKYY,ISE Cloud Computing Index Fund,First Trust,First Trust,2011-07-05,0.6,Equity,,Global,,,,,,,,etf_list
+SLQD,iShares 0-5 Year Investment Grade Corporate Bond ETF,iShares,iShares,2013-10-15,0.06,Fixed Income,,North America,,,,,,,,both
+SLV,iShares Silver Trust,iShares,iShares,2006-04-21,0.5,Commodity,,Global,,,,,,,,both
+SLVO,Silver Shares Covered Call ETN,Credit Suisse,Credit Suisse,2013-04-17,0.65,Commodity,,,,,,,,,,etf_list
+SLVP,iShares MSCI Global Silver and Metals Miners ETF,iShares,iShares,2012-01-31,0.39,Equity,,Global,,,,,,,,both
+SLX,Market Vectors Steel Index ETF Fund,Van Eck,VanEck,2006-10-10,0.55,Equity,,Global,,,,,,,,etf_list
+SLY,SPDR S&P 600 Small Cap ETF,State Street SPDR,SPDR,2005-08-11,0.2,Equity,,North America,,,,,,,,etf_list
+SLYG,SPDR S&P 600 Small Cap Growth ETF,State Street SPDR,SPDR,2000-09-25,0.25,Equity,,North America,,,,,,,,etf_list
+SLYV,SPDR S&P 600 Small Cap Value ETF,State Street SPDR,SPDR,2000-09-25,0.25,Equity,,North America,,,,,,,,etf_list
+SMAX,iShares Large Cap Max Buffer Sep ETF,iShares,iShares,2024-09-30,0.53,Equity,,North America,,,,,,,,ishares_list
+SMB,Market Vectors Short Municipal Index ETF,Van Eck,VanEck,2008-02-22,0.2,Bond,,,,,,,,,,etf_list
+SMDD,UltraPro Short MidCap400,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+SMDV,Small & Mid Cap Defensive Value ETF,Russell,Russell,tag not found,0.45,Equity,,North America,,,,,,,,etf_list
+SMH,Market Vectors Semiconductor ETF,Van Eck,VanEck,2011-12-20,0.35,Equity,,North America,,,,,,,,etf_list
+SMIN,iShares MSCI India Small-Cap ETF,iShares,iShares,2012-02-08,0.75,Equity,,Asia Pacific,,,,,,,,both
+SMLF,iShares U.S. Small-Cap Equity Factor ETF,iShares,iShares,2015-04-28,0.15,Equity,,North America,,,,,,,,ishares_list
+SMLV,SPDR Russell 2000 Low Volatility ETF,State Street SPDR,SPDR,2013-02-20,0.25,Equity,,North America,,,,,,,,etf_list
+SMMD,iShares Russell 2500 ETF,iShares,iShares,2017-07-06,0.23,Equity,,North America,,,,,,,,ishares_list
+SMMU,Short Term Municipal Bond Strategy Fund,PIMCO,PIMCO,2010-02-01,0.35,Bond,,North America,,,,,,,,etf_list
+SMMV,iShares MSCI USA Small-Cap Min Vol Factor ETF,iShares,iShares,2016-09-07,0.2,Equity,,North America,,,,,,,,ishares_list
+SMN,UltraShort Basic Materials,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+SNLN,Pyxis/iBoxx Senior Loan ETF,Pyxis,Pyxis,2012-11-07,0.55,Bond,,,,,,,,,,etf_list
+SOCL,Social Media Index ETF,Global X,Global X,2011-11-15,0.65,Equity,,Global,,,,,,,,etf_list
+SOXL,Daily Semiconductor Bull 3x Shares,Direxion,Direxion,2010-03-11,0.95,Equity,,North America,,,,,,,,etf_list
+SOXX,iShares Semiconductor ETF,iShares,iShares,2001-07-10,0.34,Equity,,North America,,,,,,,,ishares_list
+STEN,iShares Large Cap 10% Target Buffer Sep ETF,iShares,iShares,2025-09-30,0.53,Equity,,North America,,,,,,,,ishares_list
+STIP,iShares 0-5 Year TIPS Bond ETF,iShares,iShares,2010-12-01,0.03,Fixed Income,,North America,,,,,,,,ishares_list
+SUB,iShares Short-Term National Muni Bond ETF,iShares,iShares,2008-11-05,0.07,Fixed Income,,North America,,,,,,,,ishares_list
+SUSA,iShares ESG Optimized MSCI USA ETF,iShares,iShares,2005-01-24,0.25,Equity,,North America,,,,,,,,ishares_list
+SUSB,iShares ESG Aware 1-5 Year USD Corporate Bond ETF,iShares,iShares,2017-07-11,0.12,Fixed Income,,North America,,,,,,,,ishares_list
+SUSC,iShares ESG Aware USD Corporate Bond ETF,iShares,iShares,2017-07-11,0.18,Fixed Income,,North America,,,,,,,,ishares_list
+SUSL,iShares ESG MSCI USA Leaders ETF,iShares,iShares,2019-05-07,0.1,Equity,,North America,,,,,,,,ishares_list
+SVAL,iShares US Small Cap Value Factor ETF,iShares,iShares,2020-10-27,0.2,Equity,,North America,,,,,,,,ishares_list
+SYSB,iShares Systematic Bond ETF,iShares,iShares,2015-02-24,0.25,Fixed Income,,North America,,,,,,,,ishares_list
+TAGS,Agricultural Fund,Teucrium,Teucrium,2012-03-28,0.32,Commodity,,,,,,,,,,etf_list
+TAN,Solar ETF,Guggenheim,Guggenheim,2008-04-15,0.65,Equity,,Global,,,,,,,,etf_list
+TBF,Short 20+ Year Treasury,ProShares,ProShares,2009-08-18,0.95,Bond,,,,,,,,,,etf_list
+TBT,UltraShort Barclays 20+ Year Treasury,ProShares,ProShares,2008-04-29,0.95,Bond,,,,,,,,,,etf_list
+TBX,Short 7-10 Year Treasury,ProShares,ProShares,2011-04-05,0.95,Bond,,,,,,,,,,etf_list
+TCHI,iShares MSCI China Multisector Tech ETF,iShares,iShares,2022-01-25,0.59,Equity,,Asia Pacific,,,,,,,,both
+TDD,db-X 2010 Target Date Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2007-10-01,0.65,Multi-Asset,,Global,,,,,,,,etf_list
+TDIV,NASDAQ Technology Dividend Index Fund,First Trust,First Trust,2012-08-14,0.5,Equity,,North America,,,,,,,,etf_list
+TDTF,iBoxx 5-Year Target Duration TIPS Index Fund,FlexShares,FlexShares,2011-09-22,0.2,Bond,,North America,,,,,,,,etf_list
+TDTT,iBoxx 3-Year Target Duration TIPS Index Fund,FlexShares,FlexShares,2011-09-22,0.2,Bond,,North America,,,,,,,,etf_list
+TDV,db-X 2040 Target Date Fund,Deutsche Asset &amp; Wealth Management,Deutsche Asset &amp; Wealth Management,2007-10-01,0.65,Multi-Asset,,Global,,,,,,,,etf_list
+TECB,iShares U.S. Tech Breakthrough Multisector ETF,iShares,iShares,2020-01-08,0.3,Equity,,North America,,,,,,,,ishares_list
+TECL,Daily Technology Bull 3x Shares,Direxion,Direxion,2008-12-17,0.95,Equity,,North America,,,,,,,,etf_list
+TECS,Daily Technology Bear 3x Shares,Direxion,Direxion,2008-12-17,0.95,Equity,,North America,,,,,,,,etf_list
+TEK,iShares Technology Opportunities Active ETF,iShares,iShares,2024-10-21,0.77,Equity,,Global,,,,,,,,ishares_list
+TEND,iShares Large Cap 10% Target Buffer Dec ETF,iShares,iShares,2025-10-07,0.53,Equity,,North America,,,,,,,,ishares_list
+TENJ,iShares Large Cap 10% Target Buffer Jun ETF,iShares,iShares,2025-10-21,0.53,Equity,,North America,,,,,,,,ishares_list
+TENM,iShares Large Cap 10% Target Buffer Mar ETF,iShares,iShares,2025-10-21,0.53,Equity,,North America,,,,,,,,ishares_list
+TEXN,iShares Texas Equity ETF,iShares,iShares,2025-06-23,0.2,Equity,,North America,,,,,,,,ishares_list
+TFI,SPDR Barclays Municipal Bond,State Street SPDR,SPDR,2007-09-11,0.2,Bond,,,,,,,,,,etf_list
+TFLO,iShares Treasury Floating Rate Bond ETF,iShares,iShares,2014-02-03,0.15,Fixed Income,,North America,,,,,,,,ishares_list
+TGR,Target Date Retirement Income ETF,iShares,iShares,2008-11-04,0.29,Multi-Asset,,Global,,,,,,,,etf_list
+THD,iShares MSCI Thailand ETF,iShares,iShares,2008-03-26,0.59,Equity,,Asia Pacific,,,,,,,,both
+THHY,Market Vectors Treasury-Hedged High Yield Bond ETF,Van Eck,VanEck,2013-03-21,1.45,Bond,,,,,,,,,,etf_list
+THRO,iShares U.S. Thematic Rotation Active ETF,iShares,iShares,2021-12-14,0.57,Equity,,North America,,,,,,,,ishares_list
+TILT,Morningstar US Market Factor Tilt Index Fund,FlexShares,FlexShares,2011-09-22,0.27,Equity,,North America,,,,,,,,etf_list
+TIP,iShares TIPS Bond ETF,iShares,iShares,2003-12-04,0.18,Fixed Income,,North America,,,,,,,,both
+TIPX,SPDR Barclays 1-10 Year TIPS ETF,State Street SPDR,SPDR,2013-05-30,0.15,Bond,,,,,,,,,,etf_list
+TIPZ,Broad U.S. TIPS Index Fund,PIMCO,PIMCO,2009-09-03,0.2,Bond,,,,,,,,,,etf_list
+TLH,iShares 10-20 Year Treasury Bond ETF,iShares,iShares,2007-01-05,0.15,Fixed Income,,North America,,,,,,,,both
+TLO,SPDR Barclays Long Term Treasury ETF,State Street SPDR,SPDR,2007-05-23,0.13,Bond,,,,,,,,,,etf_list
+TLT,iShares 20+ Year Treasury Bond ETF,iShares,iShares,2002-07-22,0.15,Fixed Income,,North America,,,,,,,,both
+TLTD,Morningstar Developed Markets ex-US Factor Tilt Index Fund,FlexShares,FlexShares,2012-09-28,0.42,Equity,,Developed Markets,,,,,,,,etf_list
+TLTE,Morningstar Emerging Markets Factor Tilt Index Fund,FlexShares,FlexShares,2012-09-28,0.65,Equity,,Emerging Markets,,,,,,,,etf_list
+TLTW,iShares 20+ Year Treasury Bond BuyWrite Strategy ETF,iShares,iShares,2022-08-18,0.35,Fixed Income,,North America,,,,,,,,ishares_list
+TMET,iShares Transition-Enabling Metals ETF,iShares,iShares,2023-09-26,0.49,Commodity,,Global,,,,,,,,ishares_list
+TMF,Daily 20 Year Plus Treasury Bull 3x Shares,Direxion,Direxion,2009-04-16,0.95,Bond,,,,,,,,,,etf_list
+TMV,Daily 20 Year Plus Treasury Bear 3x Shares,Direxion,Direxion,2009-04-16,0.95,Bond,,,,,,,,,,etf_list
+TMW,SPDR DJ Wilshire Total Market ETF,State Street SPDR,SPDR,2000-10-04,0.2,Equity,,North America,,,,,,,,etf_list
+TNA,Daily Small Cap Bull 3X Shares,Direxion,Direxion,2008-11-05,0.95,Equity,,North America,,,,,,,,etf_list
+TOK,iShares MSCI Kokusai ETF,iShares,iShares,2007-12-10,0.25,Equity,,Global,,,,,,,,both
+TOPC,iShares S&P 500 3% Capped ETF,iShares,iShares,2025-04-15,0.15,Equity,,North America,,,,,,,,ishares_list
+TOPT,iShares Top 20 U.S. Stocks ETF,iShares,iShares,2024-10-23,0.2,Equity,,North America,,,,,,,,ishares_list
+TQQQ,UltraPro QQQ,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+TRND,US Large Cap Trendpilot ETN,RBS,RBS,2010-12-08,1.0,Equity,,North America,,,,,,,,etf_list
+TRSY,Broad U.S. Treasury Index Fund,PIMCO,PIMCO,2010-11-02,0.15,Bond,,,,,,,,,,etf_list
+TTT,UltraPro Short 20+ Year Treasury,ProShares,ProShares,2012-03-27,0.95,Bond,,,,,,,,,,etf_list
+TUR,iShares MSCI Turkey ETF,iShares,iShares,2008-03-26,0.59,Equity,,Europe,,,,,,,,both
+TVIX,Daily 2x VIX Short-Term ETN,VelocityShares,VelocityShares,2010-11-29,1.65,Alternatives,,North America,,,,,,,,etf_list
+TWM,UltraShort Russell2000,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+TWOX,iShares Large Cap Accelerated Outcome ETF,iShares,iShares,2025-01-15,0.53,Equity,,North America,,,,,,,,ishares_list
+TWQ,UltraShort Russell3000,ProShares,ProShares,2009-06-30,0.95,Equity,,North America,,,,,,,,etf_list
+TYD,Daily 7-10 Year Treasury Bull 3x Shares,Direxion,Direxion,2009-04-16,0.95,Bond,,,,,,,,,,etf_list
+TYO,Daily 7-10 Year Treasury Bear 3x Shares,Direxion,Direxion,2009-04-16,0.95,Bond,,,,,,,,,,etf_list
+TZA,Daily Small Cap Bear 3X Shares,Direxion,Direxion,2008-11-05,0.95,Equity,,North America,,,,,,,,etf_list
+UAE,iShares MSCI UAE ETF,iShares,iShares,2014-04-29,0.6,Equity,,Middle East and Africa,,,,,,,,ishares_list
+UBR,Ultra MSCI Brazil,ProShares,ProShares,2010-04-27,0.95,Equity,,Latin America,,,,,,,,etf_list
+UBT,Ultra 20+ Year Treasury,ProShares,ProShares,2010-01-19,0.95,Bond,,North America,,,,,,,,etf_list
+UCC,Ultra Consumer Services,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+UCO,Ultra DJ-UBS Crude Oil,ProShares,ProShares,2008-11-24,0.95,Commodity,,,,,,,,,,etf_list
+UDN,DB USD Index Bearish,Invesco PowerShares,Invesco,2007-02-20,0.5,Currency,,,,,,,,,,etf_list
+UDOW,UltraPro Dow30,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+UGA,United States Gasoline Fund LP,US Commodity Funds,US Commodity Funds,2008-02-26,0.6,Commodity,,,,,,,,,,etf_list
+UGAZ,3x Long Natural Gas ETN,VelocityShares,VelocityShares,2012-02-08,1.65,Commodity,,,,,,,,,,etf_list
+UGE,Ultra Consumer Goods,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+UGL,Ultra Gold,ProShares,ProShares,2008-12-01,0.95,Commodity,,,,,,,,,,etf_list
+UGLD,3x Long Gold ETN,VelocityShares,VelocityShares,2011-10-17,1.35,Commodity,,,,,,,,,,etf_list
+UINF,UltraPro 10 Year TIPS/TSY Spread,ProShares,ProShares,2012-02-08,0.75,Alternatives,,,,,,,,,,etf_list
+UJB,Ultra High Yield,ProShares,ProShares,2011-04-14,0.95,Bond,,,,,,,,,,etf_list
+UKF,Ultra Russell1000 Growth,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+UKK,Ultra Russell2000 Growth,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+UKW,Ultra Russell MidCap Growth,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+ULE,Ultra Euro,ProShares,ProShares,2008-11-24,0.95,Currency,,,,,,,,,,etf_list
+ULST,SPDR SSgA Ultra Short Term Bond ETF,State Street SPDR,SPDR,2013-10-09,0.2,Bond,,,,,,,,,,etf_list
+UMDD,UltraPro MidCap400,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+UNG,United States Natural Gas Fund LP,US Commodity Funds,US Commodity Funds,2007-04-18,0.6,Commodity,,,,,,,,,,etf_list
+UNL,United States 12 Month Natural Gas Fund,US Commodity Funds,US Commodity Funds,2009-11-18,0.75,Commodity,,,,,,,,,,etf_list
+UPRO,UltraPro S&P 500,ProShares,ProShares,2009-06-23,0.95,Equity,,North America,,,,,,,,etf_list
+UPV,Ultra MSCI Europe,ProShares,ProShares,2010-04-27,0.95,Equity,,Developed Europe,,,,,,,,etf_list
+UPW,Ultra Utilities,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+URA,Uranium ETF,Global X,Global X,2010-11-05,0.69,Equity,,Global,,,,,,,,etf_list
+URE,Ultra Real Estate,ProShares,ProShares,2007-01-30,0.95,Real Estate,,North America,,,,,,,,etf_list
+URTH,iShares MSCI World ETF,iShares,iShares,2012-01-10,0.24,Equity,,Global,,,,,,,,both
+URTY,UltraPro Russell2000,ProShares,ProShares,2010-02-09,0.95,Equity,,North America,,,,,,,,etf_list
+USCI,United States Commodity Index Fund,US Commodity Funds,US Commodity Funds,2010-08-10,0.95,Commodity,,,,,,,,,,etf_list
+USCL,iShares Climate Conscious & Transition MSCI USA ETF,iShares,iShares,2023-06-06,0.08,Equity,,North America,,,,,,,,ishares_list
+USD,Ultra Semiconductors,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+USDU,Bloomberg U.S. Dollar Bullish Fund,WisdomTree,WisdomTree,2013-12-18,0.5,Currency,,,,,,,,,,etf_list
+USHY,iShares Broad USD High Yield Corporate Bond ETF,iShares,iShares,2017-10-25,0.08,Fixed Income,,North America,,,,,,,,ishares_list
+USIG,iShares Broad USD Investment Grade Corporate Bond ETF,iShares,iShares,2007-01-05,0.04,Fixed Income,,North America,,,,,,,,ishares_list
+USL,United States 12 Month Oil,US Commodity Funds,US Commodity Funds,2007-12-06,0.6,Commodity,,,,,,,,,,etf_list
+USLV,3x Long Silver ETN,VelocityShares,VelocityShares,2011-10-17,1.65,Commodity,,,,,,,,,,etf_list
+USMI,United States Metals Index Fund,US Commodity Funds,US Commodity Funds,2012-06-19,0.7,Commodity,,,,,,,,,,etf_list
+USMV,iShares MSCI USA Min Vol Factor ETF,iShares,iShares,2011-10-18,0.15,Equity,,North America,,,,,,,,both
+USO,United States Oil Fund,US Commodity Funds,US Commodity Funds,2006-04-10,0.45,Commodity,,,,,,,,,,etf_list
+USRT,iShares Core U.S. REIT ETF,iShares,iShares,2007-05-01,0.08,Real Estate,,North America,,,,,,,,ishares_list
+UST,Ultra 7-10 Year Treasury,ProShares,ProShares,2010-01-19,0.95,Bond,,North America,,,,,,,,etf_list
+USXF,iShares ESG Advanced MSCI USA ETF,iShares,iShares,2020-06-16,0.1,Equity,,North America,,,,,,,,ishares_list
+UUP,DB USD Index Bullish,Invesco PowerShares,Invesco,2007-02-20,0.5,Currency,,,,,,,,,,etf_list
+UVG,Ultra Russell1000 Value,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+UVU,Ultra Russell MidCap Value,ProShares,ProShares,2007-02-20,0.95,Equity,,North America,,,,,,,,etf_list
+UVXY,Ultra VIX Short-Term Futures ETF,ProShares,ProShares,2011-10-04,0.95,Alternatives,,,,,,,,,,etf_list
+UWC,Ultra Russell3000,ProShares,ProShares,2009-06-30,0.95,Equity,,North America,,,,,,,,etf_list
+UWM,Ultra Russell2000,ProShares,ProShares,2007-01-23,0.95,Equity,,North America,,,,,,,,etf_list
+UXI,Ultra Industrials,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+UYG,Ultra Financials,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+UYM,Ultra Basic Materials,ProShares,ProShares,2007-01-30,0.95,Equity,,North America,,,,,,,,etf_list
+VAW,Materials ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VB,Small-Cap ETF,Vanguard,Vanguard,2004-01-26,0.1,Equity,,North America,,,,,,,,etf_list
+VBK,Small-Cap Growth ETF,Vanguard,Vanguard,2004-01-26,0.1,Equity,,North America,,,,,,,,etf_list
+VBR,Small-Cap Value ETF,Vanguard,Vanguard,2004-01-26,0.21,Equity,,North America,,,,,,,,etf_list
+VCIT,Intermediate-Term Corporate Bond Index Fund,Vanguard,Vanguard,2009-11-23,0.12,Bond,,North America,,,,,,,,etf_list
+VCLT,Long-Term Corporate Bond Index Fund,Vanguard,Vanguard,2009-11-23,0.12,Bond,,North America,,,,,,,,etf_list
+VCR,Consumer Discretion ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VCSH,Short-Term Corporate Bond Index Fund,Vanguard,Vanguard,2009-11-23,0.12,Bond,,North America,,,,,,,,etf_list
+VDC,Consumer Staples ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VDE,Energy ETF,Vanguard,Vanguard,2004-09-23,0.14,Equity,,North America,,,,,,,,etf_list
+VEA,Europe Pacific,Vanguard,Vanguard,2007-07-20,0.12,Equity,,Developed Markets,,,,,,,,etf_list
+VEGA,STAR Global Buy-Write ETF,AdvisorShares,AdvisorShares,2012-09-17,2.01,Alternatives,,,,,,,,,,etf_list
+VEGI,iShares MSCI Agriculture Producers ETF,iShares,iShares,2012-01-31,0.39,Equity,,Global,,,,,,,,both
+VEU,FTSE All World Ex US ETF,Vanguard,Vanguard,2007-03-02,0.15,Equity,,Global ex-U.S.,,,,,,,,etf_list
+VFH,Financials ETF,Vanguard,Vanguard,2004-01-26,0.19,Equity,,North America,,,,,,,,etf_list
+VGIT,Intermediate-Term Government Bond Index Fund,Vanguard,Vanguard,2009-11-23,0.12,Bond,,North America,,,,,,,,etf_list
+VGK,FTSE Europe ETF,Vanguard,Vanguard,2005-03-04,0.12,Equity,,Developed Europe,,,,,,,,etf_list
+VGLT,Long-Term Government Bond Index Fund,Vanguard,Vanguard,2009-11-24,0.12,Bond,,North America,,,,,,,,etf_list
+VGSH,Short-Term Government Bond Index Fund,Vanguard,Vanguard,2009-11-23,0.14,Bond,,North America,,,,,,,,etf_list
+VGT,Information Tech ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VHT,Health Care ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VIDI,International Equity Fund,Vident Financial,Vident Financial,2013-10-29,0.75,Equity,,Global ex-U.S.,,,,,,,,etf_list
+VIG,Dividend Appreciation ETF,Vanguard,Vanguard,2006-04-21,0.1,Equity,,North America,,,,,,,,etf_list
+VIIX,VIX Short-Term ETN,VelocityShares,VelocityShares,2010-11-29,0.89,Alternatives,,North America,,,,,,,,etf_list
+VIOG,S&P Small-Cap 600 Growth ETF,Vanguard,Vanguard,2010-09-07,0.2,Equity,,North America,,,,,,,,etf_list
+VIOO,S&P Small-Cap 600 ETF,Vanguard,Vanguard,2010-09-07,0.17,Equity,,North America,,,,,,,,etf_list
+VIOV,S&P Small-Cap 600 Value ETF,Vanguard,Vanguard,2010-09-07,0.24,Equity,,North America,,,,,,,,etf_list
+VIS,Industrials ETF,Vanguard,Vanguard,2004-09-23,0.14,Equity,,North America,,,,,,,,etf_list
+VIXM,VIX Mid-Term Futures ETF,ProShares,ProShares,2011-01-03,0.85,Alternatives,,,,,,,,,,etf_list
+VIXY,VIX Short-Term Futures ETF,ProShares,ProShares,2011-01-03,0.85,Alternatives,,,,,,,,,,etf_list
+VLAT,Direxion S&P Latin America 40 RC Volatility Response Shares,Direxion,Direxion,2012-01-11,0.45,Equity,,Latin America,,,,,,,,etf_list
+VLU,SPDR S&P 1500 Value Tilt ETF,State Street SPDR,SPDR,2012-10-24,0.35,Equity,,North America,,,,,,,,etf_list
+VLUE,iShares MSCI USA Value Factor ETF,iShares,iShares,2013-04-16,0.15,Equity,,North America,,,,,,,,both
+VMBS,Mortgage-Backed Securities Index Fund,Vanguard,Vanguard,2009-11-23,0.12,Bond,,North America,,,,,,,,etf_list
+VNM,Market Vectors Vietnam ETF,Van Eck,VanEck,2009-08-11,0.76,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+VNQ,REIT ETF,Vanguard,Vanguard,2004-09-23,0.1,Real Estate,,North America,,,,,,,,etf_list
+VNQI,Global ex-U.S. Real Estate Index Fund,Vanguard,Vanguard,2010-11-01,0.32,Real Estate,,Global ex-U.S.,,,,,,,,etf_list
+VO,Mid-Cap ETF,Vanguard,Vanguard,2004-01-26,0.1,Equity,,North America,,,,,,,,etf_list
+VOE,Mid-Cap Value ETF,Vanguard,Vanguard,2006-08-17,0.1,Equity,,North America,,,,,,,,etf_list
+VONE,Russell 1000 ETF,Vanguard,Vanguard,2010-09-20,0.12,Equity,,North America,,,,,,,,etf_list
+VONG,Russell 1000 Growth ETF,Vanguard,Vanguard,2010-09-16,0.15,Equity,,North America,,,,,,,,etf_list
+VONV,Russell 1000 Value ETF,Vanguard,Vanguard,2010-09-16,0.15,Equity,,North America,,,,,,,,etf_list
+VOO,S&P 500 ETF,Vanguard,Vanguard,2010-09-07,0.05,Equity,,North America,,,,,,,,etf_list
+VOOG,S&P 500 Growth ETF,Vanguard,Vanguard,2010-09-07,0.15,Equity,,North America,,,,,,,,etf_list
+VOOV,S&P 500 Value ETF,Vanguard,Vanguard,2010-09-07,0.15,Equity,,North America,,,,,,,,etf_list
+VOT,Mid-Cap Growth ETF,Vanguard,Vanguard,2006-08-17,0.1,Equity,,North America,,,,,,,,etf_list
+VOX,Telecom ETF,Vanguard,Vanguard,2004-09-23,0.14,Equity,,North America,,,,,,,,etf_list
+VPL,FTSE Pacific ETF,Vanguard,Vanguard,2005-03-04,0.12,Equity,,Developed Asia Pacific,,,,,,,,etf_list
+VPU,Utilities ETF,Vanguard,Vanguard,2004-01-26,0.14,Equity,,North America,,,,,,,,etf_list
+VSS,FTSE All-World ex-US Small Cap Index ETF,Vanguard,Vanguard,2009-04-02,0.25,Equity,,Global ex-U.S.,,,,,,,,etf_list
+VT,Total World Stock Index ETF,Vanguard,Vanguard,2008-06-24,0.19,Equity,,Global,,,,,,,,etf_list
+VTHR,Russell 3000 ETF,Vanguard,Vanguard,2010-09-16,0.15,Equity,,North America,,,,,,,,etf_list
+VTI,Total Stock Market ETF,Vanguard,Vanguard,2001-05-24,0.05,Equity,,North America,,,,,,,,etf_list
+VTIP,Short-Term Inflation-Protected Securities Index Fund,Vanguard,Vanguard,2012-10-16,0.1,Bond,,North America,,,,,,,,etf_list
+VTV,Value ETF,Vanguard,Vanguard,2004-01-26,0.1,Equity,,North America,,,,,,,,etf_list
+VTWG,Russell 2000 Growth ETF,Vanguard,Vanguard,2010-09-20,0.2,Equity,,North America,,,,,,,,etf_list
+VTWO,Russell 2000 ETF,Vanguard,Vanguard,2010-09-20,0.21,Equity,,North America,,,,,,,,etf_list
+VTWV,Russell 2000 Value ETF,Vanguard,Vanguard,2010-09-16,0.32,Equity,,North America,,,,,,,,etf_list
+VUG,Growth ETF,Vanguard,Vanguard,2004-01-26,0.1,Equity,,North America,,,,,,,,etf_list
+VV,Large-Cap ETF,Vanguard,Vanguard,2004-01-27,0.1,Equity,,North America,,,,,,,,etf_list
+VWO,Emerging Markets ETF,Vanguard,Vanguard,2005-03-04,0.18,Equity,,Emerging Markets,,,,,,,,etf_list
+VWOB,Emerging Markets Government Bond ETF,Vanguard,Vanguard,2013-06-04,0.35,Bond,,,,,,,,,,etf_list
+VXF,Extended Market ETF,Vanguard,Vanguard,2001-12-27,0.14,Equity,,North America,,,,,,,,etf_list
+VXUS,Total International Stock ETF,Vanguard,Vanguard,2011-01-27,0.16,Equity,,Global ex-U.S.,,,,,,,,etf_list
+VXX,S&P 500 VIX Short-Term Futures ETN,Barclays iPath,Barclays iPath,2009-01-29,0.89,Alternatives,,North America,,,,,,,,etf_list
+VXZ,S&P 500 VIX Mid-Term Futures ETN,Barclays iPath,Barclays iPath,2009-01-29,0.89,Alternatives,,North America,,,,,,,,etf_list
+VYM,High Dividend Yield ETF,Vanguard,Vanguard,2006-11-10,0.1,Equity,,North America,,,,,,,,etf_list
+WDIV,SPDR S&P Global Dividend ETF,State Street SPDR,SPDR,2013-05-30,0.4,Equity,,,,,,,,,,etf_list
+WEAT,Wheat Fund,Teucrium,Teucrium,2011-09-19,1.0,Commodity,,,,,,,,,,etf_list
+WIP,SPDR DB International Government Inflation-Protected Bond ETF,State Street SPDR,SPDR,2008-03-13,0.5,Bond,,,,,,,,,,etf_list
+WOOD,iShares Global Timber & Forestry ETF,iShares,iShares,2008-06-24,0.4,Equity,,Global,,,,,,,,both
+WPS,International Developed Property ETF,iShares,iShares,2007-07-30,0.48,Real Estate,,Global ex-U.S.,,,,,,,,etf_list
+WSML,iShares MSCI World Small-Cap ETF,iShares,iShares,2025-04-01,0.3,Equity,,Global,,,,,,,,ishares_list
+XAR,SPDR S&P Aerospace & Defense ETF,State Street SPDR,SPDR,2011-09-29,0.35,Equity,,North America,,,,,,,,etf_list
+XBI,SPDR S&P Biotech ETF,State Street SPDR,SPDR,2006-01-31,0.35,Equity,,North America,,,,,,,,etf_list
+XES,SPDR S&P Oil & Gas Equip & Service,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+XHB,SPDR Homebuilders ETF,State Street SPDR,SPDR,2006-01-31,0.35,Equity,,North America,,,,,,,,etf_list
+XHE,SPDR S&P Health Care Equipment ETF,State Street SPDR,SPDR,2011-01-26,0.35,Equity,,North America,,,,,,,,etf_list
+XHS,SPDR S&P Health Care Services ETF,State Street SPDR,SPDR,2011-09-29,0.35,Equity,,North America,,,,,,,,etf_list
+XJH,iShares ESG Select Screened S&P Mid-Cap ETF,iShares,iShares,2020-09-22,0.12,Equity,,North America,,,,,,,,ishares_list
+XJR,iShares ESG Select Screened S&P Small-Cap ETF,iShares,iShares,2020-09-22,0.12,Equity,,North America,,,,,,,,ishares_list
+XLB,Materials Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLBS,S&P SmallCap Materials Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLE,Energy Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLES,S&P SmallCap Energy Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLF,Financial Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLG,Russell Top 50 ETF,Guggenheim,Guggenheim,2005-05-04,0.2,Equity,,North America,,,,,,,,etf_list
+XLI,Industrial Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLIS,S&P SmallCap Industrials Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLK,Technology Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLKS,S&P SmallCap Information Technology Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLP,Consumer Staples Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLPS,S&P SmallCap Consumer Staples Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLU,Utilities Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLUS,S&P SmallCap Utilities Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLV,Health Care Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLVS,S&P SmallCap Health Care Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XLY,Consumer Discretionary Select Sector SPDR,State Street SPDR,SPDR,1998-12-16,0.18,Equity,,North America,,,,,,,,etf_list
+XLYS,S&P SmallCap Consumer Discretionary Portfolio,Invesco PowerShares,Invesco,2010-04-07,0.29,Equity,,North America,,,,,,,,etf_list
+XME,SPDR S&P Metals & Mining ETF,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+XMLV,S&P MidCap Low Volatility Portfolio,Invesco PowerShares,Invesco,2013-02-15,0.25,Equity,,North America,,,,,,,,etf_list
+XMPT,Market Vectors CEF Municipal Income ETF,Van Eck,VanEck,2011-07-13,1.67,Bond,,North America,,,,,,,,etf_list
+XOEF,iShares S&P 500 ex S&P 100 ETF,iShares,iShares,2025-07-08,0.2,Equity,,North America,,,,,,,,ishares_list
+XOP,SPDR S&P Oil & Gas Explor & Product,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+XPH,SPDR S&P Pharmaceuticals ETF,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+XPP,Ultra FTSE/Xinhua China 25,ProShares,ProShares,2009-06-04,0.95,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+XRT,SPDR S&P Retail ETF,State Street SPDR,SPDR,2006-06-19,0.35,Equity,,North America,,,,,,,,etf_list
+XSD,SPDR S&P Semiconductor ETF,State Street SPDR,SPDR,2006-01-31,0.35,Equity,,North America,,,,,,,,etf_list
+XSLV,S&P SmallCap Low Volatility Portfolio,Invesco PowerShares,Invesco,2013-02-15,0.25,Equity,,North America,,,,,,,,etf_list
+XSW,SPDR S&P Software & Services ETF,State Street SPDR,SPDR,2011-09-29,0.35,Equity,,North America,,,,,,,,etf_list
+XT,iShares Future Exponential Technologies ETF,iShares,iShares,2015-03-19,0.46,Equity,,Global,,,,,,,,ishares_list
+XTL,SPDR S&P Telecom ETF,State Street SPDR,SPDR,2011-01-26,0.35,Equity,,North America,,,,,,,,etf_list
+XTN,SPDR S&P Transportation ETF,State Street SPDR,SPDR,2011-01-26,0.35,Equity,,North America,,,,,,,,etf_list
+XVV,iShares ESG Select Screened S&P 500 ETF,iShares,iShares,2020-09-22,0.08,Equity,,North America,,,,,,,,ishares_list
+YANG,Daily China Bear 3x Shares,Direxion,Direxion,2009-12-03,0.95,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+YCL,Ultra Yen,ProShares,ProShares,2008-11-24,0.95,Currency,,,,,,,,,,etf_list
+YCS,UltraShort Yen,ProShares,ProShares,2008-11-24,0.95,Currency,,,,,,,,,,etf_list
+YINN,Daily China Bull 3x Shares,Direxion,Direxion,2009-12-03,0.95,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+YMLP,Yorkville High Income MLP ETF,Exchange Traded Concepts,Exchange Traded Concepts,2012-03-13,0.82,Equity,,North America,,,,,,,,etf_list
+YXI,Short FTSE/Xinhua China,ProShares,ProShares,2010-03-16,0.95,Equity,,Emerging Asia Pacific,,,,,,,,etf_list
+YYY,High Income ETF,YieldShares,YieldShares,2013-06-21,1.65,Multi-Asset,,,,,,,,,,etf_list
+ZIV,Daily Inverse VIX Medium-Term ETN,VelocityShares,VelocityShares,2010-11-29,1.35,Alternatives,,North America,,,,,,,,etf_list
+ZROZ,25+ Year Zero Coupon U.S. Treasury Index Fund,PIMCO,PIMCO,2009-10-30,0.15,Bond,,North America,,,,,,,,etf_list
+ZSL,UltraShort Silver,ProShares,ProShares,2008-12-01,0.95,Commodity,,,,,,,,,,etf_list

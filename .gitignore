@@ -13,12 +13,12 @@ __pycache__/
 .coverage
 
 # Data and artifacts
-data/raw/*
-data/curated/*
-data/snapshots/*
-artifacts/*
-!data/**/README.md
-!artifacts/README.md
+#data/raw/*
+#data/curated/*
+#data/snapshots/*
+#artifacts/*
+#!data/**/README.md
+#!artifacts/README.md
 
 # Notebooks
 .ipynb_checkpoints/

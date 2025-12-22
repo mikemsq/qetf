@@ -1,0 +1,29 @@
+{
+  "last_full_download": {
+    "max_tickers": null,
+    "out_dir": "data/raw/prices/stooq",
+    "rows_written": 1293277,
+    "run_at": "2025-12-22T00:11:45+00:00",
+    "start": "1990-01-01",
+    "suffix": ".us",
+    "tickers_failed": 0,
+    "tickers_no_data": 856,
+    "tickers_ok": 400,
+    "tickers_total": 1256,
+    "universe": "data/curated/etf_universe.csv"
+  },
+  "last_full_download_at": "2025-12-22T00:11:45+00:00",
+  "last_run": {
+    "max_tickers": null,
+    "out_dir": "data/raw/prices/stooq",
+    "rows_written": 1293277,
+    "run_at": "2025-12-22T00:11:45+00:00",
+    "start": "1990-01-01",
+    "suffix": ".us",
+    "tickers_failed": 0,
+    "tickers_no_data": 856,
+    "tickers_ok": 400,
+    "tickers_total": 1256,
+    "universe": "data/curated/etf_universe.csv"
+  }
+}

@@ -1,0 +1,470 @@
+ticker,name,SEDOL,ISIN,CUSIP,inception_date,expense_ratio,Net Expense Ratio (%),net_assets,Net Assets as of,asset_class,sub_asset_class,region,market,location,investment_style
+IVV,iShares Core S&P 500 ETF,-,US4642872000,464287200,2000-05-15,0.03,0.03,732595553702.91,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+IEFA,iShares Core MSCI EAFE ETF,-,US46432F8427,46432F842,2012-10-18,0.07,0.07,160027235743.04,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+AGG,iShares Core U.S. Aggregate Bond ETF,-,US4642872265,464287226,2003-09-22,0.03,0.03,135383149234.16,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+IWF,iShares Russell 1000 Growth ETF,-,US4642876142,464287614,2000-05-22,0.18,0.18,125539363451.04,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IEMG,iShares Core MSCI Emerging Markets ETF,-,US46434G1031,46434G103,2012-10-18,0.09,0.09,116976575469.26,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+IJH,iShares Core S&P Mid-Cap ETF,-,US4642875078,464287507,2000-05-22,0.05,0.05,101402093900.49,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IJR,iShares Core S&P Small-Cap ETF,-,US4642878049,464287804,2000-05-22,0.06,0.06,87831925389.18,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+ITOT,iShares Core S&P Total U.S. Stock Market ETF,-,US4642871507,464287150,2004-01-20,0.03,0.03,80394685077.05,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IWM,iShares Russell 2000 ETF,-,US4642876555,464287655,2000-05-22,0.19,0.19,72480933964.77,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+IBIT,iShares Bitcoin Trust ETF,-,US46438F1012,46438F101,2024-01-05,0.25,0.25,70844288275.47,2025-11-28,Digital Assets,Cryptoassets,North America,Developed,United States,Index
+EFA,iShares MSCI EAFE ETF,-,US4642874659,464287465,2001-08-14,0.32,0.32,68552838468.59,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IWD,iShares Russell 1000 Value ETF,-,US4642875987,464287598,2000-05-22,0.18,0.18,68237467182.35,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IVW,iShares S&P 500 Growth ETF,-,US4642873099,464287309,2000-05-22,0.18,0.18,66754839217.06,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+IAU,iShares Gold Trust,BMDB791,US4642852044,464285204,2005-01-21,0.25,0.25,65205794852.51,2025-11-28,Commodity,Precious Metals,Global,Developed,Broad,Index
+SGOV,iShares 0-3 Month Treasury Bond ETF,-,US46436E7186,46436E718,2020-05-26,0.09,0.09,64673522313.5,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IXUS,iShares Core MSCI Total International Stock ETF,-,US46432F8344,46432F834,2012-10-18,0.07,0.07,51000524419.92,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+TLT,iShares 20+ Year Treasury Bond ETF,-,US4642874329,464287432,2002-07-22,0.15,0.15,49704599304.24,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+QUAL,iShares MSCI USA Quality Factor ETF,-,US46432F3394,46432F339,2013-07-16,0.15,0.15,48060630464.47,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IVE,iShares S&P 500 Value ETF,-,US4642874089,464287408,2000-05-22,0.18,0.18,47503525275.39,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+IWR,iShares Russell Mid-Cap ETF,-,US4642874998,464287499,2001-07-17,0.18,0.18,45937225075.52,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IWB,iShares Russell 1000 ETF,-,US4642876225,464287622,2000-05-15,0.15,0.15,45461156438.34,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IEF,iShares 7-10 Year Treasury Bond ETF,-,US4642874402,464287440,2002-07-22,0.15,0.15,45408036647.18,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+MUB,iShares National Muni Bond ETF,-,US4642884146,464288414,2007-09-07,0.05,0.05,41578877664.63,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+MBB,iShares MBS ETF,-,US4642885887,464288588,2007-03-13,0.04,0.04,39405548499.79,2025-11-28,Fixed Income,Mortgages,North America,Developed,United States,Index
+DGRO,iShares Core Dividend Growth ETF,-,US46434V6213,46434V621,2014-06-10,0.08,0.08,35740199355.7,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IUSB,iShares Core Universal USD Bond ETF,-,US46434V6130,46434V613,2014-06-10,0.07,0.06,33966858003.26,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+GOVT,iShares U.S. Treasury Bond ETF,-,US46429B2676,46429B267,2012-02-14,0.05,0.05,33452423464.95,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+LQD,iShares iBoxx $ Investment Grade Corporate Bond ETF,-,US4642872422,464287242,2002-07-22,0.14,0.14,33165789119.6,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+DYNF,iShares U.S. Equity Factor Rotation Active ETF,BJ9ZMT1,US09290C1036,09290C103,2019-03-19,0.26,0.26,29957094446.67,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Active
+OEF,iShares S&P 100 ETF,-,US4642871010,464287101,2000-10-23,0.2,0.2,29003820325.04,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+EFV,iShares MSCI EAFE Value ETF,-,US4642888774,464288877,2005-08-01,0.31,0.31,27099337724.42,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+SLV,iShares Silver Trust,-,US46428Q1094,46428Q109,2006-04-21,0.5,0.5,27047493981.68,2025-11-28,Commodity,Precious Metals,Global,Developed,Broad,Index
+IUSG,iShares Core S&P U.S. Growth ETF,-,US4642876712,464287671,2000-07-24,0.04,0.04,26180060363.29,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+USHY,iShares Broad USD High Yield Corporate Bond ETF,-,US46435U8532,46435U853,2017-10-25,0.08,0.08,25588694306.08,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+ACWI,iShares MSCI ACWI ETF,-,US4642882579,464288257,2008-03-26,0.32,0.32,24372374652.93,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IUSV,iShares Core S&P U.S. Value ETF,-,US4642876639,464287663,2000-07-24,0.04,0.04,24005896381.48,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+SHY,iShares 1-3 Year Treasury Bond ETF,-,US4642874576,464287457,2002-07-22,0.15,0.15,23862463056.94,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IDEV,iShares Core MSCI International Developed Markets ETF,-,US46435G3267,46435G326,2017-03-21,0.04,0.04,23672962205.33,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+USMV,iShares MSCI USA Min Vol Factor ETF,-,US46429B6974,46429B697,2011-10-18,0.15,0.15,22991057501.5,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IGSB,iShares 1-5 Year Investment Grade Corporate Bond ETF,-,US4642886463,464288646,2007-01-05,0.04,0.04,21844173395.93,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+DVY,iShares Select Dividend ETF,-,US4642871689,464287168,2003-11-03,0.38,0.38,20994333983.33,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IYW,iShares U.S. Technology ETF,-,US4642877215,464287721,2000-05-15,0.38,0.38,20919527193.5,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+SHV,iShares Short Treasury Bond ETF,-,US4642886794,464288679,2007-01-05,0.15,0.15,20734614201.3,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+EEM,iShares MSCI Emerging Markets ETF,-,US4642872349,464287234,2003-04-07,0.72,0.72,20580734961.78,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+MTUM,iShares MSCI USA Momentum Factor ETF,-,US46432F3964,46432F396,2013-04-16,0.15,0.15,20426555291.5,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IWP,iShares Russell Mid-Cap Growth ETF,-,US4642874816,464287481,2001-07-17,0.23,0.23,20108943044.28,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+HYG,iShares iBoxx $ High Yield Corporate Bond ETF,-,US4642885135,464288513,2007-04-04,0.49,0.49,18392984744.08,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+IWV,iShares Russell 3000 ETF,-,US4642876894,464287689,2000-05-22,0.2,0.2,18254783214.36,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IEI,iShares 3-7 Year Treasury Bond ETF,-,US4642886612,464288661,2007-01-05,0.15,0.15,17609997313.08,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IGIB,iShares 5-10 Year Investment Grade Corporate Bond ETF,-,US4642886380,464288638,2007-01-05,0.04,0.04,16957623039.1,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IWY,iShares Russell Top 200 Growth ETF,-,US4642894384,464289438,2009-09-22,0.2,0.2,16730324231.17,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+SOXX,iShares Semiconductor ETF,-,US4642875235,464287523,2001-07-10,0.34,0.34,16704412690.17,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EWJ,iShares MSCI Japan ETF,-,US46434G8226,46434G822,1996-03-12,0.5,0.5,15849571611.28,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Japan,Index
+EMB,iShares J.P. Morgan USD Emerging Markets Bond ETF,-,US4642882819,464288281,2007-12-17,0.39,0.39,15672589522.16,2025-11-28,Fixed Income,Government,Global,Emerging,Broad,Index
+USIG,iShares Broad USD Investment Grade Corporate Bond ETF,-,US4642886208,464288620,2007-01-05,0.04,0.04,15518512796.89,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ESGU,iShares ESG Aware MSCI USA ETF,BD6C4F3,US46435G4257,46435G425,2016-12-01,0.15,0.15,15219251349.11,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+TIP,iShares TIPS Bond ETF,-,US4642871762,464287176,2003-12-04,0.18,0.18,14671911394.29,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+BINC,iShares Flexible Income Active ETF,-,US0925286033,092528603,2023-05-19,0.52,0.4,14423480306.13,2025-11-28,Fixed Income,Flexible,Global,Developed,Broad,Active
+PFF,iShares Preferred and Income Securities ETF,-,US4642886877,464288687,2007-03-26,0.45,0.45,14220850500.41,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IWS,iShares Russell Mid-Cap Value ETF,-,US4642874733,464287473,2001-07-17,0.23,0.23,14081772396.93,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IQLT,iShares MSCI Intl Quality Factor ETF,-,US46434V4564,46434V456,2015-01-13,0.3,0.3,13291342958.34,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IWO,iShares Russell 2000 Growth ETF,-,US4642876480,464287648,2000-07-24,0.24,0.24,13225292029.1,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+EMXC,iShares MSCI Emerging Markets ex China ETF,-,US46434G7640,46434G764,2017-07-18,0.25,0.25,13113046733.47,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+STIP,iShares 0-5 Year TIPS Bond ETF,-,US46429B7477,46429B747,2010-12-01,0.03,0.03,12724448180.29,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+TLH,iShares 10-20 Year Treasury Bond ETF,-,US4642886539,464288653,2007-01-05,0.15,0.15,12648059890.4,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+SCZ,iShares MSCI EAFE Small-Cap ETF,-,US4642882736,464288273,2007-12-10,0.4,0.4,12447486722.1,2025-11-28,Equity,Small Cap,Global,Developed,Broad,Index
+ITA,iShares U.S. Aerospace & Defense ETF,-,US4642887602,464288760,2006-05-01,0.38,0.38,12037121081.13,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IWN,iShares Russell 2000 Value ETF,-,US4642876308,464287630,2000-07-24,0.24,0.24,11834733932.63,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+HDV,iShares Core High Dividend ETF,-,US46429B6636,46429B663,2011-03-29,0.08,0.08,11820991607.65,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IAGG,iShares Core International Aggregate Bond ETF,-,US46435G6724,46435G672,2015-11-10,0.07,0.07,11304471517.67,2025-11-28,Fixed Income,Multi Sectors,Global,Developed,Broad,Index
+ETHA,iShares Ethereum Trust ETF,-,US46438R1059,46438R105,2024-06-24,0.25,0.25,11131030744.47,2025-11-28,Digital Assets,Cryptoassets,North America,Developed,United States,Index
+ESGD,iShares ESG Aware MSCI EAFE ETF,-,US46435G5163,46435G516,2016-06-28,0.21,0.21,10616433694.59,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+SUB,iShares Short-Term National Muni Bond ETF,-,US4642881589,464288158,2008-11-05,0.07,0.07,10088786568.22,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+INDA,iShares MSCI India ETF,-,US46429B5984,46429B598,2012-02-02,0.62,0.62,9569180168.96,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,India,Index
+EFG,iShares MSCI EAFE Growth ETF,-,US4642888857,464288885,2005-08-01,0.34,0.34,9452425389.46,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IJK,iShares S&P Mid-Cap 400 Growth ETF,-,US4642876068,464287606,2000-07-24,0.17,0.17,9183824775.04,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IGM,iShares Expanded Tech Sector ETF,-,US4642875490,464287549,2001-03-13,0.39,0.39,8983144818.83,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+FLOT,iShares Floating Rate Bond ETF,-,US46429B6552,46429B655,2011-06-14,0.15,0.15,8978898285.3,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IGF,iShares Global Infrastructure ETF,-,US4642883726,464288372,2007-12-10,0.39,0.39,8964016779.23,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IBB,iShares Biotechnology ETF,-,US4642875565,464287556,2001-02-05,0.44,0.44,8796011867.51,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+VLUE,iShares MSCI USA Value Factor ETF,-,US46432F3881,46432F388,2013-04-16,0.15,0.15,8749502653.22,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+EZU,iShares MSCI Eurozone ETF,-,US4642866085,464286608,2000-07-25,0.51,0.51,8492861488.11,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Broad,Index
+IGV,iShares Expanded Tech-Software Sector ETF,-,US4642875151,464287515,2001-07-10,0.39,0.39,8193525578.71,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IOO,iShares Global 100 ETF,-,US4642875722,464287572,2000-12-05,0.4,0.4,8067601467.97,2025-11-28,Equity,Large Cap,Global,Developed,Broad,Index
+BAI,iShares A.I. Innovation and Tech Active ETF,-,US09290C7801,09290C780,2024-10-21,0.65,0.55,7992451941.79,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+MCHI,iShares MSCI China ETF,-,US46429B6719,46429B671,2011-03-29,0.59,0.59,7972795996.84,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,China,Index
+IJJ,iShares S&P Mid-Cap 400 Value ETF,-,US4642877058,464287705,2000-07-24,0.18,0.18,7948801652.85,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+SHYG,iShares 0-5 Year High Yield Corporate Bond ETF,-,US46434V4077,46434V407,2013-10-15,0.3,0.3,7761669626.41,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+ACWX,iShares MSCI ACWI ex U.S. ETF,-,US4642882405,464288240,2008-03-26,0.32,0.32,7346756163.41,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWY,iShares MSCI South Korea ETF,-,US4642867729,464286772,2000-05-09,0.59,0.59,7017292406.11,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,South Korea,Index
+EWT,iShares MSCI Taiwan ETF,-,US46434G7723,46434G772,2000-06-20,0.59,0.59,6975999506.06,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,Taiwan,Index
+THRO,iShares U.S. Thematic Rotation Active ETF,-,US09290C8064,09290C806,2021-12-14,0.57,0.57,6923864331.56,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IEUR,iShares Core MSCI Europe ETF,-,US46434V7385,46434V738,2014-06-10,0.1,0.1,6798865247.39,2025-11-28,Equity,All Cap,Europe,Developed,Broad,Index
+IJS,iShares S&P Small-Cap 600 Value ETF,-,US4642878791,464287879,2000-07-24,0.18,0.18,6624767681.43,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+HEFA,iShares Currency Hedged MSCI EAFE ETF,-,US46434V8037,46434V803,2014-01-31,0.7,0.35,6600302486.23,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWZ,iShares MSCI Brazil ETF,-,US4642864007,464286400,2000-07-10,0.59,0.59,6587795937.12,2025-11-28,Equity,Large/Mid Cap,Latin America,Emerging,Brazil,Index
+FXI,iShares China Large-Cap ETF,-,US4642871846,464287184,2004-10-05,0.73,0.73,6586023115.17,2025-11-28,Equity,Large Cap,Asia Pacific,Emerging,China,Index
+URTH,iShares MSCI World ETF,-,US4642863926,464286392,2012-01-10,0.24,0.24,6572715131.45,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+ICSH,iShares Ultra Short Duration Bond Active ETF,-,US46434V8789,46434V878,2013-12-11,0.08,0.08,6571255033.14,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Active
+TFLO,iShares Treasury Floating Rate Bond ETF,-,US46434V8607,46434V860,2014-02-03,0.15,0.15,6530558426.08,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IJT,iShares S&P Small-Cap 600 Growth ETF,-,US4642878874,464287887,2000-07-24,0.18,0.18,6399232740.7,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+IXN,iShares Global Tech ETF,-,US4642872919,464287291,2001-11-12,0.39,0.39,6362486396.44,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IDV,iShares International Select Dividend ETF,-,US4642884484,464288448,2007-06-11,0.5,0.5,6352702824.83,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IAUM,iShares Gold Trust Micro,-,US46436F1030,46436F103,2021-06-15,0.09,0.09,5598540837.21,2025-11-28,Commodity,Precious Metals,Global,Developed,Broad,Index
+ESGE,iShares ESG Aware MSCI EM ETF,-,US46434G8630,46434G863,2016-06-28,0.26,0.26,5519464874.83,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+EFAV,iShares MSCI EAFE Min Vol Factor ETF,-,US46429B6891,46429B689,2011-10-18,0.2,0.2,5173042250.6,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+DSI,iShares ESG MSCI KLD 400 ETF,-,US4642885705,464288570,2006-11-14,0.25,0.25,5021391575.75,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+ISTB,iShares Core 1-5 Year USD Bond ETF,-,US46432F8591,46432F859,2012-10-18,0.06,0.06,4696178231.1,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+IXJ,iShares Global Healthcare ETF,-,US4642873255,464287325,2001-11-13,0.4,0.4,4508497850.98,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IHI,iShares U.S. Medical Devices ETF,-,US4642888105,464288810,2006-05-01,0.38,0.38,4347918644.32,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EAGG,iShares ESG Aware U.S. Aggregate Bond ETF,-,US46435U5496,46435U549,2018-10-18,0.1,0.1,4325625342.78,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+IYR,iShares U.S. Real Estate ETF,-,US4642877397,464287739,2000-06-12,0.38,0.38,4276059560.45,2025-11-28,Real Estate,Real Estate Securities,North America,Developed,United States,Index
+EUFN,iShares MSCI Europe Financials ETF,-,US4642891802,464289180,2010-01-20,0.49,0.49,4262281475.45,2025-11-28,Equity,All Cap,Europe,Developed,Broad,Index
+IYF,iShares U.S. Financials ETF,-,US4642877884,464287788,2000-05-22,0.38,0.38,4161060244.78,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+REET,iShares Global REIT ETF,-,US46434V6478,46434V647,2014-07-08,0.14,0.14,4038084864.85,2025-11-28,Real Estate,Real Estate Securities,Global,Developed,Broad,Index
+EEMV,iShares MSCI Emerging Markets Min Vol Factor ETF,-,US4642865335,464286533,2011-10-18,0.26,0.26,3798662978.01,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+GVI,iShares Intermediate Government/Credit Bond ETF,-,US4642886125,464288612,2007-01-05,0.2,0.2,3792781012.4,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+NEAR,iShares Short Duration Bond Active ETF,-,US46431W5076,46431W507,2013-09-25,0.25,0.25,3771603811.88,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Active
+ICVT,iShares Convertible Bond ETF,-,US46435G1022,46435G102,2015-06-02,0.2,0.2,3745845441.01,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+SUSA,iShares ESG Optimized MSCI USA ETF,-,US4642888022,464288802,2005-01-24,0.25,0.25,3710852971.22,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+XT,iShares Future Exponential Technologies ETF,-,US46434V3814,46434V381,2015-03-19,0.46,0.46,3681007539.87,2025-11-28,Equity,Large Cap,Global,Developed,Broad,Index
+CMF,iShares California Muni Bond ETF,-,US4642883569,464288356,2007-10-04,0.08,0.08,3621335504.53,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+IYH,iShares U.S. Healthcare ETF,-,US4642877629,464287762,2000-06-12,0.38,0.38,3582746697.8,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IBDR,iShares® iBonds® Dec 2026 Term Corporate ETF,-,US46435GAA04,46435GAA0,2016-09-13,0.1,0.1,3542941642.95,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IMTM,iShares MSCI Intl Momentum Factor ETF,-,US46434V4499,46434V449,2015-01-13,0.3,0.3,3507176426.65,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWC,iShares MSCI Canada ETF,-,US4642865095,464286509,1996-03-12,0.5,0.5,3498492390.78,2025-11-28,Equity,Large/Mid Cap,North America,Developed,Canada,Index
+IBDS,iShares® iBonds® Dec 2027 Term Corporate ETF,-,US46435UAA97,46435UAA9,2017-09-12,0.1,0.1,3496813017.28,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ACWV,iShares MSCI Global Min Vol Factor ETF,-,US4642865251,464286525,2011-10-18,0.2,0.2,3374330806.18,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+USRT,iShares Core U.S. REIT ETF,-,US4642885218,464288521,2007-05-01,0.08,0.08,3321082786.22,2025-11-28,Real Estate,Real Estate Securities,North America,Developed,United States,Index
+IBDT,iShares® iBonds® Dec 2028 Term Corporate ETF,-,US46435U5157,46435U515,2018-09-18,0.1,0.1,3303688619.22,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IBDU,iShares® iBonds® Dec 2029 Term Corporate ETF,-,US46436E2054,46436E205,2019-09-17,0.1,0.1,3181236585.19,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IFRA,iShares U.S. Infrastructure ETF,-,US46435U7138,46435U713,2018-04-03,0.3,0.3,3179145187.67,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+AAXJ,iShares MSCI All Country Asia ex Japan ETF,-,US4642881829,464288182,2008-08-13,0.72,0.72,3148128696.62,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,Broad,Index
+IMCG,iShares Morningstar Mid-Cap Growth ETF,-,US4642883072,464288307,2004-06-28,0.06,0.06,3124458312.08,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IWX,iShares Russell Top 200 Value ETF,-,US4642894202,464289420,2009-09-22,0.2,0.2,3032937400.6,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+AOR,iShares Core 60/40 Balanced Allocation ETF,-,US4642898674,464289867,2008-11-04,0.2,0.15,3027760823.65,2025-11-28,Multi Asset,Static Allocation,Global,Developed,Broad,Index
+ILCG,iShares Morningstar Growth ETF,-,US4642871192,464287119,2004-06-28,0.04,0.04,2997604287.05,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+LRGF,iShares U.S. Equity Factor ETF,-,US46434V2824,46434V282,2015-04-28,0.08,0.08,2994077277.49,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IVLU,iShares MSCI Intl Value Factor ETF,-,US46435G4091,46435G409,2015-06-16,0.31,0.31,2899752626.55,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+INTF,iShares International Equity Factor ETF,-,US46434V2741,46434V274,2015-04-28,0.16,0.16,2802598671.2,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWU,iShares MSCI United Kingdom ETF,-,US46435G3341,46435G334,1996-03-12,0.5,0.5,2747702503.44,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,United Kingdom,Index
+IGLB,iShares 10+ Year Investment Grade Corporate Bond ETF,-,US4642895118,464289511,2009-12-08,0.04,0.04,2744001412.65,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+RING,iShares MSCI Global Gold Miners ETF,-,US46434G8556,46434G855,2012-01-31,0.39,0.39,2739070599.6,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IYY,iShares Dow Jones U.S. ETF,-,US4642878460,464287846,2000-06-12,0.2,0.2,2735538844.86,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+SMLF,iShares U.S. Small-Cap Equity Factor ETF,-,US46434V2907,46434V290,2015-04-28,0.15,0.15,2723801233.91,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+AOA,iShares Core 80/20 Aggressive Allocation ETF,-,US4642898591,464289859,2008-11-04,0.19,0.15,2695247176.85,2025-11-28,Multi Asset,Static Allocation,Global,Developed,Broad,Index
+ITB,iShares U.S. Home Construction ETF,-,US4642887529,464288752,2006-05-01,0.38,0.38,2641130350.75,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+USCL,iShares Climate Conscious & Transition MSCI USA ETF,-,US46436E1551,46436E155,2023-06-06,0.08,0.08,2637231879.19,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IBDQ,iShares® iBonds® Dec 2025 Term Corporate ETF,-,US46434VBD10,46434VBD1,2015-03-11,0.1,0.1,2504072950.13,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IBDV,iShares® iBonds® Dec 2030 Term Corporate ETF,-,US46436E7269,46436E726,2020-06-23,0.1,0.1,2422073524.34,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ILF,iShares Latin America 40 ETF,-,US4642873909,464287390,2001-10-25,0.47,0.47,2364591753.78,2025-11-28,Equity,Large Cap,Latin America,Emerging,Broad,Index
+SLQD,iShares 0-5 Year Investment Grade Corporate Bond ETF,-,US46434V1008,46434V100,2013-10-15,0.06,0.06,2355008167.22,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+HIMU,iShares High Yield Muni Active ETF,-,US0925288435,092528843,2006-08-01,0.43,0.42,2349124430.51,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Active
+PABU,iShares Paris-Aligned Climate Optimized MSCI USA ETF,-,US46436E4118,46436E411,2022-02-08,0.1,0.1,2285926215.1,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+BDYN,iShares Dynamic Equity Active ETF,-,US09290C7231,09290C723,2017-06-01,0.42,0.4,2262028421.69,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+IBTG,iShares® iBonds® Dec 2026 Term Treasury ETF,-,US46436E8580,46436E858,2020-02-25,0.07,0.07,2197139405.85,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IBDW,iShares® iBonds® Dec 2031 Term Corporate ETF,-,US46436E4860,46436E486,2021-06-22,0.1,0.1,2036534649.5,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ESML,iShares ESG Aware MSCI USA Small-Cap ETF,-,US46435U6635,46435U663,2018-04-10,0.17,0.17,2030022705.83,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+SMMD,iShares Russell 2500 ETF,-,US46435G2681,46435G268,2017-07-06,0.23,0.15,2020053122.92,2025-11-28,Equity,Mid/Small Cap,North America,Developed,United States,Index
+IWL,iShares Russell Top 200 ETF,-,US4642894467,464289446,2009-09-22,0.15,0.15,1999490243.41,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+IPAC,iShares Core MSCI Pacific ETF,-,US46434V6965,46434V696,2014-06-10,0.09,0.09,1965439413.39,2025-11-28,Equity,All Cap,Asia Pacific,Developed,Broad,Index
+EWW,iShares MSCI Mexico ETF,-,US4642868222,464286822,1996-03-12,0.5,0.5,1949672951.94,2025-11-28,Equity,All Cap,Latin America,Emerging,Mexico,Index
+ICLN,iShares Global Clean Energy ETF,-,US4642882249,464288224,2008-06-24,0.39,0.39,1945700813.31,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+ARTY,iShares Future AI & Tech ETF,-,US46435U5561,46435U556,2018-06-26,0.47,0.47,1940184274.09,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IDU,iShares U.S. Utilities ETF,-,US4642876977,464287697,2000-06-12,0.38,0.38,1926874388.63,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+ICF,iShares Select U.S. REIT ETF,-,US4642875649,464287564,2001-01-29,0.32,0.32,1919171080.4,2025-11-28,Real Estate,Real Estate Securities,North America,Developed,United States,Index
+IYG,iShares U.S. Financial Services ETF,-,US4642877702,464287770,2000-06-12,0.38,0.38,1893214949.33,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IXC,iShares Global Energy ETF,-,US4642873412,464287341,2001-11-12,0.4,0.4,1884556832.6,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IBTH,iShares® iBonds® Dec 2027 Term Treasury ETF,-,US46436E8416,46436E841,2020-02-25,0.07,0.07,1829663123.63,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+FALN,iShares Fallen Angels USD Bond ETF,-,US46435G4745,46435G474,2016-06-14,0.25,0.25,1775248982.98,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+EWG,iShares MSCI Germany ETF,-,US4642868065,464286806,1996-03-12,0.5,0.5,1751473758.73,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Germany,Index
+EPP,iShares MSCI Pacific ex Japan ETF,-,US4642866655,464286665,2001-10-25,0.48,0.48,1729324419.88,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Broad,Index
+QLTA,iShares Aaa - A Rated Corporate Bond ETF,-,US46429B2916,46429B291,2012-02-14,0.15,0.15,1729151460.61,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IYJ,iShares U.S. Industrials ETF,-,US4642877546,464287754,2000-06-12,0.38,0.38,1660300159.99,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+HYDB,iShares High Yield Systematic Bond ETF,-,US46435G2509,46435G250,2017-07-11,0.35,0.35,1658608143.74,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+TLTW,iShares 20+ Year Treasury Bond BuyWrite Strategy ETF,-,US46436E3383,46436E338,2022-08-18,0.35,0.35,1657647941.58,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+AOM,iShares Core 40/60 Moderate Allocation ETF,-,US4642898757,464289875,2008-11-04,0.2,0.15,1644685553.28,2025-11-28,Multi Asset,Static Allocation,Global,Developed,Broad,Index
+IBTF,iShares® iBonds® Dec 2025 Term Treasury ETF,-,US46436E8663,46436E866,2020-02-25,0.07,0.07,1615906054.33,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IEV,iShares Europe ETF,-,US4642878619,464287861,2000-07-25,0.6,0.6,1589437876.26,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Broad,Index
+IYC,iShares U.S. Consumer Discretionary ETF,-,US4642875805,464287580,2000-06-12,0.38,0.38,1561297920.63,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EWP,iShares MSCI Spain ETF,-,US4642867646,464286764,1996-03-12,0.5,0.5,1561080009.8,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Spain,Index
+EEMA,iShares MSCI Emerging Markets Asia ETF,-,US4642864262,464286426,2012-02-08,0.49,0.49,1549848125.5,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,Broad,Index
+AIA,iShares Asia 50 ETF,-,US4642884302,464288430,2007-11-13,0.5,0.5,1534619536.6,2025-11-28,Equity,Large Cap,Asia Pacific,Developed,Broad,Index
+IAI,iShares U.S. Broker-Dealers & Securities Exchanges ETF,-,US4642887941,464288794,2006-05-01,0.38,0.38,1512896130.23,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EWL,iShares MSCI Switzerland ETF,-,US4642867497,464286749,1996-03-12,0.5,0.5,1473078648.75,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Switzerland,Index
+CLOA,iShares AAA CLO Active ETF,-,US0925285043,092528504,2023-01-10,0.2,0.2,1470347442.35,2025-11-28,Fixed Income,High Yield Bank Loan,North America,Developed,United States,Active
+IGEB,iShares Investment Grade Systematic Bond ETF,-,US46435G2194,46435G219,2017-07-11,0.18,0.18,1467737091.65,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+LCTU,iShares U.S. Carbon Transition Readiness Aware Active ETF,-,US09290C5094,09290C509,2021-04-06,0.3,0.15,1419235933.61,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Active
+EUSA,iShares MSCI USA Equal Weighted ETF,-,US4642866812,464286681,2010-05-05,0.09,0.09,1403276606.24,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+BDVL,iShares Disciplined Volatility Equity Active ETF,-,US09290C7157,09290C715,2017-06-01,0.41,0.4,1388781274.5,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+IMCB,iShares Morningstar Mid-Cap ETF,-,US4642882082,464288208,2004-06-28,0.04,0.04,1379055749.89,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IBDX,iShares® iBonds® Dec 2032 Term Corporate ETF,-,US46436E3128,46436E312,2022-06-28,0.1,0.1,1361112802.02,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IYK,iShares U.S. Consumer Staples ETF,-,US4642878122,464287812,2000-06-12,0.38,0.38,1326372287.37,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EWA,iShares MSCI Australia ETF,-,US4642861037,464286103,1996-03-12,0.5,0.5,1314818443.86,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Australia,Index
+SUSC,iShares ESG Aware USD Corporate Bond ETF,-,US46435G1931,46435G193,2017-07-11,0.18,0.18,1309786894.34,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+MEAR,iShares Short Maturity Municipal Bond Active ETF,-,US46431W8385,46431W838,2015-03-03,0.25,0.25,1297362215.86,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Active
+IBTI,iShares® iBonds® Dec 2028 Term Treasury ETF,-,US46436E8333,46436E833,2020-02-25,0.07,0.07,1273537285.07,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+EMGF,iShares Emerging Markets Equity Factor ETF,-,US46434G8895,46434G889,2015-12-08,0.26,0.26,1270432880.97,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+USXF,iShares ESG Advanced MSCI USA ETF,-,US46436E7673,46436E767,2020-06-16,0.1,0.1,1195236112.12,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+ILCB,iShares Morningstar U.S. Equity ETF,-,US4642871275,464287127,2004-06-28,0.03,0.03,1173642777.38,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+ILCV,iShares Morningstar Value ETF,-,US4642881092,464288109,2004-06-28,0.04,0.04,1166553020.1,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IYE,iShares U.S. Energy ETF,-,US4642877967,464287796,2000-06-12,0.38,0.38,1141004061.41,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+DIVB,iShares Core Dividend ETF,-,US46435U8615,46435U861,2017-11-07,0.05,0.05,1140209813.4,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IGRO,iShares International Dividend Growth ETF,-,US46435G5247,46435G524,2016-05-17,0.15,0.15,1110305576.08,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+GSG,iShares S&P GSCI Commodity-Indexed Trust,-,US46428R1077,46428R107,2006-07-10,0.75,0.75,1085860131.08,2025-11-28,Commodity,Multi Commodity,Global,Developed,Broad,Index
+GARP,iShares MSCI USA Quality GARP ETF,-,US46436E4035,46436E403,2020-01-14,0.15,0.15,1066560948.11,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IWC,iShares Micro-Cap ETF,-,US4642888691,464288869,2005-08-12,0.6,0.6,1056103464.34,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+SUSB,iShares ESG Aware 1-5 Year USD Corporate Bond ETF,-,US46435G2434,46435G243,2017-07-11,0.12,0.12,1049704345.5,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ECH,iShares MSCI Chile ETF,-,US4642866408,464286640,2007-11-12,0.6,0.6,1046280743.03,2025-11-28,Equity,All Cap,Latin America,Emerging,Chile,Index
+IGOV,iShares International Treasury Bond ETF,-,US4642881175,464288117,2009-01-21,0.35,0.35,1042778196.1,2025-11-28,Fixed Income,Government,Global,Developed,Broad,Index
+IBHF,iShares® iBonds® 2026 Term High Yield and Income ETF,-,US46436E5289,46436E528,2020-11-10,0.35,0.35,1039497546.7,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+NYF,iShares New York Muni Bond ETF,-,US4642883239,464288323,2007-10-04,0.09,0.09,1017950143.13,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+SUSL,iShares ESG MSCI USA Leaders ETF,-,US46435U2188,46435U218,2019-05-07,0.1,0.1,1017856234.2,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+DVYE,iShares Emerging Markets Dividend ETF,-,US4642863199,464286319,2012-02-23,0.5,0.5,1000478140.27,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+CRBN,iShares Low Carbon Optimized MSCI ACWI ETF,-,US46434V4648,46434V464,2014-12-08,0.2,0.2,994012811.79,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IETC,iShares U.S. Tech Independence Focused ETF,-,US46431W6488,46431W648,2018-03-21,0.18,0.18,949587524.85,2025-11-28,Equity,All Cap,North America,Developed,United States,Active
+IBDY,iShares® iBonds® Dec 2033 Term Corporate ETF,-,US46436E1304,46436E130,2023-06-21,0.1,0.1,935071448.83,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IBTJ,iShares® iBonds® Dec 2029 Term Treasury ETF,-,US46436E8259,46436E825,2020-02-25,0.07,0.07,907051745.04,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+KXI,iShares Global Consumer Staples ETF,-,US4642887370,464288737,2006-09-12,0.39,0.39,901193455.14,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IMCV,iShares Morningstar Mid-Cap Value ETF,-,US4642884062,464288406,2004-06-28,0.06,0.06,896147389.56,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+PICK,iShares MSCI Global Metals & Mining Producers ETF,-,US46434G8481,46434G848,2012-01-31,0.39,0.39,885803955.66,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+EXI,iShares Global Industrials ETF,-,US4642887297,464288729,2006-09-12,0.39,0.39,877342983.17,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IXP,iShares Global Comm Services ETF,-,US4642872752,464287275,2001-11-12,0.4,0.4,866966579.18,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IHAK,iShares Cybersecurity and Tech ETF,-,US46435U1354,46435U135,2019-06-11,0.47,0.47,861700337.02,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWS,iShares MSCI Singapore ETF,-,US46434G7806,46434G780,1996-03-12,0.5,0.5,835326357.25,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Singapore,Index
+SMIN,iShares MSCI India Small-Cap ETF,-,US46429B6149,46429B614,2012-02-08,0.75,0.75,832511780.34,2025-11-28,Equity,Small Cap,Asia Pacific,Emerging,India,Index
+REZ,iShares Residential and Multisector Real Estate ETF,-,US4642885622,464288562,2007-05-01,0.48,0.48,813929548.02,2025-11-28,Real Estate,Real Estate Securities,North America,Developed,United States,Index
+ISCG,iShares Morningstar Small-Cap Growth ETF,-,US4642886042,464288604,2004-06-28,0.06,0.06,803523415.44,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+IYT,iShares U.S. Transportation ETF,-,US4642871929,464287192,2003-10-06,0.38,0.38,802514478.14,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IHE,iShares U.S. Pharmaceuticals ETF,-,US4642888360,464288836,2006-05-01,0.38,0.38,802139927.45,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IHF,iShares U.S. Healthcare Providers ETF,-,US4642888287,464288828,2006-05-01,0.38,0.38,771444722.64,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+WSML,iShares MSCI World Small-Cap ETF,-,US46438G4304,46438G430,2025-04-01,0.3,0.3,769844736.7,2025-11-28,Equity,Small Cap,Global,Developed,Broad,Index
+IYM,iShares U.S. Basic Materials ETF,-,US4642878387,464287838,2000-06-12,0.38,0.38,725292878.71,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+AOK,iShares Core 30/70 Conservative Allocation ETF,-,US4642898831,464289883,2008-11-04,0.2,0.15,720375888.17,2025-11-28,Multi Asset,Static Allocation,Global,Developed,Broad,Index
+INDY,iShares India 50 ETF,-,US4642895290,464289529,2009-11-18,0.65,0.65,694725500.8,2025-11-28,Equity,Large Cap,Asia Pacific,Emerging,India,Index
+LQDH,iShares Interest Rate Hedged Corporate Bond ETF,-,US46431W7056,46431W705,2014-05-27,0.44,0.24,686728388.28,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+EUSB,iShares ESG Advanced Universal USD Bond ETF,-,US46436E6196,46436E619,2020-06-23,0.12,0.12,685087281.49,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+EWH,iShares MSCI Hong Kong ETF,-,US4642868719,464286871,1996-03-12,0.5,0.5,681460797.69,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Hong Kong,Index
+SYSB,iShares Systematic Bond ETF,-,US46435U7963,46435U796,2015-02-24,0.25,0.25,677636912.74,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+ISHG,iShares 1-3 Year International Treasury Bond ETF,-,US4642881258,464288125,2009-01-21,0.35,0.35,674481662.41,2025-11-28,Fixed Income,Government,Global,Developed,Broad,Index
+EWI,iShares MSCI Italy ETF,-,US46434G8309,46434G830,1996-03-12,0.5,0.5,666873171.9,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Italy,Index
+SLVP,iShares MSCI Global Silver and Metals Miners ETF,-,US4642863272,464286327,2012-01-31,0.39,0.39,662857572.99,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+DMXF,iShares ESG Advanced MSCI EAFE ETF,-,US46436E7590,46436E759,2020-06-16,0.12,0.12,656972792.8,2025-11-28,Equity,Large Cap,Global,Developed,Broad,Index
+IYZ,iShares U.S. Telecommunications ETF,-,US4642877132,464287713,2000-05-22,0.38,0.38,652077687.66,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+REM,iShares Mortgage Real Estate ETF,-,US46435G3424,46435G342,2007-05-01,0.48,0.48,651875640.98,2025-11-28,Real Estate,Real Estate Securities,North America,Developed,United States,Index
+KSA,iShares MSCI Saudi Arabia ETF,-,US46434V4234,46434V423,2015-09-16,0.75,0.75,649965339.54,2025-11-28,Equity,All Cap,Middle East and Africa,Emerging,Saudi Arabia,Index
+IGE,iShares North American Natural Resources ETF,-,US4642873743,464287374,2001-10-22,0.39,0.39,638796928.69,2025-11-28,Equity,All Cap,North America,Developed,Broad,Index
+HEZU,iShares Currency Hedged MSCI Eurozone ETF,-,US46434V6395,46434V639,2014-07-09,1.12,0.53,636036799.28,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Broad,Index
+BALI,iShares U.S. Large Cap Premium Income Active ETF,-,US09290C8635,09290C863,2023-09-26,0.35,0.35,635424447.14,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IXG,iShares Global Financials ETF,-,US4642873339,464287333,2001-11-12,0.41,0.41,625500907.16,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IBTK,iShares® iBonds® Dec 2030 Term Treasury ETF,-,US46436E5933,46436E593,2020-07-14,0.07,0.07,599315422.89,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+ILTB,iShares Core 10+ Year USD Bond ETF,-,US4642894798,464289479,2009-12-08,0.06,0.06,597274664.61,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+COMT,iShares GSCI Commodity Dynamic Roll Strategy ETF,-,US46431W8534,46431W853,2014-10-15,0.49,0.48,585044598.23,2025-11-28,Commodity,Multi Commodity,Global,Developed,Broad,Index
+IBMP,iShares® iBonds® Dec 2027 Term Muni Bond ETF,-,US46435U2832,46435U283,2019-04-09,0.18,0.18,584986767.37,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+LEMB,iShares J.P. Morgan EM Local Currency Bond ETF,-,US4642865178,464286517,2011-10-18,0.3,0.3,576984255.29,2025-11-28,Fixed Income,Government,Global,Emerging,Broad,Index
+AGZ,iShares Agency Bond ETF,-,US4642881662,464288166,2008-11-05,0.2,0.2,575293740.44,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+ISCV,iShares Morningstar Small-Cap Value ETF,-,US4642887032,464288703,2004-06-28,0.06,0.06,574644531.83,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+EZA,iShares MSCI South Africa ETF,-,US4642867802,464286780,2003-02-03,0.59,0.59,560104519.26,2025-11-28,Equity,Large/Mid Cap,Middle East and Africa,Emerging,South Africa,Index
+IBDZ,iShares® iBonds® Dec 2034 Term Corporate ETF,-,US46438G6531,46438G653,2024-05-22,0.1,0.1,554554787.7,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IBMO,iShares® iBonds® Dec 2026 Term Muni Bond ETF,-,US46435U2592,46435U259,2019-04-02,0.18,0.18,553927903.99,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+IAT,iShares U.S. Regional Banks ETF,-,US4642887784,464288778,2006-05-01,0.38,0.38,539336510.45,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+ISCF,iShares International Small-Cap Equity Factor ETF,-,US46434V2667,46434V266,2015-04-28,0.24,0.24,535596783.4,2025-11-28,Equity,Small Cap,Global,Developed,Broad,Index
+IBMQ,iShares® iBonds® Dec 2028 Term Muni Bond ETF,-,US46435U3251,46435U325,2019-04-16,0.18,0.18,534371722.32,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+EIS,iShares MSCI Israel ETF,-,US4642866325,464286632,2008-03-26,0.59,0.59,528420281.98,2025-11-28,Equity,All Cap,Europe,Developed,Israel,Index
+EMHY,iShares J.P. Morgan EM High Yield Bond ETF,-,US4642862852,464286285,2012-04-03,0.5,0.5,522530543.48,2025-11-28,Fixed Income,High Yield,Global,Emerging,Broad,Index
+HEWJ,iShares Currency Hedged MSCI Japan ETF,-,US46434V8862,46434V886,2014-01-31,1.03,0.5,513198377.28,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Japan,Index
+IAK,iShares U.S. Insurance ETF,-,US4642887867,464288786,2006-05-01,0.38,0.38,512010885.57,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+EWJV,iShares MSCI Japan Value ETF,-,US46435U3749,46435U374,2019-03-05,0.15,0.15,499694729.56,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Japan,Index
+CMBS,iShares CMBS ETF,-,US46429B3666,46429B366,2012-02-14,0.25,0.25,497617327.56,2025-11-28,Fixed Income,CMBS,North America,Developed,United States,Index
+XVV,iShares ESG Select Screened S&P 500 ETF,-,US46436E5693,46436E569,2020-09-22,0.08,0.08,488551804.51,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+IBTM,iShares® iBonds® Dec 2032 Term Treasury ETF,-,US46436E2963,46436E296,2022-07-06,0.07,0.07,482830708.82,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+BIDD,iShares International Dividend Active ETF,-,US09290C8486,09290C848,1997-09-26,0.6,0.59,467207646.15,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Active
+RXI,iShares Global Consumer Discretionary ETF,-,US4642887453,464288745,2006-09-12,0.39,0.39,461642657.48,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+HYBB,iShares BB Rated Corporate Bond ETF,-,US46435U4739,46435U473,2020-10-06,0.25,0.25,448944654.3,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+TECB,iShares U.S. Tech Breakthrough Multisector ETF,-,US46436E5024,46436E502,2020-01-08,0.3,0.3,447985411.96,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IEO,iShares U.S. Oil & Gas Exploration & Production ETF,-,US4642888519,464288851,2006-05-01,0.38,0.38,445788313.85,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+HYGH,iShares Interest Rate Hedged High Yield Bond ETF,-,US46431W6066,46431W606,2014-05-27,1.12,0.52,444829670.31,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+TOPT,iShares Top 20 U.S. Stocks ETF,-,US46438G5707,46438G570,2024-10-23,0.2,0.2,440690933.78,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+BGRN,iShares USD Green Bond ETF,-,US46435U4408,46435U440,2018-11-13,0.2,0.2,438669196.92,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+EPOL,iShares MSCI Poland ETF,-,US46429B6065,46429B606,2010-05-25,0.6,0.6,432261910.2,2025-11-28,Equity,All Cap,Europe,Emerging,Poland,Index
+SHYM,iShares Short Duration High Yield Muni Active ETF,-,US0925281083,092528108,2021-03-16,0.42,0.4,425760574.73,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Active
+IBTO,iShares® iBonds® Dec 2033 Term Treasury ETF,-,US46436E1486,46436E148,2023-06-27,0.07,0.07,425243862.53,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IBTL,iShares® iBonds® Dec 2031 Term Treasury ETF,-,US46436E4605,46436E460,2021-07-13,0.07,0.07,423544278.14,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+PMMF,iShares Prime Money Market ETF,-,US09290C7561,09290C756,2025-02-04,0.2,0.2,409137301.96,2025-11-28,Cash,Cash,North America,Developed,United States,Active
+EEMS,iShares MSCI Emerging Markets Small-Cap ETF,-,US4642864759,464286475,2011-08-16,0.73,0.73,404247657.89,2025-11-28,Equity,Small Cap,Global,Emerging,Broad,Index
+IBHG,iShares® iBonds® 2027 Term High Yield and Income ETF,-,US46436E4787,46436E478,2021-07-07,0.35,0.35,396619666.62,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+CEMB,iShares J.P. Morgan EM Corporate Bond ETF,-,US4642862514,464286251,2012-04-17,0.5,0.5,392875810.42,2025-11-28,Fixed Income,Credit,Global,Emerging,Broad,Index
+IBHE,iShares® iBonds® 2025 Term High Yield and Income ETF,-,US46435U1685,46435U168,2019-05-07,0.35,0.35,392255013.49,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+EWQ,iShares MSCI France ETF,-,US4642867075,464286707,1996-03-12,0.5,0.5,392145563.21,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,France,Index
+GNMA,iShares GNMA Bond ETF,-,US46429B3336,46429B333,2012-02-14,0.11,0.1,377378339.92,2025-11-28,Fixed Income,Mortgages,North America,Developed,United States,Index
+SIZE,iShares MSCI USA Size Factor ETF,-,US46432F3709,46432F370,2013-04-16,0.15,0.15,372395283.48,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+IBHH,iShares® iBonds® 2028 Term High Yield and Income ETF,-,US46436E3870,46436E387,2022-03-08,0.35,0.35,364768994.28,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+IBMN,iShares® iBonds® Dec 2025 Term Muni Bond ETF,-,US46435U4325,46435U432,2018-11-13,0.18,0.18,356358615.55,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+XJH,iShares ESG Select Screened S&P Mid-Cap ETF,-,US46436E5511,46436E551,2020-09-22,0.12,0.12,330311154.11,2025-11-28,Equity,Mid Cap,North America,Developed,United States,Index
+IBMR,iShares® iBonds® Dec 2029 Term Muni Bond ETF,-,US46436E1635,46436E163,2023-05-09,0.18,0.18,328625088.91,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+BRTR,iShares Total Return Active ETF,-,US0925288765,092528876,2023-12-12,0.41,0.38,327768610.72,2025-11-28,Fixed Income,Multi Sectors,Global,Developed,Broad,Active
+GOVZ,iShares 25+ Year Treasury STRIPS Bond ETF,-,US46436E5776,46436E577,2020-09-22,0.15,0.1,318926643.78,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+EIDO,iShares MSCI Indonesia ETF,-,US46429B3096,46429B309,2010-05-05,0.59,0.59,317419392,2025-11-28,Equity,All Cap,Asia Pacific,Emerging,Indonesia,Index
+EWD,iShares MSCI Sweden ETF,-,US4642867562,464286756,1996-03-12,0.54,0.54,312714002.69,2025-11-28,Equity,Large/Mid Cap,Europe,Developed,Sweden,Index
+IBHI,iShares® iBonds® 2029 Term High Yield and Income ETF,-,US46436E3797,46436E379,2022-03-08,0.35,0.35,309609227.37,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+CMDY,iShares Bloomberg Roll Select Commodity Strategy ETF,-,US46431W5985,46431W598,2018-04-03,0.29,0.28,305761232.43,2025-11-28,Commodity,Multi Commodity,Global,Developed,Broad,Index
+BYLD,iShares Yield Optimized Bond ETF,-,US46434V7872,46434V787,2014-04-22,0.45,0.17,302062844.23,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+SMMV,iShares MSCI USA Small-Cap Min Vol Factor ETF,-,US46435G4331,46435G433,2016-09-07,0.2,0.2,295782344.71,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+LQDW,iShares Investment Grade Corporate Bond BuyWrite Strategy ETF,-,US46436E2880,46436E288,2022-08-18,0.34,0.34,292177398.9,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+HAWX,iShares Currency Hedged MSCI ACWI ex U.S. ETF,-,US46435G8472,46435G847,2015-06-29,0.7,0.35,290864620.26,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+EWN,iShares MSCI Netherlands ETF,-,US4642868149,464286814,1996-03-12,0.5,0.5,290505739.7,2025-11-28,Equity,All Cap,Europe,Developed,Netherlands,Index
+PABD,iShares Paris-Aligned Climate Optimized MSCI World ex USA ETF,-,US46438G7299,46438G729,2024-01-17,0.12,0.12,284955298.18,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IMTB,iShares Core 5-10 Year USD Bond ETF,-,US46435G4174,46435G417,2016-11-01,0.07,0.06,275506085.27,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+EWM,iShares MSCI Malaysia ETF,-,US46434G8143,46434G814,1996-03-12,0.5,0.5,271014767.29,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,Malaysia,Index
+QTOP,iShares Nasdaq Top 30 Stocks ETF,-,US46438G5624,46438G562,2024-10-23,0.2,0.2,267717199.95,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+JXI,iShares Global Utilities ETF,-,US4642887115,464288711,2006-09-12,0.39,0.39,266176404.82,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+ISCB,iShares Morningstar Small-Cap ETF,-,US4642885051,464288505,2004-06-28,0.04,0.04,257365999.21,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+HYGW,iShares High Yield Corporate Bond BuyWrite Strategy ETF,-,US46436E3201,46436E320,2022-08-18,0.69,0.69,249268344.69,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+EVUS,iShares ESG Aware MSCI USA Value ETF,-,US46436E2211,46436E221,2023-01-31,0.18,0.18,245401994.66,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+EPU,iShares MSCI Peru and Global Exposure ETF,-,US4642898427,464289842,2009-06-19,0.59,0.59,242917529.77,2025-11-28,Equity,All Cap,Latin America,Emerging,Broad,Index
+MXI,iShares Global Materials ETF,-,US4642886950,464288695,2006-09-12,0.39,0.39,229776365.97,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+TOK,iShares MSCI Kokusai ETF,-,US4642882652,464288265,2007-12-10,0.25,0.25,228326734.96,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+WOOD,iShares Global Timber & Forestry ETF,-,US4642881746,464288174,2008-06-24,0.4,0.4,227835888.96,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+LCTD,iShares World ex U.S. Carbon Transition Readiness Aware Active ETF,-,US09290C6084,09290C608,2021-04-06,0.37,0.22,224050872.19,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Active
+INMU,iShares Intermediate Muni Income Active ETF,-,US0925282073,092528207,2021-03-16,0.41,0.3,219096638.52,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Active
+IBTP,iShares® iBonds® Dec 2034 Term Treasury ETF,-,US46438G6465,46438G646,2024-06-11,0.07,0.07,215933082.5,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+IVVW,iShares S&P 500 BuyWrite ETF,-,US46438G7117,46438G711,2024-03-14,0.25,0.25,208439179.71,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+AQLT,iShares MSCI Global Quality Factor ETF,-,US46438G4973,46438G497,2024-12-11,0.21,0.2,207692606.27,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+THD,iShares MSCI Thailand ETF,-,US4642866242,464286624,2008-03-26,0.59,0.59,202994914.14,2025-11-28,Equity,All Cap,Asia Pacific,Emerging,Thailand,Index
+EDEN,iShares MSCI Denmark ETF,-,US46429B5232,46429B523,2012-01-25,0.53,0.53,195273945.65,2025-11-28,Equity,All Cap,Europe,Developed,Denmark,Index
+GHYG,iShares US & Intl High Yield Corp Bond ETF,-,US4642861789,464286178,2012-04-03,0.4,0.4,193314855.05,2025-11-28,Fixed Income,High Yield,Global,Developed,Broad,Index
+EWZS,iShares MSCI Brazil Small-Cap ETF,-,US4642891315,464289131,2010-09-28,0.6,0.6,192675330.94,2025-11-28,Equity,Small Cap,Latin America,Emerging,Brazil,Index
+CALI,iShares Short-Term California Muni Active ETF,-,US0925288849,092528884,2023-07-11,0.25,0.2,192018786.77,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Active
+HYXF,iShares ESG Advanced High Yield Corporate Bond ETF,-,US46435G4414,46435G441,2016-06-14,0.35,0.35,189121022.97,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+HEEM,iShares Currency Hedged MSCI Emerging Markets ETF,-,US46434G5099,46434G509,2014-09-23,1.5,0.72,188618925.3,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+TENM,iShares Large Cap 10% Target Buffer Mar ETF,-,US46438G2738,46438G273,2025-10-21,0.53,0.5,188433925.98,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+CNYA,iShares MSCI China A ETF,-,US46434V5140,46434V514,2016-06-13,0.6,0.6,179553331.95,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,China,Index
+HSCZ,iShares Currency Hedged MSCI EAFE Small-Cap ETF,-,US46435G8399,46435G839,2015-06-29,0.83,0.43,171869400.75,2025-11-28,Equity,Small Cap,Global,Developed,Broad,Index
+SDG,iShares MSCI Global Sustainable Development Goals ETF,-,US46435G5320,46435G532,2016-04-20,0.49,0.49,171165661.82,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IBMS,iShares® iBonds® Dec 2030 Term Muni Bond ETF,-,US46438G6879,46438G687,2024-05-22,0.18,0.18,170100208.28,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+TUR,iShares MSCI Turkey ETF,-,US4642867158,464286715,2008-03-26,0.59,0.59,170045326.29,2025-11-28,Equity,All Cap,Europe,Emerging,Turkey,Index
+SCJ,iShares MSCI Japan Small-Cap ETF,-,US4642865822,464286582,2007-12-20,0.5,0.5,167871443.39,2025-11-28,Equity,Small Cap,Asia Pacific,Developed,Japan,Index
+IDRV,iShares Self-Driving EV and Tech ETF,-,US46435U3665,46435U366,2019-04-16,0.48,0.48,167816504.72,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+MAXJ,iShares Large Cap Max Buffer Jun ETF,-,US46438G6127,46438G612,2024-06-28,0.53,0.5,161886873.82,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IBCA,iShares® iBonds® Dec 2035 Term Corporate ETF,-,US46438G3728,46438G372,2025-03-25,0.1,0.1,155643798.19,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+GLOF,iShares Global Equity Factor ETF,-,US46434V3160,46434V316,2015-04-28,0.2,0.2,153262647.44,2025-11-28,Equity,Large/Mid Cap,Global,Developed,Broad,Index
+IVVM, iShares Large Cap Moderate Quarterly Laddered ETF,-,US0925287023,092528702,2023-06-28,0.53,0.5,147908375.68,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IEUS,iShares MSCI Europe Small-Cap ETF,-,US4642884971,464288497,2007-11-12,0.41,0.41,144282808.72,2025-11-28,Equity,Small Cap,Europe,Developed,Broad,Index
+IDGT,iShares U.S. Digital Infrastructure and Real Estate ETF,-,US4642875318,464287531,2001-07-10,0.39,0.39,140272886.22,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+IEZ,iShares U.S. Oil Equipment & Services ETF,-,US4642888444,464288844,2006-05-01,0.38,0.38,139959251.59,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+UAE,iShares MSCI UAE ETF,-,US46434V7617,46434V761,2014-04-29,0.6,0.6,136082149.8,2025-11-28,Equity,All Cap,Middle East and Africa,Emerging,United Arab Emirates,Index
+IDNA,iShares Genomics Immunology and Healthcare ETF,-,US46435U1925,46435U192,2019-06-11,0.47,0.47,133556143.07,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IGBH,iShares Interest Rate Hedged Long-Term Corporate Bond ETF,-,US46431W8120,46431W812,2015-07-22,0.39,0.14,129192774.5,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+IVVB,iShares Large Cap Deep Quarterly Laddered ETF,-,US0925288013,092528801,2023-06-28,0.54,0.51,127218882.28,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+GBF,iShares Government/Credit Bond ETF,-,US4642885960,464288596,2007-01-05,0.2,0.2,127089310.36,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+IYLD,iShares Morningstar Multi-Asset Income ETF,-,US46432F8757,46432F875,2012-04-03,0.5,0.5,121695110.77,2025-11-28,Multi Asset,Static Allocation,Global,Developed,Broad,Index
+EMXF,iShares ESG Advanced MSCI EM ETF,-,US46436E7426,46436E742,2020-10-06,0.17,0.17,120481167.85,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+SMAX,iShares Large Cap Max Buffer Sep ETF,-,US46438G5889,46438G588,2024-09-30,0.53,0.5,116875621.02,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+CSHP,iShares Enhanced Short-Term Bond Active ETF,-,US09290C8221,09290C822,2024-07-17,0.2,0.2,114708851.58,2025-11-28,Fixed Income,Flexible,Global,Developed,Broad,Active
+ICOP,iShares Copper and Metals Mining ETF,-,US46436E1890,46436E189,2023-06-21,0.47,0.47,107870978.62,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+XJR,iShares ESG Select Screened S&P Small-Cap ETF,-,US46436E5446,46436E544,2020-09-22,0.12,0.12,106927995.37,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+JPXN,iShares JPX-Nikkei 400 ETF,-,US4642873826,464287382,2001-10-23,0.48,0.48,105496718.14,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Developed,Japan,Index
+IDYN,iShares International Equity Factor Rotation Active ETF,BTPF916,US09290C6811,09290C681,2025-08-05,0.45,0.45,105017623.74,2025-11-28,Equity,Large/Mid Cap,Global,Developed,United States,Active
+EWO,iShares MSCI Austria ETF,-,US4642862027,464286202,1996-03-12,0.5,0.5,103965902.31,2025-11-28,Equity,All Cap,Europe,Developed,Austria,Index
+IBIE,iShares® iBonds® Oct 2028 Term TIPS ETF,-,US46438G7034,46438G703,2023-09-13,0.1,0.1,103596931.27,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+ECNS,iShares MSCI China Small-Cap ETF,-,US46429B2007,46429B200,2010-09-28,0.59,0.59,103230255.63,2025-11-28,Equity,Small Cap,Asia Pacific,Emerging,China,Index
+EPHE,iShares MSCI Philippines ETF,-,US46429B4086,46429B408,2010-09-28,0.59,0.59,102620204.27,2025-11-28,Equity,All Cap,Asia Pacific,Emerging,Philippines,Index
+IBIG,iShares® iBonds® Oct 2030 Term TIPS ETF,-,US46438G8859,46438G885,2023-09-19,0.1,0.1,91378887.59,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+IBLC,iShares Blockchain and Tech ETF,-,US46436E3615,46436E361,2022-04-25,0.47,0.47,90458013.14,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+BKF,iShares MSCI BIC ETF,-,US4642866572,464286657,2007-11-12,0.72,0.72,89690351.35,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+IBHJ,iShares® iBonds® 2030 Term High Yield and Income ETF,-,US46436E1221,46436E122,2023-06-21,0.35,0.35,89120947.87,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+GMMF,iShares Government Money Market ETF,-,US09290C7496,09290C749,2025-02-04,0.2,0.2,87433379.55,2025-11-28,Cash,Cash,North America,Developed,United States,Active
+KWT,iShares MSCI Kuwait ETF,-,US46436E8176,46436E817,2020-09-01,0.74,0.74,86769072.2,2025-11-28,Equity,All Cap,Kuwait,Emerging,Kuwait,Index
+IBIK,iShares® iBonds® Oct 2034 Term TIPS ETF,-,US46438G6796,46438G679,2024-05-22,0.1,0.1,86171696.25,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+VEGI,iShares MSCI Agriculture Producers ETF,-,US4642863504,464286350,2012-01-31,0.39,0.39,85779558.31,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+IFGL,iShares International Developed Real Estate ETF,-,US4642884898,464288489,2007-11-12,0.48,0.48,85704016,2025-11-28,Real Estate,Real Estate Securities,Global,Developed,Broad,Index
+IBGA,iShares® iBonds® Dec 2044 Term Treasury ETF,-,US46438G6382,46438G638,2024-06-11,0.07,0.07,84833310.26,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+BRHY,iShares High Yield Active ETF,-,US0925288682,092528868,2024-06-17,0.46,0.45,83244318.34,2025-11-28,Fixed Income,High Yield,Global,Developed,Broad,Active
+POWR,iShares U.S. Power Infrastructure ETF,-,US4642863439,464286343,2012-01-31,0.4,0.4,79549644.82,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+DMAX,iShares Large Cap Max Buffer Dec ETF,-,US46438G4718,46438G471,2024-12-31,0.53,0.5,77147612.52,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+BLCV,iShares Large Cap Value Active ETF,-,US09290C8718,09290C871,2023-05-19,0.55,0.46,74942361.09,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IBTQ,iShares® iBonds® Dec 2035 Term Treasury ETF,-,US46438G4221,46438G422,2025-03-25,0.07,0.07,74850795.98,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+BCLO,iShares BBB-B CLO Active ETF,-,US0925288500,092528850,2025-01-29,0.45,0.45,74614888.67,2025-11-28,Fixed Income,High Yield Bank Loan,North America,Developed,United States,Active
+EUHY,iShares Euro High Yield Corporate Bond USD Hedged ETF,-,US4642862100,464286210,2012-04-03,0.35,0.35,71183950.69,2025-11-28,Fixed Income,High Yield,Global,Developed,Broad,Index
+LQDI,iShares Inflation Hedged Corporate Bond ETF,-,US46431W5803,46431W580,2018-05-08,0.33,0.18,70883461.84,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ENZL,iShares MSCI New Zealand ETF,-,US4642891232,464289123,2010-09-01,0.5,0.5,70587501.94,2025-11-28,Equity,All Cap,Asia Pacific,Developed,New Zealand,Index
+ISVL,iShares International Developed Small Cap Value Factor ETF,-,US46436E5107,46436E510,2021-03-23,0.31,0.31,69740970.04,2025-11-28,Equity,Small Cap,Global,Developed,Broad,Index
+QAT,iShares MSCI Qatar ETF,-,US46434V7799,46434V779,2014-04-29,0.6,0.6,68731581.96,2025-11-28,Equity,All Cap,Middle East and Africa,Emerging,Qatar,Index
+IBIC,iShares® iBonds® Oct 2026 Term TIPS ETF,-,US46438G5053,46438G505,2023-09-13,0.1,0.1,66989432.32,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+EIRL,iShares MSCI Ireland ETF,-,US46429B5075,46429B507,2010-05-05,0.5,0.5,65249051.75,2025-11-28,Equity,All Cap,Europe,Developed,Broad,Index
+ITDC,iShares® LifePath® Target Date 2035 ETF,-,US46438G8107,46438G810,2023-10-17,0.1,0.1,63561090.03,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+SVAL,iShares US Small Cap Value Factor ETF,-,US46436E5362,46436E536,2020-10-27,0.2,0.2,61639007.22,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+IBID,iShares® iBonds® Oct 2027 Term TIPS ETF,-,US46438G6044,46438G604,2023-09-13,0.1,0.1,59847042.12,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+BRLN,iShares Floating Rate Loan Active ETF,-,US0925284053,092528405,2022-10-04,0.63,0.55,59698109.09,2025-11-28,Fixed Income,High Yield Bank Loan,North America,Developed,United States,Active
+ITDD,iShares® LifePath® Target Date 2040 ETF,-,US46438G7943,46438G794,2023-10-17,0.11,0.11,54966259.61,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+DVYA,iShares Asia/Pacific Dividend ETF,-,US4642862936,464286293,2012-02-23,0.49,0.49,54676818.45,2025-11-28,Equity,All Cap,Asia Pacific,Developed,Broad,Index
+IBIF,iShares® iBonds® Oct 2029 Term TIPS ETF,-,US46438G8024,46438G802,2023-09-19,0.1,0.1,53944934.94,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+ITDE,iShares® LifePath® Target Date 2045 ETF,-,US46438G7869,46438G786,2023-10-17,0.11,0.11,49076124.14,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+LQDB,iShares BBB Rated Corporate Bond ETF,-,US46436E4944,46436E494,2021-05-18,0.15,0.15,48377491.55,2025-11-28,Fixed Income,Credit,North America,Developed,United States,Index
+ITDF,iShares® LifePath® Target Date 2050 ETF,-,US46438G7786,46438G778,2023-10-17,0.11,0.11,45747086.61,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+ITDB,iShares® LifePath® Target Date 2030 ETF,-,US46438G8289,46438G828,2023-10-17,0.09,0.09,45538851.46,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+BEMB,iShares J.P. Morgan Broad USD Emerging Markets Bond ETF,-,US46436E2625,46436E262,2023-02-22,0.15,0.15,43460492.52,2025-11-28,Fixed Income,Corporates,Global,Emerging,Broad,Index
+GGOV,iShares Global Government Bond USD Hedged Active ETF,-,US0925288351,092528835,2025-06-25,0.4,0.39,43434970.22,2025-11-28,Fixed Income,Flexible,Global,Developed,Broad,Active
+EWUS,iShares MSCI United Kingdom Small-Cap ETF,-,US46429B4169,46429B416,2012-01-25,0.59,0.59,41087410.68,2025-11-28,Equity,Small Cap,Europe,Developed,United Kingdom,Index
+TCHI,iShares MSCI China Multisector Tech ETF,-,US46436E4290,46436E429,2022-01-25,0.59,0.59,40370086.45,2025-11-28,Equity,Large/Mid Cap,Asia Pacific,Emerging,China,Index
+IDEF,iShares Defense Industrials Active ETF,-,US09290C6993,09290C699,2025-05-19,0.55,0.55,40350284.05,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+ENOR,iShares MSCI Norway ETF,-,US46429B4995,46429B499,2012-01-23,0.53,0.53,40052280.18,2025-11-28,Equity,All Cap,Europe,Developed,Norway,Index
+IBIJ,iShares® iBonds® Oct 2033 Term TIPS ETF,-,US46438G8511,46438G851,2023-09-19,0.1,0.1,39468786.7,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+IBHK,iShares® iBonds® 2031 Term High Yield and Income ETF,-,US46438G6614,46438G661,2024-05-22,0.35,0.35,38853327.02,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+BLCR,iShares Large Cap Core Active ETF,-,US09290C8551,09290C855,2023-10-24,0.38,0.36,38282423.07,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+BREM,iShares Emerging Markets Bond Active ETF,-,US0925288278,092528827,2025-10-15,0.5,0.5,38277324.37,2025-11-28,Fixed Income,Flexible,Global,Emerging,United States,Active
+IRTR,iShares® LifePath® Retirement ETF,-,US46438G8446,46438G844,2023-10-17,0.08,0.08,37826455.31,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+IBMT,iShares® iBonds® Dec 2031 Term Muni Bond ETF,-,US46438G3561,46438G356,2025-03-25,0.18,0.18,37534063.58,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+EAOA,iShares ESG Aware 80/20 Aggressive Allocation ETF,-,US46436E6683,46436E668,2020-06-12,0.34,0.18,34227466.94,2025-11-28,Multi Asset,Multi Strategy,North America,Developed,United States,Index
+MMAX,iShares Large Cap Max Buffer Mar ETF,-,US46438G4551,46438G455,2025-03-31,0.53,0.5,33755101.34,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IBIH,iShares® iBonds® Oct 2031 Term TIPS ETF,-,US46438G8776,46438G877,2023-09-19,0.1,0.1,33027158.18,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+IWMW,iShares Russell 2000 BuyWrite ETF,-,US46438G6952,46438G695,2024-03-14,0.39,0.39,32616532.96,2025-11-28,Equity,Small Cap,North America,Developed,United States,Index
+LDEM,iShares ESG MSCI EM Leaders ETF,-,US46436E6014,46436E601,2020-02-05,0.17,0.17,32517695.83,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+INRO,iShares U.S. Industry Rotation Active ETF,-,US09290C8304,09290C830,2024-03-26,0.42,0.42,32214082.75,2025-11-28,Equity,All Cap,North America,Developed,United States,Active
+TEK,iShares Technology Opportunities Active ETF,-,US09290C7728,09290C772,2024-10-21,0.77,0.75,32001610.1,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+ITDG,iShares® LifePath® Target Date 2055 ETF,-,US46438G7604,46438G760,2023-10-17,0.12,0.12,31081870.62,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+IEDI,iShares U.S. Consumer Focused ETF,-,US46431W6637,46431W663,2018-03-21,0.18,0.18,30429257.37,2025-11-28,Equity,All Cap,North America,Developed,United States,Active
+EFNL,iShares MSCI Finland ETF,-,US46429B5158,46429B515,2012-01-25,0.55,0.55,29652816.26,2025-11-28,Equity,All Cap,Europe,Developed,Finland,Index
+LMUB,iShares Long-Term National Muni Bond ETF,-,US46438G4486,46438G448,2025-03-17,0.09,0.09,29098320.85,2025-11-28,Fixed Income,Municipals,North America,Developed,United States,Index
+IBII,iShares® iBonds® Oct 2032 Term TIPS ETF,-,US46438G8693,46438G869,2023-09-19,0.1,0.1,28807102.24,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+MADE,iShares U.S. Manufacturing ETF,-,US46438G5962,46438G596,2024-07-17,0.4,0.4,27756513.84,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+STEN,iShares Large Cap 10% Target Buffer Sep ETF,-,US46438G3157,46438G315,2025-09-30,0.53,0.5,26513757,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+EAOR,iShares ESG Aware 60/40 Balanced Allocation ETF,-,US46436E6766,46436E676,2020-06-12,0.32,0.18,25750530.22,2025-11-28,Multi Asset,Multi Strategy,North America,Developed,United States,Index
+EGUS,iShares ESG Aware MSCI USA Growth ETF,-,US46436E2393,46436E239,2023-01-31,0.18,0.18,25583149.66,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+EWK,iShares MSCI Belgium ETF,-,US4642863017,464286301,1996-03-12,0.5,0.5,23315308.05,2025-11-28,Equity,All Cap,Europe,Developed,Belgium,Index
+IBIL,iShares® iBonds® Oct 2035 Term TIPS ETF,-,US46438G3801,46438G380,2025-03-25,0.1,0.1,23255852.8,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+LDRT,iShares® iBonds® 1-5 Year Treasury Ladder ETF,-,US46438G5210,46438G521,2024-11-07,0.07,0.07,22846448.44,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+EUIG,iShares Euro Investment Grade Corporate Bond USD Hedged ETF,-,US46438G2654,46438G265,2025-11-04,0.18,0.18,22050546.83,2025-11-28,Fixed Income,Flexible,Global,Developed,United States,Index
+ITDH,iShares® LifePath® Target Date 2060 ETF,-,US46438G7521,46438G752,2023-10-17,0.12,0.12,21965187.37,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+ISMF,iShares Managed Futures Active ETF,-,US09290C7314,09290C731,2025-03-12,0.8,0.8,21766052.73,2025-11-28,Multi Asset,Multi Strategy,Global,Developed,Broad,Active
+BILT,iShares Infrastructure Active ETF,-,US09290C6738,09290C673,2025-07-29,0.6,0.6,20230984.03,2025-11-28,Equity,Large Cap,Global,Developed,Broad,Active
+ITDI,iShares® LifePath® Target Date 2065 ETF,-,US46438G7455,46438G745,2023-10-17,0.12,0.12,17415200.36,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+QNXT,iShares Nasdaq-100 ex Top 30 ETF,-,US46438G5541,46438G554,2024-10-23,0.2,0.2,16568568.29,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+TOPC,iShares S&P 500 3% Capped ETF,-,US46438G3496,46438G349,2025-04-15,0.15,0.09,15534614.26,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+TEND,iShares Large Cap 10% Target Buffer Dec ETF,-,US46438G2993,46438G299,2025-10-07,0.53,0.5,15208276.32,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+TWOX,iShares Large Cap Accelerated Outcome ETF,-,US46438G4635,46438G463,2025-01-15,0.53,0.5,14490325.43,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Active
+XOEF,iShares S&P 500 ex S&P 100 ETF,-,US46438G3231,46438G323,2025-07-08,0.2,0.2,14448369.59,2025-11-28,Equity,Large Cap,North America,Developed,United States,Index
+CORO,iShares International Country Rotation Active ETF,-,US09290C7645,09290C764,2024-12-03,1.06,0.55,14266357.19,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Active
+TEXN,iShares Texas Equity ETF,-,US46438G3314,46438G331,2025-06-23,0.2,0.2,13048907,2025-11-28,Equity,All Cap,North America,Developed,United States,Index
+ILIT,iShares Lithium Miners and Producers ETF,-,US46436E1718,46436E171,2023-06-21,0.47,0.47,12290276.59,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+TMET,iShares Transition-Enabling Metals ETF,-,US46431W5159,46431W515,2023-09-26,0.49,0.48,11751460.09,2025-11-28,Commodity,Multi Commodity,Global,Developed,Broad,Index
+LDRC,iShares® iBonds® 1-5 Year Corporate Ladder ETF,-,US46438G5392,46438G539,2024-11-07,0.1,0.1,11668522.49,2025-11-28,Fixed Income,Corporates,North America,Developed,United States,Index
+IBHL,iShares® iBonds® 2032 Term High Yield and Income ETF,-,US46438G3645,46438G364,2025-03-25,0.35,0.35,11573804.92,2025-11-28,Fixed Income,High Yield,North America,Developed,United States,Index
+TENJ,iShares Large Cap 10% Target Buffer Jun ETF,-,US46438G2811,46438G281,2025-10-21,0.53,0.5,11145705.4,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IBAT,iShares Energy Storage & Materials ETF,-,US46438G7372,46438G737,2024-03-19,0.47,0.47,10795358.92,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+BPAY,iShares FinTech Active ETF,-,US09290C8890,09290C889,2022-08-16,0.66,0.55,10545522.18,2025-11-28,Equity,All Cap,Global,Developed,Broad,Active
+LDRI,iShares® iBonds® 1-5 Year TIPS Ladder ETF,-,US46438G5137,46438G513,2024-11-07,0.1,0.1,10196945.55,2025-11-28,Fixed Income,Inflation,North America,Developed,United States,Index
+ERET,iShares Environmentally Aware Real Estate ETF,-,US46436E2708,46436E270,2022-11-15,0.3,0.3,9932124.54,2025-11-28,Real Estate,Real Estate Securities,Global,Developed,Broad,Index
+EQLT,iShares MSCI Emerging Markets Quality Factor ETF,-,US46438G1094,46438G109,2024-09-04,0.35,0.35,9654255.51,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+EVLU,iShares MSCI Emerging Markets Value Factor ETF,-,US46438G2084,46438G208,2024-09-04,0.35,0.35,9639320.05,2025-11-28,Equity,Large/Mid Cap,Global,Emerging,Broad,Index
+BGRO,iShares Large Cap Growth Active ETF,-,US09290C7983,09290C798,2024-06-04,0.55,0.55,8651275.64,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+BELT,iShares U.S. Select Equity Active ETF,-,US09290C8148,09290C814,2024-06-17,0.75,0.75,8420600.52,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+EAOK,iShares ESG Aware 30/70 Conservative Allocation ETF,-,US46436E6923,46436E692,2020-06-12,0.3,0.18,8316726.59,2025-11-28,Multi Asset,Multi Strategy,North America,Developed,United States,Index
+EMIF,iShares Emerging Markets Infrastructure ETF,-,US4642882165,464288216,2009-06-16,0.6,0.6,8179712.03,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+ENHU,iShares Enhanced Large Cap Core Active ETF,-,US09290C6571,09290C657,2025-11-04,0.22,0.22,8064532.65,2025-11-28,Equity,Large Cap,North America,Developed,United States,Active
+IVRS,iShares Future Metaverse Tech and Communications ETF,-,US46436E2476,46436E247,2023-02-14,0.47,0.47,7663290.13,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+IBGB,iShares® iBonds® Dec 2045 Term Treasury ETF,-,US46438G4148,46438G414,2025-03-25,0.07,0.07,7589597.56,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+EAOM,iShares ESG Aware 40/60 Moderate Allocation ETF,-,US46436E6840,46436E684,2020-06-12,0.31,0.18,7568347.98,2025-11-28,Multi Asset,Multi Strategy,North America,Developed,United States,Index
+ESMV,iShares ESG Optimized MSCI USA Min Vol Factor ETF,-,US46436E4456,46436E445,2021-11-02,0.18,0.18,7274109.4,2025-11-28,Equity,Large/Mid Cap,North America,Developed,United States,Index
+ITDJ,iShares® LifePath® Target Date 2070 ETF,-,US46438G4890,46438G489,2024-11-12,0.12,0.12,6462448.9,2025-11-28,Multi Asset,Target Date,Global,Developed,Broad,Active
+BMED,iShares Health Innovation Active ETF,-,US09290C4006,09290C400,2020-09-29,0.77,0.55,6187823.68,2025-11-28,Equity,Mid/Small Cap,Global,Developed,Broad,Active
+EFRA,iShares Environmental Infrastructure and Industrials ETF,-,US46436E2542,46436E254,2022-11-01,0.47,0.47,5442448.89,2025-11-28,Equity,All Cap,Global,Developed,Broad,Index
+AGRH,iShares Interest Rate Hedged U.S. Aggregate Bond ETF,-,US46431W5316,46431W531,2022-06-22,0.16,0.13,5238177.65,2025-11-28,Fixed Income,Multi Sectors,North America,Developed,United States,Index
+IBGL,iShares® iBonds® Dec 2055 Term Treasury ETF,-,US46438G3983,46438G398,2025-03-25,0.07,0.07,5004742.12,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+LDRH,iShares® iBonds® 1-5 Year High Yield and Income Ladder ETF,-,US46438G5475,46438G547,2024-11-07,0.35,0.35,5002051.56,2025-11-28,Fixed Income,Corporates,North America,Developed,United States,Index
+IBRN,iShares Neuroscience and Healthcare ETF,-,US46436E3532,46436E353,2022-08-24,0.47,0.47,4761135.04,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+ETEC,iShares Breakthrough Environmental Solutions ETF,-,US46436E1973,46436E197,2023-03-28,0.47,0.47,3936321.9,2025-11-28,Equity,All Cap,Global,Emerging,Broad,Index
+IBGK,iShares® iBonds® Dec 2054 Term Treasury ETF,-,US46438G6200,46438G620,2024-06-11,0.07,0.07,3651878.93,2025-11-28,Fixed Income,Government,North America,Developed,United States,Index
+ICPI,iShares 0-1 Year TIPS Bond ETF,-,US46438G2571,46438G257,2025-11-19,0.09,0.09,1502611.35,2025-11-28,Fixed Income,Flexible,North America,Developed,United States,Index
