@@ -4,278 +4,341 @@ Copy and paste this into a new Claude session to quickly load context and begin 
 
 -----
 
-## Version 1: Full Context Load (Desktop Sessions)
+## iPhone App - Quick Start (Primary Mode) 📱
 
-```
-I'm working on QuantETF. Please read these files to load project context:
-
-1. Project instructions:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-
-2. Current progress:
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
-
-Once you've read both files, let me know you're ready and summarize:
-- Current project phase
-- What was accomplished in the last session
-- What we should focus on today
-
-Then I'll give you today's specific task.
-```
-
------
-
-## Version 2: Quick Start (Mobile Sessions)
+**Use this for most mobile sessions:**
 
 ```
 QuantETF project - read context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
 
-Current status:
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
 
 Today's goal: [ADD YOUR GOAL HERE]
 
 Ready to work on this?
 ```
 
------
-
-## Version 3: Continuing Previous Session
-
-```
-QuantETF project - continuing from previous session.
-
-Read current context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-
-Read progress log:
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
-
-Also read the last session note:
-https://raw.githubusercontent.com/mikemsq/qetf/main/session-notes/[DATE]-[description].md
-
-Based on the handoff notes from that session, let's continue with: [SPECIFIC TASK]
-```
+**Copy-paste tip for iPhone:** Long-press the text above, select all, copy, then paste into Claude app.
 
 -----
 
-## Version 4: Code Review Session
+## iPhone App - Continuing Previous Work 📱
 
 ```
-QuantETF - Code Review Session
+QuantETF - continuing from previous session.
 
-Load project standards:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
+Context:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
 
-I need you to review code for: [FEATURE/FILE NAME]
+Last session:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/session-notes/[DATE]-[description].md
 
-Review checklist:
-- Follows CLAUDE_CONTEXT.md coding standards
-- Handles errors appropriately
-- Has adequate comments
+Based on handoff notes, let's continue with: [SPECIFIC TASK]
+```
+
+-----
+
+## iPhone App - Planning Session 📱
+
+```
+QuantETF - Planning
+
+Load:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROJECT_BRIEF.md
+
+Plan: [FEATURE/GOAL]
+
+Help me:
+1. Break into tasks
+2. Technical requirements
+3. Implementation approach
+4. Estimate effort
+5. Identify challenges
+```
+
+-----
+
+## iPhone App - Code Review 📱
+
+```
+QuantETF - Code Review
+
+Standards:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+
+Review: [FILE/FEATURE NAME]
+
+Check:
+- Follows standards
+- Error handling
+- Comments clear
 - No security issues
-- Considers edge cases
-- Performance is acceptable
+- Edge cases
+- Performance
 
-Here's the code to review:
+Code:
 [PASTE CODE]
 ```
 
 -----
 
-## Version 5: Planning Session
+## iPhone Quick Reference 📱
+
+**Essential URLs (bookmark these):**
+
+**Core docs:**
+
+- Context: https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+- Progress: https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
+- Brief: https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROJECT_BRIEF.md
+
+**Session notes:**
+
+- Index: https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/session-notes/README.md
+- Latest: https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/session-notes/[LATEST-DATE].md
+
+-----
+
+## Desktop - Full Context Load
+
+**Use for deep work sessions:**
 
 ```
-QuantETF - Planning Session
+I'm working on QuantETF. Please read these files:
 
-Load project context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROJECT_BRIEF.md
+Project instructions:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
 
-I want to plan: [FEATURE/GOAL]
+Current progress:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
 
-Please help me:
-1. Break this down into smaller tasks
-2. Identify technical requirements
-3. Suggest implementation approach
-4. Estimate complexity/effort
-5. Identify potential challenges
+Project overview:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROJECT_BRIEF.md
 
-Let's work through a detailed plan before any coding.
+Once loaded, summarize:
+- Current project phase
+- Last session accomplishments
+- Today's focus area
+
+Then I'll provide the specific task.
 ```
 
 -----
 
-## Version 6: Bug Fix Session
-
-```
-QuantETF - Bug Fix
-
-Load context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-
-I'm experiencing this bug:
-[DESCRIBE BUG]
-
-Steps to reproduce:
-1. [Step 1]
-2. [Step 2]
-
-Expected behavior: [What should happen]
-Actual behavior: [What actually happens]
-
-Relevant code:
-[PASTE CODE IF AVAILABLE]
-
-Help me:
-1. Diagnose the root cause
-2. Propose a fix
-3. Identify similar issues elsewhere
-4. Suggest how to prevent this in future
-```
-
------
-
-## Version 7: Documentation Session
-
-```
-QuantETF - Documentation Update
-
-Read project files:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
-
-I need to update documentation for: [WHAT CHANGED]
-
-Please help me update:
-- [ ] README.md (if user-facing changes)
-- [ ] CLAUDE_CONTEXT.md (if new patterns/mistakes to document)
-- [ ] Code comments (if complex logic added)
-- [ ] Session notes (create summary of what was done)
-
-Context on what was built:
-[BRIEF DESCRIPTION]
-```
-
------
-
-## Version 8: Feature Implementation (With Plan)
+## Desktop - Feature Implementation
 
 ```
 QuantETF - Feature Implementation
 
 Load context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
 
-Feature to implement: [FEATURE NAME]
+Feature: [FEATURE NAME]
 
-The plan (from planning session):
+The plan:
 [PASTE PLAN OR LINK TO SESSION NOTE]
 
 Current branch: [BRANCH NAME]
 
-Let's implement this step by step. Start with: [FIRST STEP]
+Let's implement step by step. Start with: [FIRST STEP]
 ```
 
 -----
 
-## Version 9: Testing Session
+## Desktop - Bug Fix Session
 
 ```
-QuantETF - Testing Session
+QuantETF - Bug Fix
 
 Context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
 
-Feature to test: [FEATURE NAME]
+Bug: [DESCRIBE BUG]
 
-Test requirements:
+Steps to reproduce:
+1. [Step 1]
+2. [Step 2]
+
+Expected: [What should happen]
+Actual: [What actually happens]
+
+Code:
+[PASTE RELEVANT CODE]
+
+Help me:
+1. Diagnose root cause
+2. Propose fix
+3. Find similar issues
+4. Prevent future occurrences
+```
+
+-----
+
+## Desktop - Testing Session
+
+```
+QuantETF - Testing
+
+Context:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+
+Test: [FEATURE NAME]
+
+Requirements:
 - [ ] Happy path works
 - [ ] Error cases handled
 - [ ] Edge cases covered
 - [ ] Performance acceptable
-- [ ] No console errors
+- [ ] No errors in logs
 
-Help me create a comprehensive testing plan and test cases.
+Create comprehensive test plan and test cases.
 ```
 
 -----
 
-## Version 10: End of Week Review
+## Desktop - Documentation Update
+
+```
+QuantETF - Documentation
+
+Project files:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
+
+Update docs for: [WHAT CHANGED]
+
+Update:
+- [ ] README.md (if user-facing)
+- [ ] CLAUDE_CONTEXT.md (new patterns/mistakes)
+- [ ] Code comments (complex logic)
+- [ ] Session notes (summary)
+
+What was built:
+[BRIEF DESCRIPTION]
+```
+
+-----
+
+## Desktop - End of Week Review
 
 ```
 QuantETF - Week Review
 
-Read progress:
-https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
+Progress log:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
 
-Read project context:
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
+Context:
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
 
 Help me:
-1. Summarize what was accomplished this week
-2. Update the weekly summary in PROGRESS_LOG.md
-3. Identify patterns/mistakes to add to CLAUDE_CONTEXT.md
+1. Summarize week's accomplishments
+2. Update weekly summary in PROGRESS_LOG.md
+3. Add patterns/mistakes to CLAUDE_CONTEXT.md
 4. Plan next week's priorities
-5. Assess if we're on track for project goals
+5. Assess progress toward goals
 ```
 
 -----
 
-## Customization Guide
+## Usage Tips
 
-**For your specific session, customize:**
+### For iPhone Sessions:
 
-1. Choose the version that matches your session type
-1. Replace `[BRACKETED PLACEHOLDERS]` with specifics
-1. Add/remove file URLs as needed
-1. Adjust the checklist or questions to your needs
+- **Use the top sections** - optimized for mobile
+- **Keep it short** - iPhone is for quick iterations
+- **Focus on one thing** - planning, reviewing, or light coding
+- **Save longer work** for desktop sessions
 
-**Pro Tips:**
+### For Desktop Sessions:
 
-- Save commonly used versions in your notes app for quick copy-paste
-- Mobile sessions: Use Version 2 (Quick Start) for speed
-- Desktop sessions: Use Version 1 (Full Context) for thorough work
-- Always include CLAUDE_CONTEXT.md and PROGRESS_LOG.md URLs
-- For continuing work, link to the previous session note
+- **Load full context** - all three main files
+- **Deeper work** - complex features, refactoring, testing
+- **Multiple parallel tabs** - work on different features
+- **Detailed documentation** - comprehensive session notes
 
------
+### Session Type Guide:
 
-## Mobile Quick Access
-
-**Bookmark these URLs on mobile:**
-
-- CLAUDE_CONTEXT: https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
-- PROGRESS_LOG: https://raw.githubusercontent.com/mikemsq/qetf/main/PROGRESS_LOG.md
-- PROJECT_BRIEF: https://raw.githubusercontent.com/mikemsq/qetf/main/PROJECT_BRIEF.md
-
-Then you can quickly copy-paste into Claude mobile sessions.
+- **Morning (iPhone):** Planning, review yesterday’s work
+- **Midday (iPhone):** Quick check-ins, code reviews
+- **Afternoon (Desktop):** Implementation, testing, deep work
+- **Evening (iPhone):** Update logs, prepare handoffs
 
 -----
 
-## Session Starter Checklist
+## Pro Tips for iPhone
 
-Before starting each session:
+1. **Create iOS Shortcut** to paste session starter
+1. **Bookmark URLs** in Safari for quick access
+1. **Use Siri** to open Claude app + paste from clipboard
+1. **Keep sessions focused** - one goal per mobile session
+1. **Switch to desktop** for code generation or complex debugging
 
-**Morning:**
+-----
 
-- [ ] Update PROGRESS_LOG.md with today’s date
-- [ ] Review yesterday’s handoff notes
-- [ ] Choose appropriate session starter version
-- [ ] Start 2-3 parallel sessions with different focuses
+## Daily Workflow
 
-**During Day:**
+### Morning Routine (5 min - iPhone):
 
-- [ ] Check mobile sessions periodically
-- [ ] Update session notes as you go
-- [ ] Rotate through desktop tabs
+1. Open Claude app
+1. Paste “iPhone Quick Start” template
+1. Fill in today’s goal
+1. Review context summary
+1. Get started
 
-**Evening:**
+### During Day (iPhone + Desktop):
 
-- [ ] Complete session notes
-- [ ] Update PROGRESS_LOG.md
-- [ ] Prepare handoff for tomorrow
-- [ ] Update CLAUDE_CONTEXT.md if needed
+- **iPhone:** Check progress, light reviews, planning
+- **Desktop:** Heavy implementation, testing, debugging
+- Rotate between 2-3 desktop tabs for parallel work
+
+### Evening Routine (10 min - iPhone):
+
+1. Review all sessions’ output
+1. Update PROGRESS_LOG.md via GitHub Mobile
+1. Create session note via GitHub Mobile
+1. Set tomorrow’s priorities
+
+-----
+
+## Customization
+
+**Replace these placeholders:**
+
+- `[ADD YOUR GOAL HERE]` - Today’s specific goal
+- `[DATE]` - YYYY-MM-DD format
+- `[description]` - Brief session description
+- `[FEATURE NAME]` - Feature being worked on
+- `[BRANCH NAME]` - Git branch name
+- `[PASTE CODE]` - Actual code to review/debug
+
+**Add/remove URLs:**
+
+- Include additional files if needed for specific sessions
+- Remove PROJECT_BRIEF.md if not needed for quick sessions
+
+-----
+
+## Session Quality Checklist
+
+**Before ending any session:**
+
+- [ ] Goal was clear and achieved (or blocked documented)
+- [ ] PROGRESS_LOG.md updated
+- [ ] Session note created (for substantial work)
+- [ ] Handoff notes clear for next session
+- [ ] CLAUDE_CONTEXT.md updated (if new patterns/mistakes)
+
+-----
+
+## Emergency Quick Reference
+
+**If stuck, always provide Claude these 3 URLs:**
+
+1. https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
+1. https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md
+1. https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROJECT_BRIEF.md
