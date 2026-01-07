@@ -1,6 +1,6 @@
 # CLAUDE_CONTEXT.md
 
-**Last Updated:** January 6, 2026  
+**Last Updated:** January 7, 2026  
 **Project:** QuantETF
 
 -----
@@ -10,7 +10,7 @@
 This file contains instructions and context for Claude across all sessions. Read this file at the start of every session by fetching:
 
 ```
-https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
 ```
 
 Always check PROGRESS_LOG.md for current status.
@@ -20,37 +20,56 @@ Always check PROGRESS_LOG.md for current status.
 ## Project Overview
 
 **What we’re building:**  
-QuantETF - [Add one sentence description of what QuantETF does]
+QuantETF - A modular quantitative investment platform for ETF-based strategies with backtesting, research tools, and automated rebalancing recommendations to exceed S&P 500 returns.
 
 **Current phase:**  
 Planning / Initial Development
 
 **Tech stack:**
 
-- Frontend: [e.g., React, Vue, or vanilla JS]
-- Backend: [e.g., Python/Flask, Node.js, or serverless]
-- Database: [e.g., PostgreSQL, MongoDB, or Firebase]
-- Data Sources: [e.g., APIs for ETF/market data]
-- Hosting: [e.g., Vercel, AWS, Heroku]
+- **Language:** Python 3.x
+- **Package Manager:** uv
+- **Data Processing:** pandas, numpy
+- **Backtesting:** Custom engine in src/quantetf/backtest
+- **Data Sources:** TBD (ETF pricing and fundamentals APIs)
+- **Notebooks:** Jupyter for research and exploration
+- **Testing:** pytest
+- **Version Control:** Git/GitHub
 
 -----
 
 ## Project Files Structure
 
 ```
-QuantETF/
+qetf/
 ├── PROJECT_BRIEF.md          # Strategic overview and goals
 ├── CLAUDE_CONTEXT.md         # This file - read first
 ├── PROGRESS_LOG.md           # Daily updates - check current status
 ├── README.md                 # Public-facing documentation
-├── /docs                     # Additional documentation
-│   └── /decisions            # Architecture decision records
+├── pyproject.toml            # Python dependencies and config
+├── uv.lock                   # Locked dependency versions
+├── /configs                  # Strategy and universe configs (YAML)
+├── /data                     # Data storage
+│   ├── /raw                  # Immutable ingested data
+│   ├── /curated              # Cleaned, normalized data
+│   └── /snapshots            # Versioned point-in-time datasets
+├── /artifacts                # Output bundles (metrics, plots, recommendations)
+├── /notebooks                # Jupyter notebooks for research
+├── /scripts                  # Utility scripts (ingest, backtest, etc.)
 ├── /session-notes            # Notes from each Claude session
-├── /src                      # Source code
-│   ├── /components           # UI components
-│   ├── /services             # Business logic/API calls
-│   └── /utils                # Helper functions
-└── /tests                    # Test files
+├── /src/quantetf             # Main library code
+│   ├── /data                 # Data ingestion and connectors
+│   ├── /universe             # Universe builders and filters
+│   ├── /features             # Feature engineering
+│   ├── /alpha                # Alpha models
+│   ├── /risk                 # Risk models and covariance
+│   ├── /portfolio            # Portfolio construction
+│   ├── /backtest             # Backtest engine
+│   ├── /evaluation           # Metrics and reporting
+│   ├── /production           # Production runtime
+│   ├── /cli                  # Command line interface
+│   └── /utils                # Shared utilities
+└── /tests                    # Unit and integration tests
 ```
 
 -----
@@ -62,28 +81,30 @@ QuantETF/
 - Read the full requirements before starting
 - Ask clarifying questions if anything is ambiguous
 - Propose a plan before writing code
-- Consider data accuracy and financial calculation precision
+- **Critical for quant:** Prevent lookahead bias and data leakage
 
 ### 2. Keep it simple
 
 - Use the simplest solution that works
 - Avoid over-engineering
 - Write clear, readable code over clever code
-- Financial calculations should be transparent and verifiable
+- Financial calculations must be transparent and verifiable
 
 ### 3. Document as you go
 
 - Update PROGRESS_LOG.md after completing tasks
-- Add comments for complex financial logic
-- Document decisions in /docs/decisions/
-- Explain data sources and calculation methods
+- Add docstrings for all functions and classes
+- Document decisions in /docs/decisions/ (if needed)
+- Explain calculation methods and data sources
+- Document “as-of” dates for all point-in-time operations
 
 ### 4. Test your work
 
-- Verify financial calculations with known test cases
-- Test edge cases (market closures, missing data, etc.)
-- [Add specific testing commands once established]
-- Validate data accuracy against source
+- Write tests for financial calculations with known expected values
+- Test edge cases (missing data, market holidays, boundary conditions)
+- Validate against synthetic datasets with known outcomes
+- Run: `pytest tests/` before committing
+- Check for lookahead bias in backtests
 
 -----
 
@@ -91,30 +112,48 @@ QuantETF/
 
 ### Style Guide
 
-- **Language:** [Specify: JavaScript/TypeScript/Python]
-- **Formatting:** 2 spaces, semicolons (if JS), single quotes
+- **Language:** Python 3.x
+- **Formatting:** Follow PEP 8, use Black formatter (4 spaces)
+- **Type hints:** Use type annotations for function signatures
 - **Naming conventions:**
-  - Variables: camelCase (e.g., `portfolioValue`)
-  - Functions: camelCase (e.g., `calculateReturns`)
-  - Components: PascalCase (e.g., `ETFDashboard`)
+  - Variables: snake_case (e.g., `portfolio_value`, `etf_data`)
+  - Functions: snake_case (e.g., `calculate_returns`, `fetch_prices`)
+  - Classes: PascalCase (e.g., `UniverseProvider`, `AlphaModel`)
   - Constants: UPPER_SNAKE_CASE (e.g., `API_KEY`, `MAX_RETRIES`)
-  - Files: kebab-case.js (e.g., `portfolio-calculator.js`)
+  - Files: snake_case.py (e.g., `portfolio_constructor.py`)
+  - Private methods: _leading_underscore
 
 ### Code Organization
 
-- One component/function per file when reasonable
-- Keep files under 200 lines when possible
+- One class per file when practical
+- Keep modules under 300 lines when possible
 - Group related functionality together
 - Separate data fetching from calculation logic
-- Keep UI separate from business logic
+- Keep business logic separate from I/O operations
+- Use dataclasses for data containers
 
-### Comments
+### Documentation
 
-- Write self-documenting code first
+- Write clear docstrings for all public functions/classes
+- Use Google-style docstrings:
+  
+  ```python
+  def calculate_returns(prices: pd.DataFrame) -> pd.Series:
+      """Calculate returns from price series.
+      
+      Args:
+          prices: DataFrame with datetime index and price columns
+          
+      Returns:
+          Series of percentage returns
+          
+      Raises:
+          ValueError: If prices contain NaN or negative values
+      """
+  ```
 - Add comments for “why”, not “what”
-- **Always explain financial formulas and calculations**
-- Document data source expectations and formats
-- Use JSDoc/docstrings for functions
+- **Always document financial formulas and assumptions**
+- Document data sources and expected formats
 
 -----
 
@@ -122,14 +161,16 @@ QuantETF/
 
 ✅ Read PROGRESS_LOG.md before starting work  
 ✅ Check if similar code exists before creating new patterns  
-✅ Run tests before marking work complete  
+✅ Run tests before marking work complete (`pytest tests/`)  
 ✅ Update PROGRESS_LOG.md when finishing a task  
 ✅ Create small, focused commits with clear messages  
-✅ Add error handling for API calls and data fetching  
-✅ Validate financial data before calculations  
-✅ Consider edge cases (missing data, market holidays, API failures)  
-✅ Use precise number types for financial calculations (avoid floating point errors)  
-✅ Document data sources and assumptions
+✅ Add error handling for data fetching and API calls  
+✅ Validate input data before calculations  
+✅ Use explicit `as_of` dates for all point-in-time operations  
+✅ Consider edge cases (missing data, market holidays, delisted ETFs)  
+✅ Use appropriate numeric types (avoid float precision issues for money)  
+✅ Document data sources and assumptions  
+✅ Check for lookahead bias in backtests
 
 -----
 
@@ -139,80 +180,177 @@ QuantETF/
 ❌ Don’t delete or comment out code without discussion  
 ❌ Don’t introduce new dependencies without noting in PROGRESS_LOG.md  
 ❌ Don’t commit broken/non-functional code  
-❌ Don’t ignore errors or warnings from APIs  
-❌ Don’t hardcode API keys or sensitive credentials  
-❌ Don’t skip data validation steps  
-❌ Don’t use imprecise number types for money/percentages  
+❌ Don’t ignore errors or warnings  
+❌ Don’t hardcode API keys or credentials (use environment variables)  
+❌ Don’t skip input validation  
+❌ Don’t use future data in backtests (lookahead bias)  
 ❌ Don’t make financial calculations without documenting the formula  
-❌ Don’t cache stale financial data without timestamps
+❌ Don’t use mutable default arguments in Python  
+❌ Don’t ignore timezone issues with financial data  
+❌ Don’t cache stale data without timestamps and freshness checks
 
 -----
 
 ## Common Patterns
 
-### Pattern 1: API Data Fetching
+### Pattern 1: Data Fetching with Error Handling
 
-```javascript
-// Example of how we handle ETF/market data API calls
-async function fetchETFData(ticker) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/etf/${ticker}`);
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-    const data = await response.json();
+```python
+import logging
+from typing import Optional
+import pandas as pd
+
+logger = logging.getLogger(__name__)
+
+def fetch_etf_prices(
+    ticker: str,
+    start_date: str,
+    end_date: str
+) -> Optional[pd.DataFrame]:
+    """Fetch ETF price data with robust error handling.
     
-    // Validate required fields
-    if (!data.price || !data.timestamp) {
-      throw new Error('Invalid data format');
-    }
-    
-    return data;
-  } catch (error) {
-    console.error(`Error fetching ETF data for ${ticker}:`, error);
-    // Handle gracefully - show cached data or user message
-    throw error;
-  }
-}
+    Args:
+        ticker: ETF ticker symbol
+        start_date: Start date in YYYY-MM-DD format
+        end_date: End date in YYYY-MM-DD format
+        
+    Returns:
+        DataFrame with datetime index and OHLCV columns, or None if failed
+    """
+    try:
+        # API call here
+        data = external_api.get_prices(ticker, start_date, end_date)
+        
+        # Validate required fields
+        required_cols = ['open', 'high', 'low', 'close', 'volume']
+        if not all(col in data.columns for col in required_cols):
+            raise ValueError(f"Missing required columns for {ticker}")
+        
+        # Check for data quality issues
+        if data['close'].isna().any():
+            logger.warning(f"Missing close prices for {ticker}")
+        
+        return data
+        
+    except Exception as e:
+        logger.error(f"Error fetching prices for {ticker}: {e}")
+        return None
 ```
 
-### Pattern 2: Financial Calculations
+### Pattern 2: Point-in-Time Operations (No Lookahead)
 
-```javascript
-// Always document formulas and handle precision
-/**
- * Calculate portfolio total return
- * Formula: (Current Value - Initial Value) / Initial Value * 100
- * @param {number} currentValue - Current portfolio value
- * @param {number} initialValue - Initial investment
- * @returns {number} Return percentage (e.g., 15.5 for 15.5%)
- */
-function calculateReturn(currentValue, initialValue) {
-  if (initialValue === 0) {
-    throw new Error('Initial value cannot be zero');
-  }
-  
-  // Use precise decimal library if needed for production
-  const returnValue = ((currentValue - initialValue) / initialValue) * 100;
-  return Number(returnValue.toFixed(2));
-}
+```python
+from datetime import datetime
+import pandas as pd
+
+def compute_features_as_of(
+    universe: list[str],
+    as_of_date: datetime,
+    lookback_days: int = 252
+) -> pd.DataFrame:
+    """Compute features using only data available as of the given date.
+    
+    Critical: This function must not use any data after as_of_date
+    to prevent lookahead bias in backtests.
+    
+    Args:
+        universe: List of ETF tickers
+        as_of_date: The date as of which features are computed
+        lookback_days: Days of history to use for calculations
+        
+    Returns:
+        DataFrame with features for each ticker, indexed by ticker
+    """
+    # Only fetch data up to (but not including) as_of_date
+    end_date = as_of_date
+    start_date = as_of_date - pd.Timedelta(days=lookback_days)
+    
+    features = {}
+    for ticker in universe:
+        prices = fetch_etf_prices(ticker, start_date, end_date)
+        if prices is None:
+            continue
+            
+        # Compute momentum using only historical data
+        returns = prices['close'].pct_change()
+        momentum_252d = returns.iloc[-252:].sum()
+        
+        features[ticker] = {
+            'momentum_252d': momentum_252d,
+            'as_of_date': as_of_date
+        }
+    
+    return pd.DataFrame.from_dict(features, orient='index')
 ```
 
-### Pattern 3: Error Handling
+### Pattern 3: Financial Calculations with Validation
 
-```javascript
-// Show user-friendly messages for financial data errors
-function handleDataError(error, context) {
-  const userMessage = {
-    'API_UNAVAILABLE': 'Market data temporarily unavailable. Please try again.',
-    'INVALID_TICKER': 'ETF ticker not found. Please check the symbol.',
-    'RATE_LIMIT': 'Too many requests. Please wait a moment.',
-    'STALE_DATA': 'Data may be delayed. Last updated: [timestamp]'
-  };
-  
-  console.error(`Error in ${context}:`, error);
-  return userMessage[error.code] || 'An error occurred. Please try again.';
-}
+```python
+import numpy as np
+from typing import Union
+
+def calculate_portfolio_returns(
+    weights: pd.Series,
+    returns: pd.DataFrame
+) -> pd.Series:
+    """Calculate portfolio returns from weights and asset returns.
+    
+    Formula: r_p(t) = Σ(w_i * r_i(t))
+    
+    Args:
+        weights: Series of portfolio weights (should sum to ~1.0)
+        returns: DataFrame of asset returns, columns are tickers
+        
+    Returns:
+        Series of portfolio returns over time
+        
+    Raises:
+        ValueError: If weights don't sum to approximately 1.0
+        ValueError: If tickers don't match between weights and returns
+    """
+    # Validate inputs
+    weight_sum = weights.sum()
+    if not np.isclose(weight_sum, 1.0, atol=0.01):
+        raise ValueError(f"Weights sum to {weight_sum:.4f}, expected 1.0")
+    
+    # Check ticker alignment
+    missing_tickers = set(weights.index) - set(returns.columns)
+    if missing_tickers:
+        raise ValueError(f"Missing return data for: {missing_tickers}")
+    
+    # Align and calculate
+    aligned_returns = returns[weights.index]
+    portfolio_returns = (aligned_returns * weights).sum(axis=1)
+    
+    return portfolio_returns
+```
+
+### Pattern 4: Configuration-Driven Code
+
+```python
+from pathlib import Path
+import yaml
+from dataclasses import dataclass
+
+@dataclass
+class StrategyConfig:
+    """Configuration for a quantitative strategy."""
+    name: str
+    universe_type: str
+    rebalance_frequency: str
+    lookback_days: int
+    top_n: int
+    max_position_size: float
+    
+    @classmethod
+    def from_yaml(cls, path: Path) -> 'StrategyConfig':
+        """Load strategy config from YAML file."""
+        with open(path) as f:
+            data = yaml.safe_load(f)
+        return cls(**data)
+
+# Usage:
+# config = StrategyConfig.from_yaml(Path('configs/momentum_strategy.yaml'))
 ```
 
 -----
@@ -232,25 +370,33 @@ function handleDataError(error, context) {
 
 ### Data Accuracy
 
-- Always validate data from external APIs
+- Always validate data from external sources
 - Cross-reference critical calculations
-- Handle missing data gracefully (show “N/A” not “0”)
-- Display timestamps with all financial data
-- Indicate when data is delayed or estimated
+- Handle missing data explicitly (don’t forward-fill blindly)
+- Display “as-of” timestamps with all financial data
+- Indicate when data is delayed, estimated, or backfilled
+- Check for survivorship bias in historical datasets
 
 ### Number Precision
 
-- Use appropriate decimal precision (2 decimals for currency, 4 for percentages)
-- Be aware of JavaScript floating point limitations
-- Consider using a decimal library for critical calculations
-- Always round appropriately for display
+- Use Decimal for money if precision is critical
+- Be aware of floating point limitations
+- Round appropriately for display (2 decimals for dollars, 4 for %)
+- Don’t compare floats with == (use np.isclose)
 
 ### Date/Time Handling
 
-- Use consistent timezone (preferably UTC for storage, local for display)
-- Handle market hours and holidays
-- Consider international markets if applicable
-- Store timestamps with all time-sensitive data
+- Always use timezone-aware datetime objects (UTC for storage)
+- Handle market hours and non-trading days
+- Be explicit about business day vs calendar day calculations
+- Use pandas’ business day utilities for market calendars
+- Store all timestamps in UTC, convert to local only for display
+
+### Survivorship Bias
+
+- Be cautious of using only currently-listed ETFs
+- Consider delisted/merged ETFs in historical analysis
+- Document if analysis includes survivorship bias
 
 -----
 
@@ -259,29 +405,33 @@ function handleDataError(error, context) {
 When starting a new session:
 
 1. **Load context:**
-- Read this file (CLAUDE_CONTEXT.md)
+- Read CLAUDE_CONTEXT.md (this file)
 - Read PROGRESS_LOG.md for current status
-- Check any relevant session notes from /session-notes/
+- Read PROJECT_BRIEF.md for overall goals
+- Check relevant session notes from /session-notes/
 1. **Understand the task:**
 - Review the goal clearly
 - Ask clarifying questions about requirements
 - Confirm data sources and calculation methods
+- Check for lookahead concerns if working on backtest
 - Propose a plan
 1. **Implement:**
 - Follow coding standards above
-- Write clean, tested code
-- Document financial logic clearly
+- Write clean, tested, typed code
+- Document financial logic with formulas
 - Handle errors gracefully
+- Add tests for new functionality
 1. **Verify:**
-- Test calculations with known values
+- Run pytest tests
+- Test with synthetic data if possible
 - Check edge cases
-- Verify data accuracy
+- Verify no lookahead bias
 - Ensure requirements are met
 1. **Document:**
 - Update PROGRESS_LOG.md
-- Create session note in /session-notes/
+- Create session note in /session-notes/ for substantial work
 - Note any learnings for CLAUDE_CONTEXT.md
-- Document any new patterns or mistakes
+- Document new patterns or mistakes discovered
 
 -----
 
@@ -289,11 +439,83 @@ When starting a new session:
 
 ### Documentation
 
-- [Link to financial data API documentation]
-- [Link to framework/library documentation]
-- [Link to ETF reference materials]
+- [Python pandas docs](https://pandas.pydata.org/docs/)
+- [NumPy docs](https://numpy.org/doc/)
+- [pytest docs](https://docs.pytest.org/)
+- ETF data APIs: [TBD - document when selected]
 
 ### Data Sources
 
-- [List approved data sources for ETF information]
-- [API endpoints an
+- [TBD: List approved data sources for ETF information]
+- [TBD: API endpoints and authentication]
+- [TBD: Data quality expectations]
+
+### Project References
+
+- README.md for architecture overview
+- Boris Cherny’s agentic workflow for development process
+
+-----
+
+## Questions to Ask
+
+If you’re unsure about anything, ask these questions:
+
+- What is the user trying to accomplish?
+- What’s the simplest way to achieve this?
+- Does this fit with our existing patterns?
+- How can we verify this works correctly?
+- Is there risk of lookahead bias?
+- What could go wrong?
+- Is there existing code that does something similar?
+- Does this need to be point-in-time aware?
+
+-----
+
+## Notes for Multi-Session Work
+
+**If working across multiple sessions:**
+
+- Create a branch for your feature
+- Note your branch name in PROGRESS_LOG.md
+- Describe what’s complete and what’s remaining
+- Provide clear handoff notes for the next session
+- Document any blocking issues or open questions
+
+**If blocked on something:**
+
+- Document the blocker clearly in PROGRESS_LOG.md
+- Describe what you’ve tried
+- Suggest possible solutions or next steps
+- Flag if external input is needed (data, decisions, etc.)
+
+-----
+
+## Version History
+
+|Date      |Change                    |Reason                                            |
+|----------|--------------------------|--------------------------------------------------|
+|2026-01-06|Initial creation          |Project setup                                     |
+|2026-01-07|Updated for Python project|Fixed JS examples, added quant-specific guidelines|
+
+-----
+
+## Quick Reference
+
+**Project goal:** Beat S&P 500 returns with ETF portfolio and automated rebalancing  
+**Current priority:** Set up data ingestion and backtest framework  
+**Today’s focus:** [Check PROGRESS_LOG.md]  
+**Last session:** [Reference to most recent session note]
+
+-----
+
+## Important Reminders
+
+- 📖 Always read PROGRESS_LOG.md first
+- 🎯 Understand the goal before coding
+- ⏰ Use explicit as_of dates for all point-in-time operations
+- 🚫 Never use future data in backtests (lookahead bias)
+- ✅ Verify your work before finishing
+- 📝 Document what you learned
+- 🤝 Set up next session for success
+- 🧪 Test with synthetic data when possible
