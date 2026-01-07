@@ -10,7 +10,7 @@
 This file contains instructions and context for Claude across all sessions. Read this file at the start of every session by fetching:
 
 ```
-https://raw.githubusercontent.com/mikemsq/QuantETF/main/CLAUDE_CONTEXT.md
+https://raw.githubusercontent.com/mikemsq/qetf/main/CLAUDE_CONTEXT.md
 ```
 
 Always check PROGRESS_LOG.md for current status.
