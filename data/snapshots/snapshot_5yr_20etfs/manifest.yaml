@@ -1,0 +1,47 @@
+snapshot_name: snapshot_5yr_20etfs
+created_at: '2026-01-09T02:25:53.626957'
+git_commit: 98d2cf5984bb3b06c2c412a016a4fb9aaa17a6a1
+source_files:
+  curated_data: initial_20_etfs_2021-01-10_2026-01-09_20260109_022324.parquet
+  curated_metadata: initial_20_etfs_2021-01-10_2026-01-09_20260109_022324.metadata.yaml
+data_summary:
+  universe: initial_20_etfs
+  num_tickers: 20
+  tickers:
+  - AGG
+  - DIA
+  - EEM
+  - EFA
+  - GLD
+  - IWM
+  - LQD
+  - QQQ
+  - SLV
+  - SPY
+  - TLT
+  - USDU
+  - VIXY
+  - VNQ
+  - VWO
+  - XLE
+  - XLF
+  - XLI
+  - XLK
+  - XLV
+  num_rows: 1255
+  date_range:
+    start: '2021-01-11T00:00:00'
+    end: '2026-01-08T00:00:00'
+  columns_format: MultiIndex (Ticker, Price)
+  price_fields:
+  - Close
+  - High
+  - Low
+  - Open
+  - Volume
+validation_summary:
+  total_tickers: 20
+  valid_tickers: 18
+  failed_tickers: 2
+  total_anomalies: 0
+notes: Immutable snapshot for reproducible backtesting

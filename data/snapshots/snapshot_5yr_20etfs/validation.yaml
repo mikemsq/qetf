@@ -1,0 +1,137 @@
+validation_timestamp: '2026-01-09T02:23:24.621206'
+tickers_validated: 20
+details:
+- ticker: AGG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DIA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EEM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EFA
+  valid: false
+  error: Invalid OHLC relationships detected for EFA
+  anomalies: null
+- ticker: GLD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IWM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: LQD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QQQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TLT
+  valid: false
+  error: Invalid OHLC relationships detected for TLT
+  anomalies: null
+- ticker: USDU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VIXY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VNQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VWO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0

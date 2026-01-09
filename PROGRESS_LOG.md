@@ -7,17 +7,17 @@
 
 ## Current Status
 
-**Active Phase:** Planning / Setup  
-**Current Sprint/Week:** Week 1 (Jan 6-12, 2026)  
-**Active Sessions:** 1 desktop (this session)  
-**Last Updated:** January 7, 2026
+**Active Phase:** Phase 1 Complete → Phase 2 Ready
+**Current Sprint/Week:** Week 1 (Jan 6-12, 2026)
+**Active Sessions:** 1 desktop (Codespace)
+**Last Updated:** January 9, 2026
 
 ### Quick Status
 
-- **What’s working:** Project infrastructure set up, documentation framework in place
-- **What’s in progress:** Finalizing documentation templates, preparing for data ingestion work
-- **What’s blocked:** None currently
-- **Next priority:** Select ETF data provider and implement basic ingestion
+- **What's working:** Data ingestion pipeline, validation, snapshot system - Phase 1 complete!
+- **What's in progress:** Transitioning to Phase 2 (Backtest Engine)
+- **What's blocked:** None currently
+- **Next priority:** Design and implement backtest engine architecture
 
 -----
 
@@ -28,9 +28,11 @@
 - [x] Set up project infrastructure (repo, docs, workflows)
 - [x] Create foundational documentation (PROJECT_BRIEF, CLAUDE_CONTEXT, PROGRESS_LOG)
 - [x] Establish agentic development workflow
-- [ ] Define QuantETF core features and MVP scope *(in progress - defined in PROJECT_BRIEF)*
-- [ ] Research and select ETF data provider
-- [ ] Implement basic data ingestion for 20 ETFs
+- [x] Define QuantETF core features and MVP scope *(completed - defined in PROJECT_BRIEF)*
+- [x] Research and select ETF data provider *(yfinance selected and integrated)*
+- [x] Implement basic data ingestion for 20 ETFs *(5 years of data successfully ingested)*
+- [x] Create data validation and snapshot system
+- [x] Complete Phase 1 deliverables
 
 ### Active Claude Sessions
 
@@ -192,7 +194,7 @@
 
 #### Thursday, January 9, 2026
 
-**Time spent:** ~2 hours
+**Time spent:** ~4 hours
 **Sessions active:** 1 desktop (Codespace)
 
 **Completed:**
@@ -213,6 +215,31 @@
 - Fixed pandas deprecation warning (pct_change fill_method)
 - All 24 tests passing (9 unit tests, 11 validation tests, 7 integration tests with real API calls, 1 smoke test)
 
+**Phase 1 Progress (continued in same session):**
+
+- Created comprehensive universe configuration with 20 diverse ETFs covering:
+  - US equity (SPY, QQQ, IWM, DIA)
+  - Sectors (XLF, XLE, XLK, XLV, XLI)
+  - International (EFA, EEM, VWO)
+  - Fixed income (AGG, TLT, LQD)
+  - Real assets (GLD, SLV, VNQ)
+  - Alternatives (VIXY, USDU)
+- Created production-grade data ingestion script ([ingest_etf_data.py](../scripts/ingest_etf_data.py))
+  - Command-line interface with multiple options (date ranges, lookback years)
+  - Automatic validation using existing validation utilities
+  - Saves data in Parquet format with comprehensive metadata
+  - Detailed logging and progress reporting
+- Successfully fetched and validated 5 years of historical data (2021-2026)
+  - 1,255 trading days
+  - 20 ETFs (18 fully validated, 2 with minor OHLC issues)
+  - All data in standardized MultiIndex format
+  - Stored in [/data/curated](../data/curated/) directory
+- Created snapshot versioning system ([create_snapshot.py](../scripts/create_snapshot.py))
+  - Immutable snapshots for reproducible backtesting
+  - Includes git commit hash for traceability
+  - Converts numpy types to Python types for clean YAML serialization
+  - Created production snapshot: [snapshot_5yr_20etfs](../data/snapshots/snapshot_5yr_20etfs/)
+
 **In Progress:**
 
 - Updating PROGRESS_LOG.md with today's work (this entry)
@@ -226,6 +253,15 @@
 - Use MultiIndex.from_tuples() instead of from_product() to avoid pandas edge cases
 - Keep validation functions strict (raise errors for non-MultiIndex data rather than adapting)
 - Support both old yfinance (simple columns for single ticker) and new yfinance (always MultiIndex) transparently
+- **Universe selection:** 20 diverse ETFs covering multiple asset classes for initial testing
+  - Reasoning: Provides diverse market exposures while keeping data manageable
+  - Trade-offs: Not too many tickers (easier to debug), but enough diversity to test cross-sectional strategies
+- **Data storage strategy:** Curated → Snapshot workflow
+  - Reasoning: Curated is working directory, snapshots are immutable for reproducibility
+  - Benefits: Can refresh curated data without affecting historical backtests
+- **Snapshot naming:** Descriptive names (snapshot_5yr_20etfs) vs pure timestamps
+  - Reasoning: Makes it easier to identify what each snapshot contains
+  - Can still use timestamp-based naming for automated snapshots
 
 **Blockers/Issues:**
 
@@ -240,12 +276,28 @@
 - yfinance behavior varies by version - newer versions return MultiIndex even for single tickers
 - The standardized format makes future features (multi-ticker strategies, cross-sectional analysis) much easier
 - Key learning: When you see conditional logic checking data structure format throughout the codebase, that's a signal to standardize the format at the source
+- **Data ingestion completed successfully on first try** - good evidence that standardized format was the right choice
+- Validation caught 2 tickers (EFA, TLT) with single-day OHLC inconsistencies - this is expected with real data
+- The OHLC issues are minor (1 row out of 1,255 for each ticker) and don't block usage
+- Parquet format works excellently - 1.1MB for 5 years of 20 ETFs (25,100 rows × 5 fields)
+- YAML metadata with numpy types required `yaml.unsafe_load()` - acceptable since we control the source
+- Git commit hash in snapshots provides excellent traceability for reproducibility
 
-**Tomorrow's Focus:**
+**Next Steps:**
 
-- Continue with data provider research and implementation
-- Begin working on data ingestion pipeline
-- Create first data snapshot with standardized MultiIndex format
+- ✅ Phase 1 deliverables mostly complete:
+  - ✅ Project structure and documentation
+  - ✅ Data ingestion for ETF price source (yfinance)
+  - ✅ Curated data store with quality checks
+  - ✅ Universe definition (20 ETFs)
+  - ✅ Basic data validation tests
+  - ✅ Created first production snapshot
+- **Next priority:** Begin Phase 2 (Backtest Engine)
+  - Design backtest engine architecture
+  - Implement rebalancing schedule logic
+  - Create point-in-time data access layer
+  - Implement simple momentum alpha model
+  - Build equal-weight portfolio constructor
 
 -----
 

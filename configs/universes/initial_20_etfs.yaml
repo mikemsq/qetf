@@ -1,0 +1,54 @@
+name: initial_20_etf_universe
+description: Initial universe of 20 diverse, liquid ETFs for testing data ingestion and backtesting
+
+source:
+  type: static_list
+  tickers:
+    # Large Cap Equity
+    - SPY    # SPDR S&P 500 ETF Trust
+    - QQQ    # Invesco QQQ Trust (Nasdaq-100)
+    - IWM    # iShares Russell 2000 ETF
+    - DIA    # SPDR Dow Jones Industrial Average ETF
+
+    # Sector ETFs
+    - XLF    # Financial Select Sector SPDR
+    - XLE    # Energy Select Sector SPDR
+    - XLK    # Technology Select Sector SPDR
+    - XLV    # Health Care Select Sector SPDR
+    - XLI    # Industrial Select Sector SPDR
+
+    # International Equity
+    - EFA    # iShares MSCI EAFE ETF
+    - EEM    # iShares MSCI Emerging Markets ETF
+    - VWO    # Vanguard FTSE Emerging Markets ETF
+
+    # Fixed Income
+    - AGG    # iShares Core U.S. Aggregate Bond ETF
+    - TLT    # iShares 20+ Year Treasury Bond ETF
+    - LQD    # iShares iBoxx Investment Grade Corporate Bond ETF
+
+    # Real Assets
+    - GLD    # SPDR Gold Trust
+    - SLV    # iShares Silver Trust
+    - VNQ    # Vanguard Real Estate ETF
+
+    # Alternative Strategies
+    - VIXY   # ProShares VIX Short-Term Futures ETF
+    - USDU   # WisdomTree Bloomberg U.S. Dollar Bullish Fund
+
+eligibility:
+  min_history_days: 252      # At least 1 year of history
+  min_avg_dollar_volume: 10_000_000  # $10M average daily volume
+  min_aum: 500_000_000       # $500M minimum AUM
+
+notes: |
+  This universe provides exposure across:
+  - US equity (large/mid/small cap)
+  - International developed and emerging markets
+  - Multiple sectors (technology, finance, energy, healthcare, industrials)
+  - Fixed income (aggregate bonds, treasuries, corporate)
+  - Real assets (gold, silver, real estate)
+  - Alternative strategies (volatility, currency)
+
+  All ETFs are highly liquid with deep trading history, suitable for
+  backtesting and initial strategy development.
