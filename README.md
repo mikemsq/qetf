@@ -43,11 +43,14 @@ A complete run, whether for research or production, looks like this:
 - `data/`
   - `raw/` immutable ingested data
   - `curated/` normalized clean data in a canonical schema
-  - `snapshots/` versioned, reproducible “as-of” datasets used by backtests
+  - `snapshots/` versioned, reproducible "as-of" datasets used by backtests
 - `artifacts/`
   - Output bundles from runs (metrics, plots, positions, recommendation packets).
 - `notebooks/`
   - Exploration notebooks that import the library code from `src/`.
+- `handoffs/`
+  - Agent-to-agent handoff files for parallel development workflow.
+  - See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for details.
 - `scripts/`
   - Convenience scripts for common tasks (ingest, build snapshots, run backtests).
 - `src/quantetf/`
