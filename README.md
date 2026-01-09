@@ -35,39 +35,44 @@ A complete run, whether for research or production, looks like this:
 7. **Simulate** holdings and returns (backtest) or **emit recommendations** (production).
 
 
-## Repository structure
+## Repository Structure
 
-- `configs/`
-  - Strategy, universe, schedule, and transaction cost configuration files.
-  - These are intended to be the main inputs to research sweeps and production runs.
-- `data/`
-  - `raw/` immutable ingested data
-  - `curated/` normalized clean data in a canonical schema
-  - `snapshots/` versioned, reproducible "as-of" datasets used by backtests
-- `artifacts/`
-  - Output bundles from runs (metrics, plots, positions, recommendation packets).
-- `notebooks/`
-  - Exploration notebooks that import the library code from `src/`.
-- `handoffs/`
-  - Agent-to-agent handoff files for parallel development workflow.
-  - See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for details.
-- `scripts/`
-  - Convenience scripts for common tasks (ingest, build snapshots, run backtests).
-- `src/quantetf/`
-  - The actual library, organized by domain modules:
-    - `data/` ingestion connectors, storage, and quality checks
-    - `universe/` universe builders and eligibility filters
-    - `features/` feature definitions and a lightweight feature store
-    - `alpha/` alpha model interfaces and example models
-    - `risk/` covariance and exposure modeling
-    - `portfolio/` constraints, allocators, transaction cost models
-    - `backtest/` backtest engine and accounting
-    - `evaluation/` metrics, comparisons, and reporting helpers
-    - `production/` scheduled runtime that emits recommendation packets
-    - `cli/` command entrypoints (thin wrappers around library calls)
-    - `utils/` shared utilities
-- `tests/`
-  - Unit tests and smoke tests. Over time, this should include “golden tests” with fixed expected outputs.
+### Code
+- **`src/quantetf/`** - Main library organized by domain:
+  - `data/` - Ingestion, storage, validation, point-in-time access
+  - `universe/` - Universe builders and filters
+  - `features/` - Feature engineering
+  - `alpha/` - Alpha models (momentum, etc.)
+  - `risk/` - Risk models and covariance
+  - `portfolio/` - Portfolio construction and transaction costs
+  - `backtest/` - Event-driven backtest engine
+  - `evaluation/` - Metrics and reporting
+  - `production/` - Production runtime
+  - `cli/` - Command-line interface
+  - `utils/` - Shared utilities
+
+### Data
+- **`data/`** - Data storage hierarchy:
+  - `raw/` - Immutable ingested data
+  - `curated/` - Cleaned, normalized data
+  - `snapshots/` - Versioned, reproducible datasets for backtests
+
+### Configuration
+- **`configs/`** - YAML configs for strategies, universes, schedules, costs
+
+### Development
+- **`scripts/`** - Utility scripts (ingest, snapshot, backtest)
+- **`notebooks/`** - Jupyter notebooks for research
+- **`tests/`** - Unit tests, integration tests, golden tests
+- **`artifacts/`** - Output from runs (metrics, plots, recommendations)
+
+### Multi-Agent Workflow
+- **`handoffs/`** - Agent-to-agent task handoff files
+- **`session-notes/`** - Detailed session history
+
+### Documentation
+
+See **Documentation Guide** section below for file purposes.
 
 
 ## Core abstractions
@@ -129,48 +134,67 @@ The key design rule is that all of these components accept an explicit `as_of` d
    - A stable recommendation output schema consumed by downstream tools.
 
 
-## Using AI agents to implement this project
+## Documentation Guide
 
-AI agents work best when the system is described as a set of contracts, examples, and acceptance tests.
+This project uses a clear separation of concerns for documentation:
 
-### Recommended approach
+### For All Sessions
+- **[CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md)** - Coding standards, patterns, and best practices
+  - What: Python style guide, common patterns, financial data guidelines
+  - Use: Reference when writing code
 
-1. **Write specs first, then ask agents to implement**
-   - Add a `docs/` folder with short, concrete specs:
-     - `ARCHITECTURE.md` describing the pipeline and module boundaries
-     - `DATA_SCHEMA.md` with tables, fields, and example rows
-     - `CONFIG_SPEC.md` describing YAML fields with examples
-     - `BACKTEST_SPEC.md` defining the event timeline, fill assumptions, and accounting rules
-     - `OUTPUT_SCHEMA.md` defining the recommendation packet formats
-   - Keep each spec less than a few pages. Link them from this README.
+### For Understanding the Project
+- **[PROJECT_BRIEF.md](PROJECT_BRIEF.md)** - Vision, goals, and architecture
+  - What: Overall project goals, success criteria, phases, technical decisions
+  - Use: Understand what we're building and why
 
-2. **Drive implementation through tests and “golden artifacts”**
-   - Provide a small deterministic dataset in `tests/fixtures/`.
-   - Commit expected outputs (positions, returns, recommendation packet) for that dataset.
-   - Ask agents to make tests pass, then expand scope.
+### For Current Status
+- **[PROGRESS_LOG.md](PROGRESS_LOG.md)** - Current status and recent activity
+  - What: Current phase, recent decisions, last 7 days of work
+  - Use: Know where we are and what's happening now
 
-3. **Decompose work into small, interface scoped tasks**
-   - Examples:
-     - “Implement `UniverseProvider` for YAML defined static universes.”
-     - “Implement momentum alpha with leakage guard and unit tests.”
-     - “Implement a transaction cost model based on turnover, plus tests.”
-     - “Implement backtest accounting for equal weight portfolios.”
-   - Each task should have a definition of done:
-     - inputs, outputs, edge cases, and test expectations.
+### For Development Process
+- **[AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)** - Multi-agent development process
+  - What: How specialized agents work in parallel, task lifecycle, handoff patterns
+  - Use: Understand the development workflow
 
-4. **Make agent context explicit**
-   - Add an `AGENTS.md` file with:
-     - code style rules (typing, docstrings, logging)
-     - how to run tests, how to add fixtures
-     - which module owns which responsibilities
-     - “no lookahead” rules and how to enforce them
+- **[TASKS.md](TASKS.md)** - Task queue for parallel development
+  - What: Ready/blocked/completed tasks with dependencies and priorities
+  - Use: Find work to do
 
-### High value artifacts for agents
+- **[handoffs/](handoffs/)** - Detailed task specifications
+  - What: Context, steps, acceptance criteria for specific tasks
+  - Use: Pick up and implement a task
 
-- **Interface contracts**: typed dataclasses for key objects (Universe, FeatureFrame, AlphaScores, RiskModelOutput, TargetWeights).
-- **Mermaid diagrams**: a pipeline flow and module dependency graph.
-- **Example configs**: at least one complete strategy config that runs end to end.
-- **Synthetic dataset + golden results**: small, deterministic, and checked into tests.
-- **Run manifests**: a simple JSON manifest written by production runtime so agents can see what “reproducible” means.
+### For History
+- **[SESSION_INDEX.md](SESSION_INDEX.md)** - Complete session history
+  - What: Chronological record of all development sessions
+  - Use: Find historical context and past decisions
 
-If you want, I can also generate the `docs/` pack (spec files, diagrams, output schemas, and a set of golden tests) so agents can start implementing immediately.
+- **[session-notes/](session-notes/)** - Detailed session notes
+  - What: In-depth notes from each development session
+  - Use: Deep dive into specific sessions
+
+-----
+
+## Multi-Agent Development Workflow
+
+This project uses a **distributed multi-agent workflow** for development:
+
+- Multiple specialized agents work in parallel from shared documentation
+- Tasks are managed in [TASKS.md](TASKS.md) with clear dependencies
+- Each task has a detailed handoff file in [handoffs/](handoffs/)
+- No context loss between sessions - each agent starts fresh
+
+**For developers:**
+1. Read [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) to understand the process
+2. Check [TASKS.md](TASKS.md) for available tasks
+3. Pick up a task and read its handoff file
+4. Follow [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) coding standards
+5. Update session notes as you go
+
+**Benefits:**
+- 3x speedup through parallel execution
+- Clear task handoffs eliminate confusion
+- Resilient to context limits and session interruptions
+- Scalable - add more agents as needed

@@ -1,8 +1,7 @@
 # Project Brief - QuantETF
 
-**Last Updated:** January 7, 2026  
-**Project Status:** Planning / Initial Development  
-**Target Completion:** 8-12 weeks for MVP
+**Last Updated:** January 9, 2026
+**Project Status:** Phase 1 Complete → Phase 2 In Progress
 
 -----
 
@@ -230,36 +229,37 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 ## Project Phases
 
-### Phase 1: Foundation (Weeks 1-2)
+### Phase 1: Foundation ✅ COMPLETE
 
 **Goal:** Set up project infrastructure and data pipeline
 
 **Deliverables:**
 
-- [ ] Project structure and documentation (CLAUDE_CONTEXT, PROGRESS_LOG)
-- [ ] Data ingestion for at least one ETF price source
-- [ ] Curated data store with basic quality checks
-- [ ] Simple universe definition (static list of 20 ETFs)
-- [ ] Basic data validation tests
+- [x] Project structure and documentation (CLAUDE_CONTEXT, PROGRESS_LOG)
+- [x] Data ingestion for at least one ETF price source
+- [x] Curated data store with basic quality checks
+- [x] Simple universe definition (static list of 20 ETFs)
+- [x] Basic data validation tests
 
 **Success Metrics:** Can load historical prices for 20 ETFs and create a snapshot
 
-### Phase 2: Backtest Engine (Weeks 3-4)
+### Phase 2: Backtest Engine (IN PROGRESS - 30%)
 
 **Goal:** Build working backtest engine with one simple strategy
 
 **Deliverables:**
 
-- [ ] Backtest engine that handles rebalancing schedule
-- [ ] Point-in-time data access (no lookahead)
-- [ ] Simple alpha model (e.g., 12-month momentum)
+- [x] Backtest engine architecture designed
+- [x] Point-in-time data access (no lookahead)
+- [x] Simple alpha model (12-month momentum)
 - [ ] Portfolio constructor (equal weight top N)
 - [ ] Transaction cost model (simple flat fee)
 - [ ] Basic metrics (returns, Sharpe ratio, drawdown)
+- [ ] End-to-end backtest working
 
 **Success Metrics:** Can run a complete backtest and generate equity curve
 
-### Phase 3: Strategy Development (Weeks 5-6)
+### Phase 3: Strategy Development
 
 **Goal:** Implement multiple alpha signals and portfolio construction methods
 
@@ -273,7 +273,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Success Metrics:** Can compare multiple strategies and identify which performs best
 
-### Phase 4: Production Pipeline (Weeks 7-8)
+### Phase 4: Production Pipeline
 
 **Goal:** Automate recommendation generation
 
@@ -285,9 +285,9 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 - [ ] Data freshness checks
 - [ ] Basic alerting for failures
 
-**Success Metrics:** Can generate weekly recommendations automatically
+**Success Metrics:** Can generate recommendations on schedule
 
-### Phase 5: Polish & Documentation (Weeks 9-10)
+### Phase 5: Polish & Documentation
 
 **Goal:** Make the system production-ready and well-documented
 
@@ -299,7 +299,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 - [ ] Golden test suite (known expected outputs)
 - [ ] Performance optimization if needed
 
-**Success Metrics:** New user can clone repo and run first backtest in < 30 minutes
+**Success Metrics:** New user can clone repo and run first backtest quickly
 
 -----
 
@@ -320,7 +320,6 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 ### Required Resources
 
-- **Time Commitment:** 10-15 hours per week
 - **Budget:**
   - $0-50/month for data API (if free sources insufficient)
   - $20/month Claude Pro (already have)
@@ -379,7 +378,6 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 - **Frequency:** Daily (PROGRESS_LOG.md updates)
 - **Format:** Session notes for substantial work
-- **Weekly reviews:** End-of-week summary in PROGRESS_LOG.md
 
 -----
 
@@ -411,7 +409,6 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Development velocity:**
 
-- **Weekly commits:** Track consistency
 - **Issues closed:** Track progress on backlog
 - **Time to run backtest:** Target < 5 minutes for 5-year history
 
@@ -421,10 +418,11 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 ### Related Documents
 
-- [CLAUDE_CONTEXT.md](https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md) - Coding standards
-- [PROGRESS_LOG.md](https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/PROGRESS_LOG.md) - Daily progress
-- [README.md](https://github.com/mikemsq/qetf) - Project overview
-- [Boris Cherny’s Agentic Workflow](https://threadreaderapp.com/thread/2007179832300581177.html) - Development methodology
+- [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) - Coding standards and patterns
+- [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) - Multi-agent development process
+- [PROGRESS_LOG.md](PROGRESS_LOG.md) - Current status and recent activity
+- [TASKS.md](TASKS.md) - Task queue for parallel development
+- [README.md](README.md) - Public-facing overview
 
 ### Change Log
 
@@ -432,6 +430,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 |----------|--------------------|------------------------------------------------|
 |2026-01-05|Initial draft       |Project kickoff                                 |
 |2026-01-07|Comprehensive update|Filled in all sections, added phases and metrics|
+|2026-01-09|Removed timelines   |Align with multi-agent workflow, focus on phases not dates|
 
 ### References
 
@@ -457,8 +456,8 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Elevator Pitch:** A Python-based platform for researching and deploying systematic ETF strategies with reproducible backtests and automated rebalancing recommendations.
 
-**One-Week Goal:** Set up data ingestion and create first snapshot of 20 ETF prices
+**Current Phase:** Phase 2 - Backtest Engine (30% complete)
 
-**Current Blocker:** Need to select ETF data provider (evaluate yfinance, Alpha Vantage)
+**Current Focus:** Complete portfolio construction, transaction costs, and backtest engine
 
-**Next Action:** Research ETF data providers and implement basic ingestion connector
+**See:** [PROGRESS_LOG.md](PROGRESS_LOG.md) for detailed current status and [TASKS.md](TASKS.md) for ready tasks

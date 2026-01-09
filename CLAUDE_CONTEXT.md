@@ -400,69 +400,12 @@ class StrategyConfig:
 
 -----
 
-## Session Workflow
-
-When starting a new session:
-
-1. **Load context:**
-- Read CLAUDE_CONTEXT.md (this file)
-- Read PROGRESS_LOG.md for current status
-- Read PROJECT_BRIEF.md for overall goals
-- Check relevant session notes from /session-notes/
-1. **Understand the task:**
-- Review the goal clearly
-- Ask clarifying questions about requirements
-- Confirm data sources and calculation methods
-- Check for lookahead concerns if working on backtest
-- Propose a plan
-1. **Implement:**
-- Follow coding standards above
-- Write clean, tested, typed code
-- Document financial logic with formulas
-- Handle errors gracefully
-- Add tests for new functionality
-1. **Verify:**
-- Run pytest tests
-- Test with synthetic data if possible
-- Check edge cases
-- Verify no lookahead bias
-- Ensure requirements are met
-1. **Document:**
-- Update PROGRESS_LOG.md
-- Create session note in /session-notes/ for substantial work
-- Note any learnings for CLAUDE_CONTEXT.md
-- Document new patterns or mistakes discovered
-
------
-
-## External Resources
-
-### Documentation
-
-- [Python pandas docs](https://pandas.pydata.org/docs/)
-- [NumPy docs](https://numpy.org/doc/)
-- [pytest docs](https://docs.pytest.org/)
-- ETF data APIs: [TBD - document when selected]
-
-### Data Sources
-
-- [TBD: List approved data sources for ETF information]
-- [TBD: API endpoints and authentication]
-- [TBD: Data quality expectations]
-
-### Project References
-
-- README.md for architecture overview
-- Boris Cherny’s agentic workflow for development process
-
------
-
 ## Questions to Ask
 
-If you’re unsure about anything, ask these questions:
+If you're unsure about anything, ask these questions:
 
 - What is the user trying to accomplish?
-- What’s the simplest way to achieve this?
+- What's the simplest way to achieve this?
 - Does this fit with our existing patterns?
 - How can we verify this works correctly?
 - Is there risk of lookahead bias?
@@ -472,22 +415,29 @@ If you’re unsure about anything, ask these questions:
 
 -----
 
-## Notes for Multi-Session Work
+## Important Reminders
 
-**If working across multiple sessions:**
+- 📖 Always read PROGRESS_LOG.md first for current status
+- 🎯 Understand the goal before coding
+- ⏰ Use explicit as_of dates for all point-in-time operations
+- 🚫 Never use future data in backtests (lookahead bias)
+- ✅ Verify your work before finishing
+- 📝 Update session notes incrementally as you work (don't wait until end)
+- 🤝 Save progress frequently to avoid quota issues
+- 🧪 Test with synthetic data when possible
 
-- Create a branch for your feature
-- Note your branch name in PROGRESS_LOG.md
-- Describe what’s complete and what’s remaining
-- Provide clear handoff notes for the next session
-- Document any blocking issues or open questions
+-----
 
-**If blocked on something:**
+## Development Workflow
 
-- Document the blocker clearly in PROGRESS_LOG.md
-- Describe what you’ve tried
-- Suggest possible solutions or next steps
-- Flag if external input is needed (data, decisions, etc.)
+See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for the multi-agent development process.
+
+For quick reference:
+1. Check [TASKS.md](TASKS.md) for available work
+2. Read relevant handoff file from [handoffs/](handoffs/)
+3. Implement following this file's coding standards
+4. Update session notes as you go
+5. Commit and push changes
 
 -----
 
@@ -497,25 +447,4 @@ If you’re unsure about anything, ask these questions:
 |----------|--------------------------|--------------------------------------------------|
 |2026-01-06|Initial creation          |Project setup                                     |
 |2026-01-07|Updated for Python project|Fixed JS examples, added quant-specific guidelines|
-
------
-
-## Quick Reference
-
-**Project goal:** Beat S&P 500 returns with ETF portfolio and automated rebalancing  
-**Current priority:** Set up data ingestion and backtest framework  
-**Today’s focus:** [Check PROGRESS_LOG.md]  
-**Last session:** [Reference to most recent session note]
-
------
-
-## Important Reminders
-
-- 📖 Always read PROGRESS_LOG.md first
-- 🎯 Understand the goal before coding
-- ⏰ Use explicit as_of dates for all point-in-time operations
-- 🚫 Never use future data in backtests (lookahead bias)
-- ✅ Verify your work before finishing
-- 📝 Document what you learned
-- 🤝 Set up next session for success
-- 🧪 Test with synthetic data when possible
+|2026-01-09|Streamlined duplication   |Removed session workflow (now in AGENT_WORKFLOW.md)|
