@@ -23,17 +23,26 @@ class DataProvider(ABC):
         end_date: str
     ) -> Optional[pd.DataFrame]:
         """Fetch daily OHLCV price data for ETF tickers.
-        
+
         Args:
             tickers: List of ETF ticker symbols (e.g., ['SPY', 'QQQ'])
             start_date: Start date in YYYY-MM-DD format
             end_date: End date in YYYY-MM-DD format
-            
+
         Returns:
-            DataFrame with datetime index and OHLCV columns, or None if failed.
-            For single ticker: columns are ['Open', 'High', 'Low', 'Close', 'Volume']
-            For multiple tickers: MultiIndex columns with (ticker, column) pairs
-            
+            DataFrame with datetime index and MultiIndex columns, or None if failed.
+
+            **Standardized Format:**
+            - Columns are ALWAYS MultiIndex with format (Ticker, Price_Field)
+            - This applies to both single and multiple ticker requests
+            - Price fields: 'Open', 'High', 'Low', 'Close', 'Volume'
+            - Column names: ['Ticker', 'Price']
+
+            **Example access patterns:**
+            - Single ticker: data['SPY']['Close']
+            - Multiple tickers: data['SPY']['Close'], data['QQQ']['Close']
+            - All tickers for one field: data.xs('Close', level='Price', axis=1)
+
         Raises:
             ValueError: If date format is invalid or dates are out of range
         """

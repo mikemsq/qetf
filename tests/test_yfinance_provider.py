@@ -9,8 +9,8 @@ import pandas as pd
 from datetime import datetime
 from unittest.mock import Mock, patch
 
-from src.quantetf.data.providers.yfinance_provider import YFinanceProvider
-from src.quantetf.utils.validation import (
+from quantetf.data.providers.yfinance_provider import YFinanceProvider
+from quantetf.utils.validation import (
     validate_ohlcv_dataframe,
     detect_price_anomalies,
     validate_date_range
@@ -76,14 +76,22 @@ class TestYFinanceProvider:
             assert data is not None
             assert isinstance(data, pd.DataFrame)
             assert not data.empty
-            
-            # Check required columns exist
+
+            # Check MultiIndex columns format
+            assert isinstance(data.columns, pd.MultiIndex)
+            assert data.columns.names == ['Ticker', 'Price']
+
+            # Check required price fields exist
             expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-            assert all(col in data.columns for col in expected_cols)
-            
+            price_fields = data.columns.get_level_values('Price').unique().tolist()
+            assert all(col in price_fields for col in expected_cols)
+
+            # Check SPY ticker exists
+            assert 'SPY' in data.columns.get_level_values('Ticker')
+
             # Check datetime index
             assert isinstance(data.index, pd.DatetimeIndex)
-            
+
             # Validate data quality
             assert validate_ohlcv_dataframe(data, 'SPY')
         except ImportError:
@@ -188,7 +196,7 @@ class TestYFinanceProvider:
         try:
             provider = YFinanceProvider()
             
-            with patch('src.quantetf.data.providers.yfinance_provider.yf.download') as mock_download:
+            with patch('quantetf.data.providers.yfinance_provider.yf.download') as mock_download:
                 mock_download.return_value = sample_price_data
                 
                 data = provider.fetch_prices(['SPY'], '2020-01-01', '2020-12-31')
@@ -212,47 +220,47 @@ class TestValidationUtilities:
     
     def test_validate_ohlcv_missing_columns(self, sample_price_data):
         """Test validation fails when required columns are missing."""
-        # Remove Close column
-        df = sample_price_data.drop('Close', axis=1)
-        
+        # Remove Close column from MultiIndex
+        df = sample_price_data.drop(('SPY', 'Close'), axis=1)
+
         with pytest.raises(ValueError, match="Missing required columns"):
-            validate_ohlcv_dataframe(df, 'TEST')
+            validate_ohlcv_dataframe(df, 'SPY')
     
     def test_validate_ohlcv_negative_prices(self, sample_price_data):
         """Test validation fails for negative prices."""
         df = sample_price_data.copy()
-        df.loc[df.index[0], 'Close'] = -10  # Introduce negative price
-        
+        df.loc[df.index[0], ('SPY', 'Close')] = -10  # Introduce negative price
+
         with pytest.raises(ValueError, match="Negative prices"):
-            validate_ohlcv_dataframe(df, 'TEST')
+            validate_ohlcv_dataframe(df, 'SPY')
     
     def test_validate_ohlcv_invalid_ohlc_relationship(self, sample_price_data):
         """Test validation fails for invalid OHLC relationships."""
         df = sample_price_data.copy()
         # Make High less than Low (invalid)
-        df.loc[df.index[0], 'High'] = df.loc[df.index[0], 'Low'] - 1
-        
+        df.loc[df.index[0], ('SPY', 'High')] = df.loc[df.index[0], ('SPY', 'Low')] - 1
+
         with pytest.raises(ValueError, match="Invalid OHLC relationships"):
-            validate_ohlcv_dataframe(df, 'TEST')
+            validate_ohlcv_dataframe(df, 'SPY')
     
     def test_validate_ohlcv_excessive_missing_data(self, sample_price_data):
         """Test validation fails for excessive missing data."""
         df = sample_price_data.copy()
         # Make 10% of data NaN (exceeds 5% threshold)
         df.iloc[:int(len(df)*0.1), :] = pd.NA
-        
+
         with pytest.raises(ValueError, match="Excessive missing data"):
-            validate_ohlcv_dataframe(df, 'TEST')
+            validate_ohlcv_dataframe(df, 'SPY')
     
     def test_validate_ohlcv_valid_data(self, sample_price_data):
         """Test validation passes for valid data."""
-        result = validate_ohlcv_dataframe(sample_price_data, 'TEST')
+        result = validate_ohlcv_dataframe(sample_price_data, 'SPY')
         assert result == True
-    
+
     def test_detect_price_anomalies_clean_data(self, sample_price_data):
         """Test anomaly detection on clean data."""
-        anomalies = detect_price_anomalies(sample_price_data, 'TEST')
-        
+        anomalies = detect_price_anomalies(sample_price_data, 'SPY')
+
         assert anomalies['suspicious_days'] == 0
         assert anomalies['extreme_changes'] == 0
         assert anomalies['zero_volume'] == 0
@@ -261,29 +269,30 @@ class TestValidationUtilities:
         """Test detection of suspicious day (OHLC all equal)."""
         df = sample_price_data.copy()
         # Make OHLC all equal for one day
-        df.loc[df.index[0], ['Open', 'High', 'Low', 'Close']] = 100
-        
-        anomalies = detect_price_anomalies(df, 'TEST')
-        
+        for col in ['Open', 'High', 'Low', 'Close']:
+            df.loc[df.index[0], ('SPY', col)] = 100
+
+        anomalies = detect_price_anomalies(df, 'SPY')
+
         assert anomalies['suspicious_days'] == 1
     
     def test_detect_price_anomalies_extreme_change(self, sample_price_data):
         """Test detection of extreme price changes."""
         df = sample_price_data.copy()
         # Create extreme price change (>50%)
-        df.loc[df.index[1], 'Close'] = df.loc[df.index[0], 'Close'] * 1.6
-        
-        anomalies = detect_price_anomalies(df, 'TEST', max_daily_change=0.5)
-        
+        df.loc[df.index[1], ('SPY', 'Close')] = df.loc[df.index[0], ('SPY', 'Close')] * 1.6
+
+        anomalies = detect_price_anomalies(df, 'SPY', max_daily_change=0.5)
+
         assert anomalies['extreme_changes'] >= 1
     
     def test_detect_price_anomalies_zero_volume(self, sample_price_data):
         """Test detection of zero volume days."""
         df = sample_price_data.copy()
-        df.loc[df.index[0], 'Volume'] = 0
-        
-        anomalies = detect_price_anomalies(df, 'TEST')
-        
+        df.loc[df.index[0], ('SPY', 'Volume')] = 0
+
+        anomalies = detect_price_anomalies(df, 'SPY')
+
         assert anomalies['zero_volume'] == 1
     
     def test_validate_date_range_non_datetime_index(self):

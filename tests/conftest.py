@@ -44,51 +44,58 @@ def short_date_range():
 @pytest.fixture
 def sample_price_data():
     """Return sample ETF price data for testing.
-    
+
     Returns:
-        DataFrame with synthetic price data (252 business days)
+        DataFrame with MultiIndex columns (Ticker, Price_Field) for single ticker 'SPY'
     """
     dates = pd.date_range(start="2020-01-01", periods=252, freq="B")
     n = len(dates)
-    
+
     # Create realistic-looking price data
     base_price = 100
-    returns = pd.Series(range(n)) * 0.1  # Slight upward trend
-    noise = pd.Series(range(n)) % 5 - 2  # Add some noise
-    
+    returns = np.arange(n) * 0.1  # Slight upward trend
+    noise = np.arange(n) % 5 - 2  # Add some noise
+
     close_prices = base_price + returns + noise
-    
-    data = pd.DataFrame({
+
+    # Create simple DataFrame first
+    simple_df = pd.DataFrame({
         "Open": close_prices - 0.5,
         "High": close_prices + 1.0,
         "Low": close_prices - 1.0,
         "Close": close_prices,
         "Volume": 1000000,
     }, index=dates)
-    
-    return data
+
+    # Convert to MultiIndex format (Ticker, Price_Field)
+    simple_df.columns = pd.MultiIndex.from_product(
+        [['SPY'], simple_df.columns],
+        names=['Ticker', 'Price']
+    )
+
+    return simple_df
 
 
 @pytest.fixture
 def sample_price_data_multi_ticker():
     """Return sample price data for multiple tickers.
-    
+
     Returns:
-        DataFrame with MultiIndex columns (ticker, price_field)
+        DataFrame with MultiIndex columns (Ticker, Price_Field)
     """
     dates = pd.date_range(start="2020-01-01", periods=252, freq="B")
     n = len(dates)
-    
+
     tickers = ["SPY", "QQQ"]
     data_dict = {}
-    
+
     for ticker in tickers:
         base_price = 100 if ticker == "SPY" else 200
-        returns = pd.Series(range(n)) * 0.1
-        noise = pd.Series(range(n)) % 5 - 2
-        
+        returns = np.arange(n) * 0.1
+        noise = np.arange(n) % 5 - 2
+
         close_prices = base_price + returns + noise
-        
+
         data_dict[ticker] = pd.DataFrame({
             "Open": close_prices - 0.5,
             "High": close_prices + 1.0,
@@ -96,6 +103,8 @@ def sample_price_data_multi_ticker():
             "Close": close_prices,
             "Volume": 1000000,
         }, index=dates)
-    
-    # Combine into MultiIndex DataFrame
-    return pd.concat(data_dict, axis=1)
+
+    # Combine into MultiIndex DataFrame with names
+    combined = pd.concat(data_dict, axis=1)
+    combined.columns.names = ['Ticker', 'Price']
+    return combined

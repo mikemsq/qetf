@@ -16,6 +16,7 @@ dependencies = [
   "typer>=0.12",
   "rich>=13.7",
   "matplotlib>=3.8",
+  "yfinance>=0.2",
 ]
 
 [project.optional-dependencies]
@@ -34,3 +35,6 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+  "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
+]

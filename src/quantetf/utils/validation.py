@@ -15,24 +15,24 @@ def validate_ohlcv_dataframe(
     required_cols: List[str] = None
 ) -> bool:
     """Validate OHLCV DataFrame structure and data quality.
-    
+
     Performs comprehensive validation including:
     - Presence of required columns
     - No negative prices
     - Valid OHLC relationships (High >= Low, etc.)
     - Reasonable data completeness
-    
+
     Args:
-        df: DataFrame to validate with OHLCV data
-        ticker: Ticker symbol for error messages (optional)
-        required_cols: List of required column names (default: OHLCV)
-        
+        df: DataFrame with MultiIndex columns (Ticker, Price_Field)
+        ticker: Ticker symbol to validate (used to select from MultiIndex)
+        required_cols: List of required price field names (default: OHLCV)
+
     Returns:
         True if validation passes
-        
+
     Raises:
         ValueError: If validation fails with specific error message
-        
+
     Example:
         >>> data = fetch_prices(['SPY'], '2020-01-01', '2021-01-01')
         >>> validate_ohlcv_dataframe(data, 'SPY')
@@ -40,34 +40,63 @@ def validate_ohlcv_dataframe(
     """
     if required_cols is None:
         required_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-    
+
     # Check DataFrame is not empty
     if df.empty:
         raise ValueError(f"DataFrame is empty for {ticker}")
-    
+
+    # Expect MultiIndex columns with format (Ticker, Price_Field)
+    if not isinstance(df.columns, pd.MultiIndex):
+        raise ValueError(
+            f"Expected MultiIndex columns with format (Ticker, Price_Field), "
+            f"but got simple columns: {df.columns.tolist()}"
+        )
+
+    # Get the price field level (should be level 1 with name 'Price')
+    price_level = 1 if df.columns.names[0] == 'Ticker' else 0
+    available_cols = set(df.columns.get_level_values(price_level))
+
     # Check required columns exist
-    missing_cols = set(required_cols) - set(df.columns)
+    missing_cols = set(required_cols) - available_cols
     if missing_cols:
         raise ValueError(f"Missing required columns for {ticker}: {missing_cols}")
-    
+
+    # Check if the specific ticker exists in the DataFrame
+    ticker_level = 0 if df.columns.names[0] == 'Ticker' else 1
+    available_tickers = df.columns.get_level_values(ticker_level).unique().tolist()
+
+    if ticker not in available_tickers:
+        raise ValueError(
+            f"Ticker '{ticker}' not found in DataFrame. "
+            f"Available tickers: {available_tickers}"
+        )
+
+    # Extract data for the specific ticker
+    ticker_data = df[ticker]
+
+    # Get OHLC data
+    open_data = ticker_data.get('Open')
+    high_data = ticker_data.get('High')
+    low_data = ticker_data.get('Low')
+    close_data = ticker_data.get('Close')
+
     # Check for negative prices
-    price_cols = ['Open', 'High', 'Low', 'Close']
-    available_price_cols = [col for col in price_cols if col in df.columns]
-    
-    if (df[available_price_cols] < 0).any().any():
-        raise ValueError(f"Negative prices detected for {ticker}")
-    
+    price_cols_data = [d for d in [open_data, high_data, low_data, close_data] if d is not None]
+    for price_data in price_cols_data:
+        if (price_data < 0).any():
+            raise ValueError(f"Negative prices detected for {ticker}")
+
     # Check OHLC relationships
-    if all(col in df.columns for col in price_cols):
+    if all(d is not None for d in [open_data, high_data, low_data, close_data]):
         # High should be >= all other prices
-        high_invalid = ((df['High'] < df['Low']) |
-                       (df['High'] < df['Open']) |
-                       (df['High'] < df['Close'])).any()
-        
-        # Low should be <= all other prices  
-        low_invalid = ((df['Low'] > df['Open']) |
-                      (df['Low'] > df['Close'])).any()
-        
+        high_invalid = ((high_data < low_data) |
+                       (high_data < open_data) |
+                       (high_data < close_data)).any()
+
+        # Low should be <= all other prices
+        low_invalid = ((low_data > open_data) |
+                      (low_data > close_data)).any()
+
         if high_invalid or low_invalid:
             raise ValueError(f"Invalid OHLC relationships detected for {ticker}")
     
@@ -91,18 +120,18 @@ def detect_price_anomalies(
     max_daily_change: float = 0.5
 ) -> dict:
     """Detect potential anomalies in price data.
-    
+
     Args:
-        df: DataFrame with price data (must have 'Close' column)
-        ticker: Ticker symbol for reporting
+        df: DataFrame with MultiIndex columns (Ticker, Price_Field)
+        ticker: Ticker symbol to analyze
         max_daily_change: Maximum reasonable daily price change (default: 50%)
-        
+
     Returns:
         Dictionary with anomaly counts:
         - suspicious_days: Days where OHLC are all equal
         - extreme_changes: Days with price changes > max_daily_change
         - zero_volume: Days with zero trading volume
-        
+
     Example:
         >>> anomalies = detect_price_anomalies(data, 'SPY')
         >>> if anomalies['extreme_changes'] > 0:
@@ -113,23 +142,50 @@ def detect_price_anomalies(
         'extreme_changes': 0,
         'zero_volume': 0
     }
-    
+
+    # Expect MultiIndex columns
+    if not isinstance(df.columns, pd.MultiIndex):
+        raise ValueError(
+            f"Expected MultiIndex columns with format (Ticker, Price_Field), "
+            f"but got simple columns: {df.columns.tolist()}"
+        )
+
+    # Check if ticker exists
+    ticker_level = 0 if df.columns.names[0] == 'Ticker' else 1
+    available_tickers = df.columns.get_level_values(ticker_level).unique().tolist()
+
+    if ticker not in available_tickers:
+        raise ValueError(
+            f"Ticker '{ticker}' not found in DataFrame. "
+            f"Available tickers: {available_tickers}"
+        )
+
+    # Extract data for the specific ticker
+    ticker_data = df[ticker]
+
+    # Get OHLC and volume data
+    open_data = ticker_data.get('Open')
+    high_data = ticker_data.get('High')
+    low_data = ticker_data.get('Low')
+    close_data = ticker_data.get('Close')
+    volume_data = ticker_data.get('Volume')
+
     # Check for suspicious days (OHLC all equal)
-    if all(col in df.columns for col in ['Open', 'High', 'Low', 'Close']):
-        mask = ((df['Open'] == df['High']) & 
-                (df['Open'] == df['Low']) & 
-                (df['Open'] == df['Close']))
+    if all(d is not None for d in [open_data, high_data, low_data, close_data]):
+        mask = ((open_data == high_data) &
+                (open_data == low_data) &
+                (open_data == close_data))
         issues['suspicious_days'] = mask.sum()
-    
+
     # Check for extreme price changes
-    if 'Close' in df.columns:
-        returns = df['Close'].pct_change()
+    if close_data is not None:
+        returns = close_data.pct_change(fill_method=None)
         issues['extreme_changes'] = (abs(returns) > max_daily_change).sum()
-    
+
     # Check for zero volume days
-    if 'Volume' in df.columns:
-        issues['zero_volume'] = (df['Volume'] == 0).sum()
-    
+    if volume_data is not None:
+        issues['zero_volume'] = (volume_data == 0).sum()
+
     return issues
 
 

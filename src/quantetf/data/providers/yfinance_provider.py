@@ -70,19 +70,22 @@ class YFinanceProvider(DataProvider):
             end_date: End date in YYYY-MM-DD format
             
         Returns:
-            DataFrame with datetime index and OHLCV columns.
-            For single ticker: columns are ['Open', 'High', 'Low', 'Close', 'Volume']
-            For multiple tickers: MultiIndex columns with (ticker, column) pairs
+            DataFrame with datetime index and MultiIndex columns.
+            Column format is always (Ticker, Price_Field) regardless of number of tickers.
+            This ensures consistent data structure throughout the system.
             Returns None if fetch fails.
-            
+
         Raises:
             ValueError: If date format is invalid
-        
+
         Example:
             >>> provider = YFinanceProvider()
+            >>> # Single ticker - returns MultiIndex columns (Ticker, Price_Field)
+            >>> data = provider.fetch_prices(['SPY'], '2020-01-01', '2021-01-01')
+            >>> print(data['SPY']['Close'])  # Access specific ticker/column
+            >>> # Multiple tickers - same format
             >>> data = provider.fetch_prices(['SPY', 'QQQ'], '2020-01-01', '2021-01-01')
-            >>> print(data.columns.levels[0])  # Shows tickers
-            >>> print(data.columns.levels[1])  # Shows OHLCV columns
+            >>> print(data['SPY']['Close'])  # Consistent access pattern
         """
         # Validate date format
         try:
@@ -112,23 +115,36 @@ class YFinanceProvider(DataProvider):
             if data.empty:
                 logger.warning(f"No data retrieved for {tickers}")
                 return None
-            
-            # Ensure consistent column structure
-            if len(tickers) == 1:
-                # For single ticker, yfinance returns simple columns
-                # Ensure we have the expected column names
-                expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-                if not all(col in data.columns for col in expected_cols):
-                    logger.error(f"Missing required columns for {tickers[0]}")
-                    return None
+
+            # Ensure consistent MultiIndex column structure for ALL cases
+            # yfinance behavior (varies by version):
+            # - Newer versions: Always returns MultiIndex columns (Price_Field, Ticker)
+            # - Older versions: Single ticker returns simple columns, multiple returns MultiIndex
+
+            # Check if data already has MultiIndex (newer yfinance behavior)
+            if isinstance(data.columns, pd.MultiIndex):
+                # yfinance returns (Price, Ticker), we want (Ticker, Price)
+                if data.columns.names[0] != 'Ticker':
+                    data.columns = data.columns.swaplevel(0, 1)
+                    data.columns.names = ['Ticker', 'Price']
             else:
-                # For multiple tickers, yfinance returns MultiIndex columns
-                # Format: (column, ticker) - we want (ticker, column)
-                if isinstance(data.columns, pd.MultiIndex):
-                    # Swap levels if needed
-                    if data.columns.names[0] != 'Ticker':
-                        data.columns = data.columns.swaplevel(0, 1)
-            
+                # Simple columns - convert to MultiIndex (older yfinance for single ticker)
+                ticker = tickers[0]
+                expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
+
+                # Check columns before conversion
+                missing_cols = [col for col in expected_cols if col not in data.columns]
+                if missing_cols:
+                    logger.error(f"Missing required columns for {ticker}: {missing_cols}")
+                    return None
+
+                # Create MultiIndex columns
+                new_columns = pd.MultiIndex.from_tuples(
+                    [(ticker, col) for col in data.columns],
+                    names=['Ticker', 'Price']
+                )
+                data.columns = new_columns
+
             logger.info(f"Successfully fetched {len(data)} rows for {len(tickers)} ticker(s)")
             return data
             
