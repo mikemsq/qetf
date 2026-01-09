@@ -34,11 +34,12 @@ Implement EqualWeightTopN portfolio constructor that takes top N ETFs by alpha s
 ---
 
 ### IMPL-003: FlatTransactionCost Model
-**Status:** ready
+**Status:** completed
 **Priority:** high
 **Estimated:** 1 hour
+**Completed:** 2026-01-09
 **Dependencies:** []
-**Assigned:** (available)
+**Assigned:** Session-IMPL-003
 
 **Description:**
 Implement simple flat transaction cost model (10 bps per trade).
@@ -48,6 +49,12 @@ Implement simple flat transaction cost model (10 bps per trade).
 - Tests: `tests/test_transaction_costs.py`
 
 **Handoff:** `handoffs/handoff-IMPL-003.md`
+
+**Notes:**
+- Implemented as dataclass following existing CostModel pattern
+- 22 comprehensive tests, all passing
+- Handles edge cases (empty/None weights, NaN values, misaligned tickers)
+- Returns cost as fraction of NAV (e.g., 0.001 = 10 bps)
 
 ---
 
