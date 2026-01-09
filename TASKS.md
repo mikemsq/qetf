@@ -84,19 +84,28 @@ Implement SimpleBacktestEngine that orchestrates the event-driven backtest loop.
 ---
 
 ### TEST-001: No-Lookahead Tests
-**Status:** ready
+**Status:** completed
 **Priority:** critical
 **Estimated:** 2 hours
+**Completed:** 2026-01-09
 **Dependencies:** []
-**Assigned:** (available)
+**Assigned:** Testing Agent
 
 **Description:**
 Create synthetic data tests to verify no lookahead bias in data access and alpha models.
 
 **Files:**
-- Create: `tests/test_no_lookahead.py`
+- Created: `tests/test_no_lookahead.py`
 
 **Handoff:** `handoffs/handoff-TEST-001.md`
+**Completion:** `handoffs/completion-TEST-001.md`
+
+**Notes:**
+- 8 comprehensive tests all passing
+- Synthetic data approach makes lookahead bugs visible
+- Verifies SnapshotDataStore T-1 enforcement
+- Verifies MomentumAlpha uses only historical data
+- Strong confidence in no-lookahead enforcement
 
 ---
 
