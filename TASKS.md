@@ -16,20 +16,27 @@
 ## Current Sprint: Phase 2 Backtest Engine
 
 ### IMPL-002: EqualWeightTopN Portfolio Constructor
-**Status:** ready
+**Status:** completed
 **Priority:** high
-**Estimated:** 1-2 hours
+**Completed:** 2026-01-09
 **Dependencies:** []
-**Assigned:** (available)
+**Assigned:** Session-IMPL-002
 
 **Description:**
 Implement EqualWeightTopN portfolio constructor that takes top N ETFs by alpha score and assigns equal weights.
 
 **Files:**
-- Create: `src/quantetf/portfolio/equal_weight.py`
-- Tests: `tests/test_equal_weight.py`
+- Created: `src/quantetf/portfolio/equal_weight.py`
+- Created: `tests/test_equal_weight.py`
 
 **Handoff:** `handoffs/handoff-IMPL-002.md`
+**Completion:** `handoffs/completion-IMPL-002.md`
+
+**Notes:**
+- All 14 tests pass (covers edge cases, NaN handling, large universes)
+- Handles fewer valid scores than top_n gracefully
+- Comprehensive diagnostics for debugging
+- Ready for integration in backtest engine
 
 ---
 
@@ -59,10 +66,10 @@ Implement simple flat transaction cost model (10 bps per trade).
 ---
 
 ### IMPL-004: Simple Backtest Engine
-**Status:** blocked
+**Status:** ready
 **Priority:** high
 **Estimated:** 3-4 hours
-**Dependencies:** [IMPL-002, IMPL-003]
+**Dependencies:** [IMPL-002, IMPL-003] (both completed)
 **Assigned:** (available)
 
 **Description:**
