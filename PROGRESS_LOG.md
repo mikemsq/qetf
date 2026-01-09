@@ -240,9 +240,36 @@
   - Converts numpy types to Python types for clean YAML serialization
   - Created production snapshot: [snapshot_5yr_20etfs](../data/snapshots/snapshot_5yr_20etfs/)
 
+**Phase 2 Progress (started in same session):**
+
+- Discussed backtest engine architecture with user and finalized design decisions:
+  - Event-driven architecture (vs vectorized) for correctness and debuggability
+  - T-1 data access (conservative, prevents lookahead bias)
+  - Fixed calendar rebalance schedule (monthly/weekly)
+  - Continuous scores for alpha signals
+  - Top-5 equal-weight portfolio construction
+  - 10 bps flat transaction costs
+- Implemented SnapshotDataStore ([snapshot_store.py](../src/quantetf/data/snapshot_store.py))
+  - Point-in-time data access with strict T-1 enforcement
+  - Loads from parquet snapshot files
+  - Methods: read_prices(), get_close_prices(), read_prices_total_return()
+  - Critical: Uses `data.index < as_of` to prevent lookahead
+- Implemented MomentumAlpha model ([momentum.py](../src/quantetf/alpha/momentum.py))
+  - 252-day lookback (12-month momentum)
+  - Handles missing data gracefully
+  - Comprehensive logging of score statistics
+  - Strict T-1 data access through SnapshotDataStore
+- **Created multi-agent parallel workflow system** (major process improvement)
+  - [AGENT_WORKFLOW.md](../AGENT_WORKFLOW.md): Complete workflow documentation
+  - [TASKS.md](../TASKS.md): Central task queue with 5 Phase 2 tasks
+  - [handoffs/](../handoffs/): Agent-to-agent handoff files
+  - Enables parallel development by multiple agents
+  - Eliminates context compaction issues
+  - Inspired by Boris Cherny's agentic workflow, adapted for parallel execution
+
 **In Progress:**
 
-- Updating PROGRESS_LOG.md with today's work (this entry)
+- Session finalization and documentation
 
 **Decisions Made:**
 
@@ -262,6 +289,17 @@
 - **Snapshot naming:** Descriptive names (snapshot_5yr_20etfs) vs pure timestamps
   - Reasoning: Makes it easier to identify what each snapshot contains
   - Can still use timestamp-based naming for automated snapshots
+- **Phase 2 architectural decisions (from user discussion):**
+  - Event-driven backtest (not vectorized) for correctness
+  - T-1 data access (use previous day's close for decisions)
+  - Pluggable components (AlphaModel, PortfolioConstructor, CostModel, Schedule)
+  - Top-5 equal-weight as MVP portfolio construction
+  - 10 bps flat transaction costs (conservative for liquid ETFs)
+- **Multi-agent workflow adoption:**
+  - Reasoning: Single long sessions hit context limits and lose important details
+  - Solution: Specialized agents work in parallel from shared documentation
+  - Benefits: No context loss, parallel execution, focused tasks, scalable
+  - Implementation: Planning → Task Queue (TASKS.md) → Coding Agents → Review
 
 **Blockers/Issues:**
 
@@ -282,22 +320,54 @@
 - Parquet format works excellently - 1.1MB for 5 years of 20 ETFs (25,100 rows × 5 fields)
 - YAML metadata with numpy types required `yaml.unsafe_load()` - acceptable since we control the source
 - Git commit hash in snapshots provides excellent traceability for reproducibility
+- **Phase 2 implementation started successfully**
+  - SnapshotDataStore enforces T-1 with `data.index < as_of` (strict inequality)
+  - MomentumAlpha model is clean and well-documented
+  - Base classes already existed (PortfolioConstructor, CostModel, etc.) - good foundation
+- **Multi-agent workflow is a game-changer**
+  - Created detailed handoff file for IMPL-002 (EqualWeightTopN) as template
+  - Task queue has 5 ready/blocked tasks for Phase 2
+  - Can now launch 2-3 agents in parallel on different tasks
+  - Eliminates need for context compaction
 
-**Next Steps:**
+**Session Summary:**
 
-- ✅ Phase 1 deliverables mostly complete:
-  - ✅ Project structure and documentation
-  - ✅ Data ingestion for ETF price source (yfinance)
-  - ✅ Curated data store with quality checks
-  - ✅ Universe definition (20 ETFs)
-  - ✅ Basic data validation tests
-  - ✅ Created first production snapshot
-- **Next priority:** Begin Phase 2 (Backtest Engine)
-  - Design backtest engine architecture
-  - Implement rebalancing schedule logic
-  - Create point-in-time data access layer
-  - Implement simple momentum alpha model
-  - Build equal-weight portfolio constructor
+**Phase 1: COMPLETE ✅**
+- Data ingestion pipeline working
+- 5-year snapshot created and validated
+- All 24 tests passing
+- Infrastructure solid and documented
+
+**Phase 2: STARTED (30% complete)**
+- ✅ Architecture designed (event-driven, T-1 data)
+- ✅ SnapshotDataStore implemented
+- ✅ MomentumAlpha implemented
+- ✅ Multi-agent workflow system created
+- ⏳ Remaining: 3 ready tasks in TASKS.md (can be done in parallel)
+
+**Next Session (Tomorrow):**
+
+**Option 1: Launch parallel agents** (Recommended - fastest)
+- Open 3 browser tabs/sessions
+- Tab 1: Implement IMPL-002 (EqualWeightTopN)
+- Tab 2: Implement IMPL-003 (FlatTransactionCost)
+- Tab 3: Implement TEST-001 (No-lookahead tests)
+- All work simultaneously, 3x speedup
+
+**Option 2: Sequential (traditional)**
+- Pick up IMPL-002 from TASKS.md
+- Complete implementation and tests
+- Move to next task
+
+**Quick Start Command:**
+```bash
+# For any agent:
+cd /workspaces/qetf
+git pull  # Get latest
+cat TASKS.md | grep "Status: ready"  # See available tasks
+cat handoffs/handoff-IMPL-002.md  # Read task details
+# Then: Implement following the handoff file
+```
 
 -----
 
