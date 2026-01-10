@@ -66,20 +66,29 @@ Implement simple flat transaction cost model (10 bps per trade).
 ---
 
 ### IMPL-004: Simple Backtest Engine
-**Status:** ready
+**Status:** completed
 **Priority:** high
-**Estimated:** 3-4 hours
+**Completed:** 2026-01-10
 **Dependencies:** [IMPL-002, IMPL-003] (both completed)
-**Assigned:** (available)
+**Assigned:** Session-IMPL-004-Resume
 
 **Description:**
 Implement SimpleBacktestEngine that orchestrates the event-driven backtest loop.
 
 **Files:**
-- Create: `src/quantetf/backtest/simple_engine.py`
-- Tests: `tests/test_backtest_engine.py`
+- Created: `src/quantetf/backtest/simple_engine.py`
+- Created: `tests/test_backtest_engine.py`
 
 **Handoff:** `handoffs/handoff-IMPL-004.md`
+**Completion:** `handoffs/completion-IMPL-004.md`
+
+**Notes:**
+- 353 lines of implementation + 475 lines of tests
+- 17 comprehensive tests, all passing
+- Event-driven architecture with T-1 data access
+- Integrates MomentumAlpha, EqualWeightTopN, FlatTransactionCost
+- Total test count: 68 → 85 (+17)
+- Ready for IMPL-005
 
 ---
 
@@ -110,10 +119,10 @@ Create synthetic data tests to verify no lookahead bias in data access and alpha
 ---
 
 ### IMPL-005: End-to-End Backtest Script
-**Status:** blocked
+**Status:** ready
 **Priority:** high
 **Estimated:** 2 hours
-**Dependencies:** [IMPL-004]
+**Dependencies:** [IMPL-004] (completed)
 **Assigned:** (available)
 
 **Description:**

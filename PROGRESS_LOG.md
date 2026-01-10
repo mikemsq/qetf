@@ -8,20 +8,20 @@
 
 ## Current Status
 
-**Active Phase:** Phase 2 - Backtest Engine (60% complete)
+**Active Phase:** Phase 2 - Backtest Engine (80% complete)
 **Branch:** main
 
 ### Quick Status
 
-- **What's working:** Data pipeline, snapshots, point-in-time access, momentum alpha, equal-weight portfolio, transaction costs, no-lookahead validation
-- **What's in progress:** Backtest engine implementation
+- **What's working:** Data pipeline, snapshots, point-in-time access, momentum alpha, equal-weight portfolio, transaction costs, no-lookahead validation, **SimpleBacktestEngine**
+- **What's in progress:** None currently
 - **What's blocked:** None currently
-- **Next priority:** IMPL-004 (SimpleBacktestEngine) - now ready!
+- **Next priority:** IMPL-005 (End-to-End Backtest Script) - now ready!
 
 ### Ready to Work On
 
 See [TASKS.md](TASKS.md) for detailed task queue. Currently ready:
-- IMPL-004: SimpleBacktestEngine (both dependencies complete)
+- IMPL-005: End-to-End Backtest Script (IMPL-004 completed)
 
 -----
 
@@ -30,6 +30,45 @@ See [TASKS.md](TASKS.md) for detailed task queue. Currently ready:
 This section shows the last 7 days of activity. For full history, see [session-notes/](session-notes/).
 
 ### Daily Logs
+
+#### Friday, January 10, 2026 (Session Resume - IMPL-004)
+
+**Duration:** ~2 hours
+**Focus:** SimpleBacktestEngine implementation
+
+**Completed:**
+
+- ✅ **IMPL-004: SimpleBacktestEngine**
+  - 353 lines of implementation code
+  - 17 comprehensive tests, all passing
+  - Event-driven backtest loop with T-1 data access
+  - Integrates MomentumAlpha, EqualWeightTopN, FlatTransactionCost
+  - Helper functions: rebalance dates, Sharpe ratio, max drawdown
+  - Comprehensive logging and error handling
+  - Commit: (pending)
+
+**Test Results:**
+
+- All 17 backtest engine tests passing
+- Total test count: 68 → 85 (+17 tests)
+- Test categories:
+  - Helper functions: 9 tests
+  - Integration tests: 8 tests (synthetic data)
+
+**Key Achievement:**
+
+Phase 2 progress: 60% → 80% (IMPL-005 now unblocked!)
+
+**Session Notes:**
+
+- Previous session interrupted by quota
+- Successfully resumed and completed IMPL-004
+- Fixed import issues (AlphaModel from alpha.base, not types)
+- Extended synthetic test data to 3 years for sufficient lookback
+- Reduced min_periods to 50 in tests for faster convergence
+- All acceptance criteria met
+
+---
 
 #### Thursday, January 9, 2026 (Morning Session - Documentation Cleanup)
 
