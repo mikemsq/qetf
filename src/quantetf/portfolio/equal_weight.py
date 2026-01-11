@@ -98,8 +98,10 @@ class EqualWeightTopN(PortfolioConstructor):
         logger.info(f"Valid scores: {len(valid_scores)}/{len(alpha.scores)}")
 
         if len(valid_scores) == 0:
-            logger.warning("No valid alpha scores available, returning zero weights")
-            weights = pd.Series(0.0, index=list(universe.tickers))
+            logger.warning("No valid alpha scores available, allocating 100% to cash")
+            all_tickers = list(universe.tickers) + [CASH_TICKER]
+            weights = pd.Series(0.0, index=all_tickers)
+            weights[CASH_TICKER] = 1.0
             return TargetWeights(
                 as_of=as_of,
                 weights=weights,
@@ -107,7 +109,8 @@ class EqualWeightTopN(PortfolioConstructor):
                     'top_n': self.top_n,
                     'selected': [],
                     'num_valid_scores': 0,
-                    'num_universe_tickers': len(universe.tickers)
+                    'num_universe_tickers': len(universe.tickers),
+                    'cash_weight': 1.0
                 }
             )
 
@@ -118,8 +121,9 @@ class EqualWeightTopN(PortfolioConstructor):
         num_selected = min(self.top_n, len(ranked))
         top_tickers = ranked.head(num_selected).index.tolist()
 
-        # Calculate equal weight
-        weight = 1.0 / num_selected if num_selected > 0 else 0.0
+        # Calculate equal weight across top_n positions (not num_selected)
+        # This ensures total weight always sums to 1.0
+        weight = 1.0 / self.top_n
 
         logger.info(
             f"Selected {num_selected} tickers: {top_tickers} "
@@ -136,11 +140,6 @@ class EqualWeightTopN(PortfolioConstructor):
             cash_weight = (self.top_n - num_selected) * weight
             weights[CASH_TICKER] = cash_weight
             logger.info(f"Allocated {cash_weight:.4f} to cash (insufficient valid scores)")
-
-        # If no valid scores at all, allocate everything to cash
-        if num_selected == 0:
-            weights[CASH_TICKER] = 1.0
-            logger.info("No valid scores, allocated 100% to cash")
 
         # Verify sum (should be ~1.0)
         weight_sum = weights.sum()
