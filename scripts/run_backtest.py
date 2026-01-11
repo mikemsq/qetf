@@ -33,6 +33,8 @@ from datetime import datetime
 import json
 import yaml
 import pandas as pd
+import sys
+import os
 
 from quantetf.backtest.simple_engine import SimpleBacktestEngine, BacktestConfig
 from quantetf.alpha.momentum import MomentumAlpha
@@ -41,10 +43,7 @@ from quantetf.portfolio.costs import FlatTransactionCost
 from quantetf.data.snapshot_store import SnapshotDataStore
 from quantetf.types import Universe
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+# Logging is set up in main() to write to out.txt file
 logger = logging.getLogger(__name__)
 
 
@@ -140,18 +139,15 @@ Examples:
     return parser.parse_args()
 
 
-def run_backtest(args):
+def run_backtest(args, output_dir):
     """Run the backtest with given parameters.
 
     Args:
         args: Parsed command-line arguments
+        output_dir: Path to output directory (already created)
 
     Returns:
         BacktestResult object containing equity curve, holdings, metrics
-
-    Raises:
-        FileNotFoundError: If snapshot directory not found
-        ValueError: If configuration is invalid or insufficient data
     """
     logger.info("=" * 80)
     logger.info("QuantETF Backtest")
@@ -235,7 +231,7 @@ def run_backtest(args):
     print_metrics(result)
 
     # 7. Save results
-    output_dir = save_results(result, args)
+    output_dir = save_results(result, args, output_dir)
     logger.info(f"Results saved to: {output_dir}")
 
     return result
@@ -254,43 +250,41 @@ def print_metrics(result):
 
     metrics = result.metrics
 
-    print(f"\nTotal Return:     {metrics['total_return']:>10.2%}")
-    print(f"Sharpe Ratio:     {metrics['sharpe_ratio']:>10.2f}")
-    print(f"Max Drawdown:     {metrics['max_drawdown']:>10.2%}")
-    print(f"Total Costs:      ${metrics['total_costs']:>10,.2f}")
-    print(f"Num Rebalances:   {metrics['num_rebalances']:>10,}")
+    logger.info(f"\nTotal Return:     {metrics['total_return']:>10.2%}")
+    logger.info(f"Sharpe Ratio:     {metrics['sharpe_ratio']:>10.2f}")
+    logger.info(f"Max Drawdown:     {metrics['max_drawdown']:>10.2%}")
+    logger.info(f"Total Costs:      ${metrics['total_costs']:>10,.2f}")
+    logger.info(f"Num Rebalances:   {metrics['num_rebalances']:>10,}")
 
     # Additional metrics
     final_nav = result.equity_curve['nav'].iloc[-1]
     initial_nav = result.config.initial_capital
-    print(f"\nInitial NAV:      ${initial_nav:>10,.2f}")
-    print(f"Final NAV:        ${final_nav:>10,.2f}")
-    print(f"Profit/Loss:      ${final_nav - initial_nav:>10,.2f}")
+    logger.info(f"\nInitial NAV:      ${initial_nav:>10,.2f}")
+    logger.info(f"Final NAV:        ${final_nav:>10,.2f}")
+    logger.info(f"Profit/Loss:      ${final_nav - initial_nav:>10,.2f}")
 
     logger.info("=" * 80)
 
 
-def save_results(result, args):
+def save_results(result, args, output_dir):
     """Save backtest results to disk.
 
-    Creates a timestamped directory containing:
+    Saves results to the already-created output directory containing:
     - equity_curve.csv: NAV and costs over time
     - holdings_history.csv: Share holdings at each rebalance
     - weights_history.csv: Portfolio weights at each rebalance
     - metrics.json: Performance metrics
     - config.json: Backtest configuration
+    - out.txt: Console and logging output (created in main())
 
     Args:
         result: BacktestResult object
         args: Parsed command-line arguments
+        output_dir: Path to output directory (already created)
 
     Returns:
         Path object pointing to the output directory
     """
-    # Create output directory
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    output_dir = Path(args.output_dir) / f"{timestamp}_{args.strategy}"
-    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Save equity curve
     equity_path = output_dir / 'equity_curve.csv'
@@ -337,8 +331,28 @@ def main():
     """Main entry point."""
     args = parse_args()
 
+    # Create output directory early so we can set up logging
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    base_output_dir = Path(args.output_dir)
+    base_output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = base_output_dir / f"{timestamp}_{args.strategy}"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Set up logging to both console and file
+    log_file = output_dir / 'out.txt'
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(sys.stdout),  # Console output
+            logging.FileHandler(log_file)        # File output
+        ]
+    )
+    logger = logging.getLogger(__name__)
+
     try:
-        result = run_backtest(args)
+        logger.info(f"Starting backtest, output will be saved to: {output_dir}")
+        result = run_backtest(args, output_dir)
         logger.info("SUCCESS!")
         return 0
 
