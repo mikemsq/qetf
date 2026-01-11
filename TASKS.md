@@ -1,7 +1,7 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 9, 2026
-**Active Phase:** Phase 2 - Backtest Engine
+**Last Updated:** January 11, 2026
+**Active Phase:** Phase 3 - Analytics & Visualization
 
 ## Task Status Legend
 
@@ -187,25 +187,420 @@ Implemented SnapshotDataStore for point-in-time data access from parquet files.
 
 ---
 
+## Current Sprint: Phase 3 - Analytics & Visualization
+
+### ANALYSIS-001: Enhanced Metrics Module
+**Status:** ready
+**Priority:** high
+**Estimated:** 2-3 hours
+**Dependencies:** []
+
+**Description:**
+Expand evaluation/metrics.py with advanced performance metrics for comprehensive strategy analysis.
+
+**New Metrics to Add:**
+- Sortino ratio (downside-risk adjusted returns)
+- Calmar ratio (return / max drawdown)
+- Win rate (percentage of positive periods)
+- Value at Risk (VaR) and Conditional VaR (CVaR) at 95% confidence
+- Rolling Sharpe ratio (252-day window)
+- Information ratio (vs benchmark)
+
+**Files:**
+- Update: `src/quantetf/evaluation/metrics.py`
+- Create: `tests/test_advanced_metrics.py`
+
+**Acceptance Criteria:**
+- All 6 new metrics implemented with proper docstrings
+- Each metric has 3+ tests (typical case, edge cases, validation)
+- Integration with existing metrics.py
+- Examples in docstrings showing expected usage
+
+---
+
+### ANALYSIS-002: Risk Analytics Module
+**Status:** ready
+**Priority:** high
+**Estimated:** 2-3 hours
+**Dependencies:** [ANALYSIS-001]
+
+**Description:**
+Create new risk_analytics.py module for portfolio risk decomposition and analysis.
+
+**Functionality:**
+- Correlation matrix of holdings over time
+- Portfolio beta to benchmark (SPY, QQQ)
+- Volatility clustering detection
+- Concentration metrics (HHI, effective N)
+- Exposure summary (sector, geography if available)
+
+**Files:**
+- Create: `src/quantetf/evaluation/risk_analytics.py`
+- Create: `tests/test_risk_analytics.py`
+
+**Acceptance Criteria:**
+- At least 5 risk analytics functions implemented
+- Works with backtest results format
+- 15+ tests covering all functions
+- Clear docstrings with financial context
+
+---
+
+### VIZ-001: Backtest Analysis Notebook
+**Status:** ready
+**Priority:** high
+**Estimated:** 3-4 hours
+**Dependencies:** [ANALYSIS-001]
+
+**Description:**
+Create comprehensive Jupyter notebook for visualizing backtest results.
+
+**Required Visualizations:**
+1. Equity curve with dual-axis drawdown overlay
+2. Monthly/yearly returns heatmap
+3. Rolling Sharpe ratio (252-day window)
+4. Drawdown waterfall chart
+5. Returns distribution histogram
+6. Underwater plot (time below high-water mark)
+7. Holdings evolution over time
+8. Turnover analysis
+
+**Files:**
+- Create: `notebooks/backtest_analysis.ipynb`
+- Update: `notebooks/README.md`
+
+**Acceptance Criteria:**
+- Loads latest backtest from artifacts/backtests/
+- All 8 visualizations implemented
+- Clear markdown explanations
+- Runs end-to-end without errors
+- Generates professional-looking charts
+
+**Notes:**
+- Use matplotlib/seaborn for consistency
+- Make plots interactive where beneficial (plotly optional)
+- Include summary metrics table at top
+
+---
+
+### VIZ-002: Alpha Diagnostics Notebook
+**Status:** ready
+**Priority:** medium
+**Estimated:** 2-3 hours
+**Dependencies:** [ANALYSIS-001]
+
+**Description:**
+Create notebook for analyzing alpha signal quality and predictiveness.
+
+**Analysis Sections:**
+1. Information Coefficient (IC) time series
+2. Signal decay analysis (correlation at different horizons)
+3. Quintile performance analysis
+4. Cross-sectional spread of alpha scores
+5. Hit rate by signal strength
+6. Turnover and stability analysis
+
+**Files:**
+- Create: `notebooks/alpha_diagnostics.ipynb`
+- Create: `src/quantetf/evaluation/alpha_diagnostics.py` (helper functions)
+- Create: `tests/test_alpha_diagnostics.py`
+
+**Acceptance Criteria:**
+- All 6 analysis sections implemented
+- Helper functions tested (10+ tests)
+- Works with momentum alpha model
+- Clear interpretation guidelines
+
+---
+
+### ANALYSIS-003: Strategy Comparison Script
+**Status:** ready
+**Priority:** high
+**Estimated:** 3-4 hours
+**Dependencies:** [ANALYSIS-001, ANALYSIS-002]
+
+**Description:**
+Create script to run multiple strategy variants and generate comparative analysis.
+
+**Features:**
+- Run multiple configs in parallel or sequence
+- Generate comparison table (all metrics side-by-side)
+- Equity curve overlay chart
+- Risk-return scatter plot
+- Correlation matrix of strategy returns
+- Statistical significance tests (Sharpe ratio t-test)
+
+**Files:**
+- Create: `scripts/compare_strategies.py`
+- Create: `src/quantetf/evaluation/comparison.py`
+- Create: `tests/test_strategy_comparison.py`
+
+**Acceptance Criteria:**
+- CLI accepts multiple config files
+- Outputs HTML report with charts
+- Saves comparison results to artifacts/
+- 15+ tests for comparison logic
+- Documentation in scripts/README.md
+
+**Example Usage:**
+```bash
+python scripts/compare_strategies.py \
+  --configs configs/strategies/*.yaml \
+  --snapshot data/snapshots/snapshot_5yr_20etfs \
+  --output artifacts/comparisons/
+```
+
+---
+
+### ANALYSIS-004: Parameter Sensitivity Analysis
+**Status:** ready
+**Priority:** medium
+**Estimated:** 2-3 hours
+**Dependencies:** [ANALYSIS-003]
+
+**Description:**
+Create notebook for systematic parameter sweep and sensitivity testing.
+
+**Parameters to Test:**
+- Momentum lookback: [63, 126, 252, 504] days
+- Top-N selection: [3, 5, 7, 10] ETFs
+- Rebalance frequency: ['weekly', 'monthly', 'quarterly']
+- Transaction costs: [5, 10, 20, 50] bps
+
+**Visualizations:**
+- Heatmap: Sharpe ratio vs (lookback, top_n)
+- Surface plot: Returns vs (rebalance_freq, cost_bps)
+- Robustness check: performance stability
+
+**Files:**
+- Create: `notebooks/parameter_sweep.ipynb`
+- Create: `scripts/grid_search.py` (automation)
+
+**Acceptance Criteria:**
+- Automated parameter grid search
+- Results saved to artifacts/parameter_sweeps/
+- Clear heatmap visualizations
+- Identifies robust parameter ranges
+
+---
+
+### ANALYSIS-005: Benchmark Comparison Framework
+**Status:** ready
+**Priority:** high
+**Estimated:** 2-3 hours
+**Dependencies:** [ANALYSIS-001, ANALYSIS-003]
+
+**Description:**
+Create framework for comparing strategies against standard benchmarks.
+
+**Benchmarks to Implement:**
+1. SPY buy-and-hold
+2. 60/40 portfolio (SPY/AGG)
+3. Equal-weight universe
+4. Random selection (Monte Carlo)
+5. Oracle (perfect foresight upper bound)
+
+**Metrics:**
+- Excess return (strategy - benchmark)
+- Tracking error
+- Information ratio
+- Beta and alpha (regression)
+- Drawdown comparison
+
+**Files:**
+- Create: `scripts/benchmark_comparison.py`
+- Create: `src/quantetf/evaluation/benchmarks.py`
+- Create: `tests/test_benchmarks.py`
+
+**Acceptance Criteria:**
+- All 5 benchmarks implemented
+- Regression-based attribution
+- HTML report generation
+- 12+ tests
+
+---
+
+### ANALYSIS-006: Walk-Forward Validation Framework
+**Status:** ready
+**Priority:** critical
+**Estimated:** 4-5 hours
+**Dependencies:** [ANALYSIS-003]
+
+**Description:**
+Implement rolling window validation to test strategy robustness and prevent overfitting.
+
+**Methodology:**
+1. Define rolling windows (e.g., 2-year train, 1-year test)
+2. For each window: run backtest on train period
+3. Test on out-of-sample period
+4. Roll window forward
+5. Aggregate results
+
+**Analysis:**
+- Out-of-sample Sharpe distribution
+- In-sample vs out-of-sample degradation
+- Parameter stability over time
+- Regime-specific performance
+
+**Files:**
+- Create: `scripts/walk_forward_test.py`
+- Create: `src/quantetf/evaluation/walk_forward.py`
+- Create: `tests/test_walk_forward.py`
+
+**Acceptance Criteria:**
+- Configurable window sizes
+- Prevents data leakage
+- Comprehensive report generation
+- 15+ tests
+- Documentation on interpreting results
+
+---
+
+### ANALYSIS-007: Transaction Cost Analysis
+**Status:** ready
+**Priority:** medium
+**Estimated:** 2-3 hours
+**Dependencies:** [ANALYSIS-001]
+
+**Description:**
+Enhance cost modeling with realistic cost structures and sensitivity analysis.
+
+**New Cost Models:**
+- SlippageCostModel (volume-based)
+- SpreadCostModel (bid-ask spreads)
+- ImpactCostModel (market impact for large trades)
+
+**Analysis:**
+- Cost sensitivity notebook
+- Rebalance frequency vs cost drag
+- High-turnover vs low-turnover comparison
+- Identify expensive trades (illiquid ETFs)
+
+**Files:**
+- Update: `src/quantetf/portfolio/costs.py`
+- Create: `notebooks/cost_sensitivity.ipynb`
+- Update: `tests/test_transaction_costs.py`
+
+**Acceptance Criteria:**
+- 3 new cost models implemented
+- Each model has 5+ tests
+- Sensitivity notebook functional
+- Cost comparison framework
+
+---
+
+### VIZ-003: Stress Test Notebook
+**Status:** ready
+**Priority:** medium
+**Estimated:** 2-3 hours
+**Dependencies:** [VIZ-001, ANALYSIS-001]
+
+**Description:**
+Analyze strategy performance during specific market regimes and crisis periods.
+
+**Periods to Test:**
+- 2020 COVID crash (Feb-Mar 2020)
+- 2022 Bond/Tech selloff
+- High volatility periods (VIX > 30)
+- Low volatility periods (VIX < 15)
+- Bull markets vs bear markets
+
+**Metrics:**
+- Max drawdown in crisis
+- Recovery time
+- Volatility spike behavior
+- Correlation breakdown
+
+**Files:**
+- Create: `notebooks/stress_test.ipynb`
+
+**Acceptance Criteria:**
+- Identifies crisis periods automatically
+- Regime classification logic
+- Clear before/during/after analysis
+- Comparative visualizations
+
+---
+
+### VIZ-004: Auto-Report Generation
+**Status:** ready
+**Priority:** medium
+**Estimated:** 3-4 hours
+**Dependencies:** [VIZ-001, ANALYSIS-001, ANALYSIS-002]
+
+**Description:**
+Create automated HTML report generator from backtest results.
+
+**Report Sections:**
+1. Executive summary (key metrics table)
+2. Performance charts (equity, drawdown, returns)
+3. Risk analytics (correlations, beta, VaR)
+4. Holdings analysis (turnover, concentration)
+5. Trade log with attribution
+6. Benchmark comparison
+
+**Files:**
+- Create: `scripts/generate_report.py`
+- Create: `src/quantetf/evaluation/report_builder.py`
+- Create: `templates/report_template.html` (Jinja2)
+
+**Acceptance Criteria:**
+- Professional HTML output
+- Embeds charts (base64 or inline SVG)
+- Self-contained single file
+- CLI interface
+- Example usage in scripts/README.md
+
+---
+
+### INFRA-002: Data Quality Monitoring
+**Status:** ready
+**Priority:** medium
+**Estimated:** 2-3 hours
+**Dependencies:** []
+
+**Description:**
+Create script to audit data quality and detect anomalies.
+
+**Checks:**
+- Missing data summary (% NaN by ticker)
+- Price spikes (>10% single-day moves)
+- Stale data detection (gaps > 5 days)
+- Volume anomalies
+- Correlation matrix (detect duplicates)
+- Delisting detection
+
+**Files:**
+- Create: `scripts/data_health_check.py`
+- Create: `src/quantetf/data/quality.py`
+- Create: `tests/test_data_quality.py`
+
+**Acceptance Criteria:**
+- Automated quality scoring
+- Generates quality report
+- Flags suspicious data
+- 12+ tests
+
+---
+
 ## Backlog (Future Phases)
 
-### Phase 3: Strategy Development
+### Phase 4: Strategy Development
 - IMPL-006: Mean reversion alpha model
 - IMPL-007: Multi-factor alpha combiner
 - IMPL-008: Mean-variance portfolio optimizer
 - IMPL-009: Risk parity constructor
 - IMPL-010: Covariance estimation
 
-### Phase 4: Production Pipeline
+### Phase 5: Production Pipeline
 - IMPL-011: Production recommendation generator
 - IMPL-012: Run manifest creation
 - IMPL-013: Alerting system
 - IMPL-014: Data freshness checks
 
-### Phase 5: Documentation & Polish
+### Phase 6: Documentation & Polish
 - DOC-001: Tutorial notebook
 - DOC-002: API documentation
-- DOC-003: Strategy comparison framework
 - TEST-002: Golden test suite
 
 ---

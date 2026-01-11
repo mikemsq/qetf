@@ -246,7 +246,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Success Metrics:** Can load historical prices for 20 ETFs and create a snapshot
 
-### Phase 2: Backtest Engine (IN PROGRESS - 30%)
+### Phase 2: Backtest Engine ✅ COMPLETE
 
 **Goal:** Build working backtest engine with one simple strategy
 
@@ -255,14 +255,35 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 - [x] Backtest engine architecture designed
 - [x] Point-in-time data access (no lookahead)
 - [x] Simple alpha model (12-month momentum)
-- [ ] Portfolio constructor (equal weight top N)
-- [ ] Transaction cost model (simple flat fee)
-- [ ] Basic metrics (returns, Sharpe ratio, drawdown)
-- [ ] End-to-end backtest working
+- [x] Portfolio constructor (equal weight top N)
+- [x] Transaction cost model (simple flat fee)
+- [x] Basic metrics (returns, Sharpe ratio, drawdown)
+- [x] End-to-end backtest working
 
-**Success Metrics:** Can run a complete backtest and generate equity curve
+**Success Metrics:** ✅ Can run a complete backtest and generate equity curve (101 tests passing)
 
-### Phase 3: Strategy Development
+### Phase 3: Analytics & Visualization (IN PROGRESS - 0%)
+
+**Goal:** Build comprehensive analytical tools to evaluate and improve strategies
+
+**Deliverables:**
+
+- [ ] Enhanced metrics module (Sortino, Calmar, VaR, rolling Sharpe, etc.)
+- [ ] Backtest visualization notebook (equity curves, heatmaps, drawdowns)
+- [ ] Risk analytics module (correlations, beta, concentration metrics)
+- [ ] Alpha diagnostics (IC analysis, signal decay, quintile performance)
+- [ ] Strategy comparison framework
+- [ ] Benchmark comparison (vs SPY, 60/40, oracle, random)
+- [ ] Walk-forward validation (prevent overfitting)
+- [ ] Parameter sensitivity analysis
+- [ ] Transaction cost analysis with realistic models
+- [ ] Stress testing (crisis period analysis)
+- [ ] Auto-report generation (HTML reports)
+- [ ] Data quality monitoring
+
+**Success Metrics:** Can rigorously evaluate strategy robustness, compare variants, and generate professional reports
+
+### Phase 4: Strategy Development
 
 **Goal:** Implement multiple alpha signals and portfolio construction methods
 
@@ -271,12 +292,12 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 - [ ] 2-3 additional alpha models
 - [ ] Mean-variance optimization for portfolio construction
 - [ ] Risk model (simple covariance estimation)
-- [ ] Enhanced metrics and visualization
-- [ ] Strategy comparison framework
+- [ ] Multi-factor alpha combiner
+- [ ] Risk parity constructor
 
 **Success Metrics:** Can compare multiple strategies and identify which performs best
 
-### Phase 4: Production Pipeline
+### Phase 5: Production Pipeline
 
 **Goal:** Automate recommendation generation
 
@@ -290,7 +311,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Success Metrics:** Can generate recommendations on schedule
 
-### Phase 5: Polish & Documentation
+### Phase 6: Polish & Documentation
 
 **Goal:** Make the system production-ready and well-documented
 
