@@ -2,8 +2,14 @@
 
 import pytest
 import pandas as pd
+import numpy as np
 
-from quantetf.portfolio.costs import FlatTransactionCost
+from quantetf.portfolio.costs import (
+    FlatTransactionCost,
+    SlippageCostModel,
+    SpreadCostModel,
+    ImpactCostModel,
+)
 
 
 class TestFlatTransactionCost:
@@ -331,3 +337,272 @@ class TestFlatTransactionCost:
 
         with pytest.raises(Exception):  # FrozenInstanceError
             cost_model.cost_bps = 20.0
+
+
+class TestSlippageCostModel:
+    """Test suite for SlippageCostModel."""
+
+    def test_initialization_default(self):
+        """Test Slipp ageCostModel initializes with default parameters."""
+        model = SlippageCostModel()
+        assert model.base_spread_bps == 5.0
+        assert model.impact_coefficient == 2.0
+
+    def test_initialization_custom(self):
+        """Test SlippageCostModel with custom parameters."""
+        model = SlippageCostModel(base_spread_bps=10.0, impact_coefficient=3.0)
+        assert model.base_spread_bps == 10.0
+        assert model.impact_coefficient == 3.0
+
+    def test_no_trade_zero_cost(self):
+        """Test that no rebalancing results in zero cost."""
+        model = SlippageCostModel()
+        prev_weights = pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+        next_weights = pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+
+        cost = model.estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+        assert cost == 0.0
+
+    def test_small_trade_low_cost(self):
+        """Test that small trades have low impact."""
+        model = SlippageCostModel(base_spread_bps=5.0, impact_coefficient=2.0)
+        prev_weights = pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+        next_weights = pd.Series([0.51, 0.49], index=['SPY', 'QQQ'])
+
+        cost = model.estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+        # Small 1% change should have cost close to base_spread
+        assert cost > 0
+        assert cost < 0.001  # Less than 10 bps
+
+    def test_large_trade_high_cost(self):
+        """Test that larger trades incur higher costs."""
+        model = SlippageCostModel(base_spread_bps=5.0, impact_coefficient=2.0)
+
+        # Small trade
+        small_cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ']),
+            next_weights=pd.Series([0.55, 0.45], index=['SPY', 'QQQ'])
+        )
+
+        # Large trade
+        large_cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ']),
+            next_weights=pd.Series([0.8, 0.2], index=['SPY', 'QQQ'])
+        )
+
+        # Larger trade should cost more
+        assert large_cost > small_cost
+
+    def test_impact_increases_with_size(self):
+        """Verify that impact scales with trade size."""
+        model = SlippageCostModel(base_spread_bps=0.0, impact_coefficient=1.0)
+
+        # 10% position change
+        cost_10pct = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.1], index=['SPY'])
+        )
+
+        # 20% position change (2x larger)
+        cost_20pct = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.2], index=['SPY'])
+        )
+
+        # Cost should scale roughly linearly with size (when base_spread = 0)
+        assert cost_20pct > cost_10pct
+
+    def test_empty_weights(self):
+        """Test handling of empty weight series."""
+        model = SlippageCostModel()
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series(dtype=float),
+            next_weights=pd.Series(dtype=float)
+        )
+        assert cost == 0.0
+
+
+class TestSpreadCostModel:
+    """Test suite for SpreadCostModel."""
+
+    def test_initialization_default(self):
+        """Test SpreadCostModel initializes with default spread map."""
+        model = SpreadCostModel()
+        assert model.spread_map is not None
+        assert 'SPY' in model.spread_map
+        assert model.spread_map['SPY'] == 1.0
+
+    def test_initialization_custom_spread_map(self):
+        """Test SpreadCostModel with custom spread map."""
+        custom_spreads = {'SPY': 0.5, 'QQQ': 1.5}
+        model = SpreadCostModel(spread_map=custom_spreads)
+        assert model.spread_map['SPY'] == 0.5
+        assert model.spread_map['QQQ'] == 1.5
+
+    def test_liquid_etf_low_cost(self):
+        """Test that liquid ETFs (SPY) have low spread cost."""
+        model = SpreadCostModel()
+
+        # Full rotation from SPY to QQQ (both very liquid)
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([1.0], index=['SPY']),
+            next_weights=pd.Series([1.0], index=['QQQ'])
+        )
+
+        # Both SPY and QQQ have 1 bp spread, so average should be 1 bp
+        assert cost == pytest.approx(0.0001, abs=1e-6)
+
+    def test_illiquid_etf_high_cost(self):
+        """Test that illiquid ETFs have higher costs."""
+        model = SpreadCostModel()
+
+        # Trade into ARKK (higher spread)
+        cost_arkk = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([1.0], index=['SPY']),
+            next_weights=pd.Series([1.0], index=['ARKK'])
+        )
+
+        # Trade into QQQ (lower spread)
+        cost_qqq = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([1.0], index=['SPY']),
+            next_weights=pd.Series([1.0], index=['QQQ'])
+        )
+
+        # ARKK trade should cost more
+        assert cost_arkk > cost_qqq
+
+    def test_unknown_ticker_uses_default(self):
+        """Test that unknown tickers use default spread."""
+        model = SpreadCostModel(default_spread_bps=20.0)
+
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([1.0], index=['UNKNOWN']),
+            next_weights=pd.Series([1.0], index=['ALSO_UNKNOWN'])
+        )
+
+        # Should use default spread of 20 bps
+        assert cost == pytest.approx(0.002, abs=1e-6)
+
+    def test_no_trade_zero_cost(self):
+        """Test no rebalancing gives zero cost."""
+        model = SpreadCostModel()
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ']),
+            next_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+        )
+        assert cost == 0.0
+
+
+class TestImpactCostModel:
+    """Test suite for ImpactCostModel."""
+
+    def test_initialization_default(self):
+        """Test ImpactCostModel initializes with default coefficient."""
+        model = ImpactCostModel()
+        assert model.impact_coefficient == 5.0
+
+    def test_initialization_custom(self):
+        """Test ImpactCostModel with custom coefficient."""
+        model = ImpactCostModel(impact_coefficient=10.0)
+        assert model.impact_coefficient == 10.0
+
+    def test_square_root_scaling(self):
+        """Verify square-root relationship: 4x trade → 2x cost."""
+        model = ImpactCostModel(impact_coefficient=10.0)
+
+        # 1% trade
+        cost_1pct = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.01], index=['SPY'])
+        )
+
+        # 4% trade (4x larger)
+        cost_4pct = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.04], index=['SPY'])
+        )
+
+        # Should be approximately 2x (sqrt(4) = 2)
+        ratio = cost_4pct / cost_1pct
+        assert 1.9 < ratio < 2.1  # Allow some tolerance
+
+    def test_large_trade_higher_relative_cost(self):
+        """Test that larger trades have disproportionately higher cost."""
+        model = ImpactCostModel(impact_coefficient=5.0)
+
+        small_cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.05], index=['SPY'])
+        )
+
+        large_cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.0], index=['SPY']),
+            next_weights=pd.Series([0.25], index=['SPY'])
+        )
+
+        # 5x larger trade should cost more than 5x (due to sqrt scaling)
+        assert large_cost > small_cost
+        # But less than linear (5x)
+        assert large_cost < 5 * small_cost
+
+    def test_no_trade_zero_cost(self):
+        """Test no rebalancing gives zero cost."""
+        model = ImpactCostModel()
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ']),
+            next_weights=pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+        )
+        assert cost == 0.0
+
+    def test_empty_weights(self):
+        """Test handling of empty weight series."""
+        model = ImpactCostModel()
+        cost = model.estimate_rebalance_cost(
+            prev_weights=pd.Series(dtype=float),
+            next_weights=pd.Series(dtype=float)
+        )
+        assert cost == 0.0
+
+
+class TestCostModelComparison:
+    """Integration tests comparing different cost models."""
+
+    def test_all_models_on_same_trade(self):
+        """Test all cost models on the same trade for comparison."""
+        prev_weights = pd.Series([0.5, 0.5], index=['SPY', 'QQQ'])
+        next_weights = pd.Series([0.7, 0.3], index=['SPY', 'QQQ'])
+
+        flat_cost = FlatTransactionCost(cost_bps=10.0).estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+
+        slippage_cost = SlippageCostModel(base_spread_bps=5.0, impact_coefficient=2.0).estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+
+        spread_cost = SpreadCostModel().estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+
+        impact_cost = ImpactCostModel(impact_coefficient=5.0).estimate_rebalance_cost(
+            prev_weights=prev_weights,
+            next_weights=next_weights
+        )
+
+        # All should return valid costs
+        assert flat_cost > 0
+        assert slippage_cost > 0
+        assert spread_cost > 0
+        assert impact_cost > 0
+
+        # Spread cost should be lowest (SPY/QQQ are very liquid)
+        assert spread_cost < flat_cost
