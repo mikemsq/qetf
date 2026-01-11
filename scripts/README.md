@@ -152,6 +152,60 @@ python scripts/run_backtest.py \
 
 ---
 
+### [compare_strategies.py](compare_strategies.py)
+Compare multiple strategy backtests and generate comparative analysis.
+
+**Purpose:** Loads multiple backtest results, computes comparative metrics, performs statistical significance tests (Sharpe ratio t-tests), and generates comprehensive reports with charts, tables, and correlation analysis.
+
+**Usage:**
+```bash
+# Compare all backtests in a directory
+python scripts/compare_strategies.py \
+    --backtest-dirs artifacts/backtests/*/ \
+    --output artifacts/comparisons/latest
+
+# Compare specific strategies
+python scripts/compare_strategies.py \
+    --backtest-dirs \
+        artifacts/backtests/20260111_023934_momentum-ew-top5 \
+        artifacts/backtests/20260111_024110_momentum-ew-top3 \
+    --output artifacts/comparisons/momentum_comparison \
+    --report-name momentum_3v5
+
+# Compare with verbose logging
+python scripts/compare_strategies.py \
+    --backtest-dirs artifacts/backtests/momentum_* \
+    --output artifacts/comparisons/ \
+    --report-name momentum_comparison \
+    --verbose
+```
+
+**Output:**
+- `{output_dir}/{report_name}_metrics.csv`: Comparison table with all metrics
+- `{output_dir}/{report_name}_table.html`: Styled HTML comparison table
+- `{output_dir}/{report_name}_equity.png`: Equity curve overlay chart
+- `{output_dir}/{report_name}_risk_return.png`: Risk-return scatter plot
+- `{output_dir}/{report_name}_correlation.csv`: Returns correlation matrix
+- `{output_dir}/{report_name}_significance_tests.csv`: Pairwise Sharpe ratio t-tests
+
+**Features:**
+- Comprehensive metrics comparison (CAGR, Sharpe, Sortino, Calmar, etc.)
+- Statistical significance testing (Jobson-Korkie test for Sharpe ratios)
+- Correlation analysis of strategy returns
+- Professional visualizations (equity overlay, risk-return scatter)
+- HTML report generation with styling
+- Console summary with formatted tables
+
+**Metrics Compared:**
+- Total return, CAGR
+- Sharpe ratio, Sortino ratio, Calmar ratio
+- Max drawdown, volatility
+- Win rate, VaR, CVaR
+- Total costs, number of rebalances
+- Final NAV
+
+---
+
 ## Typical Workflow
 
 1. **Harmonize universe:**
@@ -172,4 +226,11 @@ python scripts/run_backtest.py \
 4. **Run backtest:**
    ```bash
    python scripts/run_backtest.py --snapshot data/snapshots/snapshot_5yr_20etfs
+   ```
+
+5. **Compare strategies:**
+   ```bash
+   python scripts/compare_strategies.py \
+       --backtest-dirs artifacts/backtests/*/ \
+       --output artifacts/comparisons/latest
    ```

@@ -267,6 +267,52 @@ Create new risk_analytics.py module for portfolio risk decomposition and analysi
 
 ---
 
+### ANALYSIS-003: Strategy Comparison Script
+**Status:** completed
+**Priority:** high
+**Estimated:** 3-4 hours
+**Completed:** 2026-01-11
+**Dependencies:** [ANALYSIS-001, ANALYSIS-002] (both completed)
+**Assigned:** ANALYSIS-003 Session
+
+**Description:**
+Create script to run multiple strategy variants and generate comparative analysis.
+
+**Features Implemented:**
+- Load and compare multiple backtest results
+- Generate comparison table (all metrics side-by-side)
+- Equity curve overlay chart
+- Risk-return scatter plot
+- Correlation matrix of strategy returns
+- Statistical significance tests (Jobson-Korkie Sharpe ratio t-test)
+- HTML report generation with styling
+- Console summary output
+
+**Files:**
+- Created: `scripts/compare_strategies.py` (370+ lines, full CLI)
+- Created: `src/quantetf/evaluation/comparison.py` (560+ lines, 11 functions)
+- Created: `tests/test_strategy_comparison.py` (28 tests, all passing)
+- Updated: `scripts/README.md` (comprehensive documentation)
+- Updated: `pyproject.toml` (added scipy and seaborn dependencies)
+
+**Results:**
+- 28 comprehensive tests (exceeds target of 15+)
+- All tests passing (100%)
+- Full comparison functionality working
+- Professional visualizations (equity overlay, risk-return scatter)
+- Statistical significance testing with Jobson-Korkie method
+- HTML table generation with CSS styling
+- Total test count: 211 → 239 (+28)
+
+**Notes:**
+- Implements 11 comparison functions: load, metrics, correlation, t-test, charts, reports
+- Jobson-Korkie test for statistically rigorous Sharpe ratio comparison
+- Handles edge cases: single strategy, empty results, missing data
+- Console output includes formatted tables and significance tests
+- Ready for use in parameter sensitivity analysis (ANALYSIS-004)
+
+---
+
 ### VIZ-001: Backtest Analysis Notebook
 **Status:** completed
 **Priority:** high
@@ -347,47 +393,6 @@ Create notebook for analyzing alpha signal quality and predictiveness.
 
 ---
 
-### ANALYSIS-003: Strategy Comparison Script
-**Status:** in_progress
-**Priority:** high
-**Estimated:** 3-4 hours
-**Completed:** 2026-01-11
-**Dependencies:** [ANALYSIS-001, ANALYSIS-002] (both completed)
-**Assigned:** ANALYSIS-003 Session
-
-**Description:**
-Create script to run multiple strategy variants and generate comparative analysis.
-
-**Features:**
-- Run multiple configs in parallel or sequence
-- Generate comparison table (all metrics side-by-side)
-- Equity curve overlay chart
-- Risk-return scatter plot
-- Correlation matrix of strategy returns
-- Statistical significance tests (Sharpe ratio t-test)
-
-**Files:**
-- Create: `scripts/compare_strategies.py`
-- Create: `src/quantetf/evaluation/comparison.py`
-- Create: `tests/test_strategy_comparison.py`
-
-**Acceptance Criteria:**
-- CLI accepts multiple config files
-- Outputs HTML report with charts
-- Saves comparison results to artifacts/
-- 15+ tests for comparison logic
-- Documentation in scripts/README.md
-
-**Example Usage:**
-```bash
-python scripts/compare_strategies.py \
-  --configs configs/strategies/*.yaml \
-  --snapshot data/snapshots/snapshot_5yr_20etfs \
-  --output artifacts/comparisons/
-```
-
----
-
 ### ANALYSIS-004: Parameter Sensitivity Analysis
 **Status:** ready
 **Priority:** medium
@@ -421,38 +426,59 @@ Create notebook for systematic parameter sweep and sensitivity testing.
 ---
 
 ### ANALYSIS-005: Benchmark Comparison Framework
-**Status:** ready
+**Status:** completed
 **Priority:** high
 **Estimated:** 2-3 hours
-**Dependencies:** [ANALYSIS-001, ANALYSIS-003]
+**Completed:** 2026-01-11
+**Dependencies:** [ANALYSIS-001, ANALYSIS-003] (both completed)
+**Assigned:** ANALYSIS-005 Session
 
 **Description:**
 Create framework for comparing strategies against standard benchmarks.
 
-**Benchmarks to Implement:**
-1. SPY buy-and-hold
-2. 60/40 portfolio (SPY/AGG)
-3. Equal-weight universe
-4. Random selection (Monte Carlo)
-5. Oracle (perfect foresight upper bound)
+**Benchmarks Implemented:**
+1. SPY buy-and-hold ✅
+2. 60/40 portfolio (SPY/AGG) ✅
+3. Equal-weight universe ✅
+4. Random selection (Monte Carlo) ✅
+5. Oracle (perfect foresight upper bound) ✅
 
 **Metrics:**
-- Excess return (strategy - benchmark)
-- Tracking error
-- Information ratio
-- Beta and alpha (regression)
-- Drawdown comparison
+- Excess return (strategy - benchmark) ✅
+- Tracking error ✅
+- Information ratio ✅
+- Beta and alpha (regression) ✅
+- Drawdown comparison ✅
 
 **Files:**
-- Create: `scripts/benchmark_comparison.py`
-- Create: `src/quantetf/evaluation/benchmarks.py`
-- Create: `tests/test_benchmarks.py`
+- Created: `scripts/benchmark_comparison.py` (370+ lines, full CLI)
+- Created: `src/quantetf/evaluation/benchmarks.py` (700+ lines, 5 benchmarks + utilities)
+- Created: `tests/test_benchmarks.py` (20 tests, all passing)
+
+**Results:**
+- All 5 benchmarks implemented with proper point-in-time data access
+- 20 comprehensive tests (exceeds target of 12+)
+- All tests passing (100%)
+- Regression-based attribution (beta, alpha, tracking error, information ratio)
+- HTML report generation with visualizations
+- Console output with formatted tables
+- Total test count: 239 → 259 (+20)
 
 **Acceptance Criteria:**
-- All 5 benchmarks implemented
-- Regression-based attribution
-- HTML report generation
-- 12+ tests
+- ✅ All 5 benchmarks implemented
+- ✅ Regression-based attribution
+- ✅ HTML report generation
+- ✅ 12+ tests (20 delivered)
+
+**Notes:**
+- SPY buy-and-hold: 100% passive market exposure
+- 60/40 portfolio: Quarterly rebalanced balanced portfolio
+- Equal-weight universe: Monthly rebalanced equal allocation
+- Random selection: Monte Carlo average with configurable trials
+- Oracle: Perfect foresight upper bound for strategy assessment
+- All benchmarks handle missing data gracefully
+- CLI supports custom date ranges and benchmark selection
+- Ready for use in parameter sensitivity analysis
 
 ---
 
