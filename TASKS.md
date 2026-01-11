@@ -483,38 +483,56 @@ Create framework for comparing strategies against standard benchmarks.
 ---
 
 ### ANALYSIS-006: Walk-Forward Validation Framework
-**Status:** ready
+**Status:** completed
 **Priority:** critical
 **Estimated:** 4-5 hours
-**Dependencies:** [ANALYSIS-003]
+**Completed:** 2026-01-11
+**Dependencies:** [ANALYSIS-003] (completed)
+**Assigned:** ANALYSIS-006 Session
 
 **Description:**
 Implement rolling window validation to test strategy robustness and prevent overfitting.
 
-**Methodology:**
-1. Define rolling windows (e.g., 2-year train, 1-year test)
-2. For each window: run backtest on train period
-3. Test on out-of-sample period
-4. Roll window forward
-5. Aggregate results
+**Methodology Implemented:**
+1. Define rolling windows (e.g., 2-year train, 1-year test) ✅
+2. For each window: run backtest on train period ✅
+3. Test on out-of-sample period ✅
+4. Roll window forward ✅
+5. Aggregate results ✅
 
-**Analysis:**
-- Out-of-sample Sharpe distribution
-- In-sample vs out-of-sample degradation
-- Parameter stability over time
-- Regime-specific performance
+**Analysis Features:**
+- Out-of-sample Sharpe distribution ✅
+- In-sample vs out-of-sample degradation ✅
+- Parameter stability over time ✅
+- Regime-specific performance tracking ✅
 
 **Files:**
-- Create: `scripts/walk_forward_test.py`
-- Create: `src/quantetf/evaluation/walk_forward.py`
-- Create: `tests/test_walk_forward.py`
+- Created: `scripts/walk_forward_test.py` (400+ lines, full CLI)
+- Created: `src/quantetf/evaluation/walk_forward.py` (700+ lines, 11 functions)
+- Created: `tests/test_walk_forward.py` (20 tests, all passing)
+- Updated: `scripts/README.md` (comprehensive documentation)
+
+**Results:**
+- All 20 comprehensive tests passing (exceeds target of 15+)
+- Configurable train/test window sizes
+- Prevents data leakage (point-in-time enforcement)
+- JSON summary output + CSV tables + visualizations
+- Validated with real 5-year backtest data
+- Total test count: 255 → 275 (+20)
 
 **Acceptance Criteria:**
-- Configurable window sizes
-- Prevents data leakage
-- Comprehensive report generation
-- 15+ tests
-- Documentation on interpreting results
+- ✅ Configurable window sizes (train_years, test_years, step_months)
+- ✅ Prevents data leakage (uses SnapshotDataStore with T-1 access)
+- ✅ Comprehensive report generation (summary.json, window_results.csv, plots)
+- ✅ 20 tests (exceeds 15+ requirement)
+- ✅ Documentation on interpreting results (README.md + docstrings)
+
+**Notes:**
+- Walk-forward framework provides critical robustness testing
+- Generates 4 visualization plots: Sharpe evolution, returns evolution, OOS distribution, degradation
+- Summary includes degradation metrics, stability metrics, and window-by-window analysis
+- CLI supports custom date ranges, strategy parameters, and output locations
+- Example run on real data shows OOS Sharpe of 0.89 (4 windows)
 
 ---
 

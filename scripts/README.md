@@ -206,6 +206,56 @@ python scripts/compare_strategies.py \
 
 ---
 
+### [walk_forward_test.py](walk_forward_test.py)
+Walk-forward validation framework for testing strategy robustness.
+
+**Purpose:** Performs rolling window validation to assess out-of-sample performance and detect overfitting. Tests the strategy on unseen data using a configurable train/test window approach.
+
+**Usage:**
+```bash
+# Run with defaults (2y train, 1y test, 6m step)
+python scripts/walk_forward_test.py
+
+# Custom train/test windows
+python scripts/walk_forward_test.py \
+    --train-years 3 \
+    --test-years 1 \
+    --step-months 3
+
+# Custom strategy parameters
+python scripts/walk_forward_test.py \
+    --top-n 7 \
+    --lookback 126 \
+    --cost-bps 5
+
+# Save detailed output with visualizations
+python scripts/walk_forward_test.py \
+    --output artifacts/walk_forward/test1 \
+    --save-plots
+```
+
+**Output:**
+- Summary statistics (in-sample vs out-of-sample performance)
+- Degradation metrics (Sharpe degradation, return degradation)
+- Stability metrics (coefficient of variation, positive window percentage)
+- Window-by-window results CSV
+- Visualization plots (Sharpe ratio evolution, degradation by window)
+- Individual window equity curves
+
+**Key Metrics:**
+- In-sample vs out-of-sample Sharpe ratio
+- Performance degradation (IS - OOS)
+- Percentage of positive OOS windows
+- Stability of returns across windows
+
+**Interpretation:**
+- **Low degradation:** Strategy is robust and not overfit
+- **High degradation:** Strategy may be overfit to training data
+- **Positive OOS Sharpe:** Strategy shows genuine predictive power
+- **Stable performance:** Consistent results across different time periods
+
+---
+
 ## Typical Workflow
 
 1. **Harmonize universe:**
@@ -233,4 +283,13 @@ python scripts/compare_strategies.py \
    python scripts/compare_strategies.py \
        --backtest-dirs artifacts/backtests/*/ \
        --output artifacts/comparisons/latest
+   ```
+
+6. **Validate strategy robustness (walk-forward):**
+   ```bash
+   python scripts/walk_forward_test.py \
+       --snapshot data/snapshots/snapshot_5yr_20etfs \
+       --train-years 2 \
+       --test-years 1 \
+       --save-plots
    ```
