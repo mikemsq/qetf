@@ -14,7 +14,7 @@ from dataclasses import dataclass
 import pandas as pd
 import numpy as np
 
-from quantetf.types import Universe
+from quantetf.types import Universe, CASH_TICKER
 from quantetf.alpha.base import AlphaModel
 from quantetf.portfolio.base import PortfolioConstructor, CostModel
 from quantetf.data.snapshot_store import SnapshotDataStore
@@ -106,9 +106,19 @@ class SimpleBacktestEngine:
         logger.info(f"Rebalance frequency: {config.rebalance_frequency}")
 
         # 1. Initialize tracking
+        # Add cash to universe if not already present
+        all_tickers = list(config.universe.tickers)
+        if CASH_TICKER not in all_tickers:
+            all_tickers.append(CASH_TICKER)
+        
         nav = config.initial_capital
-        holdings = pd.Series(0.0, index=list(config.universe.tickers))  # shares
-        weights = pd.Series(0.0, index=list(config.universe.tickers))  # portfolio weights
+        holdings = pd.Series(0.0, index=all_tickers)  # shares
+        weights = pd.Series(0.0, index=all_tickers)  # portfolio weights
+        
+        # Initialize 100% in cash
+        cash_shares = config.initial_capital / 1.0  # Cash price is $1.00
+        holdings[CASH_TICKER] = cash_shares
+        weights[CASH_TICKER] = 1.0
 
         # History tracking
         nav_history = []
@@ -146,6 +156,12 @@ class SimpleBacktestEngine:
                 logger.warning(f"Empty price data for {rebalance_date}, skipping")
                 continue
 
+            # Add cash price ($1.00 constant)
+            if CASH_TICKER not in prices.columns:
+                # Create cash price series with $1.00 for all dates
+                cash_prices = pd.Series(1.0, index=prices.index, name=CASH_TICKER)
+                prices = pd.concat([prices, cash_prices], axis=1)
+
             # Get latest prices for universe tickers (most recent T-1)
             latest_prices = prices.iloc[-1]  # Most recent available (T-1)
 
@@ -182,14 +198,21 @@ class SimpleBacktestEngine:
                 continue
 
             # 3e. Calculate costs
-            cost = cost_model.estimate_rebalance_cost(
-                prev_weights=weights,
-                next_weights=target_weights.weights,
-                prices=latest_prices
-            )
-            cost_dollars = cost * nav  # Convert from fraction to dollars
+            # Special case: no costs on initial deployment from cash
+            if i == 0 and weights.sum() == 0.0:
+                # First rebalance from all cash - no transaction costs
+                cost = 0.0
+                cost_dollars = 0.0
+                logger.debug("  Initial deployment from cash: no transaction costs")
+            else:
+                cost = cost_model.estimate_rebalance_cost(
+                    prev_weights=weights,
+                    next_weights=target_weights.weights,
+                    prices=latest_prices
+                )
+                cost_dollars = cost * nav  # Convert from fraction to dollars
 
-            logger.debug(f"  Transaction cost: ${cost_dollars:,.2f} ({cost*100:.4f}%)")
+                logger.debug(f"  Transaction cost: ${cost_dollars:,.2f} ({cost*100:.4f}%)")
 
             # 3f. Apply costs to NAV
             nav -= cost_dollars

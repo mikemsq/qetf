@@ -12,7 +12,7 @@ from typing import Optional
 import pandas as pd
 
 from quantetf.portfolio.base import PortfolioConstructor
-from quantetf.types import AlphaScores, DatasetVersion, RiskModelOutput, TargetWeights, Universe
+from quantetf.types import AlphaScores, DatasetVersion, RiskModelOutput, TargetWeights, Universe, CASH_TICKER
 from quantetf.data.store import DataStore
 
 logger = logging.getLogger(__name__)
@@ -126,9 +126,21 @@ class EqualWeightTopN(PortfolioConstructor):
             f"(weight={weight:.4f} each)"
         )
 
-        # Create weights series for entire universe (0.0 for non-selected)
-        weights = pd.Series(0.0, index=list(universe.tickers))
+        # Create weights series for entire universe plus cash (0.0 for non-selected)
+        all_tickers = list(universe.tickers) + [CASH_TICKER]
+        weights = pd.Series(0.0, index=all_tickers)
         weights[top_tickers] = weight
+
+        # Allocate remaining weight to cash if we have fewer than top_n positions
+        if num_selected < self.top_n:
+            cash_weight = (self.top_n - num_selected) * weight
+            weights[CASH_TICKER] = cash_weight
+            logger.info(f"Allocated {cash_weight:.4f} to cash (insufficient valid scores)")
+
+        # If no valid scores at all, allocate everything to cash
+        if num_selected == 0:
+            weights[CASH_TICKER] = 1.0
+            logger.info("No valid scores, allocated 100% to cash")
 
         # Verify sum (should be ~1.0)
         weight_sum = weights.sum()
@@ -144,6 +156,7 @@ class EqualWeightTopN(PortfolioConstructor):
                 'num_universe_tickers': len(universe.tickers),
                 'num_selected': num_selected,
                 'weight_per_ticker': weight,
-                'total_weight': float(weight_sum)
+                'total_weight': float(weight_sum),
+                'cash_weight': float(weights.get(CASH_TICKER, 0.0))
             }
         )

@@ -6,6 +6,9 @@ from typing import Any, Dict, Iterable, Mapping, Optional
 
 import pandas as pd
 
+# Special ticker for cash holdings
+CASH_TICKER = "$CASH$"
+
 
 @dataclass(frozen=True)
 class DatasetVersion:

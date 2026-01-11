@@ -224,6 +224,9 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 1. **Decision:** Explicit as_of dates for all operations
 - **Reasoning:** Prevents lookahead bias, makes time-travel clear
 - **Trade-offs:** More parameter passing, but essential for correctness
+1. **Decision:** Cash as explicit portfolio holding with "$CASH$" ticker
+- **Reasoning:** Ensures realistic NAV calculations, prevents NAV from dropping to 0 when strategy stays in cash, maintains proper financial modeling throughout backtest lifecycle
+- **Trade-offs:** Slightly more complex portfolio construction logic, but essential for accurate backtesting and realistic results
 
 -----
 

@@ -11,6 +11,7 @@ This package provides modular components for:
 """
 
 from .types import (
+    CASH_TICKER,
     DatasetVersion,
     Universe,
     FeatureFrame,
