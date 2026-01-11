@@ -225,30 +225,45 @@ Expand evaluation/metrics.py with advanced performance metrics for comprehensive
 ---
 
 ### ANALYSIS-002: Risk Analytics Module
-**Status:** ready
+**Status:** completed
 **Priority:** high
 **Estimated:** 2-3 hours
-**Dependencies:** [ANALYSIS-001]
+**Completed:** 2026-01-11
+**Dependencies:** [ANALYSIS-001] (completed)
+**Assigned:** ANALYSIS-002 Session
 
 **Description:**
 Create new risk_analytics.py module for portfolio risk decomposition and analysis.
 
 **Functionality:**
-- Correlation matrix of holdings over time
-- Portfolio beta to benchmark (SPY, QQQ)
-- Volatility clustering detection
-- Concentration metrics (HHI, effective N)
-- Exposure summary (sector, geography if available)
+- Correlation matrix of holdings over time ✅
+- Portfolio beta to benchmark (SPY, QQQ) ✅
+- Portfolio alpha (Jensen's alpha) ✅
+- Volatility clustering detection ✅
+- Concentration metrics (HHI, effective N) ✅
+- Exposure summary (sector, geography if available) ✅
+- Drawdown analysis ✅
+- Rolling correlation ✅
+- Tail ratio analysis ✅
 
 **Files:**
-- Create: `src/quantetf/evaluation/risk_analytics.py`
-- Create: `tests/test_risk_analytics.py`
+- Created: `src/quantetf/evaluation/risk_analytics.py` (11 functions, 400+ lines)
+- Created: `tests/test_risk_analytics.py` (45 tests)
+- Created: `scripts/validate_risk_analytics.py` (validation script)
 
-**Acceptance Criteria:**
-- At least 5 risk analytics functions implemented
-- Works with backtest results format
-- 15+ tests covering all functions
-- Clear docstrings with financial context
+**Results:**
+- 11 risk analytics functions implemented (exceeds target of 5)
+- 45 comprehensive tests (exceeds target of 15)
+- All tests passing (100%)
+- Validated with real 5-year backtest data
+- Clear docstrings with financial context and examples
+- Total test count: 183 (was 138, +45)
+
+**Notes:**
+- Comprehensive coverage: beta, alpha, correlation, concentration, volatility, drawdowns, tail risk
+- Works seamlessly with backtest results format (weights_history, holdings_history, equity curve)
+- Validation script demonstrates all functions on real data
+- Ready for use in VIZ-001 (Backtest Analysis Notebook)
 
 ---
 
