@@ -190,31 +190,37 @@ Implemented SnapshotDataStore for point-in-time data access from parquet files.
 ## Current Sprint: Phase 3 - Analytics & Visualization
 
 ### ANALYSIS-001: Enhanced Metrics Module
-**Status:** ready
+**Status:** completed
 **Priority:** high
 **Estimated:** 2-3 hours
+**Completed:** 2026-01-11
 **Dependencies:** []
+**Assigned:** Wave 1 Sequential Execution
 
 **Description:**
 Expand evaluation/metrics.py with advanced performance metrics for comprehensive strategy analysis.
 
-**New Metrics to Add:**
-- Sortino ratio (downside-risk adjusted returns)
-- Calmar ratio (return / max drawdown)
-- Win rate (percentage of positive periods)
-- Value at Risk (VaR) and Conditional VaR (CVaR) at 95% confidence
-- Rolling Sharpe ratio (252-day window)
-- Information ratio (vs benchmark)
+**New Metrics Added:**
+- Sortino ratio (downside-risk adjusted returns) ✅
+- Calmar ratio (return / max drawdown) ✅
+- Win rate (percentage of positive periods) ✅
+- Value at Risk (VaR) and Conditional VaR (CVaR) at 95% confidence ✅
+- Rolling Sharpe ratio (252-day window) ✅
+- Information ratio (vs benchmark) ✅
 
 **Files:**
-- Update: `src/quantetf/evaluation/metrics.py`
-- Create: `tests/test_advanced_metrics.py`
+- Updated: `src/quantetf/evaluation/metrics.py` (+350 lines, 7 new metrics)
+- Created: `tests/test_advanced_metrics.py` (37 tests)
 
-**Acceptance Criteria:**
-- All 6 new metrics implemented with proper docstrings
-- Each metric has 3+ tests (typical case, edge cases, validation)
-- Integration with existing metrics.py
-- Examples in docstrings showing expected usage
+**Results:**
+- All 7 metrics implemented with comprehensive docstrings
+- 37 tests created (exceeds target of 21+)
+- All tests passing (100%)
+- Validated with real backtest data
+- Total test count: 138 (was 101, +37)
+- Metrics include edge case handling, proper error messages, and examples
+
+**Handoff:** `handoffs/handoff-ANALYSIS-001.md`
 
 ---
 
