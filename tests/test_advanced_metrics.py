@@ -12,6 +12,7 @@ from quantetf.evaluation.metrics import (
     conditional_value_at_risk,
     rolling_sharpe_ratio,
     information_ratio,
+    calculate_active_metrics,
 )
 
 
@@ -386,3 +387,140 @@ class TestMetricsIntegration:
         assert sortino != 0
         assert 0 <= wr <= 100
         assert var_95 < 0  # VaR should be negative (loss)
+
+
+class TestCalculateActiveMetrics:
+    """Tests for calculate_active_metrics function."""
+
+    def test_calculate_active_metrics_basic(self):
+        """Test basic active metrics calculation."""
+        strategy = pd.Series([0.01, 0.02, -0.01, 0.015, 0.02])
+        benchmark = pd.Series([0.008, 0.015, -0.008, 0.012, 0.018])
+
+        metrics = calculate_active_metrics(strategy, benchmark)
+
+        # Check all keys present
+        assert 'active_return' in metrics
+        assert 'information_ratio' in metrics
+        assert 'beta' in metrics
+        assert 'alpha' in metrics
+        assert 'tracking_error' in metrics
+        assert 'win_rate' in metrics
+        assert 'strategy_total_return' in metrics
+        assert 'benchmark_total_return' in metrics
+        assert 'strategy_sharpe' in metrics
+        assert 'benchmark_sharpe' in metrics
+
+        # Check strategy outperformed
+        assert metrics['active_return'] > 0
+        assert isinstance(metrics['information_ratio'], float)
+        assert isinstance(metrics['beta'], float)
+
+    def test_calculate_active_metrics_underperformance(self):
+        """Test when strategy underperforms benchmark."""
+        strategy = pd.Series([0.005, 0.01, -0.015, 0.008, 0.01])
+        benchmark = pd.Series([0.01, 0.02, -0.01, 0.015, 0.02])
+
+        metrics = calculate_active_metrics(strategy, benchmark)
+
+        assert metrics['active_return'] < 0
+        assert metrics['win_rate'] < 50.0
+        assert metrics['strategy_total_return'] < metrics['benchmark_total_return']
+
+    def test_calculate_active_metrics_perfect_tracking(self):
+        """Test when strategy perfectly tracks benchmark."""
+        returns = pd.Series([0.01, 0.02, -0.01, 0.015, 0.02])
+
+        metrics = calculate_active_metrics(returns, returns)
+
+        assert np.isclose(metrics['active_return'], 0.0, atol=1e-10)
+        assert np.isclose(metrics['tracking_error'], 0.0, atol=1e-10)
+        assert np.isclose(metrics['beta'], 1.0, atol=1e-6)
+        # Win rate should be 0% when perfectly tracking (excess returns are exactly 0, not > 0)
+        assert metrics['win_rate'] == 0.0
+
+    def test_calculate_active_metrics_empty_strategy(self):
+        """Test error handling for empty strategy returns."""
+        empty_strategy = pd.Series([])
+        benchmark = pd.Series([0.01, 0.02, 0.015])
+
+        with pytest.raises(ValueError, match="Strategy returns series is empty"):
+            calculate_active_metrics(empty_strategy, benchmark)
+
+    def test_calculate_active_metrics_empty_benchmark(self):
+        """Test error handling for empty benchmark returns."""
+        strategy = pd.Series([0.01, 0.02, 0.015])
+        empty_benchmark = pd.Series([])
+
+        with pytest.raises(ValueError, match="Benchmark returns series is empty"):
+            calculate_active_metrics(strategy, empty_benchmark)
+
+    def test_calculate_active_metrics_no_overlap(self):
+        """Test error handling when there's no overlap in indices."""
+        strategy = pd.Series([0.01, 0.02, 0.015], index=pd.date_range('2024-01-01', periods=3))
+        benchmark = pd.Series([0.01, 0.02, 0.015], index=pd.date_range('2024-02-01', periods=3))
+
+        with pytest.raises(ValueError, match="No overlapping returns"):
+            calculate_active_metrics(strategy, benchmark)
+
+    def test_calculate_active_metrics_with_nans(self):
+        """Test handling of NaN values in returns."""
+        strategy = pd.Series([0.01, np.nan, 0.02, -0.01, 0.015])
+        benchmark = pd.Series([0.008, 0.015, np.nan, -0.008, 0.012])
+
+        # Should drop NaNs and align properly
+        metrics = calculate_active_metrics(strategy, benchmark)
+
+        # Should have valid metrics based on overlapping non-NaN values
+        assert np.isfinite(metrics['active_return'])
+        assert np.isfinite(metrics['information_ratio'])
+
+    def test_calculate_active_metrics_with_datetime_index(self):
+        """Test with datetime-indexed returns (realistic scenario)."""
+        dates = pd.date_range('2024-01-01', periods=252, freq='D')
+        np.random.seed(42)
+        strategy = pd.Series(np.random.normal(0.0006, 0.01, 252), index=dates)
+        benchmark = pd.Series(np.random.normal(0.0005, 0.009, 252), index=dates)
+
+        metrics = calculate_active_metrics(strategy, benchmark, periods_per_year=252)
+
+        # All metrics should be valid
+        for key in ['active_return', 'information_ratio', 'beta', 'alpha', 'tracking_error']:
+            assert np.isfinite(metrics[key])
+
+        # Beta should be reasonable (typically between 0.5 and 1.5 for equity strategies)
+        assert -2.0 < metrics['beta'] < 3.0
+
+    def test_calculate_active_metrics_risk_free_rate(self):
+        """Test with non-zero risk-free rate."""
+        strategy = pd.Series([0.02, 0.03, -0.01, 0.025, 0.03])
+        benchmark = pd.Series([0.015, 0.025, -0.008, 0.020, 0.028])
+
+        metrics_rf0 = calculate_active_metrics(strategy, benchmark, risk_free_rate=0.0)
+        metrics_rf2 = calculate_active_metrics(strategy, benchmark, risk_free_rate=0.02)
+
+        # Alpha should differ with different risk-free rates
+        assert metrics_rf0['alpha'] != metrics_rf2['alpha']
+
+    def test_calculate_active_metrics_all_values_reasonable(self):
+        """Test that all returned values are reasonable."""
+        np.random.seed(42)
+        strategy = pd.Series(np.random.normal(0.0008, 0.015, 500))
+        benchmark = pd.Series(np.random.normal(0.0006, 0.012, 500))
+
+        metrics = calculate_active_metrics(strategy, benchmark)
+
+        # Win rate should be between 0 and 100
+        assert 0 <= metrics['win_rate'] <= 100
+
+        # Total returns should be reasonable (e.g., between -50% and +200%)
+        assert -0.5 < metrics['strategy_total_return'] < 2.0
+        assert -0.5 < metrics['benchmark_total_return'] < 2.0
+
+        # Sharpe ratios should be reasonable (typically -2 to +4 for daily data)
+        assert -3.0 < metrics['strategy_sharpe'] < 5.0
+        assert -3.0 < metrics['benchmark_sharpe'] < 5.0
+
+        # Max drawdown should be negative and reasonable
+        assert -1.0 < metrics['strategy_max_dd'] <= 0.0
+        assert -1.0 < metrics['benchmark_max_dd'] <= 0.0

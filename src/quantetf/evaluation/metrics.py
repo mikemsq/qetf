@@ -403,3 +403,133 @@ def information_ratio(
     annualized_te = tracking_error * np.sqrt(periods_per_year)
 
     return float(annualized_excess / annualized_te)
+
+
+def calculate_active_metrics(
+    strategy_returns: pd.Series,
+    benchmark_returns: pd.Series,
+    periods_per_year: int = 252,
+    risk_free_rate: float = 0.0
+) -> dict[str, float]:
+    """Calculate comprehensive active performance metrics vs benchmark.
+
+    This is the STANDARD format for all performance reporting in QuantETF.
+    The goal is to beat SPY, so active metrics are the primary focus.
+
+    Args:
+        strategy_returns: Strategy period returns (e.g., daily)
+        benchmark_returns: Benchmark period returns (typically SPY)
+        periods_per_year: Trading periods per year (default 252 for daily)
+        risk_free_rate: Annualized risk-free rate (default 0.0)
+
+    Returns:
+        Dictionary with comprehensive active metrics:
+
+        Strategy Metrics:
+        - strategy_total_return: Cumulative strategy return
+        - strategy_sharpe: Strategy Sharpe ratio
+        - strategy_sortino: Strategy Sortino ratio
+        - strategy_max_dd: Strategy maximum drawdown
+        - strategy_cagr: Strategy CAGR
+
+        Benchmark Metrics:
+        - benchmark_total_return: Cumulative benchmark return
+        - benchmark_sharpe: Benchmark Sharpe ratio
+        - benchmark_sortino: Benchmark Sortino ratio
+        - benchmark_max_dd: Benchmark maximum drawdown
+        - benchmark_cagr: Benchmark CAGR
+
+        Active Metrics (THE KEY METRICS):
+        - active_return: Total excess return vs benchmark
+        - active_return_ann: Annualized excess return
+        - tracking_error: Volatility of excess returns (annualized)
+        - information_ratio: Active return / tracking error
+        - beta: Strategy beta to benchmark
+        - alpha: Jensen's alpha (risk-adjusted excess return)
+        - sharpe_difference: Strategy Sharpe - Benchmark Sharpe
+        - win_rate: % of periods where strategy beat benchmark
+
+    Raises:
+        ValueError: If returns series are empty or misaligned
+
+    Example:
+        >>> strategy_rets = pd.Series([0.01, 0.02, -0.01, 0.015])
+        >>> spy_rets = pd.Series([0.008, 0.015, -0.008, 0.012])
+        >>> metrics = calculate_active_metrics(strategy_rets, spy_rets)
+        >>> print(f"Beat SPY by {metrics['active_return']:.2%}")
+        >>> print(f"Information Ratio: {metrics['information_ratio']:.2f}")
+    """
+    # Input validation
+    strat = strategy_returns.dropna()
+    bench = benchmark_returns.dropna()
+
+    if len(strat) == 0:
+        raise ValueError("Strategy returns series is empty or all NaN")
+    if len(bench) == 0:
+        raise ValueError("Benchmark returns series is empty or all NaN")
+
+    # Align indices
+    common_index = strat.index.intersection(bench.index)
+    if len(common_index) == 0:
+        raise ValueError("No overlapping returns between strategy and benchmark")
+
+    aligned_strat = strat[common_index]
+    aligned_bench = bench[common_index]
+
+    # Calculate strategy metrics
+    strat_equity = (1 + aligned_strat).cumprod()
+    bench_equity = (1 + aligned_bench).cumprod()
+
+    strategy_metrics = {
+        'strategy_total_return': float(strat_equity.iloc[-1] - 1.0),
+        'strategy_sharpe': sharpe(aligned_strat, periods_per_year),
+        'strategy_sortino': sortino_ratio(aligned_strat, risk_free_rate, periods_per_year),
+        'strategy_max_dd': max_drawdown(strat_equity),
+        'strategy_cagr': cagr(strat_equity, periods_per_year),
+    }
+
+    # Calculate benchmark metrics
+    benchmark_metrics = {
+        'benchmark_total_return': float(bench_equity.iloc[-1] - 1.0),
+        'benchmark_sharpe': sharpe(aligned_bench, periods_per_year),
+        'benchmark_sortino': sortino_ratio(aligned_bench, risk_free_rate, periods_per_year),
+        'benchmark_max_dd': max_drawdown(bench_equity),
+        'benchmark_cagr': cagr(bench_equity, periods_per_year),
+    }
+
+    # Calculate active metrics
+    excess_returns = aligned_strat - aligned_bench
+    tracking_error = excess_returns.std() * np.sqrt(periods_per_year)
+
+    # Information ratio
+    ir = information_ratio(aligned_strat, aligned_bench, periods_per_year)
+
+    # Beta and alpha (using linear regression)
+    if aligned_bench.std() > 0:
+        covariance = aligned_strat.cov(aligned_bench)
+        beta = covariance / aligned_bench.var()
+
+        # Jensen's alpha: alpha = Rp - [Rf + beta * (Rb - Rf)]
+        rf_per_period = risk_free_rate / periods_per_year
+        alpha = (aligned_strat.mean() - rf_per_period) - beta * (aligned_bench.mean() - rf_per_period)
+        alpha_annualized = alpha * periods_per_year
+    else:
+        beta = 0.0
+        alpha_annualized = 0.0
+
+    # Win rate (% periods beating benchmark)
+    win_rate_pct = float((excess_returns > 0).sum() / len(excess_returns) * 100.0)
+
+    active_metrics = {
+        'active_return': float(strategy_metrics['strategy_total_return'] - benchmark_metrics['benchmark_total_return']),
+        'active_return_ann': float(excess_returns.mean() * periods_per_year),
+        'tracking_error': float(tracking_error),
+        'information_ratio': float(ir),
+        'beta': float(beta),
+        'alpha': float(alpha_annualized),
+        'sharpe_difference': float(strategy_metrics['strategy_sharpe'] - benchmark_metrics['benchmark_sharpe']),
+        'win_rate': float(win_rate_pct),
+    }
+
+    # Combine all metrics
+    return {**strategy_metrics, **benchmark_metrics, **active_metrics}
