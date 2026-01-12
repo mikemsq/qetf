@@ -189,6 +189,43 @@ Implemented SnapshotDataStore for point-in-time data access from parquet files.
 
 ## Current Sprint: Phase 3 - Analytics & Visualization
 
+### REFACTOR-001: Active Returns Focus Refactor
+**Status:** ready
+**Priority:** CRITICAL
+**Estimated:** 2-3 hours
+**Dependencies:** []
+**Assigned:** Unassigned
+
+**Description:**
+Refactor existing performance analysis to emphasize active returns vs SPY benchmark. Current implementation shows portfolio performance in isolation, but the project goal is to beat SPY.
+
+**User Requirement (Jan 12, 2026):**
+> "I always want to see the portfolio performance, benchmark performance and active performance. The pure portfolio performance is less interesting than comparison to buy and hold spy strategy. The goal of this project is to create a strategy that can beat spy."
+
+**Changes Needed:**
+1. Add `calculate_active_metrics()` helper to metrics.py
+2. Update backtest_analysis.ipynb to show strategy vs SPY overlaid
+3. Update all visualizations to show relative performance
+4. Add active return summary section to notebook
+5. Make SPY comparison the default in all analysis tools
+
+**Files:**
+- Update: `src/quantetf/evaluation/metrics.py` (add calculate_active_metrics)
+- Update: `notebooks/backtest_analysis.ipynb` (add SPY overlay)
+- Update: `scripts/compare_strategies.py` (make SPY default)
+- Update: `tests/test_advanced_metrics.py` (test active metrics)
+
+**Handoff:** `handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md`
+
+**Acceptance Criteria:**
+- calculate_active_metrics() function implemented and tested
+- Notebook shows strategy vs SPY overlaid in all charts
+- Notebook leads with "Beat SPY by X%" summary
+- All metrics tables show strategy, benchmark, and active side-by-side
+- Documentation updated (CLAUDE_CONTEXT.md ✅, PROJECT_BRIEF.md ✅)
+
+---
+
 ### ANALYSIS-001: Enhanced Metrics Module
 **Status:** completed
 **Priority:** high

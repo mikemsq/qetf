@@ -8,15 +8,25 @@
 
 ## Current Status
 
-**Active Phase:** Phase 3 - Analytics & Visualization (0% complete)
+**Active Phase:** Phase 3 - Analytics & Visualization (42% complete - 5/12 tasks done)
 **Branch:** main
 
 ### Quick Status
 
-- **What's working:** Complete end-to-end backtesting system with real data, momentum strategy, equal-weight portfolio, transaction costs, no-lookahead validation (Phase 2 complete, 101 tests passing)
-- **What's in progress:** Phase 3 planning complete - 12 new tasks defined
+- **What's working:** Complete end-to-end backtesting system with real data, momentum strategy, equal-weight portfolio, transaction costs, no-lookahead validation (Phase 2 complete, 275 tests passing)
+- **What's in progress:** Phase 3 - 5 tasks completed (Enhanced Metrics, Risk Analytics, Backtest Viz, Strategy Comparison, Benchmarks, Walk-Forward)
 - **What's blocked:** None currently
-- **Next priority:** ANALYSIS-001 (Enhanced Metrics Module) - foundational for all analytics
+- **Next priority:** **REFACTOR existing analysis to emphasize active returns vs SPY** (see handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md)
+
+### ⚠️ Important User Requirement (Jan 12, 2026)
+
+**Performance analysis must ALWAYS show relative performance vs SPY, not just absolute returns.**
+
+- Primary metric: Active return (strategy vs SPY)
+- All visualizations should overlay strategy vs SPY
+- Reports should lead with "Beat SPY by X%" or "Underperformed by X%"
+- See [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) "Performance Analysis Standards" section
+- Refactor task created: [handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md](handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md)
 
 ### Ready to Work On
 

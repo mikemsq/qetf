@@ -37,6 +37,7 @@ Current solutions are either:
 **Primary goal:**
 
 - [ ] Generate a portfolio that demonstrates superior risk-adjusted returns vs S&P 500 in backtest (Sharpe ratio > 0.8)
+- [ ] **All performance analysis must show strategy vs SPY comparison** - active performance is the key metric
 
 **Secondary goals:**
 
@@ -44,6 +45,15 @@ Current solutions are either:
 - [ ] Weekly rebalancing recommendations in production
 - [ ] Modular codebase where components can be swapped without rewriting the engine
 - [ ] Clear audit trail from data → signals → portfolio → recommendations
+
+**Performance Reporting Standard:**
+
+Every analysis must show three metrics together:
+1. Portfolio performance (strategy returns)
+2. Benchmark performance (SPY buy-and-hold)
+3. Active performance (excess returns vs benchmark)
+
+The goal is not just positive returns, but **beating SPY consistently**.
 
 -----
 

@@ -372,10 +372,40 @@ class StrategyConfig:
 
 - Always validate data from external sources
 - Cross-reference critical calculations
-- Handle missing data explicitly (don’t forward-fill blindly)
-- Display “as-of” timestamps with all financial data
+- Handle missing data explicitly (don't forward-fill blindly)
+- Display "as-of" timestamps with all financial data
 - Indicate when data is delayed, estimated, or backfilled
 - Check for survivorship bias in historical datasets
+
+### Performance Analysis Standards
+
+**CRITICAL: Always show relative performance, not just absolute performance**
+
+The goal of QuantETF is to **beat SPY (S&P 500)**. All performance analysis must emphasize comparison to benchmark:
+
+- **Always show three metrics together:**
+  1. Portfolio performance (strategy returns)
+  2. Benchmark performance (SPY buy-and-hold)
+  3. Active performance (strategy excess returns vs benchmark)
+
+- **Active performance is the primary metric** - it shows whether the strategy is adding value
+- Pure portfolio performance is less interesting than relative performance
+- Default visualizations should overlay strategy vs SPY equity curves
+- Metrics tables should show strategy metrics, SPY metrics, and differences side-by-side
+- Reports should lead with "Strategy beat SPY by X%" or "Strategy underperformed SPY by X%"
+
+**Examples:**
+- ❌ Wrong: "Strategy returned 45% with Sharpe 1.2"
+- ✅ Right: "Strategy returned 45% vs SPY 35% (+10% active return), Sharpe 1.2 vs 0.9"
+
+- ❌ Wrong: Chart showing only strategy equity curve
+- ✅ Right: Chart showing strategy vs SPY equity curves overlaid with shaded active return area
+
+**Implementation:**
+- Notebooks should load SPY benchmark data automatically
+- All visualization functions should accept optional benchmark parameter (default to SPY)
+- Metrics calculations should include `calculate_active_metrics(strategy, benchmark)` helper
+- HTML reports should have "Active Performance" section prominently displayed
 
 ### Number Precision
 
