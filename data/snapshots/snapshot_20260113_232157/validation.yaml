@@ -1,0 +1,1378 @@
+validation_timestamp: '2026-01-13T23:16:25.848992'
+tickers_validated: 304
+details:
+- ticker: ACWI
+  valid: false
+  error: Invalid OHLC relationships detected for ACWI
+  anomalies: null
+- ticker: ACWX
+  valid: false
+  error: Invalid OHLC relationships detected for ACWX
+  anomalies: null
+- ticker: AGG
+  valid: false
+  error: Excessive missing data (6.2%) for AGG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ANGL
+  valid: false
+  error: Invalid OHLC relationships detected for ANGL
+  anomalies: null
+- ticker: ARKF
+  valid: false
+  error: Excessive missing data (6.2%) for ARKF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ARKG
+  valid: false
+  error: Invalid OHLC relationships detected for ARKG
+  anomalies: null
+- ticker: ARKK
+  valid: false
+  error: Invalid OHLC relationships detected for ARKK
+  anomalies: null
+- ticker: ARKQ
+  valid: false
+  error: Excessive missing data (6.2%) for ARKQ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ARKW
+  valid: false
+  error: Invalid OHLC relationships detected for ARKW
+  anomalies: null
+- ticker: BATT
+  valid: false
+  error: Invalid OHLC relationships detected for BATT
+  anomalies: null
+- ticker: BBRE
+  valid: false
+  error: Invalid OHLC relationships detected for BBRE
+  anomalies: null
+- ticker: BCI
+  valid: false
+  error: Invalid OHLC relationships detected for BCI
+  anomalies: null
+- ticker: BKLN
+  valid: false
+  error: Invalid OHLC relationships detected for BKLN
+  anomalies: null
+- ticker: BLOK
+  valid: false
+  error: Invalid OHLC relationships detected for BLOK
+  anomalies: null
+- ticker: BND
+  valid: false
+  error: Invalid OHLC relationships detected for BND
+  anomalies: null
+- ticker: BNDX
+  valid: false
+  error: Excessive missing data (6.2%) for BNDX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: BOTZ
+  valid: false
+  error: Excessive missing data (6.2%) for BOTZ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: BTAL
+  valid: false
+  error: Invalid OHLC relationships detected for BTAL
+  anomalies: null
+- ticker: CEW
+  valid: false
+  error: Invalid OHLC relationships detected for CEW
+  anomalies: null
+- ticker: CMBS
+  valid: false
+  error: Excessive missing data (6.2%) for CMBS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: COMT
+  valid: false
+  error: Invalid OHLC relationships detected for COMT
+  anomalies: null
+- ticker: CPER
+  valid: false
+  error: Excessive missing data (6.2%) for CPER. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: CTA
+  valid: false
+  error: Excessive missing data (6.2%) for CTA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: CWB
+  valid: false
+  error: Excessive missing data (6.2%) for CWB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: CYB
+  valid: false
+  error: Invalid OHLC relationships detected for CYB
+  anomalies: null
+- ticker: DBC
+  valid: false
+  error: Invalid OHLC relationships detected for DBC
+  anomalies: null
+- ticker: DBEF
+  valid: false
+  error: Invalid OHLC relationships detected for DBEF
+  anomalies: null
+- ticker: DBEM
+  valid: false
+  error: Invalid OHLC relationships detected for DBEM
+  anomalies: null
+- ticker: DBEU
+  valid: false
+  error: Invalid OHLC relationships detected for DBEU
+  anomalies: null
+- ticker: DBJP
+  valid: false
+  error: Invalid OHLC relationships detected for DBJP
+  anomalies: null
+- ticker: DBMF
+  valid: false
+  error: Excessive missing data (6.2%) for DBMF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DBV
+  valid: false
+  error: Excessive missing data (6.2%) for DBV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DDM
+  valid: false
+  error: Excessive missing data (6.2%) for DDM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DFE
+  valid: false
+  error: Invalid OHLC relationships detected for DFE
+  anomalies: null
+- ticker: DGRO
+  valid: false
+  error: Invalid OHLC relationships detected for DGRO
+  anomalies: null
+- ticker: DHS
+  valid: false
+  error: Invalid OHLC relationships detected for DHS
+  anomalies: null
+- ticker: DIA
+  valid: false
+  error: Excessive missing data (6.2%) for DIA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DIVA
+  valid: false
+  error: Excessive missing data (6.2%) for DIVA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DIVO
+  valid: false
+  error: Invalid OHLC relationships detected for DIVO
+  anomalies: null
+- ticker: DJP
+  valid: false
+  error: Excessive missing data (6.2%) for DJP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DLS
+  valid: false
+  error: Invalid OHLC relationships detected for DLS
+  anomalies: null
+- ticker: DOG
+  valid: false
+  error: Invalid OHLC relationships detected for DOG
+  anomalies: null
+- ticker: DRIV
+  valid: false
+  error: Excessive missing data (6.2%) for DRIV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DSI
+  valid: false
+  error: Invalid OHLC relationships detected for DSI
+  anomalies: null
+- ticker: DTEC
+  valid: false
+  error: Excessive missing data (6.2%) for DTEC. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: DVY
+  valid: false
+  error: Invalid OHLC relationships detected for DVY
+  anomalies: null
+- ticker: ECH
+  valid: false
+  error: Invalid OHLC relationships detected for ECH
+  anomalies: null
+- ticker: EEM
+  valid: false
+  error: Invalid OHLC relationships detected for EEM
+  anomalies: null
+- ticker: EFA
+  valid: false
+  error: Invalid OHLC relationships detected for EFA
+  anomalies: null
+- ticker: EFZ
+  valid: false
+  error: Invalid OHLC relationships detected for EFZ
+  anomalies: null
+- ticker: EGPT
+  valid: false
+  error: Invalid OHLC relationships detected for EGPT
+  anomalies: null
+- ticker: EIDO
+  valid: false
+  error: Excessive missing data (6.2%) for EIDO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EMB
+  valid: false
+  error: Excessive missing data (6.2%) for EMB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EPU
+  valid: false
+  error: Invalid OHLC relationships detected for EPU
+  anomalies: null
+- ticker: EQLS
+  valid: false
+  error: Excessive missing data (6.2%) for EQLS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ESGD
+  valid: false
+  error: Excessive missing data (6.2%) for ESGD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ESGU
+  valid: false
+  error: Invalid OHLC relationships detected for ESGU
+  anomalies: null
+- ticker: ESGV
+  valid: false
+  error: Excessive missing data (6.2%) for ESGV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EUM
+  valid: false
+  error: Excessive missing data (6.2%) for EUM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWA
+  valid: false
+  error: Invalid OHLC relationships detected for EWA
+  anomalies: null
+- ticker: EWC
+  valid: false
+  error: Excessive missing data (6.2%) for EWC. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWG
+  valid: false
+  error: Excessive missing data (6.2%) for EWG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWH
+  valid: false
+  error: Invalid OHLC relationships detected for EWH
+  anomalies: null
+- ticker: EWI
+  valid: false
+  error: Excessive missing data (6.2%) for EWI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWJ
+  valid: false
+  error: Excessive missing data (6.2%) for EWJ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWL
+  valid: false
+  error: Excessive missing data (6.2%) for EWL. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWP
+  valid: false
+  error: Excessive missing data (6.2%) for EWP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWQ
+  valid: false
+  error: Excessive missing data (6.2%) for EWQ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWS
+  valid: false
+  error: Invalid OHLC relationships detected for EWS
+  anomalies: null
+- ticker: EWT
+  valid: false
+  error: Excessive missing data (6.2%) for EWT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWU
+  valid: false
+  error: Excessive missing data (6.2%) for EWU. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWW
+  valid: false
+  error: Excessive missing data (6.2%) for EWW. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: EWY
+  valid: false
+  error: Invalid OHLC relationships detected for EWY
+  anomalies: null
+- ticker: EWZ
+  valid: false
+  error: Invalid OHLC relationships detected for EWZ
+  anomalies: null
+- ticker: EZA
+  valid: false
+  error: Invalid OHLC relationships detected for EZA
+  anomalies: null
+- ticker: FALN
+  valid: false
+  error: Invalid OHLC relationships detected for FALN
+  anomalies: null
+- ticker: FEZ
+  valid: false
+  error: Invalid OHLC relationships detected for FEZ
+  anomalies: null
+- ticker: FINX
+  valid: false
+  error: Excessive missing data (6.2%) for FINX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FLOT
+  valid: false
+  error: Excessive missing data (6.2%) for FLOT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FM
+  valid: false
+  error: Invalid OHLC relationships detected for FM
+  anomalies: null
+- ticker: FMF
+  valid: false
+  error: Excessive missing data (6.2%) for FMF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FNDA
+  valid: false
+  error: Invalid OHLC relationships detected for FNDA
+  anomalies: null
+- ticker: FNDF
+  valid: false
+  error: Invalid OHLC relationships detected for FNDF
+  anomalies: null
+- ticker: FRAK
+  valid: false
+  error: Invalid OHLC relationships detected for FRAK
+  anomalies: null
+- ticker: FVD
+  valid: false
+  error: Invalid OHLC relationships detected for FVD
+  anomalies: null
+- ticker: FXA
+  valid: false
+  error: Invalid OHLC relationships detected for FXA
+  anomalies: null
+- ticker: FXB
+  valid: false
+  error: Invalid OHLC relationships detected for FXB
+  anomalies: null
+- ticker: FXC
+  valid: false
+  error: Excessive missing data (6.2%) for FXC. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FXE
+  valid: false
+  error: Excessive missing data (6.2%) for FXE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FXI
+  valid: false
+  error: Excessive missing data (6.2%) for FXI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: FXY
+  valid: false
+  error: Excessive missing data (6.2%) for FXY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GCC
+  valid: false
+  error: Invalid OHLC relationships detected for GCC
+  anomalies: null
+- ticker: GIGE
+  valid: false
+  error: Excessive missing data (6.2%) for GIGE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GLD
+  valid: false
+  error: Excessive missing data (6.2%) for GLD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GNMA
+  valid: false
+  error: Excessive missing data (6.2%) for GNMA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GOVT
+  valid: false
+  error: Excessive missing data (6.2%) for GOVT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GSG
+  valid: false
+  error: Excessive missing data (6.2%) for GSG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: GUNR
+  valid: false
+  error: Excessive missing data (6.2%) for GUNR. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HACK
+  valid: false
+  error: Excessive missing data (6.2%) for HACK. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HDV
+  valid: false
+  error: Invalid OHLC relationships detected for HDV
+  anomalies: null
+- ticker: HEEM
+  valid: false
+  error: Invalid OHLC relationships detected for HEEM
+  anomalies: null
+- ticker: HEFA
+  valid: false
+  error: Invalid OHLC relationships detected for HEFA
+  anomalies: null
+- ticker: HERO
+  valid: false
+  error: Excessive missing data (6.2%) for HERO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HEWG
+  valid: false
+  error: Excessive missing data (6.2%) for HEWG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HEWJ
+  valid: false
+  error: Invalid OHLC relationships detected for HEWJ
+  anomalies: null
+- ticker: HEWU
+  valid: false
+  error: Excessive missing data (6.2%) for HEWU. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HEZU
+  valid: false
+  error: Invalid OHLC relationships detected for HEZU
+  anomalies: null
+- ticker: HOMZ
+  valid: false
+  error: Excessive missing data (6.2%) for HOMZ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: HYG
+  valid: false
+  error: Invalid OHLC relationships detected for HYG
+  anomalies: null
+- ticker: IAU
+  valid: false
+  error: Excessive missing data (6.2%) for IAU. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IBB
+  valid: false
+  error: Excessive missing data (6.2%) for IBB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ICLN
+  valid: false
+  error: Invalid OHLC relationships detected for ICLN
+  anomalies: null
+- ticker: ICVT
+  valid: false
+  error: Invalid OHLC relationships detected for ICVT
+  anomalies: null
+- ticker: IDV
+  valid: false
+  error: Invalid OHLC relationships detected for IDV
+  anomalies: null
+- ticker: IEF
+  valid: false
+  error: Excessive missing data (6.2%) for IEF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IEMG
+  valid: false
+  error: Invalid OHLC relationships detected for IEMG
+  anomalies: null
+- ticker: IGIB
+  valid: false
+  error: Excessive missing data (6.2%) for IGIB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IGM
+  valid: false
+  error: Excessive missing data (6.2%) for IGM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IGN
+  valid: false
+  error: Invalid OHLC relationships detected for IGN
+  anomalies: null
+- ticker: IGV
+  valid: false
+  error: Excessive missing data (6.2%) for IGV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IHF
+  valid: false
+  error: Invalid OHLC relationships detected for IHF
+  anomalies: null
+- ticker: IHI
+  valid: false
+  error: Excessive missing data (6.2%) for IHI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IMOM
+  valid: false
+  error: Invalid OHLC relationships detected for IMOM
+  anomalies: null
+- ticker: INDA
+  valid: false
+  error: Invalid OHLC relationships detected for INDA
+  anomalies: null
+- ticker: INDS
+  valid: false
+  error: Invalid OHLC relationships detected for INDS
+  anomalies: null
+- ticker: INTF
+  valid: false
+  error: Invalid OHLC relationships detected for INTF
+  anomalies: null
+- ticker: IPAY
+  valid: false
+  error: Excessive missing data (6.2%) for IPAY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ISWN
+  valid: false
+  error: Excessive missing data (6.2%) for ISWN. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ITB
+  valid: false
+  error: Excessive missing data (6.2%) for ITB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IVAL
+  valid: false
+  error: Invalid OHLC relationships detected for IVAL
+  anomalies: null
+- ticker: IVV
+  valid: false
+  error: Excessive missing data (6.2%) for IVV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IWM
+  valid: false
+  error: Excessive missing data (6.2%) for IWM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IXC
+  valid: false
+  error: Invalid OHLC relationships detected for IXC
+  anomalies: null
+- ticker: IXJ
+  valid: false
+  error: Excessive missing data (6.2%) for IXJ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IXN
+  valid: false
+  error: Excessive missing data (6.2%) for IXN. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IXUS
+  valid: false
+  error: Invalid OHLC relationships detected for IXUS
+  anomalies: null
+- ticker: IYC
+  valid: false
+  error: Excessive missing data (6.2%) for IYC. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IYE
+  valid: false
+  error: Invalid OHLC relationships detected for IYE
+  anomalies: null
+- ticker: IYF
+  valid: false
+  error: Excessive missing data (6.2%) for IYF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IYK
+  valid: false
+  error: Invalid OHLC relationships detected for IYK
+  anomalies: null
+- ticker: IYM
+  valid: false
+  error: Excessive missing data (6.2%) for IYM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IYR
+  valid: false
+  error: Invalid OHLC relationships detected for IYR
+  anomalies: null
+- ticker: IYT
+  valid: false
+  error: Invalid OHLC relationships detected for IYT
+  anomalies: null
+- ticker: IYW
+  valid: false
+  error: Excessive missing data (6.2%) for IYW. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: IYZ
+  valid: false
+  error: Excessive missing data (6.2%) for IYZ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: JEPI
+  valid: false
+  error: Invalid OHLC relationships detected for JEPI
+  anomalies: null
+- ticker: JEPQ
+  valid: false
+  error: Excessive missing data (6.2%) for JEPQ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: JETS
+  valid: false
+  error: Excessive missing data (6.2%) for JETS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: JNK
+  valid: false
+  error: Invalid OHLC relationships detected for JNK
+  anomalies: null
+- ticker: JPGE
+  valid: false
+  error: Excessive missing data (6.2%) for JPGE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: JPST
+  valid: false
+  error: Excessive missing data (6.2%) for JPST. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: JPUS
+  valid: false
+  error: Invalid OHLC relationships detected for JPUS
+  anomalies: null
+- ticker: KBE
+  valid: false
+  error: Excessive missing data (6.2%) for KBE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: KMLM
+  valid: false
+  error: Invalid OHLC relationships detected for KMLM
+  anomalies: null
+- ticker: KRE
+  valid: false
+  error: Excessive missing data (6.2%) for KRE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: KRMA
+  valid: false
+  error: Invalid OHLC relationships detected for KRMA
+  anomalies: null
+- ticker: LDUR
+  valid: false
+  error: Excessive missing data (6.2%) for LDUR. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: LIT
+  valid: false
+  error: Excessive missing data (6.2%) for LIT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: LQD
+  valid: false
+  error: Invalid OHLC relationships detected for LQD
+  anomalies: null
+- ticker: LRGF
+  valid: false
+  error: Excessive missing data (6.2%) for LRGF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MBB
+  valid: false
+  error: Excessive missing data (6.2%) for MBB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MCHI
+  valid: false
+  error: Excessive missing data (6.2%) for MCHI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MINT
+  valid: false
+  error: Excessive missing data (6.2%) for MINT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MOO
+  valid: false
+  error: Excessive missing data (6.2%) for MOO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MOON
+  valid: false
+  error: Excessive missing data (6.2%) for MOON. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MORT
+  valid: false
+  error: Invalid OHLC relationships detected for MORT
+  anomalies: null
+- ticker: MSOS
+  valid: false
+  error: Excessive missing data (6.2%) for MSOS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MTUM
+  valid: false
+  error: Excessive missing data (6.2%) for MTUM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MUB
+  valid: false
+  error: Excessive missing data (6.2%) for MUB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MVV
+  valid: false
+  error: Excessive missing data (6.2%) for MVV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: MYY
+  valid: false
+  error: Invalid OHLC relationships detected for MYY
+  anomalies: null
+- ticker: NEAR
+  valid: false
+  error: Excessive missing data (6.2%) for NEAR. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: NERD
+  valid: false
+  error: Excessive missing data (6.2%) for NERD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: NOBL
+  valid: false
+  error: Excessive missing data (6.2%) for NOBL. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: NUSI
+  valid: false
+  error: Invalid OHLC relationships detected for NUSI
+  anomalies: null
+- ticker: OUSA
+  valid: false
+  error: Excessive missing data (6.2%) for OUSA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: OUSM
+  valid: false
+  error: Invalid OHLC relationships detected for OUSM
+  anomalies: null
+- ticker: PALL
+  valid: false
+  error: Excessive missing data (6.2%) for PALL. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: PAVE
+  valid: false
+  error: Excessive missing data (6.2%) for PAVE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: PBW
+  valid: false
+  error: Invalid OHLC relationships detected for PBW
+  anomalies: null
+- ticker: PCY
+  valid: false
+  error: Invalid OHLC relationships detected for PCY
+  anomalies: null
+- ticker: PDBC
+  valid: false
+  error: Invalid OHLC relationships detected for PDBC
+  anomalies: null
+- ticker: PFF
+  valid: false
+  error: Invalid OHLC relationships detected for PFF
+  anomalies: null
+- ticker: POTX
+  valid: false
+  error: Excessive missing data (6.2%) for POTX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: PPLT
+  valid: false
+  error: Excessive missing data (6.2%) for PPLT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: PSQ
+  valid: false
+  error: Invalid OHLC relationships detected for PSQ
+  anomalies: null
+- ticker: PUTW
+  valid: false
+  error: Invalid OHLC relationships detected for PUTW
+  anomalies: null
+- ticker: QLD
+  valid: false
+  error: Excessive missing data (6.2%) for QLD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: QMOM
+  valid: false
+  error: Excessive missing data (6.2%) for QMOM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: QQQ
+  valid: false
+  error: Excessive missing data (6.2%) for QQQ. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: QRMI
+  valid: false
+  error: Invalid OHLC relationships detected for QRMI
+  anomalies: null
+- ticker: QUAL
+  valid: false
+  error: Excessive missing data (6.2%) for QUAL. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: QVAL
+  valid: false
+  error: Invalid OHLC relationships detected for QVAL
+  anomalies: null
+- ticker: QYLD
+  valid: false
+  error: Invalid OHLC relationships detected for QYLD
+  anomalies: null
+- ticker: REET
+  valid: false
+  error: Invalid OHLC relationships detected for REET
+  anomalies: null
+- ticker: REM
+  valid: false
+  error: Invalid OHLC relationships detected for REM
+  anomalies: null
+- ticker: REZ
+  valid: false
+  error: Invalid OHLC relationships detected for REZ
+  anomalies: null
+- ticker: ROBO
+  valid: false
+  error: Excessive missing data (6.2%) for ROBO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: ROM
+  valid: false
+  error: Excessive missing data (6.2%) for ROM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: RSX
+  valid: false
+  error: Invalid OHLC relationships detected for RSX
+  anomalies: null
+- ticker: RWM
+  valid: false
+  error: Invalid OHLC relationships detected for RWM
+  anomalies: null
+- ticker: RWR
+  valid: false
+  error: Invalid OHLC relationships detected for RWR
+  anomalies: null
+- ticker: RXL
+  valid: false
+  error: Invalid OHLC relationships detected for RXL
+  anomalies: null
+- ticker: RYLD
+  valid: false
+  error: Invalid OHLC relationships detected for RYLD
+  anomalies: null
+- ticker: SCHA
+  valid: false
+  error: Excessive missing data (6.2%) for SCHA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SCHD
+  valid: false
+  error: Invalid OHLC relationships detected for SCHD
+  anomalies: null
+- ticker: SCHH
+  valid: false
+  error: Excessive missing data (6.2%) for SCHH. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SCHO
+  valid: false
+  error: Excessive missing data (6.2%) for SCHO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SCHP
+  valid: false
+  error: Excessive missing data (6.2%) for SCHP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SCHR
+  valid: false
+  error: Excessive missing data (6.2%) for SCHR. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SDY
+  valid: false
+  error: Invalid OHLC relationships detected for SDY
+  anomalies: null
+- ticker: SH
+  valid: false
+  error: Excessive missing data (6.2%) for SH. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SHY
+  valid: false
+  error: Excessive missing data (6.2%) for SHY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SHYG
+  valid: false
+  error: Invalid OHLC relationships detected for SHYG
+  anomalies: null
+- ticker: SIZE
+  valid: false
+  error: Invalid OHLC relationships detected for SIZE
+  anomalies: null
+- ticker: SJB
+  valid: false
+  error: Invalid OHLC relationships detected for SJB
+  anomalies: null
+- ticker: SJNK
+  valid: false
+  error: Invalid OHLC relationships detected for SJNK
+  anomalies: null
+- ticker: SKYY
+  valid: false
+  error: Excessive missing data (6.2%) for SKYY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SLV
+  valid: false
+  error: Excessive missing data (6.2%) for SLV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SMH
+  valid: false
+  error: Excessive missing data (6.2%) for SMH. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SMLF
+  valid: false
+  error: Invalid OHLC relationships detected for SMLF
+  anomalies: null
+- ticker: SNSR
+  valid: false
+  error: Invalid OHLC relationships detected for SNSR
+  anomalies: null
+- ticker: SOXX
+  valid: false
+  error: Excessive missing data (6.2%) for SOXX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SPIB
+  valid: false
+  error: Invalid OHLC relationships detected for SPIB
+  anomalies: null
+- ticker: SPLV
+  valid: false
+  error: Excessive missing data (6.2%) for SPLV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SPTI
+  valid: false
+  error: Excessive missing data (6.2%) for SPTI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SPTL
+  valid: false
+  error: Invalid OHLC relationships detected for SPTL
+  anomalies: null
+- ticker: SPTS
+  valid: false
+  error: Excessive missing data (6.2%) for SPTS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SPY
+  valid: false
+  error: Excessive missing data (6.2%) for SPY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SPYI
+  valid: false
+  error: Invalid OHLC relationships detected for SPYI
+  anomalies: null
+- ticker: SRLN
+  valid: false
+  error: Invalid OHLC relationships detected for SRLN
+  anomalies: null
+- ticker: SRVR
+  valid: false
+  error: Invalid OHLC relationships detected for SRVR
+  anomalies: null
+- ticker: SSO
+  valid: false
+  error: Invalid OHLC relationships detected for SSO
+  anomalies: null
+- ticker: SUSA
+  valid: false
+  error: Excessive missing data (6.2%) for SUSA. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SUSL
+  valid: false
+  error: Invalid OHLC relationships detected for SUSL
+  anomalies: null
+- ticker: SVXY
+  valid: false
+  error: Excessive missing data (6.2%) for SVXY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: SWAN
+  valid: false
+  error: Invalid OHLC relationships detected for SWAN
+  anomalies: null
+- ticker: TAIL
+  valid: false
+  error: Excessive missing data (6.2%) for TAIL. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TAN
+  valid: false
+  error: Excessive missing data (6.2%) for TAN. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TBF
+  valid: false
+  error: Invalid OHLC relationships detected for TBF
+  anomalies: null
+- ticker: TBT
+  valid: false
+  error: Invalid OHLC relationships detected for TBT
+  anomalies: null
+- ticker: THD
+  valid: false
+  error: Excessive missing data (6.2%) for THD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TIP
+  valid: false
+  error: Excessive missing data (6.2%) for TIP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TLT
+  valid: false
+  error: Excessive missing data (6.2%) for TLT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TLTW
+  valid: false
+  error: Excessive missing data (6.2%) for TLTW. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: TUR
+  valid: false
+  error: Invalid OHLC relationships detected for TUR
+  anomalies: null
+- ticker: UCC
+  valid: false
+  error: Excessive missing data (6.2%) for UCC. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UDN
+  valid: false
+  error: Excessive missing data (6.2%) for UDN. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UFO
+  valid: false
+  error: Excessive missing data (6.2%) for UFO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UNG
+  valid: false
+  error: Excessive missing data (6.2%) for UNG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: URE
+  valid: false
+  error: Excessive missing data (6.2%) for URE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: USDU
+  valid: false
+  error: Excessive missing data (6.2%) for USDU. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: USMV
+  valid: false
+  error: Invalid OHLC relationships detected for USMV
+  anomalies: null
+- ticker: USO
+  valid: false
+  error: Excessive missing data (6.2%) for USO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: USRT
+  valid: false
+  error: Excessive missing data (6.2%) for USRT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: USSG
+  valid: false
+  error: Excessive missing data (6.2%) for USSG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UUP
+  valid: false
+  error: Excessive missing data (6.2%) for UUP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UWM
+  valid: false
+  error: Excessive missing data (6.2%) for UWM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: UYG
+  valid: false
+  error: Invalid OHLC relationships detected for UYG
+  anomalies: null
+- ticker: VB
+  valid: false
+  error: Excessive missing data (6.2%) for VB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VCIT
+  valid: false
+  error: Invalid OHLC relationships detected for VCIT
+  anomalies: null
+- ticker: VCSH
+  valid: false
+  error: Invalid OHLC relationships detected for VCSH
+  anomalies: null
+- ticker: VEA
+  valid: false
+  error: Invalid OHLC relationships detected for VEA
+  anomalies: null
+- ticker: VFMF
+  valid: false
+  error: Excessive missing data (6.2%) for VFMF. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VFMO
+  valid: false
+  error: Excessive missing data (6.2%) for VFMO. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VFQY
+  valid: false
+  error: Excessive missing data (6.2%) for VFQY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VFVA
+  valid: false
+  error: Invalid OHLC relationships detected for VFVA
+  anomalies: null
+- ticker: VGIT
+  valid: false
+  error: Invalid OHLC relationships detected for VGIT
+  anomalies: null
+- ticker: VGK
+  valid: false
+  error: Invalid OHLC relationships detected for VGK
+  anomalies: null
+- ticker: VGLT
+  valid: false
+  error: Invalid OHLC relationships detected for VGLT
+  anomalies: null
+- ticker: VGSH
+  valid: false
+  error: Excessive missing data (6.2%) for VGSH. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VIG
+  valid: false
+  error: Excessive missing data (6.2%) for VIG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VIXM
+  valid: false
+  error: Excessive missing data (6.2%) for VIXM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VIXY
+  valid: false
+  error: Excessive missing data (6.2%) for VIXY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VLUE
+  valid: false
+  error: Invalid OHLC relationships detected for VLUE
+  anomalies: null
+- ticker: VMBS
+  valid: false
+  error: Excessive missing data (6.2%) for VMBS. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VNM
+  valid: false
+  error: Excessive missing data (6.2%) for VNM. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VNQ
+  valid: false
+  error: Invalid OHLC relationships detected for VNQ
+  anomalies: null
+- ticker: VO
+  valid: false
+  error: Invalid OHLC relationships detected for VO
+  anomalies: null
+- ticker: VSGX
+  valid: false
+  error: Excessive missing data (6.2%) for VSGX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VSS
+  valid: false
+  error: Invalid OHLC relationships detected for VSS
+  anomalies: null
+- ticker: VTI
+  valid: false
+  error: Excessive missing data (6.2%) for VTI. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VTV
+  valid: false
+  error: Excessive missing data (6.2%) for VTV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VUG
+  valid: false
+  error: Excessive missing data (6.2%) for VUG. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VWO
+  valid: false
+  error: Invalid OHLC relationships detected for VWO
+  anomalies: null
+- ticker: VXUS
+  valid: false
+  error: Invalid OHLC relationships detected for VXUS
+  anomalies: null
+- ticker: VXX
+  valid: false
+  error: Excessive missing data (6.2%) for VXX. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: VYM
+  valid: false
+  error: Invalid OHLC relationships detected for VYM
+  anomalies: null
+- ticker: WCLD
+  valid: false
+  error: Excessive missing data (6.2%) for WCLD. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: WOOD
+  valid: false
+  error: Invalid OHLC relationships detected for WOOD
+  anomalies: null
+- ticker: XHB
+  valid: false
+  error: Excessive missing data (6.2%) for XHB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XLB
+  valid: false
+  error: Excessive missing data (6.2%) for XLB. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XLE
+  valid: false
+  error: Excessive missing data (6.2%) for XLE. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XLF
+  valid: false
+  error: Invalid OHLC relationships detected for XLF
+  anomalies: null
+- ticker: XLI
+  valid: false
+  error: Invalid OHLC relationships detected for XLI
+  anomalies: null
+- ticker: XLK
+  valid: false
+  error: Invalid OHLC relationships detected for XLK
+  anomalies: null
+- ticker: XLP
+  valid: false
+  error: Excessive missing data (6.2%) for XLP. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XLRE
+  valid: false
+  error: Invalid OHLC relationships detected for XLRE
+  anomalies: null
+- ticker: XLU
+  valid: false
+  error: Invalid OHLC relationships detected for XLU
+  anomalies: null
+- ticker: XLV
+  valid: false
+  error: Excessive missing data (6.2%) for XLV. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XLY
+  valid: false
+  error: Excessive missing data (6.2%) for XLY. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XRMI
+  valid: false
+  error: Invalid OHLC relationships detected for XRMI
+  anomalies: null
+- ticker: XRT
+  valid: false
+  error: Excessive missing data (6.2%) for XRT. Found 237280 missing values out of
+    3821280 cells.
+  anomalies: null
+- ticker: XYLD
+  valid: false
+  error: Invalid OHLC relationships detected for XYLD
+  anomalies: null
