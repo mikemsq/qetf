@@ -27,11 +27,14 @@ Examples:
 """
 
 import argparse
+import json
 import logging
 import sys
 from pathlib import Path
 from datetime import datetime
 from typing import List
+
+import pandas as pd
 
 from quantetf.evaluation.comparison import (
     load_backtest_result,
@@ -43,6 +46,10 @@ from quantetf.evaluation.comparison import (
     generate_comparison_report,
     StrategyResult
 )
+from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.backtest.simple_engine import BacktestConfig
+from quantetf.evaluation.benchmarks import run_spy_benchmark
+from quantetf.types import Universe
 
 # Set up logging
 logging.basicConfig(
@@ -159,6 +166,83 @@ def load_all_backtests(backtest_dirs: List[str]) -> List[StrategyResult]:
         logger.warning(f"Failed to load {len(failed_loads)} backtest(s)")
 
     return results
+
+
+def add_spy_benchmark(results: List[StrategyResult]) -> List[StrategyResult]:
+    """Automatically add SPY benchmark for comparison context.
+
+    Args:
+        results: List of strategy results to compare
+
+    Returns:
+        Updated list with SPY benchmark added (or original if failed)
+    """
+    if not results:
+        return results
+
+    logger.info("Adding SPY benchmark for comparison context...")
+
+    try:
+        # Load config from first backtest to get snapshot path and dates
+        first_result = results[0]
+        backtest_dir = Path(first_result.backtest_dir)
+        config_path = backtest_dir / 'config.json'
+
+        if not config_path.exists():
+            logger.warning(f"Config file not found at {config_path}")
+            return results
+
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+
+        snapshot_dir = config.get('snapshot_dir', 'data/snapshots/snapshot_5yr_20etfs')
+        snapshot_path = Path(snapshot_dir) / 'data.parquet'
+
+        # Load snapshot data
+        store = SnapshotDataStore(snapshot_path)
+
+        # Determine date range from first result's equity curve
+        start_date = first_result.equity_curve.index.min()
+        end_date = first_result.equity_curve.index.max()
+        initial_capital = config.get('initial_capital', 100000.0)
+
+        # Create dummy universe (SPY benchmark doesn't actually use it)
+        dummy_universe = Universe(as_of=start_date, tickers=('SPY',))
+
+        # Create SPY benchmark config
+        spy_config = BacktestConfig(
+            start_date=start_date,
+            end_date=end_date,
+            universe=dummy_universe,
+            initial_capital=initial_capital,
+            rebalance_frequency='monthly'
+        )
+
+        # Run SPY benchmark
+        spy_result = run_spy_benchmark(config=spy_config, store=store)
+
+        # Convert to StrategyResult format
+        # Note: StrategyResult expects equity_curve to be a Series (NAV values)
+        spy_strategy_result = StrategyResult(
+            name='SPY Benchmark',
+            backtest_dir=Path('benchmark_spy'),  # Must be Path object
+            equity_curve=spy_result.equity_curve['nav'],  # Extract NAV Series
+            weights_history=pd.DataFrame(),  # SPY doesn't have weights
+            holdings_history=pd.DataFrame(),  # SPY doesn't have holdings
+            metrics=spy_result.metrics,
+            config={'description': 'SPY buy-and-hold benchmark'}
+        )
+
+        # Add to results list
+        results_with_spy = results + [spy_strategy_result]
+        logger.info("✅ SPY benchmark added successfully")
+
+        return results_with_spy
+
+    except Exception as e:
+        logger.warning(f"Could not add SPY benchmark: {e}")
+        logger.info("Proceeding with comparison without SPY benchmark")
+        return results
 
 
 def print_summary_table(comparison_df):
@@ -287,6 +371,9 @@ def main():
         sys.exit(1)
 
     logger.info(f"Successfully loaded {len(results)} backtest(s)")
+
+    # Automatically add SPY benchmark for context
+    results = add_spy_benchmark(results)
 
     if len(results) < 2:
         logger.warning("Only 1 backtest loaded. Comparison requires at least 2.")
