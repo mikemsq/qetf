@@ -1,6 +1,6 @@
 # CLAUDE_CONTEXT.md
 
-**Last Updated:** January 7, 2026  
+**Last Updated:** January 13, 2026
 **Project:** QuantETF
 
 -----
@@ -131,6 +131,25 @@ qetf/
 - Separate data fetching from calculation logic
 - Keep business logic separate from I/O operations
 - Use dataclasses for data containers
+
+### File Path Handling
+
+- **Always use `pathlib.Path` objects for file paths, not strings**
+- Accept `Union[str, Path]` at API boundaries, convert to `Path` immediately
+- Use Path objects for all internal path manipulation and passing between methods
+- Benefits: type safety, cross-platform compatibility, rich API, immutability
+- Example:
+  ```python
+  from pathlib import Path
+  from typing import Union
+
+  def load_config(config_path: Union[str, Path]) -> dict:
+      """Load configuration from file."""
+      config_path = Path(config_path)  # Convert immediately
+      if not config_path.exists():
+          raise FileNotFoundError(f"{config_path} not found")
+      return yaml.safe_load(config_path.read_text())
+  ```
 
 ### Documentation
 
@@ -407,6 +426,15 @@ The goal of QuantETF is to **beat SPY (S&P 500)**. All performance analysis must
 - Metrics calculations should include `calculate_active_metrics(strategy, benchmark)` helper
 - HTML reports should have "Active Performance" section prominently displayed
 
+**Warmup Period Alignment (CRITICAL):**
+- Strategies with lookback periods (momentum, technical indicators) require warmup time before signals are available
+- **ALWAYS align benchmark start date to when strategy starts trading** (after warmup)
+- Example: 252-day momentum needs ~1 year of warmup before first signal
+- Detect first active trading date: find first rebalance where portfolio has non-cash positions
+- Start SPY benchmark from this same date to ensure fair comparison
+- Document warmup period in analysis (e.g., "Warmup: 365 days, ~1.4 years")
+- Without alignment, benchmark gets unfair head start while strategy holds cash
+
 ### Number Precision
 
 - Use Decimal for money if precision is critical
@@ -478,3 +506,4 @@ For quick reference:
 |2026-01-06|Initial creation          |Project setup                                     |
 |2026-01-07|Updated for Python project|Fixed JS examples, added quant-specific guidelines|
 |2026-01-09|Streamlined duplication   |Removed session workflow (now in AGENT_WORKFLOW.md)|
+|2026-01-13|Added Path object standard|Mandate pathlib.Path for all file path handling  |
