@@ -1,0 +1,23 @@
+name: residual_momentum_top5_ew
+universe: configs/universes/tier1_initial_20.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: residual_momentum
+  lookback_days: 252    # ~12 months for regression
+  min_periods: 200      # Minimum data points for stable OLS
+  spy_ticker: SPY
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  Residual momentum: beta-neutral momentum via OLS regression.
+  Regresses ticker returns against SPY to remove market beta exposure,
+  then ranks by sum of residuals (idiosyncratic returns).
+  Captures stock-specific momentum independent of overall market direction.

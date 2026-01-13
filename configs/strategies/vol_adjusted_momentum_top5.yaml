@@ -1,0 +1,23 @@
+name: vol_adjusted_momentum_top5_ew
+universe: configs/universes/tier1_initial_20.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: vol_adjusted_momentum
+  lookback_days: 252
+  min_periods: 200
+  vol_floor: 0.01           # 1% minimum volatility
+  annualization_factor: 252.0
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  Volatility-adjusted momentum: rank by Sharpe-style returns/vol ratio.
+  Favors consistent performers over volatile assets.
+  Higher scores indicate better risk-adjusted returns.

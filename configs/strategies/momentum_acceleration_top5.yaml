@@ -1,0 +1,22 @@
+name: momentum_acceleration_top5_ew
+universe: configs/universes/tier1_initial_20.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: momentum_acceleration
+  short_lookback_days: 63   # ~3 months
+  long_lookback_days: 252    # ~12 months
+  min_periods: 200
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  Momentum acceleration: rank by (3M returns - 12M returns).
+  Captures trend strength and inflection points.
+  Positive scores indicate accelerating trends, negative indicate deceleration.
