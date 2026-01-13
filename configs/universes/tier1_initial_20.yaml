@@ -1,0 +1,75 @@
+name: tier1_initial_20_etfs
+description: |
+  Tier 1 - Initial 20 ETF Universe (Baseline)
+
+  This is the original universe used for initial strategy development and testing.
+  Provides broad diversification across major asset classes with highly liquid,
+  low-cost ETFs from top providers.
+
+  Coverage:
+  - US Equity: Large/Mid/Small Cap (4 ETFs)
+  - US Sectors: Tech, Finance, Energy, Healthcare, Industrials (5 ETFs)
+  - International: Developed (EAFE) and Emerging Markets (3 ETFs)
+  - Fixed Income: Aggregate Bonds, Long Treasuries, Corp Bonds (3 ETFs)
+  - Real Assets: Gold, Silver, Real Estate (3 ETFs)
+  - Alternatives: Volatility, Currency (2 ETFs)
+
+tier: 1
+size: 20
+liquidity_profile: extremely_high
+expense_ratio_profile: ultra_low_cost
+
+source:
+  type: static_list
+  tickers:
+    # Large Cap Equity (4)
+    - SPY    # SPDR S&P 500 ETF Trust (Largest, most liquid)
+    - QQQ    # Invesco QQQ Trust (Nasdaq-100, tech-heavy)
+    - IWM    # iShares Russell 2000 ETF (Small cap)
+    - DIA    # SPDR Dow Jones Industrial Average ETF
+
+    # Sector ETFs (5) - SPDR Select Sector series
+    - XLF    # Financial Select Sector SPDR
+    - XLE    # Energy Select Sector SPDR
+    - XLK    # Technology Select Sector SPDR
+    - XLV    # Health Care Select Sector SPDR
+    - XLI    # Industrial Select Sector SPDR
+
+    # International Equity (3)
+    - EFA    # iShares MSCI EAFE ETF (Developed ex-US)
+    - EEM    # iShares MSCI Emerging Markets ETF
+    - VWO    # Vanguard FTSE Emerging Markets ETF
+
+    # Fixed Income (3)
+    - AGG    # iShares Core U.S. Aggregate Bond ETF
+    - TLT    # iShares 20+ Year Treasury Bond ETF
+    - LQD    # iShares iBoxx Investment Grade Corporate Bond ETF
+
+    # Real Assets (3)
+    - GLD    # SPDR Gold Trust
+    - SLV    # iShares Silver Trust
+    - VNQ    # Vanguard Real Estate ETF
+
+    # Alternative Strategies (2)
+    - VIXY   # ProShares VIX Short-Term Futures ETF
+    - USDU   # WisdomTree Bloomberg U.S. Dollar Bullish Fund
+
+eligibility:
+  min_history_days: 252           # At least 1 year of history
+  min_avg_dollar_volume: 50_000_000  # $50M average daily volume
+  min_aum: 1_000_000_000          # $1B minimum AUM
+  max_expense_ratio: 0.50         # 50 bps maximum
+
+notes: |
+  All ETFs selected for:
+  - Extremely high liquidity (tight spreads, deep order books)
+  - Long track record (mostly 10+ years)
+  - Large AUM (reduces closure risk)
+  - Low expense ratios
+  - Major providers (iShares, SPDR, Vanguard, Invesco)
+
+  Use this for:
+  - Initial strategy development
+  - Quick backtests
+  - Proof-of-concept work
+  - Teaching and examples

@@ -1,0 +1,217 @@
+name: tier5_comprehensive_300plus_etfs
+description: |
+  Tier 5 - Comprehensive 300+ ETF Universe
+
+  Maximum coverage across all investable ETF strategies. Includes niche thematics,
+  all major active ETFs, multi-asset strategies, alternatives, and specialized
+  fixed income. This tier is designed for comprehensive strategy research and
+  maximum opportunity set exploration.
+
+  Additions beyond Tier 4:
+  - Additional active management ETFs from major providers
+  - More thematic/innovation ETFs
+  - Factor combinations and multi-factor strategies
+  - Options-based strategies (covered calls, puts)
+  - Volatility strategies
+  - More currency and macro hedging tools
+  - Micro-cap and specialized size strategies
+  - Additional real estate sub-sectors
+  - Credit quality spectrum (AAA to CCC)
+
+tier: 5
+size: 300+
+liquidity_profile: medium
+expense_ratio_profile: varies_widely
+
+source:
+  type: rule_based
+  description: |
+    This tier uses a rules-based approach to build from Tier 4 and add
+    additional ETFs that meet basic liquidity and AUM thresholds.
+
+  base_universe: tier4_broad_200
+
+  additional_selection_rules:
+    # Rule 1: Add all remaining major provider ETFs
+    - provider_in: [iShares, Vanguard, SPDR, Invesco, Schwab]
+      min_aum: 50_000_000
+      min_avg_volume: 1_000_000
+
+    # Rule 2: Add thematic ETFs with decent size
+    - category_in: [Thematic, Innovation, Disruptive Technology]
+      min_aum: 100_000_000
+      min_avg_volume: 2_000_000
+
+    # Rule 3: Add factor and smart beta strategies
+    - category_in: [Factor, Smart Beta, Strategic Beta]
+      min_aum: 75_000_000
+      min_avg_volume: 1_500_000
+
+    # Rule 4: Add alternatives with track record
+    - asset_class: Alternatives
+      min_history_days: 126
+      min_aum: 50_000_000
+
+  explicit_adds_tier5:
+    # ===== ALL OF TIER 4 (200 ETFs) INCLUDED =====
+    # Plus ~100-150 additional ETFs below
+
+    # Additional Thematic/Innovation (20)
+    - ARKQ   # ARK Autonomous Technology & Robotics ETF
+    - ARKF   # ARK Fintech Innovation ETF
+    - BLOK   # Amplify Transformational Data Sharing ETF (Blockchain)
+    - BATT   # Amplify Lithium & Battery Technology ETF
+    - DRIV   # Global X Autonomous & Electric Vehicles ETF
+    - DTEC   # ALPS Disruptive Technologies ETF
+    - GIGE   # Harbor Disruptive Innovation ETF
+    - HERO   # Global X Video Games & Esports ETF
+    - IPAY   # ETFMG Prime Mobile Payments ETF
+    - JETS   # U.S. Global Jets ETF
+    - MOON   # Direxion Moonshot Innovators ETF
+    - MSOS   # AdvisorShares Pure US Cannabis ETF
+    - NERD   # Roundhill BITKRAFT Esports & Digital Entertainment ETF
+    - PAVE   # Global X U.S. Infrastructure Development ETF (if not in T4)
+    - POTX   # Global X Cannabis ETF
+    - ROBO   # ROBO Global Robotics and Automation Index ETF
+    - SNSR   # Global X Internet of Things ETF
+    - SRVR   # Pacer Benchmark Data & Infrastructure Real Estate SCTR ETF
+    - UFO    # Procure Space ETF
+    - WCLD   # WisdomTree Cloud Computing Fund
+
+    # Options-Based / Income Strategies (15)
+    - QYLD   # Global X NASDAQ 100 Covered Call ETF
+    - XYLD   # Global X S&P 500 Covered Call ETF
+    - RYLD   # Global X Russell 2000 Covered Call ETF
+    - JEPI   # JPMorgan Equity Premium Income ETF
+    - JEPQ   # JPMorgan Nasdaq Equity Premium Income ETF
+    - NUSI   # Nationwide Risk-Managed Income ETF
+    - DIVO   # Amplify CWP Enhanced Dividend Income ETF
+    - QRMI   # Global X NASDAQ 100 Risk Managed Income ETF
+    - XYLD   # Global X S&P 500 Covered Call & Growth ETF
+    - SPYI   # NEOS S&P 500 High Income ETF
+    - XRMI   # Global X S&P 500 Risk Managed Income ETF
+    - ISWN   # Amplify BlackSwan Growth & Treasury Core ETF
+    - SWAN   # Amplify BlackSwan Growth & Treasury Core ETF
+    - TLTW   # iShares 20+ Year Treasury Bond BuyWrite Strategy ETF
+    - PUTW   # WisdomTree CBOE S&P 500 PutWrite Strategy Fund
+
+    # Multi-Factor & Factor Combos (15)
+    - LRGF   # iShares MSCI USA Multifactor ETF
+    - SMLF   # iShares MSCI USA Small-Cap Multifactor ETF
+    - INTF   # iShares MSCI International Multifactor ETF
+    - JPUS   # JPMorgan Diversified Return U.S. Equity ETF
+    - JPGE   # JPMorgan Diversified Return Global Equity ETF
+    - OUSM   # O'Shares FTSE U.S. Small-Cap Quality Dividend ETF
+    - OUSA   # O'Shares FTSE U.S. Quality Dividend ETF
+    - QMOM   # Alpha Architect U.S. Quantitative Momentum ETF
+    - QVAL   # Alpha Architect U.S. Quantitative Value ETF
+    - IVAL   # Alpha Architect International Quantitative Value ETF
+    - IMOM   # Alpha Architect International Quantitative Momentum ETF
+    - VFMF   # Vanguard U.S. Multifactor ETF
+    - VFMO   # Vanguard U.S. Momentum Factor ETF
+    - VFVA   # Vanguard U.S. Value Factor ETF
+    - VFQY   # Vanguard U.S. Quality Factor ETF
+
+    # Volatility & Hedging Strategies (10)
+    - SVXY   # ProShares Short VIX Short-Term Futures ETF
+    - VXX    # iPath Series B S&P 500 VIX Short-Term Futures ETN
+    - VIXM   # ProShares VIX Mid-Term Futures ETF
+    - TAIL   # Cambria Tail Risk ETF
+    - BTAL   # AGFiQ U.S. Market Neutral Anti-Beta Fund
+    - CTA    # Simplify Managed Futures Strategy ETF
+    - KMLM   # KFA Mount Lucas Managed Futures Index Strategy ETF
+    - FMF    # First Trust Managed Futures Strategy Fund
+    - DBMF   # iMGP DBi Managed Futures Strategy ETF
+    - EQLS   # Alpine Equity Long/Short ETF
+
+    # Additional Real Estate (10)
+    - XLRE   # Real Estate Select Sector SPDR Fund
+    - REET   # iShares Global REIT ETF (if not in T4)
+    - RWR    # SPDR Dow Jones REIT ETF
+    - SCHH   # Schwab U.S. REIT ETF
+    - USRT   # iShares Core U.S. REIT ETF
+    - BBRE   # JPMorgan BetaBuilders MSCI US REIT ETF
+    - REM    # iShares Mortgage Real Estate ETF
+    - MORT   # VanEck Mortgage REIT Income ETF
+    - INDS   # Pacer Benchmark Industrial Real Estate SCTR ETF
+    - HOMZ   # Hoya Capital Housing ETF
+
+    # Fixed Income Specialization (15)
+    - GOVT   # iShares U.S. Treasury Bond ETF
+    - VGIT   # Vanguard Intermediate-Term Treasury ETF
+    - VGSH   # Vanguard Short-Term Treasury ETF
+    - VGLT   # Vanguard Long-Term Treasury ETF
+    - SCHO   # Schwab Short-Term U.S. Treasury ETF
+    - SCHR   # Schwab Intermediate-Term U.S. Treasury ETF
+    - SPTS   # SPDR Portfolio Short Term Treasury ETF
+    - SPTL   # SPDR Portfolio Long Term Treasury ETF
+    - SPTI   # SPDR Portfolio Intermediate Term Treasury ETF
+    - CMBS   # iShares CMBS ETF
+    - MBB    # iShares MBS ETF
+    - GNMA   # iShares GNMA Bond ETF
+    - CWB    # SPDR Bloomberg Convertible Securities ETF
+    - ICVT   # iShares Convertible Bond ETF
+    - LDUR   # PIMCO Enhanced Low Duration Active ETF
+
+    # International Equity Additional (10)
+    - ACWI   # iShares MSCI ACWI ETF
+    - ACWX   # iShares MSCI ACWI ex U.S. ETF
+    - IXUS   # iShares Core MSCI Total International Stock ETF
+    - VXUS   # Vanguard Total International Stock ETF
+    - VSS    # Vanguard FTSE All-World ex-US Small-Cap ETF
+    - SCHA   # Schwab U.S. Small-Cap ETF
+    - FNDA   # Schwab Fundamental U.S. Small Company Index ETF
+    - FNDF   # Schwab Fundamental International Small Company Index ETF
+    - DLS    # WisdomTree International SmallCap Dividend Fund
+    - DFE    # WisdomTree Europe SmallCap Dividend Fund
+
+    # Currencies & Macro (10)
+    - UUP    # Invesco DB US Dollar Index Bullish Fund
+    - UDN    # Invesco DB US Dollar Index Bearish Fund
+    - FXE    # Invesco CurrencyShares Euro Trust
+    - FXY    # Invesco CurrencyShares Japanese Yen Trust
+    - FXB    # Invesco CurrencyShares British Pound Sterling Trust
+    - FXA    # Invesco CurrencyShares Australian Dollar Trust
+    - FXC    # Invesco CurrencyShares Canadian Dollar Trust
+    - CYB    # WisdomTree Chinese Yuan Strategy Fund
+    - CEW    # WisdomTree Emerging Currency Strategy Fund
+    - DBV    # Invesco DB G10 Currency Harvest Fund
+
+eligibility:
+  min_history_days: 21            # At least 1 month of history (new ETFs allowed)
+  min_avg_dollar_volume: 1_000_000  # $1M average daily volume minimum
+  min_aum: 50_000_000             # $50M minimum AUM
+  max_expense_ratio: 2.00         # 200 bps maximum (allows niche/active)
+
+notes: |
+  Tier 5 is the maximum opportunity set for comprehensive strategy research.
+
+  Strengths:
+  - Near-complete coverage of investable ETF universe
+  - Allows testing of niche thematics and specialized strategies
+  - Includes alternatives and hedging tools
+  - Maximum cross-sectional opportunity
+
+  Cautions:
+  - Some ETFs have low liquidity (wider spreads)
+  - Higher expense ratios on average
+  - Some leveraged/inverse ETFs with decay risk
+  - Newer ETFs may lack track record
+  - Increased survivorship bias risk (more ETF closures)
+
+  Use this for:
+  - Maximum opportunity set strategies
+  - Thematic rotation strategies
+  - Long/short equity with many instruments
+  - Volatility arbitrage strategies
+  - Comprehensive factor research
+  - Options-based income strategies
+  - Academic research requiring broad coverage
+
+  Best Practices:
+  - Always check data availability before backtesting
+  - Monitor transaction costs carefully (low AUM = wider spreads)
+  - Be aware of expense ratio drag
+  - Consider survivorship bias in results
+  - Use appropriate position sizing given liquidity constraints
+  - Validate results on smaller, more liquid universe (Tier 2-3)

@@ -1,0 +1,281 @@
+name: tier4_broad_200_etfs
+description: |
+  Tier 4 - Broad 200 ETF Universe
+
+  Comprehensive coverage across all major asset classes, regions, sectors, and strategies.
+  Includes niche sectors, frontier markets, leveraged/inverse ETFs for hedging, currency
+  hedged variants, and specialized fixed income.
+
+  New additions:
+  - Frontier markets and smaller emerging economies
+  - Sub-industry and niche sector exposures
+  - Currency hedged versions of major international ETFs
+  - Leveraged and inverse ETFs (2x, -1x for hedging)
+  - ESG and sustainable investing ETFs
+  - Dividend and income strategies
+  - More alternative strategies
+
+tier: 4
+size: 200
+liquidity_profile: medium_to_high
+expense_ratio_profile: moderate_to_high_cost
+
+source:
+  type: rule_based
+  base_tickers:
+    # Include all of Tier 3 (100 ETFs)
+    # Plus 100 additional ETFs selected by criteria below
+
+  selection_criteria:
+    # Explicit inclusion list for key additions
+    explicit_adds:
+      # ===== ALL OF TIER 3 (100 ETFs) =====
+      - SPY
+      - QQQ
+      - IWM
+      - DIA
+      - XLF
+      - XLE
+      - XLK
+      - XLV
+      - XLI
+      - EFA
+      - EEM
+      - VWO
+      - AGG
+      - TLT
+      - LQD
+      - GLD
+      - SLV
+      - VNQ
+      - VIXY
+      - USDU
+      - XLY
+      - XLP
+      - XLB
+      - XLU
+      - FEZ
+      - EWJ
+      - FXI
+      - MCHI
+      - INDA
+      - IVV
+      - VTI
+      - VTV
+      - VUG
+      - VYM
+      - HYG
+      - JNK
+      - MUB
+      - TIP
+      - SHY
+      - IEF
+      - BND
+      - DBC
+      - USO
+      - UNG
+      - PDBC
+      - SPLV
+      - MTUM
+      - QUAL
+      - SIZE
+      - USMV
+      - XHB
+      - KRE
+      - KBE
+      - XRT
+      - SMH
+      - IBB
+      - IYR
+      - ITB
+      - SOXX
+      - IHI
+      - EWZ
+      - EWT
+      - EWY
+      - EWG
+      - EWU
+      - EWC
+      - EWA
+      - THD
+      - EPU
+      - VGK
+      - ICLN
+      - TAN
+      - ARKK
+      - ARKG
+      - ARKW
+      - BOTZ
+      - SKYY
+      - FINX
+      - HACK
+      - LIT
+      - EMB
+      - PCY
+      - VCIT
+      - VCSH
+      - BNDX
+      - FLOT
+      - PFF
+      - SCHP
+      - VMBS
+      - SJNK
+      - VLUE
+      - IEMG
+      - VEA
+      - VO
+      - VB
+      - REET
+      - IAU
+      - PALL
+      - PPLT
+      - CPER
+
+      # ===== NEW IN TIER 4 (100 ETFs) =====
+
+      # Additional Country/Regional (15)
+      - EWH    # iShares MSCI Hong Kong ETF
+      - EWI    # iShares MSCI Italy ETF
+      - EWL    # iShares MSCI Switzerland ETF
+      - EWP    # iShares MSCI Spain ETF
+      - EWQ    # iShares MSCI France ETF
+      - EWS    # iShares MSCI Singapore ETF
+      - EWW    # iShares MSCI Mexico ETF
+      - EZA    # iShares MSCI South Africa ETF
+      - ECH    # iShares MSCI Chile ETF
+      - EIDO   # iShares MSCI Indonesia ETF
+      - EGPT   # VanEck Egypt Index ETF
+      - FM     # iShares MSCI Frontier and Select EM ETF
+      - RSX    # VanEck Russia ETF
+      - TUR    # iShares MSCI Turkey ETF
+      - VNM    # VanEck Vietnam ETF
+
+      # Currency Hedged International (10)
+      - HEFA   # iShares Currency Hedged MSCI EAFE ETF
+      - HEWJ   # iShares Currency Hedged MSCI Japan ETF
+      - DBEF   # Xtrackers MSCI EAFE Hedged Equity ETF
+      - DBJP   # Xtrackers MSCI Japan Hedged Equity ETF
+      - HEWG   # iShares Currency Hedged MSCI Germany ETF
+      - HEWU   # iShares Currency Hedged MSCI United Kingdom ETF
+      - HEEM   # iShares Currency Hedged MSCI Emerging Markets ETF
+      - DBEM   # Xtrackers MSCI Emerging Markets Hedged Equity ETF
+      - DBEU   # Xtrackers MSCI Europe Hedged Equity ETF
+      - HEZU   # iShares Currency Hedged MSCI Eurozone ETF
+
+      # Leveraged Equity (2x long) (10)
+      - SSO    # ProShares Ultra S&P500 (2x SPY)
+      - QLD    # ProShares Ultra QQQ (2x QQQ)
+      - UWM    # ProShares Ultra Russell2000 (2x IWM)
+      - DDM    # ProShares Ultra Dow30 (2x DIA)
+      - MVV    # ProShares Ultra MidCap400 (2x mid-caps)
+      - UCC    # ProShares Ultra Consumer Services
+      - UYG    # ProShares Ultra Financials
+      - URE    # ProShares Ultra Real Estate
+      - ROM    # ProShares Ultra Technology
+      - RXL    # ProShares Ultra Health Care
+
+      # Inverse/Hedging ETFs (-1x short) (10)
+      - SH     # ProShares Short S&P500 (-1x SPY)
+      - PSQ    # ProShares Short QQQ (-1x QQQ)
+      - RWM    # ProShares Short Russell2000 (-1x IWM)
+      - DOG    # ProShares Short Dow30 (-1x DIA)
+      - MYY    # ProShares Short MidCap400
+      - TBF    # ProShares Short 20+ Year Treasury
+      - TBT    # ProShares UltraShort 20+ Year Treasury (-2x)
+      - SJB    # ProShares Short High Yield
+      - EUM    # ProShares Short MSCI Emerging Markets
+      - EFZ    # ProShares Short MSCI EAFE
+
+      # ESG / Sustainable Investing (10)
+      - ESGU   # iShares MSCI USA ESG Select ETF
+      - ESGV   # Vanguard ESG U.S. Stock ETF
+      - VSGX   # Vanguard ESG International Stock ETF
+      - SUSL   # iShares ESG MSCI USA Leaders ETF
+      - USSG   # Xtrackers MSCI USA ESG Leaders Equity ETF
+      - SUSA   # iShares MSCI USA ESG Select ETF
+      - DSI    # iShares MSCI KLD 400 Social ETF
+      - KRMA   # Global X Conscious Companies ETF
+      - ESGD   # iShares MSCI EAFE ESG Optimized ETF
+      - PBW    # Invesco WilderHill Clean Energy ETF
+
+      # Dividend/Income Focused (10)
+      - VIG    # Vanguard Dividend Appreciation ETF
+      - SCHD   # Schwab U.S. Dividend Equity ETF
+      - DVY    # iShares Select Dividend ETF
+      - SDY    # SPDR S&P Dividend ETF
+      - HDV    # iShares Core High Dividend ETF
+      - NOBL   # ProShares S&P 500 Dividend Aristocrats ETF
+      - DHS    # WisdomTree U.S. High Dividend Fund
+      - FVD    # First Trust Value Line Dividend Index Fund
+      - DGRO   # iShares Core Dividend Growth ETF
+      - IDV    # iShares International Select Dividend ETF
+
+      # Additional Sectors/Industries (15)
+      - IYT    # iShares U.S. Transportation ETF
+      - IYE    # iShares U.S. Energy ETF
+      - IYF    # iShares U.S. Financials ETF
+      - IYZ    # iShares U.S. Telecom ETF
+      - IYC    # iShares U.S. Consumer Discretionary ETF
+      - IYK    # iShares U.S. Consumer Staples ETF
+      - IYM    # iShares U.S. Basic Materials ETF
+      - IYW    # iShares U.S. Technology ETF
+      - IGV    # iShares Expanded Tech-Software ETF
+      - IGN    # iShares Expanded Tech Sector ETF
+      - IGM    # iShares Expanded Tech-Multimedia Networking ETF
+      - IHF    # iShares U.S. Healthcare Providers ETF
+      - IXC    # iShares Global Energy ETF
+      - IXN    # iShares Global Tech ETF
+      - IXJ    # iShares Global Healthcare ETF
+
+      # Additional Fixed Income Strategies (10)
+      - ANGL   # VanEck Fallen Angel High Yield Bond ETF
+      - FALN   # iShares Fallen Angels USD Bond ETF
+      - BKLN   # Invesco Senior Loan ETF
+      - SRLN   # SPDR Blackstone Senior Loan ETF
+      - NEAR   # iShares Short Maturity Bond ETF
+      - JPST   # JPMorgan Ultra-Short Income ETF
+      - MINT   # PIMCO Enhanced Short Maturity Active ETF
+      - SHYG   # iShares 0-5 Year High Yield Corporate Bond ETF
+      - IGIB   # iShares Intermediate-Term Corporate Bond ETF
+      - SPIB   # SPDR Portfolio Intermediate Term Corporate Bond ETF
+
+      # Additional Commodities & Real Assets (10)
+      - GSG    # iShares S&P GSCI Commodity-Indexed Trust
+      - DJP    # iPath Bloomberg Commodity Index Total Return ETN
+      - GCC    # WisdomTree Enhanced Commodity Strategy Fund
+      - COMT   # iShares Commodities Select Strategy ETF
+      - BCI    # Aberdeen Standard Bloomberg All Commodity Strategy K-1 Free ETF
+      - WOOD   # iShares Global Timber & Forestry ETF
+      - GUNR   # FlexShares Morningstar Global Upstream Natural Resources Index Fund
+      - MOO    # VanEck Agribusiness ETF
+      - PAVE   # Global X U.S. Infrastructure Development ETF
+      - FRAK   # VanEck Oil Services ETF
+
+eligibility:
+  min_history_days: 63            # At least 3 months of history
+  min_avg_dollar_volume: 5_000_000  # $5M average daily volume
+  min_aum: 100_000_000            # $100M minimum AUM
+  max_expense_ratio: 1.50         # 150 bps maximum (allows leveraged/inverse)
+
+notes: |
+  Tier 4 provides:
+  - Near-comprehensive global coverage
+  - Leveraged and inverse ETFs for hedging and tactical strategies
+  - Currency hedged versions for currency risk management
+  - ESG/sustainable variants of major indices
+  - Deep dividend/income focus options
+  - Frontier markets for diversification
+  - Extensive commodity and real asset coverage
+
+  Use this for:
+  - Global macro strategies
+  - Currency-aware strategies
+  - Long/short equity strategies
+  - ESG-integrated strategies
+  - Tactical hedging strategies
+  - Income-focused portfolios
+  - Comprehensive sector rotation
+
+  Warning: Some ETFs have higher expense ratios and tracking error.
+  Leveraged ETFs are subject to daily reset risk and decay.
+  Use appropriate risk management.

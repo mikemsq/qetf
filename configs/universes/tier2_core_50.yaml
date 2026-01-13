@@ -1,0 +1,121 @@
+name: tier2_core_50_etfs
+description: |
+  Tier 2 - Core 50 ETF Universe
+
+  Expands from Tier 1 with additional sector coverage, more international exposure,
+  and additional fixed income segments. Still focuses on highly liquid, low-cost
+  ETFs from major providers.
+
+  Additions from Tier 1:
+  - Additional US sectors (Consumer, Materials, Utilities, Communication)
+  - More international regions (Europe, Asia, Japan, China)
+  - Expanded fixed income (High Yield, Muni, TIPS, Short-term)
+  - Style factors (Growth, Value, Dividend)
+  - Additional commodities
+
+tier: 2
+size: 50
+liquidity_profile: very_high
+expense_ratio_profile: low_cost
+
+source:
+  type: static_list
+  tickers:
+    # ===== FROM TIER 1 (20 ETFs) =====
+    # Large Cap Equity (4)
+    - SPY
+    - QQQ
+    - IWM
+    - DIA
+
+    # Sector ETFs (5)
+    - XLF
+    - XLE
+    - XLK
+    - XLV
+    - XLI
+
+    # International Equity (3)
+    - EFA
+    - EEM
+    - VWO
+
+    # Fixed Income (3)
+    - AGG
+    - TLT
+    - LQD
+
+    # Real Assets (3)
+    - GLD
+    - SLV
+    - VNQ
+
+    # Alternatives (2)
+    - VIXY
+    - USDU
+
+    # ===== NEW IN TIER 2 (30 ETFs) =====
+
+    # Additional US Sectors (4)
+    - XLY    # Consumer Discretionary Select Sector SPDR
+    - XLP    # Consumer Staples Select Sector SPDR
+    - XLB    # Materials Select Sector SPDR
+    - XLU    # Utilities Select Sector SPDR
+
+    # Additional International Regions (5)
+    - FEZ    # SPDR EURO STOXX 50 ETF (Europe)
+    - EWJ    # iShares MSCI Japan ETF
+    - FXI    # iShares China Large-Cap ETF
+    - MCHI   # iShares MSCI China ETF
+    - INDA   # iShares MSCI India ETF
+
+    # US Equity Styles (5)
+    - IVV    # iShares Core S&P 500 ETF (alternative to SPY)
+    - VTI    # Vanguard Total Stock Market ETF
+    - VTV    # Vanguard Value ETF
+    - VUG    # Vanguard Growth ETF
+    - VYM    # Vanguard High Dividend Yield ETF
+
+    # Extended Fixed Income (7)
+    - HYG    # iShares iBoxx $ High Yield Corporate Bond ETF
+    - JNK    # SPDR Bloomberg High Yield Bond ETF
+    - MUB    # iShares National Muni Bond ETF
+    - TIP    # iShares TIPS Bond ETF
+    - SHY    # iShares 1-3 Year Treasury Bond ETF
+    - IEF    # iShares 7-10 Year Treasury Bond ETF
+    - BND    # Vanguard Total Bond Market ETF
+
+    # Additional Commodities & Real Assets (4)
+    - DBC    # Invesco DB Commodity Index Tracking Fund
+    - USO    # United States Oil Fund
+    - UNG    # United States Natural Gas Fund
+    - PDBC   # Invesco Optimum Yield Diversified Commodity
+
+    # Additional Alternatives (5)
+    - SPLV   # Invesco S&P 500 Low Volatility ETF
+    - MTUM   # iShares MSCI USA Momentum Factor ETF
+    - QUAL   # iShares MSCI USA Quality Factor ETF
+    - SIZE   # iShares MSCI USA Size Factor ETF
+    - USMV   # iShares MSCI USA Min Vol Factor ETF
+
+eligibility:
+  min_history_days: 252           # At least 1 year of history
+  min_avg_dollar_volume: 20_000_000  # $20M average daily volume
+  min_aum: 500_000_000            # $500M minimum AUM
+  max_expense_ratio: 0.75         # 75 bps maximum
+
+notes: |
+  Tier 2 provides:
+  - Complete SPDR sector coverage (all 11 sectors)
+  - Major international markets (Europe, Japan, China, India)
+  - Full yield curve coverage (short/intermediate/long treasuries)
+  - High yield and municipal bonds
+  - Factor strategies (momentum, quality, low vol, value, growth)
+  - Broad commodity exposure
+
+  Use this for:
+  - More sophisticated cross-sectional strategies
+  - Regional rotation strategies
+  - Factor-based strategies
+  - Sector rotation with full coverage
+  - Comprehensive asset allocation

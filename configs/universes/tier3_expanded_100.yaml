@@ -1,0 +1,162 @@
+name: tier3_expanded_100_etfs
+description: |
+  Tier 3 - Expanded 100 ETF Universe
+
+  Adds granular sector/industry exposure, emerging market countries, thematic ETFs,
+  and additional fixed income strategies. Maintains focus on liquid, reasonably-priced
+  ETFs while expanding coverage.
+
+  New coverage areas:
+  - Industry-level granularity (beyond broad sectors)
+  - Country-specific exposures (Brazil, Korea, Taiwan, etc.)
+  - Smart beta and factor strategies
+  - Thematic investing (Clean Energy, Robotics, Cloud, etc.)
+  - Credit strategies (Floating Rate, Preferreds, Convertibles)
+
+tier: 3
+size: 100
+liquidity_profile: high
+expense_ratio_profile: moderate_cost
+
+source:
+  type: static_list
+  tickers:
+    # ===== ALL OF TIER 2 (50 ETFs) =====
+    - SPY
+    - QQQ
+    - IWM
+    - DIA
+    - XLF
+    - XLE
+    - XLK
+    - XLV
+    - XLI
+    - EFA
+    - EEM
+    - VWO
+    - AGG
+    - TLT
+    - LQD
+    - GLD
+    - SLV
+    - VNQ
+    - VIXY
+    - USDU
+    - XLY
+    - XLP
+    - XLB
+    - XLU
+    - FEZ
+    - EWJ
+    - FXI
+    - MCHI
+    - INDA
+    - IVV
+    - VTI
+    - VTV
+    - VUG
+    - VYM
+    - HYG
+    - JNK
+    - MUB
+    - TIP
+    - SHY
+    - IEF
+    - BND
+    - DBC
+    - USO
+    - UNG
+    - PDBC
+    - SPLV
+    - MTUM
+    - QUAL
+    - SIZE
+    - USMV
+
+    # ===== NEW IN TIER 3 (50 ETFs) =====
+
+    # Industry ETFs (10)
+    - XHB    # SPDR S&P Homebuilders ETF
+    - KRE    # SPDR S&P Regional Banking ETF
+    - KBE    # SPDR S&P Bank ETF
+    - XRT    # SPDR S&P Retail ETF
+    - SMH    # VanEck Semiconductor ETF
+    - IBB    # iShares Biotechnology ETF
+    - IYR    # iShares U.S. Real Estate ETF
+    - ITB    # iShares U.S. Home Construction ETF
+    - SOXX   # iShares Semiconductor ETF
+    - IHI    # iShares U.S. Medical Devices ETF
+
+    # Country/Regional ETFs (10)
+    - EWZ    # iShares MSCI Brazil ETF
+    - EWT    # iShares MSCI Taiwan ETF
+    - EWY    # iShares MSCI South Korea ETF
+    - EWG    # iShares MSCI Germany ETF
+    - EWU    # iShares MSCI United Kingdom ETF
+    - EWC    # iShares MSCI Canada ETF
+    - EWA    # iShares MSCI Australia ETF
+    - THD    # iShares MSCI Thailand ETF
+    - EPU    # iShares MSCI Peru ETF
+    - VGK    # Vanguard FTSE Europe ETF
+
+    # Thematic / Innovation (10)
+    - ICLN   # iShares Global Clean Energy ETF
+    - TAN    # Invesco Solar ETF
+    - ARKK   # ARK Innovation ETF
+    - ARKG   # ARK Genomic Revolution ETF
+    - ARKW   # ARK Next Generation Internet ETF
+    - BOTZ   # Global X Robotics & AI ETF
+    - SKYY   # First Trust Cloud Computing ETF
+    - FINX   # Global X FinTech ETF
+    - HACK   # ETFMG Prime Cyber Security ETF
+    - LIT    # Global X Lithium & Battery Tech ETF
+
+    # Additional Fixed Income (10)
+    - EMB    # iShares J.P. Morgan USD Emerging Markets Bond ETF
+    - PCY    # Invesco Emerging Markets Sovereign Debt ETF
+    - VCIT   # Vanguard Intermediate-Term Corporate Bond ETF
+    - VCSH   # Vanguard Short-Term Corporate Bond ETF
+    - BNDX   # Vanguard Total International Bond ETF
+    - FLOT   # iShares Floating Rate Bond ETF
+    - PFF    # iShares Preferred and Income Securities ETF
+    - SCHP   # Schwab U.S. TIPS ETF
+    - VMBS   # Vanguard Mortgage-Backed Securities ETF
+    - SJNK   # SPDR Bloomberg Short Term High Yield Bond ETF
+
+    # Factor & Smart Beta (5)
+    - VLUE   # iShares MSCI USA Value Factor ETF
+    - IEMG   # iShares Core MSCI Emerging Markets ETF
+    - VEA    # Vanguard FTSE Developed Markets ETF
+    - VO     # Vanguard Mid-Cap ETF
+    - VB     # Vanguard Small-Cap ETF
+
+    # Additional Real Assets (5)
+    - REET   # iShares Global REIT ETF
+    - IAU    # iShares Gold Trust
+    - PALL   # Aberdeen Standard Physical Palladium Shares ETF
+    - PPLT   # Aberdeen Standard Physical Platinum Shares ETF
+    - CPER   # United States Copper Index Fund
+
+eligibility:
+  min_history_days: 126           # At least 6 months of history
+  min_avg_dollar_volume: 10_000_000  # $10M average daily volume
+  min_aum: 250_000_000            # $250M minimum AUM
+  max_expense_ratio: 0.95         # 95 bps maximum (allows thematic ETFs)
+
+notes: |
+  Tier 3 provides:
+  - Industry-level granularity for tactical strategies
+  - Single-country exposures for geographic strategies
+  - Thematic exposures for innovation-focused strategies
+  - Expanded fixed income (EM debt, preferreds, floating rate)
+  - Additional precious metals beyond gold/silver
+
+  Use this for:
+  - Industry rotation strategies
+  - Country-specific macro strategies
+  - Thematic momentum strategies
+  - More granular fixed income allocation
+  - Alternative beta strategies
+
+  Note: Includes some higher expense ratio ETFs (thematic/active) but all
+  maintain strong liquidity and reasonable AUM.
