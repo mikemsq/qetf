@@ -1,7 +1,7 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 11, 2026
-**Active Phase:** Phase 3 - Analytics & Visualization
+**Last Updated:** January 14, 2026
+**Active Phase:** Strategy Optimizer System Implementation
 
 ## Task Status Legend
 
@@ -697,6 +697,256 @@ Create script to audit data quality and detect anomalies.
 - Generates quality report
 - Flags suspicious data
 - 12+ tests
+
+---
+
+## Current Sprint: Strategy Optimizer System
+
+This sprint implements an automated system to find ETF strategies that beat SPY across multiple time periods (3yr, 5yr, 10yr). The system systematically searches across alpha models, parameters, schedules, and portfolio construction options.
+
+**Handout Reference**: See `/workspaces/qetf/docs/handouts/HANDOUT_strategy_optimizer.md` for full architecture.
+
+---
+
+### OPT-001: Parameter Grid Generator
+**Status:** ready
+**Priority:** HIGH
+**Estimated:** 2-3 hours
+**Dependencies:** []
+**Assigned:** Unassigned
+
+**Description:**
+Create the parameter grid generator module that defines schedule-specific parameter search spaces for all 4 alpha models (momentum, momentum_acceleration, vol_adjusted_momentum, residual_momentum).
+
+**Key Design Insight:**
+- Weekly rebalancing uses shorter lookback periods (faster signals match frequent trading)
+- Monthly rebalancing uses longer lookback periods (stable signals match infrequent trading)
+
+**Files to Create:**
+- `src/quantetf/optimization/grid.py`
+- `tests/optimization/test_grid.py`
+
+**Implementation Details:**
+- Define `PARAMETER_GRIDS_WEEKLY` and `PARAMETER_GRIDS_MONTHLY` dictionaries
+- Create `StrategyConfig` dataclass with `to_dict()` and `generate_name()` methods
+- Implement `is_valid_config()` for validation (e.g., short_lookback < long_lookback)
+- Implement `generate_configs()` to generate all valid combinations
+- Implement `count_configs()` for reporting
+
+**Expected Output:**
+- ~138 weekly configurations
+- ~216 monthly configurations
+- ~354 total configurations
+
+**Handoff:** `docs/handouts/HANDOUT_grid_generator.md`
+
+**Acceptance Criteria:**
+- [ ] All 4 alpha models have schedule-specific parameter grids
+- [ ] `is_valid_config()` rejects invalid combinations (short >= long for momentum_acceleration)
+- [ ] `generate_configs()` returns list of StrategyConfig objects
+- [ ] `count_configs()` returns breakdown by schedule and alpha type
+- [ ] 10+ tests covering edge cases and validation
+- [ ] Type hints and docstrings complete
+
+---
+
+### OPT-002: Multi-Period Evaluator
+**Status:** ready
+**Priority:** HIGH
+**Estimated:** 3-4 hours
+**Dependencies:** [OPT-001]
+**Assigned:** Unassigned
+
+**Description:**
+Create the multi-period evaluator that runs a single strategy configuration across 3yr, 5yr, and 10yr windows and determines if it beats SPY.
+
+**Key Features:**
+- Evaluate strategy across configurable time periods
+- Calculate active metrics vs SPY benchmark
+- Determine "beats SPY" status (positive active return AND positive IR in ALL periods)
+- Calculate composite score for ranking
+
+**Files to Create:**
+- `src/quantetf/optimization/evaluator.py`
+- `tests/optimization/test_evaluator.py`
+
+**Implementation Details:**
+- Create `PeriodMetrics` dataclass (strategy return, SPY return, active return, IR, etc.)
+- Create `MultiPeriodResult` dataclass with `beats_spy_all_periods` flag and `composite_score`
+- Implement `MultiPeriodEvaluator` class with `evaluate()` method
+- Composite score = avg(IR) - consistency_penalty + winner_bonus
+
+**Dependencies (existing modules):**
+- `src/quantetf/backtest/simple_engine.py` - `SimpleBacktestEngine`
+- `src/quantetf/evaluation/metrics.py` - `calculate_active_metrics`
+- `src/quantetf/evaluation/benchmarks.py` - `get_spy_returns`
+- `src/quantetf/data/snapshot_store.py` - `SnapshotDataStore`
+
+**Handoff:** `docs/handouts/HANDOUT_multi_period_evaluator.md`
+
+**Acceptance Criteria:**
+- [ ] Evaluates strategy across 3yr, 5yr, 10yr periods
+- [ ] Calculates all metrics: strategy return, SPY return, active return, IR, Sharpe, max DD
+- [ ] `beats_spy_all_periods` correctly identifies winning strategies
+- [ ] Composite score rewards consistency and penalizes volatility
+- [ ] Graceful error handling for failed evaluations
+- [ ] 12+ tests covering normal operation and edge cases
+
+---
+
+### OPT-003: Strategy Optimizer
+**Status:** ready
+**Priority:** HIGH
+**Estimated:** 3-4 hours
+**Dependencies:** [OPT-001, OPT-002]
+**Assigned:** Unassigned
+
+**Description:**
+Create the main optimizer orchestrator that generates all configurations, runs evaluations, ranks results, and produces reports.
+
+**Key Features:**
+- Sequential or parallel execution (configurable)
+- Progress tracking with tqdm
+- Graceful error handling (log and skip failed configs)
+- Comprehensive output files
+
+**Files to Create:**
+- `src/quantetf/optimization/optimizer.py`
+- `tests/optimization/test_optimizer.py`
+
+**Implementation Details:**
+- Create `OptimizationResult` dataclass with all_results, winners, best_config
+- Implement `StrategyOptimizer` class with `run()` method
+- Support `max_workers` parameter for parallel execution
+- Generate output files:
+  - `all_results.csv` - every config with metrics
+  - `winners.csv` - only configs that beat SPY
+  - `best_strategy.yaml` - ready-to-use config file
+  - `optimization_report.md` - human-readable summary
+
+**Output Directory Structure:**
+```
+artifacts/optimization/TIMESTAMP/
+├── all_results.csv
+├── winners.csv
+├── best_strategy.yaml
+└── optimization_report.md
+```
+
+**Handoff:** `docs/handouts/HANDOUT_optimizer.md`
+
+**Acceptance Criteria:**
+- [ ] Generates all configs via grid.py
+- [ ] Runs evaluations via evaluator.py
+- [ ] Sorts results by composite score
+- [ ] Identifies and exports winning strategies
+- [ ] Creates all 4 output files
+- [ ] Progress bar shows evaluation progress
+- [ ] Handles failed configs gracefully
+- [ ] 10+ tests
+
+---
+
+### OPT-004: CLI Script
+**Status:** ready
+**Priority:** HIGH
+**Estimated:** 1-2 hours
+**Dependencies:** [OPT-003]
+**Assigned:** Unassigned
+
+**Description:**
+Create the command-line interface for running the strategy optimizer.
+
+**Files to Create:**
+- `scripts/find_best_strategy.py`
+- `tests/test_find_best_strategy.py` (optional, basic CLI test)
+
+**CLI Arguments:**
+- `--snapshot` (required): Path to data snapshot directory
+- `--output` (default: artifacts/optimization): Output directory
+- `--periods` (default: 3,5,10): Comma-separated evaluation periods in years
+- `--max-configs` (optional): Limit configs for debugging
+- `--parallel` (default: 1): Number of parallel workers
+- `--verbose/-v`: Enable debug logging
+- `--dry-run`: Just count configs without running
+
+**Usage Examples:**
+```bash
+# Basic run
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157
+
+# Quick test with 20 configs
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --max-configs 20 --verbose
+
+# Parallel execution
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --parallel 4
+```
+
+**Handoff:** `docs/handouts/HANDOUT_cli_script.md`
+
+**Acceptance Criteria:**
+- [ ] All CLI arguments work correctly
+- [ ] `--dry-run` counts configs without running
+- [ ] `--verbose` enables debug logging
+- [ ] Prints summary with winners count and best strategy
+- [ ] Reports output directory location
+- [ ] Executable (chmod +x)
+
+---
+
+### OPT-005: Update __init__.py Exports
+**Status:** ready
+**Priority:** MEDIUM
+**Estimated:** 30 minutes
+**Dependencies:** [OPT-001, OPT-002, OPT-003]
+**Assigned:** Unassigned
+
+**Description:**
+Update `src/quantetf/optimization/__init__.py` to export all new classes and functions.
+
+**Files to Update:**
+- `src/quantetf/optimization/__init__.py`
+
+**Exports to Add:**
+- From evaluator.py: `PeriodMetrics`, `MultiPeriodResult`, `MultiPeriodEvaluator`
+- From optimizer.py: `OptimizationResult`, `StrategyOptimizer`
+
+**Acceptance Criteria:**
+- [ ] All public classes importable from `quantetf.optimization`
+- [ ] `__all__` list updated
+
+---
+
+## Implementation Order
+
+**Recommended sequence for serial implementation:**
+
+1. **OPT-001: Grid Generator** (no dependencies, pure Python)
+2. **OPT-002: Multi-Period Evaluator** (depends on OPT-001)
+3. **OPT-003: Strategy Optimizer** (depends on OPT-001, OPT-002)
+4. **OPT-004: CLI Script** (depends on OPT-003)
+5. **OPT-005: Update Exports** (depends on all above)
+
+**For parallel implementation:**
+- Agent A: OPT-001 (Grid Generator) → OPT-003 (Optimizer)
+- Agent B: OPT-002 (Evaluator) - can start after OPT-001 type definitions available
+- Agent C: OPT-004 (CLI) - can start after OPT-003 interface defined
+
+**Total estimated time:** 10-14 hours serial, 5-7 hours parallel
+
+---
+
+## Risk Mitigation Notes
+
+1. **Overfitting Prevention**: Using 3 different time periods as pseudo-out-of-sample validation
+2. **Data Snooping**: Report ALL results, not just winners
+3. **Computational Cost**: ~354 configs is manageable (~15-25 min)
+4. **Error Handling**: Log and skip failed configs, don't abort entire run
 
 ---
 
