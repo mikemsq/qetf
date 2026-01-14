@@ -1,0 +1,26 @@
+name: momentum_accel_3m_12m_tier5_filtered
+universe: configs/universes/tier5_filtered_no_toxic.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: momentum_acceleration
+  short_lookback_days: 63    # ~3 months
+  long_lookback_days: 252    # ~12 months
+  min_periods: 200
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  Momentum acceleration with standard timeframes (3M vs 12M).
+  Uses Tier 5 FILTERED universe (~250 ETFs) - excludes toxic products:
+  - No volatility ETFs (VXX, VIXY)
+  - No inverse ETFs (SH, PSQ, EUM, etc.)
+  - No leveraged ETFs (SSO, QLD, etc.)
+  - No commodity contango traps (UNG, USO)
+  Monthly rebalance with equal-weight top 5 holdings.

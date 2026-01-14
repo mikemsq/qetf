@@ -1,0 +1,388 @@
+name: tier5_filtered_no_toxic_etfs
+description: |
+  Tier 5 Filtered - Comprehensive ETF Universe WITHOUT Toxic Products
+
+  Excludes ETFs that are structurally designed to lose money over time:
+  - Volatility ETFs (VXX, VIXY, VIXM, SVXY) - severe contango decay
+  - Inverse ETFs (SH, PSQ, DOG, RWM, EFZ, EUM, SJB, TBF, TBT, MYY) - daily rebalancing decay
+  - Leveraged ETFs (SSO, QLD, DDM, MVV, ROM, RXL, UCC, URE, UWM, UYG) - volatility decay
+  - Commodity futures ETFs with severe contango (UNG, USO) - roll yield destruction
+  - Cannabis/speculative (MSOS, POTX) - regulatory risk, poor structure
+  - Russia (RSX) - sanctioned/frozen
+
+  Remaining: ~250 quality ETFs suitable for momentum strategies
+
+tier: 5
+size: 250
+liquidity_profile: medium_to_high
+expense_ratio_profile: moderate
+
+source:
+  type: static_list
+  tickers:
+    # === BROAD MARKET EQUITY ===
+    - ACWI   # All Country World
+    - ACWX   # All Country ex-US
+    - IVV    # S&P 500
+    - SPY    # S&P 500
+    - VTI    # Total US Stock Market
+    - QQQ    # Nasdaq 100
+    - DIA    # Dow Jones
+    - IWM    # Russell 2000
+
+    # === US SECTORS ===
+    - XLB    # Materials
+    - XLE    # Energy
+    - XLF    # Financials
+    - XLI    # Industrials
+    - XLK    # Technology
+    - XLP    # Consumer Staples
+    - XLRE   # Real Estate
+    - XLU    # Utilities
+    - XLV    # Healthcare
+    - XLY    # Consumer Discretionary
+
+    # === US INDUSTRY/THEMATIC ===
+    - IBB    # Biotech
+    - IHF    # Healthcare Providers
+    - IHI    # Medical Devices
+    - IGV    # Software
+    - IGM    # Expanded Tech
+    - IGN    # Networking
+    - ITB    # Homebuilders
+    - IYC    # Consumer Services
+    - IYE    # Energy
+    - IYF    # Financials
+    - IYK    # Consumer Goods
+    - IYM    # Materials
+    - IYR    # Real Estate
+    - IYT    # Transportation
+    - IYW    # Technology
+    - IYZ    # Telecom
+    - KBE    # Banks
+    - KRE    # Regional Banks
+    - SMH    # Semiconductors
+    - SOXX   # Semiconductors
+    - XHB    # Homebuilders
+    - XRT    # Retail
+
+    # === THEMATIC/INNOVATION ===
+    - ARKF   # Fintech
+    - ARKG   # Genomics
+    - ARKK   # Innovation
+    - ARKQ   # Autonomous Tech
+    - ARKW   # Internet
+    - BLOK   # Blockchain
+    - BOTZ   # Robotics
+    - DRIV   # Autonomous/EV
+    - FINX   # Fintech
+    - HACK   # Cybersecurity
+    - HERO   # Video Games
+    - ICLN   # Clean Energy
+    - LIT    # Lithium/Battery
+    - MOON   # Space
+    - NERD   # eSports
+    - PAVE   # Infrastructure
+    - PBW    # Clean Energy
+    - ROBO   # Robotics
+    - SKYY   # Cloud Computing
+    - SNSR   # IoT
+    - TAN    # Solar
+    - WCLD   # Cloud Computing
+    - WOOD   # Timber
+
+    # === INTERNATIONAL DEVELOPED ===
+    - EFA    # EAFE
+    - VEA    # Developed ex-US
+    - VGK    # Europe
+    - EWA    # Australia
+    - EWC    # Canada
+    - EWG    # Germany
+    - EWH    # Hong Kong
+    - EWI    # Italy
+    - EWJ    # Japan
+    - EWL    # Switzerland
+    - EWP    # Spain
+    - EWQ    # France
+    - EWS    # Singapore
+    - EWT    # Taiwan
+    - EWU    # UK
+    - FEZ    # Eurozone
+    - HEWG   # Germany Hedged
+    - HEWJ   # Japan Hedged
+    - HEWU   # UK Hedged
+    - HEZU   # Eurozone Hedged
+
+    # === INTERNATIONAL EMERGING ===
+    - EEM    # Emerging Markets
+    - IEMG   # Core EM
+    - VWO    # EM
+    - INDA   # India
+    - MCHI   # China
+    - FXI    # China Large Cap
+    - EWW    # Mexico
+    - EWY    # South Korea
+    - EWZ    # Brazil
+    - ECH    # Chile
+    - EIDO   # Indonesia
+    - EPU    # Peru
+    - EZA    # South Africa
+    - FM     # Frontier Markets
+    - THD    # Thailand
+    - TUR    # Turkey
+    - VNM    # Vietnam
+
+    # === INTERNATIONAL SMALL CAP ===
+    - DFE    # Europe Small Cap
+    - DLS    # International Small Cap
+    - VSS    # All World ex-US Small Cap
+    - FNDA   # US Small Cap Fundamental
+    - FNDF   # International Fundamental
+    - SCHA   # US Small Cap
+
+    # === FIXED INCOME - GOVERNMENT ===
+    - AGG    # US Aggregate Bond
+    - BND    # Total Bond
+    - GOVT   # Treasury
+    - IEF    # 7-10 Year Treasury
+    - SHY    # 1-3 Year Treasury
+    - TIP    # TIPS
+    - TLT    # 20+ Year Treasury
+    - VGIT   # Intermediate Treasury
+    - VGLT   # Long Treasury
+    - VGSH   # Short Treasury
+    - SCHO   # Short Treasury
+    - SCHR   # Intermediate Treasury
+    - SPTS   # Short Treasury
+    - SPTI   # Intermediate Treasury
+    - SPTL   # Long Treasury
+
+    # === FIXED INCOME - CORPORATE ===
+    - LQD    # Investment Grade Corporate
+    - VCIT   # Intermediate Corporate
+    - VCSH   # Short Corporate
+    - IGIB   # Intermediate Corporate
+    - HYG    # High Yield
+    - JNK    # High Yield
+    - SHYG   # Short High Yield
+    - SJNK   # Short High Yield
+    - ANGL   # Fallen Angels
+    - FALN   # Fallen Angels
+    - BKLN   # Senior Loans
+    - SRLN   # Senior Loans
+
+    # === FIXED INCOME - MORTGAGE/MUNI ===
+    - MBB    # Mortgage Backed
+    - VMBS   # Mortgage Backed
+    - GNMA   # GNMA Bonds
+    - CMBS   # Commercial MBS
+    - MUB    # Municipal
+
+    # === FIXED INCOME - INTERNATIONAL ===
+    - BNDX   # International Bond
+    - EMB    # EM Bonds
+    - PCY    # EM Sovereign
+
+    # === FIXED INCOME - SHORT DURATION/FLOATING ===
+    - FLOT   # Floating Rate
+    - MINT   # Short Maturity
+    - NEAR   # Short Duration
+    - JPST   # Ultra Short
+    - LDUR   # Low Duration
+
+    # === REAL ESTATE ===
+    - VNQ    # US REITs
+    - RWR    # US REITs
+    - REET   # Global REITs
+    - REM    # Mortgage REITs
+    - MORT   # Mortgage REITs
+    - HOMZ   # Housing
+    - REZ    # Residential REITs
+    - INDS   # Industrial REITs
+    - SRVR   # Data Center REITs
+    - USRT   # US REITs
+    - SCHH   # US REITs
+    - BBRE   # US REITs
+
+    # === COMMODITIES (Non-Toxic) ===
+    - GLD    # Gold
+    - IAU    # Gold
+    - SLV    # Silver
+    - PALL   # Palladium
+    - PPLT   # Platinum
+    - DBC    # Diversified Commodities
+    - PDBC   # Diversified Commodities
+    - GSG    # Commodities
+    - DJP    # Commodities
+    - COMT   # Commodities
+    - BCI    # Commodities
+    - GCC    # Commodities
+    - CPER   # Copper
+    - MOO    # Agribusiness
+    - GUNR   # Natural Resources
+
+    # === CURRENCY ===
+    - FXA    # Australian Dollar
+    - FXB    # British Pound
+    - FXC    # Canadian Dollar
+    - FXE    # Euro
+    - FXY    # Yen
+    - UUP    # Dollar Bullish
+    - UDN    # Dollar Bearish
+    - CEW    # EM Currency
+    - CYB    # Yuan
+    - DBV    # Currency Carry
+    - USDU   # Dollar
+
+    # === DIVIDEND/INCOME (Non-Covered Call) ===
+    - VYM    # High Dividend
+    - DVY    # Dividend Select
+    - HDV    # High Dividend
+    - SDY    # Dividend Aristocrats
+    - NOBL   # Dividend Aristocrats
+    - SCHD   # Dividend
+    - VIG    # Dividend Appreciation
+    - DGRO   # Dividend Growth
+    - DIVO   # Dividend
+    - DHS    # High Dividend
+    - FVD    # Value Dividend
+    - IDV    # International Dividend
+    - PFF    # Preferred Stock
+
+    # === FACTOR/SMART BETA ===
+    - MTUM   # Momentum
+    - VLUE   # Value
+    - QUAL   # Quality
+    - SIZE   # Small Cap
+    - USMV   # Min Volatility
+    - SPLV   # Low Volatility
+    - LRGF   # US Large Cap Multi-Factor
+    - SMLF   # US Small Cap Multi-Factor
+    - INTF   # International Multi-Factor
+    - IMOM   # International Momentum
+    - IVAL   # International Value
+    - QMOM   # Momentum
+    - QVAL   # Value
+    - VFMF   # Multi-Factor
+    - VFMO   # Momentum
+    - VFQY   # Quality
+    - VFVA   # Value
+
+    # === ESG ===
+    - ESGU   # US ESG
+    - ESGD   # International ESG
+    - ESGV   # US ESG
+    - SUSA   # US ESG
+    - SUSL   # US ESG Leaders
+    - DSI    # Sustainable
+    - USSG   # US ESG
+    - KRMA   # ESG
+    - VSGX   # International ESG
+
+    # === OPTIONS INCOME (Conservative) ===
+    - JEPI   # Equity Premium Income
+    - JEPQ   # Nasdaq Premium Income
+    - DIVA   # Dividend Value
+    - NUSI   # Nasdaq Risk Managed
+    - SWAN   # Hedged Equity
+    - TAIL   # Risk Hedge
+
+    # === HEDGED/CURRENCY HEDGED ===
+    - DBEF   # Hedged EAFE
+    - DBEM   # Hedged EM
+    - DBEU   # Hedged Europe
+    - DBJP   # Hedged Japan
+    - HEFA   # Hedged EAFE
+    - HEEM   # Hedged EM
+
+    # === ALTERNATIVES ===
+    - BTAL   # Anti-Beta
+    - CTA    # Managed Futures
+    - DBMF   # Managed Futures
+    - FMF    # Managed Futures
+    - KMLM   # Managed Futures
+    - EQLS   # Market Neutral
+
+    # === BROAD BOND/MULTI-ASSET ===
+    - CWB    # Convertible Bonds
+    - ICVT   # Convertible Bonds
+
+    # === COVERED CALL (Moderate) ===
+    - QYLD   # Nasdaq Covered Call
+    - RYLD   # Russell Covered Call
+    - XYLD   # S&P Covered Call
+    - SPYI   # S&P Income
+    - TLTW   # Treasury Covered Call
+    - QRMI   # Risk Managed Income
+    - XRMI   # Risk Managed Income
+    - JPGE   # Hedged Equity
+    - JPUS   # Diversified Return
+    - PUTW   # Put Write
+
+    # === OTHER EQUITY ===
+    - OUSA   # US Quality
+    - OUSM   # US Small Cap Quality
+    - ISWN   # International Quality
+    - BATT   # Battery Tech
+    - GIGE   # Internet Giants
+    - JETS   # Airlines
+    - FRAK   # Fracking
+    - UFO    # Space
+    - DTEC   # Tech
+    - IPAY   # Payments
+    - EGPT   # Egypt
+
+eligibility:
+  min_history_days: 126
+  min_avg_dollar_volume: 5000000
+  min_aum: 100000000
+  max_expense_ratio: 1.5
+
+exclusions:
+  volatility_etfs:
+    - VXX    # iPath VIX Short-Term
+    - VIXY   # ProShares VIX Short-Term
+    - VIXM   # ProShares VIX Mid-Term
+    - SVXY   # ProShares Short VIX
+  inverse_etfs:
+    - SH     # Short S&P 500
+    - PSQ    # Short QQQ
+    - DOG    # Short Dow
+    - RWM    # Short Russell 2000
+    - EFZ    # Short EAFE
+    - EUM    # Short Emerging Markets
+    - SJB    # Short High Yield
+    - TBF    # Short 20+ Treasury
+    - TBT    # Ultra Short 20+ Treasury
+    - MYY    # Short MidCap
+  leveraged_etfs:
+    - SSO    # Ultra S&P 500
+    - QLD    # Ultra QQQ
+    - DDM    # Ultra Dow
+    - MVV    # Ultra MidCap
+    - ROM    # Ultra Technology
+    - RXL    # Ultra Financials
+    - UCC    # Ultra Consumer Services
+    - URE    # Ultra Real Estate
+    - UWM    # Ultra Russell 2000
+    - UYG    # Ultra Financials
+  commodity_contango:
+    - UNG    # Natural Gas
+    - USO    # Oil
+  speculative:
+    - MSOS   # Cannabis
+    - POTX   # Cannabis
+  sanctioned:
+    - RSX    # Russia
+
+notes: |
+  This filtered universe removes structurally toxic ETFs:
+
+  1. VOLATILITY ETFs: VXX, VIXY lose ~50-80% annually due to contango
+  2. INVERSE ETFs: Daily rebalancing causes decay in sideways/up markets
+  3. LEVERAGED ETFs: Volatility decay erodes returns over time
+  4. COMMODITY FUTURES: UNG, USO suffer severe roll yield destruction
+  5. SPECULATIVE: Cannabis ETFs have poor structure and regulatory risk
+  6. SANCTIONED: RSX is frozen due to Russia sanctions
+
+  Suitable for momentum strategies that might otherwise select these toxic products.
