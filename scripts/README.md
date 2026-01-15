@@ -256,6 +256,79 @@ python scripts/walk_forward_test.py \
 
 ---
 
+### [find_best_strategy.py](find_best_strategy.py)
+Strategy optimization CLI that searches across all parameter combinations to find strategies that beat SPY.
+
+**Purpose:** Runs the strategy optimizer to systematically search through alpha models, parameters, and portfolio construction options. Identifies strategies that consistently outperform SPY across multiple time periods (3yr, 5yr, 10yr by default).
+
+**Usage:**
+```bash
+# Basic run (all 324 configurations)
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157
+
+# Quick test with limited configs
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --max-configs 20 --verbose
+
+# Parallel execution (faster)
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --parallel 4
+
+# Dry run (count configs only)
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --dry-run
+
+# Custom evaluation periods
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --periods 1,3,5
+
+# Filter by schedule and alpha type
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --schedules weekly \
+    --alpha-types momentum,vol_adjusted_momentum
+```
+
+**Output:**
+- `artifacts/optimization/{timestamp}/`
+  - `all_results.csv`: Every configuration with metrics
+  - `winners.csv`: Configurations that beat SPY in all periods
+  - `best_strategy.yaml`: Ready-to-use config for best strategy
+  - `optimization_report.md`: Human-readable summary
+
+**Arguments:**
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--snapshot` | (required) | Path to data snapshot directory |
+| `--output` | `artifacts/optimization` | Output directory for results |
+| `--periods` | `3,5,10` | Comma-separated evaluation periods in years |
+| `--max-configs` | None | Maximum configs to test (for debugging) |
+| `--parallel` | `1` | Number of parallel workers |
+| `--cost-bps` | `10.0` | Transaction cost in basis points |
+| `--schedules` | all | Filter by schedule (weekly, monthly) |
+| `--alpha-types` | all | Filter by alpha type |
+| `--verbose/-v` | False | Enable DEBUG logging |
+| `--dry-run` | False | Count configs without running |
+
+**Alpha Types Available:**
+- `momentum`: Classic price momentum
+- `momentum_acceleration`: Short vs long momentum comparison
+- `vol_adjusted_momentum`: Volatility-scaled momentum
+- `residual_momentum`: Market-adjusted momentum
+
+**What "Beats SPY" Means:**
+A strategy beats SPY when it achieves:
+1. Positive excess return (strategy return > SPY return)
+2. Positive information ratio (risk-adjusted excess return > 0)
+3. Consistent across ALL evaluated periods
+
+---
+
 ## Typical Workflow
 
 1. **Harmonize universe:**
@@ -292,4 +365,11 @@ python scripts/walk_forward_test.py \
        --train-years 2 \
        --test-years 1 \
        --save-plots
+   ```
+
+7. **Find best strategy (optimization):**
+   ```bash
+   python scripts/find_best_strategy.py \
+       --snapshot data/snapshots/snapshot_5yr_20etfs \
+       --periods 3,5,10
    ```

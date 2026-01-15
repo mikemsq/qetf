@@ -302,7 +302,7 @@ class MultiPeriodEvaluator:
         cost_model = FlatTransactionCost(cost_bps=self.cost_bps)
 
         # Create universe
-        universe = Universe(tickers=tickers)
+        universe = Universe(as_of=self.end_date, tickers=tuple(tickers))
 
         # Create backtest config
         backtest_config = BacktestConfig(

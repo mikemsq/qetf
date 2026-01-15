@@ -700,10 +700,11 @@ Create script to audit data quality and detect anomalies.
 
 ---
 
-## Current Sprint: Strategy Optimizer System
+## Current Sprint: Strategy Optimizer System ✅ COMPLETE
 
 This sprint implements an automated system to find ETF strategies that beat SPY across multiple time periods (3yr, 5yr, 10yr). The system systematically searches across alpha models, parameters, schedules, and portfolio construction options.
 
+**Status:** All 5 tasks completed (OPT-001 through OPT-005)
 **Handout Reference**: See `/workspaces/qetf/docs/handouts/HANDOUT_strategy_optimizer.md` for full architecture.
 
 ---
@@ -864,18 +865,18 @@ artifacts/optimization/TIMESTAMP/
 ---
 
 ### OPT-004: CLI Script
-**Status:** ready
+**Status:** completed
 **Priority:** HIGH
 **Estimated:** 1-2 hours
-**Dependencies:** [OPT-003]
-**Assigned:** Unassigned
+**Completed:** 2026-01-15
+**Dependencies:** [OPT-003] (completed)
+**Assigned:** Session-OPT-004
 
 **Description:**
 Create the command-line interface for running the strategy optimizer.
 
-**Files to Create:**
-- `scripts/find_best_strategy.py`
-- `tests/test_find_best_strategy.py` (optional, basic CLI test)
+**Files Created:**
+- `scripts/find_best_strategy.py` (200+ lines)
 
 **CLI Arguments:**
 - `--snapshot` (required): Path to data snapshot directory
@@ -883,6 +884,9 @@ Create the command-line interface for running the strategy optimizer.
 - `--periods` (default: 3,5,10): Comma-separated evaluation periods in years
 - `--max-configs` (optional): Limit configs for debugging
 - `--parallel` (default: 1): Number of parallel workers
+- `--cost-bps` (default: 10.0): Transaction cost in basis points
+- `--schedules` (optional): Filter by schedule type (weekly, monthly)
+- `--alpha-types` (optional): Filter by alpha type
 - `--verbose/-v`: Enable debug logging
 - `--dry-run`: Just count configs without running
 
@@ -901,17 +905,28 @@ python scripts/find_best_strategy.py \
 python scripts/find_best_strategy.py \
     --snapshot data/snapshots/snapshot_20260113_232157 \
     --parallel 4
+
+# Dry run to count configs
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --dry-run
 ```
 
 **Handoff:** `docs/handouts/HANDOUT_cli_script.md`
 
 **Acceptance Criteria:**
-- [ ] All CLI arguments work correctly
-- [ ] `--dry-run` counts configs without running
-- [ ] `--verbose` enables debug logging
-- [ ] Prints summary with winners count and best strategy
-- [ ] Reports output directory location
-- [ ] Executable (chmod +x)
+- [x] All CLI arguments work correctly
+- [x] `--dry-run` counts configs without running
+- [x] `--verbose` enables debug logging
+- [x] Prints summary with winners count and best strategy
+- [x] Reports output directory location
+- [x] Executable (chmod +x)
+
+**Notes:**
+- Added additional filtering options (`--schedules`, `--alpha-types`, `--cost-bps`)
+- Comprehensive help text with examples
+- Validates snapshot path and periods format
+- Updated scripts/README.md with full documentation
 
 ---
 
