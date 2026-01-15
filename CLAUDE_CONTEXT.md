@@ -486,6 +486,22 @@ If you're unsure about anything, ask these questions:
 
 -----
 
+## Agent Quick Reference
+
+When starting a session, tell Claude which agent role to assume. Claude will automatically read the required files.
+
+| Agent | Required Reading | Purpose |
+|-------|------------------|---------|
+| **Quant Researcher** | PROJECT_BRIEF.md, PROGRESS_LOG.md, latest artifacts/ | Analyze results, recommend strategies |
+| **Architect/Planner** | PROJECT_BRIEF.md, PROGRESS_LOG.md, TASKS.md | Design tasks, manage priorities |
+| **Coding Agent** | CLAUDE_CONTEXT.md, specific handoff file | Implement features, write tests |
+
+**Usage:** Just say "You are the [Agent Name] agent" and Claude will read the appropriate files.
+
+For full agent workflow details, see [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md).
+
+---
+
 ## Development Workflow
 
 See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for the multi-agent development process.
