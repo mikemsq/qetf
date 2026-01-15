@@ -43,9 +43,10 @@
 ---
 
 ### IMPL-006: New Alpha Models for Regime Research
-**Status:** ready
+**Status:** completed
 **Priority:** CRITICAL
 **Estimated:** 3-4 hours
+**Completed:** 2026-01-15
 **Dependencies:** []
 
 **Description:**
@@ -54,18 +55,26 @@ Implement three new alpha models identified in RESEARCH-001:
 2. **DualMomentum** - Absolute + relative momentum (Gary Antonacci style)
 3. **ValueMomentum** - Blend momentum and mean-reversion signals
 
-**Files to Create:**
-- `src/quantetf/alpha/trend_filtered_momentum.py`
-- `src/quantetf/alpha/dual_momentum.py`
-- `src/quantetf/alpha/value_momentum.py`
-- Tests for each
+**Files Created:**
+- `src/quantetf/alpha/trend_filtered_momentum.py` (240 lines)
+- `src/quantetf/alpha/dual_momentum.py` (185 lines)
+- `src/quantetf/alpha/value_momentum.py` (220 lines)
+- `tests/test_trend_filtered_momentum.py` (9 tests)
+- `tests/test_dual_momentum.py` (9 tests)
+- `tests/test_value_momentum.py` (10 tests)
 
 **Full Specification:** `handoffs/IMPL-006-NEW-ALPHA-MODELS.md`
 
 **Acceptance Criteria:**
-- [ ] All 3 alpha models implemented
-- [ ] 15+ unit tests (5 per model)
-- [ ] Exports updated in `__init__.py`
+- [x] All 3 alpha models implemented
+- [x] 28 unit tests (exceeds 15+ requirement)
+- [x] Exports updated in `__init__.py`
+
+**Notes:**
+- All models follow existing AlphaModel interface (compatible with backtest engine)
+- TrendFilteredMomentum gracefully handles missing trend ticker
+- DualMomentum implements absolute momentum threshold filtering
+- ValueMomentum z-scores signals before blending for proper weighting
 
 ---
 
