@@ -19,6 +19,7 @@ dependencies = [
   "scipy>=1.11",
   "seaborn>=0.13",
   "yfinance>=0.2",
+  "fredapi>=0.5.1",
 ]
 
 [project.optional-dependencies]
