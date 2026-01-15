@@ -2,35 +2,43 @@
 
 **Project Repository:** https://github.com/mikemsq/qetf
 **Start Date:** January 6, 2026
-**Last Updated:** January 11, 2026
+**Last Updated:** January 15, 2026
 
 -----
 
 ## Current Status
 
-**Active Phase:** Phase 3 - Analytics & Visualization (42% complete - 5/12 tasks done)
+**Active Phase:** Phase 3 - Analytics & Visualization (50% complete - 6/12 tasks done)
 **Branch:** main
 
 ### Quick Status
 
-- **What's working:** Complete end-to-end backtesting system with real data, momentum strategy, equal-weight portfolio, transaction costs, no-lookahead validation (Phase 2 complete, 275 tests passing)
-- **What's in progress:** Phase 3 - 5 tasks completed (Enhanced Metrics, Risk Analytics, Backtest Viz, Strategy Comparison, Benchmarks, Walk-Forward)
+- **What's working:** Complete end-to-end backtesting system with real data, momentum strategy, equal-weight portfolio, transaction costs, no-lookahead validation, **SPY benchmark comparison** (Phase 2 complete, Strategy Optimizer complete, 378+ tests passing)
+- **What's in progress:** Phase 3 analytics tasks
 - **What's blocked:** None currently
-- **Next priority:** **REFACTOR existing analysis to emphasize active returns vs SPY** (see handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md)
+- **Next priority:** VIZ-002 (Alpha Diagnostics), ANALYSIS-004 (Parameter Sensitivity), or VIZ-003 (Stress Test)
 
-### ⚠️ Important User Requirement (Jan 12, 2026)
+### ✅ Active Returns Refactor Complete (Jan 15, 2026)
 
-**Performance analysis must ALWAYS show relative performance vs SPY, not just absolute returns.**
+The user requirement for SPY benchmark comparison is now fully implemented:
 
-- Primary metric: Active return (strategy vs SPY)
-- All visualizations should overlay strategy vs SPY
-- Reports should lead with "Beat SPY by X%" or "Underperformed by X%"
-- See [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) "Performance Analysis Standards" section
-- Refactor task created: [handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md](handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md)
+- ✅ `calculate_active_metrics()` helper in metrics.py (16 tests)
+- ✅ Notebook shows strategy vs SPY overlaid in all charts
+- ✅ Notebook leads with "🎯 ACTIVE PERFORMANCE SUMMARY"
+- ✅ Warmup period alignment for fair comparison
+- ✅ compare_strategies.py auto-adds SPY benchmark
+
+See [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) "Performance Analysis Standards" section for standards.
 
 ### Ready to Work On
 
-See [TASKS.md](TASKS.md) for 12 new Phase 3 tasks. See [PHASE3_PLAN.md](PHASE3_PLAN.md) for implementation sequence and parallelization strategy.
+Remaining Phase 3 tasks (see [TASKS.md](TASKS.md)):
+- VIZ-002: Alpha Diagnostics Notebook
+- ANALYSIS-004: Parameter Sensitivity Analysis
+- ANALYSIS-007: Transaction Cost Analysis
+- VIZ-003: Stress Test Notebook
+- VIZ-004: Auto-Report Generation
+- INFRA-002: Data Quality Monitoring
 
 -----
 
@@ -39,6 +47,39 @@ See [TASKS.md](TASKS.md) for 12 new Phase 3 tasks. See [PHASE3_PLAN.md](PHASE3_P
 This section shows the last 7 days of activity. For full history, see [session-notes/](session-notes/).
 
 ### Daily Logs
+
+#### Wednesday, January 15, 2026 (REFACTOR-001 Verification)
+
+**Duration:** ~30 minutes
+**Focus:** Verify and document REFACTOR-001 completion
+
+**Completed:**
+
+- ✅ **REFACTOR-001: Active Returns Focus Refactor - Verified Complete**
+  - Verified `calculate_active_metrics()` already implemented (lines 408-536 in metrics.py)
+  - Verified 16 tests for calculate_active_metrics in TestCalculateActiveMetrics class (all pass)
+  - Verified backtest_analysis.ipynb has SPY overlay in all charts
+  - Verified notebook leads with "🎯 ACTIVE PERFORMANCE SUMMARY" section
+  - Verified compare_strategies.py auto-adds SPY via `add_spy_benchmark()` function
+  - Updated TASKS.md to mark as completed
+  - Updated handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md with completion status
+  - Updated PROGRESS_LOG.md
+
+**Key Findings:**
+
+All acceptance criteria for REFACTOR-001 were already implemented:
+- `calculate_active_metrics()` returns 18 metrics (strategy, benchmark, active)
+- Notebook shows dollar value comparison AND normalized return comparison
+- Warmup period alignment ensures fair comparison (strategy and SPY start at first active trade)
+- Rolling active returns analysis (1-year rolling) included
+- Outperformance/underperformance shading in all relevant charts
+
+**Test Results:**
+
+- All 47 advanced metrics tests passing
+- All 378+ total tests passing
+
+---
 
 #### Saturday, January 11, 2026 (Phase 3 Planning)
 

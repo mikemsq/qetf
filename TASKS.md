@@ -190,11 +190,12 @@ Implemented SnapshotDataStore for point-in-time data access from parquet files.
 ## Current Sprint: Phase 3 - Analytics & Visualization
 
 ### REFACTOR-001: Active Returns Focus Refactor
-**Status:** ready
+**Status:** completed
 **Priority:** CRITICAL
 **Estimated:** 2-3 hours
+**Completed:** 2026-01-15
 **Dependencies:** []
-**Assigned:** Unassigned
+**Assigned:** Session-REFACTOR-001
 
 **Description:**
 Refactor existing performance analysis to emphasize active returns vs SPY benchmark. Current implementation shows portfolio performance in isolation, but the project goal is to beat SPY.
@@ -202,27 +203,33 @@ Refactor existing performance analysis to emphasize active returns vs SPY benchm
 **User Requirement (Jan 12, 2026):**
 > "I always want to see the portfolio performance, benchmark performance and active performance. The pure portfolio performance is less interesting than comparison to buy and hold spy strategy. The goal of this project is to create a strategy that can beat spy."
 
-**Changes Needed:**
-1. Add `calculate_active_metrics()` helper to metrics.py
-2. Update backtest_analysis.ipynb to show strategy vs SPY overlaid
-3. Update all visualizations to show relative performance
-4. Add active return summary section to notebook
-5. Make SPY comparison the default in all analysis tools
+**Changes Implemented:**
+1. ✅ Added `calculate_active_metrics()` helper to metrics.py (lines 408-536)
+2. ✅ Updated backtest_analysis.ipynb to show strategy vs SPY overlaid
+3. ✅ All visualizations show relative performance with outperformance shading
+4. ✅ Notebook leads with "🎯 ACTIVE PERFORMANCE SUMMARY" section
+5. ✅ SPY comparison is default in compare_strategies.py via `add_spy_benchmark()`
 
-**Files:**
-- Update: `src/quantetf/evaluation/metrics.py` (add calculate_active_metrics)
-- Update: `notebooks/backtest_analysis.ipynb` (add SPY overlay)
-- Update: `scripts/compare_strategies.py` (make SPY default)
-- Update: `tests/test_advanced_metrics.py` (test active metrics)
+**Files Updated:**
+- `src/quantetf/evaluation/metrics.py` - Added calculate_active_metrics() (128 lines)
+- `notebooks/backtest_analysis.ipynb` - SPY overlay in all charts, warmup alignment
+- `scripts/compare_strategies.py` - Auto-adds SPY benchmark (add_spy_benchmark function)
+- `tests/test_advanced_metrics.py` - 16 tests for calculate_active_metrics (TestCalculateActiveMetrics class)
 
 **Handoff:** `handoffs/PERFORMANCE_ANALYSIS_REFACTOR.md`
 
-**Acceptance Criteria:**
-- calculate_active_metrics() function implemented and tested
-- Notebook shows strategy vs SPY overlaid in all charts
-- Notebook leads with "Beat SPY by X%" summary
-- All metrics tables show strategy, benchmark, and active side-by-side
-- Documentation updated (CLAUDE_CONTEXT.md ✅, PROJECT_BRIEF.md ✅)
+**Acceptance Criteria (All Met):**
+- ✅ calculate_active_metrics() function implemented and tested (16 tests)
+- ✅ Notebook shows strategy vs SPY overlaid in all charts (equity, drawdown, rolling Sharpe)
+- ✅ Notebook leads with "Beat SPY by X%" summary (🎯 ACTIVE PERFORMANCE SUMMARY)
+- ✅ All metrics tables show strategy, benchmark, and active side-by-side
+- ✅ Documentation updated (CLAUDE_CONTEXT.md ✅, PROJECT_BRIEF.md ✅)
+
+**Notes:**
+- Implements warmup period alignment for fair comparison (strategy starts at first active trade)
+- Shows dollar value comparison AND normalized return comparison
+- Includes rolling active returns analysis (1-year rolling)
+- compare_strategies.py auto-adds SPY if backtests are loaded
 
 ---
 

@@ -159,13 +159,13 @@ def calculate_active_metrics(
 
 ## Acceptance Criteria
 
-- [ ] `calculate_active_metrics()` function implemented and tested
-- [ ] Backtest analysis notebook shows strategy vs SPY overlaid in all relevant charts
-- [ ] Notebook leads with active return summary ("Beat SPY by X%")
-- [ ] All metrics tables show strategy, benchmark, and active metrics side-by-side
-- [ ] Documentation updated to reflect new standard format
-- [ ] CLAUDE_CONTEXT.md updated with performance analysis standards (✅ DONE)
-- [ ] PROJECT_BRIEF.md updated with success criteria (✅ DONE)
+- [x] `calculate_active_metrics()` function implemented and tested (16 tests in TestCalculateActiveMetrics)
+- [x] Backtest analysis notebook shows strategy vs SPY overlaid in all relevant charts
+- [x] Notebook leads with active return summary ("🎯 ACTIVE PERFORMANCE SUMMARY")
+- [x] All metrics tables show strategy, benchmark, and active metrics side-by-side
+- [x] Documentation updated to reflect new standard format
+- [x] CLAUDE_CONTEXT.md updated with performance analysis standards (✅ DONE)
+- [x] PROJECT_BRIEF.md updated with success criteria (✅ DONE)
 
 ---
 
@@ -204,6 +204,6 @@ Active:    +12.3% excess return
 
 ---
 
-**Status:** Ready for implementation
-**Estimated Effort:** 2-3 hours
+**Status:** ✅ COMPLETED (2026-01-15)
+**Estimated Effort:** 2-3 hours (actual: already implemented in prior sessions)
 **Dependencies:** None (uses existing code)
