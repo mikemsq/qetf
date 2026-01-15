@@ -1,0 +1,36 @@
+name: trend_filtered_momentum_tier4
+universe: configs/universes/tier4_broad_200.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: trend_filtered_momentum
+  momentum_lookback: 252   # 12-month momentum
+  ma_period: 200           # MA200 trend filter
+  trend_ticker: SPY
+  defensive_tickers:
+    - AGG
+    - TLT
+    - GLD
+    - USMV
+    - SPLV
+  min_periods: 200
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  EXP-002: Trend-filtered momentum strategy.
+
+  Hypothesis: Using SPY > MA200 as a trend filter reduces catastrophic losses
+  by switching to defensive assets during bear markets.
+
+  Bullish regime (SPY > MA200): Use 12-month momentum to select top 5 ETFs
+  Bearish regime (SPY < MA200): Allocate to defensive assets (AGG, TLT, GLD, USMV, SPLV)
+
+  Expected: Avoid 2018 (-19.3%) and 2022 (-24.5%) drawdowns while capturing
+  bull market gains.

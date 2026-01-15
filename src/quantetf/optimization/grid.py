@@ -43,6 +43,22 @@ PARAMETER_GRIDS_WEEKLY: Dict[str, Dict[str, List[Any]]] = {
         'lookback_days': [63, 126],
         'min_periods': [50, 100],
     },
+    # New regime-based alpha models (IMPL-006)
+    'trend_filtered_momentum': {
+        'momentum_lookback': [63, 126],
+        'ma_period': [100, 150],
+        'min_periods': [50],
+    },
+    'dual_momentum': {
+        'lookback': [63, 126],
+        'risk_free_rate': [0.0, 0.02],
+        'min_periods': [50],
+    },
+    'value_momentum': {
+        'momentum_weight': [0.3, 0.5, 0.7],
+        'momentum_lookback': [63, 126],
+        'min_periods': [50],
+    },
 }
 
 # Monthly schedule: longer lookbacks for stable signals
@@ -65,6 +81,22 @@ PARAMETER_GRIDS_MONTHLY: Dict[str, Dict[str, List[Any]]] = {
     'residual_momentum': {
         'lookback_days': [126, 189, 252],
         'min_periods': [100, 150],
+    },
+    # New regime-based alpha models (IMPL-006)
+    'trend_filtered_momentum': {
+        'momentum_lookback': [126, 189, 252],
+        'ma_period': [150, 200],
+        'min_periods': [100],
+    },
+    'dual_momentum': {
+        'lookback': [126, 189, 252],
+        'risk_free_rate': [0.0, 0.02, 0.04],
+        'min_periods': [100],
+    },
+    'value_momentum': {
+        'momentum_weight': [0.3, 0.5, 0.7],
+        'momentum_lookback': [126, 189, 252],
+        'min_periods': [100],
     },
 }
 
@@ -220,9 +252,14 @@ def is_valid_config(alpha_type: str, params: Dict[str, Any]) -> bool:
         if short >= long:
             return False
 
-    # Determine the relevant lookback key
+    # Determine the relevant lookback key based on alpha type
+    lookback_key = None
     if alpha_type == 'momentum_acceleration':
         lookback_key = 'long_lookback_days'
+    elif alpha_type in ('trend_filtered_momentum', 'value_momentum'):
+        lookback_key = 'momentum_lookback'
+    elif alpha_type == 'dual_momentum':
+        lookback_key = 'lookback'
     else:
         lookback_key = 'lookback_days'
 

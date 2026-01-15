@@ -129,6 +129,25 @@ def _register_standard_models():
     except ImportError:
         logger.warning("Could not import ResidualMomentumAlpha")
 
+    # New regime-based alpha models (IMPL-006)
+    try:
+        from quantetf.alpha.trend_filtered_momentum import TrendFilteredMomentum
+        AlphaModelRegistry.register('trend_filtered_momentum', TrendFilteredMomentum)
+    except ImportError:
+        logger.warning("Could not import TrendFilteredMomentum")
+
+    try:
+        from quantetf.alpha.dual_momentum import DualMomentum
+        AlphaModelRegistry.register('dual_momentum', DualMomentum)
+    except ImportError:
+        logger.warning("Could not import DualMomentum")
+
+    try:
+        from quantetf.alpha.value_momentum import ValueMomentum
+        AlphaModelRegistry.register('value_momentum', ValueMomentum)
+    except ImportError:
+        logger.warning("Could not import ValueMomentum")
+
 
 # Register models on import
 _register_standard_models()
