@@ -1070,11 +1070,133 @@ Update `src/quantetf/optimization/__init__.py` to export all new classes and fun
 
 ---
 
+## 🔬 RESEARCH AGENDA: Regime-Based Strategy Search
+
+**Research Question:** Can we beat SPY over any 1-year period by adapting strategy to market regime?
+
+**Status:** Research complete. Implementation tasks created.
+**Findings Document:** `handoffs/RESEARCH-001-REGIME-HYPOTHESIS.md`
+**Quick Reference:** `handoffs/RESEARCH_AGENDA_QUICKREF.md`
+
+### Key Findings
+- Perfect foresight: 10/10 years beatable (avg +55.8%/year spread)
+- Simple momentum: 3/9 years win rate (33%)
+- Regime patterns exist: Bull (7yr), Bear (1yr), High Vol (1yr)
+- No single strategy dominates all regimes
+
+---
+
+### IMPL-006: New Alpha Models for Regime Research
+**Status:** ready
+**Priority:** HIGH
+**Estimated:** 3-4 hours
+**Dependencies:** []
+
+**Description:**
+Implement three new alpha models identified in RESEARCH-001:
+1. **TrendFilteredMomentum** - Momentum with MA200 trend filter
+2. **DualMomentum** - Absolute + relative momentum (Gary Antonacci style)
+3. **ValueMomentum** - Blend momentum and mean-reversion signals
+
+**Files to Create:**
+- `src/quantetf/alpha/trend_filtered_momentum.py`
+- `src/quantetf/alpha/dual_momentum.py`
+- `src/quantetf/alpha/value_momentum.py`
+- Tests for each
+
+**Full Specification:** `handoffs/IMPL-006-NEW-ALPHA-MODELS.md`
+
+**Acceptance Criteria:**
+- [ ] All 3 alpha models implemented
+- [ ] 15+ unit tests (5 per model)
+- [ ] Exports updated in `__init__.py`
+
+---
+
+### IMPL-007: FRED Macro Data Ingestion
+**Status:** ready
+**Priority:** MEDIUM
+**Estimated:** 2-3 hours
+**Dependencies:** []
+
+**Description:**
+Create data ingestion for FRED economic indicators to enable macro regime detection.
+
+**Key Indicators:**
+- VIX (VIXCLS) - Volatility regime
+- 10Y Treasury (DGS10) - Risk-free rate
+- 2Y-10Y Spread (T10Y2Y) - Recession signal
+- High Yield Spread (BAMLH0A0HYM2) - Credit stress
+
+**Files to Create:**
+- `scripts/ingest_fred_data.py` - CLI for downloading FRED data
+- `src/quantetf/data/macro_loader.py` - Loader and regime detector
+- Add `fredapi>=0.5.1` to requirements.txt
+
+**Full Specification:** `handoffs/IMPL-007-DATA-INGESTION.md`
+
+**Acceptance Criteria:**
+- [ ] FRED ingestion script working
+- [ ] MacroDataLoader class implemented
+- [ ] RegimeDetector class implemented
+- [ ] Manifest and combined dataset creation
+
+---
+
+### EXP-001: Monthly vs Annual Rebalancing
+**Status:** blocked
+**Priority:** HIGH
+**Estimated:** 2-3 hours
+**Dependencies:** [IMPL-006]
+
+**Description:**
+Test hypothesis that monthly rebalancing captures regime shifts faster than annual.
+
+**Analysis:**
+- Run 12M momentum with monthly vs annual rebalance
+- Compare: win rate, max drawdown, Sharpe ratio
+- Document results
+
+---
+
+### EXP-002: Trend Filter Backtest
+**Status:** blocked
+**Priority:** HIGH
+**Estimated:** 2-3 hours
+**Dependencies:** [IMPL-006]
+
+**Description:**
+Test TrendFilteredMomentum strategy over 10-year period.
+
+**Hypothesis:** SPY > MA200 filter reduces catastrophic losses (2018, 2022).
+
+---
+
+### EXP-003: Ensemble vs Switching
+**Status:** blocked
+**Priority:** MEDIUM
+**Estimated:** 2-3 hours
+**Dependencies:** [IMPL-006, IMPL-007]
+
+**Description:**
+Test whether blending strategies beats regime-switching.
+
+---
+
+### EXP-004: Walk-Forward Validation
+**Status:** blocked
+**Priority:** HIGH
+**Estimated:** 3-4 hours
+**Dependencies:** [EXP-001, EXP-002]
+
+**Description:**
+Train regime rules on 2016-2020, test on 2021-2025.
+
+---
+
 ## Backlog (Future Phases)
 
 ### Phase 4: Strategy Development
-- IMPL-006: Mean reversion alpha model
-- IMPL-007: Multi-factor alpha combiner
 - IMPL-008: Mean-variance portfolio optimizer
 - IMPL-009: Risk parity constructor
 - IMPL-010: Covariance estimation
