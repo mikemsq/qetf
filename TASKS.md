@@ -79,9 +79,10 @@ Implement three new alpha models identified in RESEARCH-001:
 ---
 
 ### IMPL-007: FRED Macro Data Ingestion
-**Status:** ready
+**Status:** completed
 **Priority:** HIGH
 **Estimated:** 2-3 hours
+**Completed:** 2026-01-15
 **Dependencies:** []
 
 **Description:**
@@ -93,18 +94,27 @@ Create data ingestion for FRED economic indicators to enable macro regime detect
 - 2Y-10Y Spread (T10Y2Y) - Recession signal
 - High Yield Spread (BAMLH0A0HYM2) - Credit stress
 
-**Files to Create:**
-- `scripts/ingest_fred_data.py` - CLI for downloading FRED data
-- `src/quantetf/data/macro_loader.py` - Loader and regime detector
-- Add `fredapi>=0.5.1` to requirements.txt
+**Files Created:**
+- `scripts/ingest_fred_data.py` - CLI for downloading FRED data (288 lines)
+- `src/quantetf/data/macro_loader.py` - Loader and regime detector (160 lines)
+- `tests/data/test_macro_loader.py` - Unit tests (18 tests)
+- `fredapi>=0.5.1` added to pyproject.toml
 
 **Full Specification:** `handoffs/IMPL-007-DATA-INGESTION.md`
 
 **Acceptance Criteria:**
-- [ ] FRED ingestion script working
-- [ ] MacroDataLoader class implemented
-- [ ] RegimeDetector class implemented
-- [ ] Manifest and combined dataset creation
+- [x] FRED ingestion script working
+- [x] MacroDataLoader class implemented
+- [x] RegimeDetector class implemented
+- [x] Manifest and combined dataset creation
+- [x] 18 unit tests passing
+
+**Notes:**
+- Ingestion script supports 12 default FRED indicators
+- MacroDataLoader provides helpers for VIX, yield curve spread, regime detection
+- RegimeDetector classifies: RISK_ON, ELEVATED_VOL, HIGH_VOL, RECESSION_WARNING
+- Exports registered in `src/quantetf/data/__init__.py`
+- Requires FRED API key (free at https://fred.stlouisfed.org/docs/api/api_key.html)
 
 ---
 
