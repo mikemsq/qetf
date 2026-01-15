@@ -1,46 +1,142 @@
 # Agent Workflow - QuantETF
 
-**Last Updated:** January 9, 2026
+**Last Updated:** January 15, 2026
 
 This document describes the multi-agent workflow for developing QuantETF. Instead of relying on single long-running sessions, we use specialized agents working in parallel from shared documentation and a task queue.
 
 ## Overview
 
-The project uses a **distributed agentic workflow** inspired by Boris Cherny's approach, adapted for parallel agent execution:
+The project uses a **distributed agentic workflow** with three specialized agent roles:
 
 ```
-Planning Agent → Task Queue → Specialized Coding Agents → Review Agent
+                    Quant Researcher
+                          ↓
+                   Strategy Ideas & Analysis
+                          ↓
+Architect/Planner → Task Queue → Coding Agents
        ↓                              ↓
-   TASKS.md                     Implementation
+   TASKS.md                    Implementation
        ↓                              ↓
 Documentation ← ─────────────── PROGRESS_LOG.md
 ```
 
 ## Agent Roles
 
-### 1. Planning Agent
-- **Responsibility:** Break down features into specific, independent tasks
-- **Input:** PROJECT_BRIEF.md, PROGRESS_LOG.md, user requirements
-- **Output:** TASKS.md with detailed task specifications
-- **When to use:** Start of each phase, when adding new features
+### 1. Quant Researcher Agent
 
-### 2. Coding Agent (multiple instances)
-- **Responsibility:** Implement specific tasks from the queue
-- **Input:** Single task from TASKS.md, CLAUDE_CONTEXT.md
-- **Output:** Working code + tests + task completion note
+**Purpose:** Provide financial domain expertise to guide strategy development.
+
+- **Responsibility:** Propose strategies, analyze backtest results, suggest improvements based on quantitative finance theory
+- **Input:** Backtest results, evaluation metrics, academic literature, market knowledge
+- **Output:** Strategy recommendations, parameter suggestions, analysis reports
+- **When to use:**
+  - When a strategy underperforms and you need to understand why
+  - When exploring new alpha signals or portfolio construction methods
+  - When interpreting backtest results (is this overfitting? regime-dependent?)
+  - When deciding what parameter ranges to search
+
+**Domain Knowledge:**
+- Factor investing (momentum, value, quality, low volatility)
+- Portfolio construction (mean-variance, risk parity, equal weight)
+- Common pitfalls (overfitting, transaction costs, survivorship bias)
+- Academic literature on ETF strategies
+- Market microstructure and trading costs
+
+**Example Prompts:**
+```
+Your role: Quant Researcher Agent
+
+Read:
+- /workspaces/qetf/PROJECT_BRIEF.md (understand goals)
+- /workspaces/qetf/artifacts/[latest_backtest_results]
+
+Task: Our momentum strategy is underperforming SPY. Analyze the results and
+suggest 3-5 specific improvements we should test, grounded in quant theory.
+
+Consider:
+- Is the lookback period optimal for momentum factor?
+- Should we add volatility scaling?
+- Is the rebalancing frequency appropriate?
+- Are transaction costs eating the alpha?
+```
+
+### 2. Architect/Planner Agent
+
+**Purpose:** Design implementation approaches and manage the task queue.
+
+- **Responsibility:** Break down features into tasks, maintain priorities and dependencies, design technical approaches
+- **Input:** PROJECT_BRIEF.md, PROGRESS_LOG.md, Quant Researcher recommendations, user requirements
+- **Output:** TASKS.md with detailed task specifications, handoff files
+- **When to use:**
+  - Start of each phase or feature
+  - When adding new functionality
+  - When tasks are blocked and need re-prioritization
+  - When dependencies change
+
+**Responsibilities (merged from Planning + Scheduling):**
+- Break features into specific, independent tasks
+- Create detailed handoff files with context and acceptance criteria
+- Maintain task priorities based on project goals
+- Identify and resolve blockers
+- Update task dependencies as work progresses
+- Balance workload across parallel efforts
+
+**Example Prompts:**
+```
+Your role: Architect/Planner Agent
+
+Read:
+- /workspaces/qetf/PROJECT_BRIEF.md
+- /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/TASKS.md
+
+Task: The Quant Researcher recommended we implement momentum acceleration
+(rate of change of momentum). Break this into implementation tasks.
+
+Create:
+- Updated TASKS.md with new tasks
+- handoffs/handoff-IMPL-XXX.md for each task
+
+Ensure tasks are parallelizable where possible.
+```
+
+### 3. Coding Agent (multiple instances)
+
+**Purpose:** Implement specific tasks from the queue with full ownership of deliverables.
+
+- **Responsibility:** Implement tasks, write tests, run tests, update documentation, mark tasks complete
+- **Input:** Single task from TASKS.md, CLAUDE_CONTEXT.md, handoff file
+- **Output:** Working code + passing tests + updated PROGRESS_LOG.md + completion note
 - **When to use:** Pick up any task marked "ready"
 
-### 3. Review Agent
-- **Responsibility:** Verify implementations, run tests, update docs
-- **Input:** Completed task, test results
-- **Output:** Updated PROGRESS_LOG.md, merged code
-- **When to use:** After coding agent completes a task
+**Full Ownership Includes:**
+- Reading and understanding the handoff file
+- Implementing the feature following CLAUDE_CONTEXT.md standards
+- Writing comprehensive tests
+- Running tests and ensuring they pass
+- Updating PROGRESS_LOG.md with what was completed
+- Creating completion note in handoffs/
+- Marking task as complete in TASKS.md
+- Committing code with clear message
 
-### 4. Scheduling Agent
-- **Responsibility:** Maintain task queue, identify blockers, prioritize
-- **Input:** TASKS.md, PROGRESS_LOG.md
-- **Output:** Updated task priorities and dependencies
-- **When to use:** Daily, or when tasks are blocked
+**Example Prompts:**
+```
+Your role: Coding Agent
+
+Read:
+- /workspaces/qetf/CLAUDE_CONTEXT.md
+- /workspaces/qetf/handoffs/handoff-IMPL-001.md
+
+Task: Implement the task specified in handoff-IMPL-001.md
+
+Deliver:
+- Working implementation
+- Tests (all passing)
+- Updated PROGRESS_LOG.md
+- handoffs/completion-IMPL-001.md
+
+Update TASKS.md status when done.
+```
 
 ## File Structure
 
@@ -49,30 +145,41 @@ Documentation ← ─────────────── PROGRESS_LOG.md
 - **PROJECT_BRIEF.md** - Overall goals, phases, architecture
 - **PROGRESS_LOG.md** - Daily updates, decisions, status
 
-### Agent Workflow Files (New)
+### Agent Workflow Files
 - **TASKS.md** - Task queue with statuses
-- **HANDOFFS/** - Directory for agent-to-agent handoffs
+- **handoffs/** - Directory for agent-to-agent handoffs
   - `handoff-TASKID.md` - Detailed task context
   - `completion-TASKID.md` - Task completion summary
 
 ## Task Lifecycle
 
-### 1. Task Creation (Planning Agent)
+### 1. Strategy Direction (Quant Researcher)
+
+When exploring new strategies or analyzing results:
+```
+Quant Researcher analyzes backtest results:
+- "Momentum with 12-month lookback underperforms because..."
+- "Recommend testing: momentum acceleration, volatility scaling, sector rotation"
+- "Parameter ranges to search: lookback 3-12 months, top_n 10-30"
+```
+
+### 2. Task Creation (Architect/Planner)
 
 ```yaml
-Task: IMPL-001-momentum-alpha
+Task: IMPL-001-momentum-accel
 Status: ready
 Priority: high
 Assigned: (none - available for pickup)
-Estimated: 1-2 hours
 Dependencies: []
 
 Description: |
-  Implement MomentumAlpha class in src/quantetf/alpha/momentum.py
+  Implement MomentumAcceleration alpha model that measures rate of change
+  of momentum (second derivative of price).
 
 Acceptance Criteria:
   - Implements AlphaModel base class
-  - Uses 252-day lookback by default
+  - Computes momentum acceleration = momentum(t) - momentum(t-N)
+  - Configurable short_window and long_window parameters
   - Strict T-1 data access (no lookahead)
   - Includes docstrings and type hints
   - Has unit tests with synthetic data
@@ -80,115 +187,68 @@ Acceptance Criteria:
 
 Context:
   - Read: CLAUDE_CONTEXT.md, src/quantetf/alpha/base.py
-  - Pattern: See existing YFinanceProvider for data access
-  - Testing: See tests/test_yfinance_provider.py for test patterns
+  - Pattern: See existing MomentumAlpha for reference
+  - Quant rationale: Momentum acceleration captures trend strength changes
 
 Handoff File: handoffs/handoff-IMPL-001.md
 ```
 
-### 2. Task Pickup (Coding Agent)
+### 3. Task Pickup (Coding Agent)
 
 Agent updates TASKS.md:
 ```yaml
 Status: in_progress
-Assigned: Agent-Alpha-001
-Started: 2026-01-09 10:30
+Assigned: Coding-Agent-001
+Started: 2026-01-15 10:30
 ```
 
-### 3. Implementation
-
-Agent works on the task, following CLAUDE_CONTEXT.md standards.
-
-### 4. Completion
+### 4. Implementation & Completion (Coding Agent)
 
 Agent:
-1. Runs tests (`pytest tests/`)
-2. Creates completion note: `handoffs/completion-IMPL-001.md`
-3. Updates TASKS.md status to `completed`
-4. Commits code with clear message
+1. Implements the feature following CLAUDE_CONTEXT.md
+2. Writes comprehensive tests
+3. Runs tests (`pytest tests/`)
+4. Updates PROGRESS_LOG.md with completion summary
+5. Creates completion note: `handoffs/completion-IMPL-001.md`
+6. Updates TASKS.md status to `completed`
+7. Commits code with clear message
 
-### 5. Review (Review Agent)
+## When to Use Each Agent
 
-Agent:
-1. Verifies tests pass
-2. Checks code quality
-3. Updates PROGRESS_LOG.md
-4. Marks task as `merged`
-
-## Creating Task Handoffs
-
-### Handoff File Template
-
-```markdown
-# Task Handoff: IMPL-001-momentum-alpha
-
-## Quick Context
-You are implementing the MomentumAlpha class. This is part of Phase 2
-(Backtest Engine) which started on Jan 9, 2026.
-
-## What You Need to Know
-- We use T-1 data access (no lookahead bias)
-- All price data is in MultiIndex format (Ticker, Price_Field)
-- Momentum = (current_price / price_N_days_ago) - 1.0
-
-## Files to Read First
-1. /workspaces/qetf/CLAUDE_CONTEXT.md - Coding standards
-2. /workspaces/qetf/src/quantetf/alpha/base.py - Base class
-3. /workspaces/qetf/src/quantetf/data/snapshot_store.py - Data access
-
-## Implementation Steps
-1. Create MomentumAlpha class inheriting from AlphaModel
-2. Implement __init__ with lookback_days parameter
-3. Implement score() method with T-1 data access
-4. Add comprehensive docstrings
-5. Create tests in tests/test_momentum_alpha.py
-6. Run: pytest tests/test_momentum_alpha.py
-
-## Acceptance Criteria
-- [ ] Class implements AlphaModel interface correctly
-- [ ] Uses store.get_close_prices(as_of=...) for T-1 data
-- [ ] Handles missing data gracefully (returns NaN scores)
-- [ ] All tests pass
-- [ ] Code follows CLAUDE_CONTEXT.md standards
-
-## Success Looks Like
-```python
-# Can be used like this:
-alpha = MomentumAlpha(lookback_days=252)
-scores = alpha.score(
-    as_of=pd.Timestamp("2023-12-31"),
-    universe=universe,
-    features=features,  # Not used, but required by interface
-    store=store
-)
-# Returns AlphaScores with momentum for each ticker
-```
-
-## Questions? Issues?
-If blocked or unclear:
-1. Check CLAUDE_CONTEXT.md for patterns
-2. Look at similar implementations (e.g., YFinanceProvider)
-3. Document the blocker in completion note
-```
+| Situation | Agent |
+|-----------|-------|
+| "Why doesn't this strategy beat SPY?" | **Quant Researcher** |
+| "What parameter ranges should we search?" | **Quant Researcher** |
+| "Is this result statistically significant or overfitting?" | **Quant Researcher** |
+| "How should we implement the optimizer?" | **Architect/Planner** |
+| "Break down this feature into tasks" | **Architect/Planner** |
+| "What tasks are blocked?" | **Architect/Planner** |
+| "Implement IMPL-005 momentum acceleration" | **Coding Agent** |
+| "Fix the bug in portfolio construction" | **Coding Agent** |
+| "Add tests for the new feature" | **Coding Agent** |
 
 ## Parallel Work Strategy
 
-### Example: Phase 2 Parallelization
+### Example: Strategy Search Parallelization
 
-**Planning Agent creates 5 tasks:**
-1. `IMPL-001` - MomentumAlpha model
-2. `IMPL-002` - EqualWeightTopN constructor
-3. `IMPL-003` - FlatTransactionCost model
-4. `IMPL-004` - SimpleBacktestEngine
-5. `TEST-001` - Integration tests
+**Quant Researcher recommends 3 strategy variants to test:**
+1. Momentum acceleration (rate of change)
+2. Volatility-scaled momentum
+3. Sector rotation overlay
+
+**Architect/Planner creates tasks:**
+1. `IMPL-001` - MomentumAcceleration alpha model
+2. `IMPL-002` - VolatilityScaledMomentum alpha model
+3. `IMPL-003` - SectorRotation alpha model
+4. `TEST-001` - Backtest all three variants
 
 **Execution:**
-- Agent-Alpha-001 picks up IMPL-001 (momentum)
-- Agent-Portfolio-001 picks up IMPL-002 (constructor)
-- Agent-Cost-001 picks up IMPL-003 (cost model)
+- Coding-Agent-001 picks up IMPL-001
+- Coding-Agent-002 picks up IMPL-002
+- Coding-Agent-003 picks up IMPL-003
 - All work in parallel
-- When all 3 complete, Agent-Engine-001 picks up IMPL-004
-- Finally Agent-Test-001 picks up TEST-001
+- When all complete, run comparative backtests
+- Quant Researcher analyzes results
 
 **Time saved:** 3x speedup vs sequential
 
@@ -196,74 +256,82 @@ If blocked or unclear:
 
 Tasks specify dependencies:
 ```yaml
-Task: IMPL-004-backtest-engine
+Task: TEST-001-compare-strategies
 Dependencies: [IMPL-001, IMPL-002, IMPL-003]
 Status: blocked
 ```
 
-Scheduling agent updates to `ready` when dependencies complete.
+Architect/Planner updates to `ready` when dependencies complete.
 
 ## Benefits of This Approach
 
-1. **No context loss** - Each agent starts fresh
-2. **Parallel execution** - Multiple tasks simultaneously
-3. **Clear handoffs** - Explicit task specifications
-4. **Better testing** - Each component tested independently
-5. **Easier debugging** - Small, focused changes
-6. **Scalable** - Add more agents as needed
+1. **Domain expertise** - Quant Researcher brings financial knowledge
+2. **No context loss** - Each agent starts fresh with clear handoffs
+3. **Parallel execution** - Multiple tasks simultaneously
+4. **Clear ownership** - Coding agents own full delivery
+5. **Better testing** - Each component tested independently
+6. **Scalable** - Add more coding agents as needed
 7. **Resilient** - Agent failure doesn't lose all progress
 
 ## Best Practices
 
-### For Planning Agent
-- Break tasks into 1-3 hour chunks
-- Make tasks as independent as possible
+### For Quant Researcher
+- Ground recommendations in established quant theory
+- Provide specific, testable hypotheses
+- Explain the "why" behind suggestions
+- Consider transaction costs and implementation feasibility
+- Flag potential overfitting risks
+
+### For Architect/Planner
+- Break tasks into focused, independent chunks
+- Make tasks as parallelizable as possible
 - Provide clear acceptance criteria
 - Include code examples in handoffs
+- Keep dependencies minimal
+- Prioritize tasks that advance the primary goal (beat SPY)
 
 ### For Coding Agents
 - Read handoff file completely first
 - Follow CLAUDE_CONTEXT.md standards
 - Write tests before marking complete
-- Update completion notes with any learnings
-
-### For Review Agent
-- Verify tests pass
-- Check for CLAUDE_CONTEXT.md compliance
-- Update PROGRESS_LOG.md with what was completed
-- Identify patterns for CLAUDE_CONTEXT.md
-
-### For Scheduling Agent
-- Check daily for blocked tasks
-- Identify new dependencies as they emerge
-- Prioritize critical path tasks
-- Balance agent workload
-
-## Migration from Current State
-
-**Current:** Single agent session with todo list
-**Target:** Multiple agents with task queue
-
-**Steps:**
-1. Create TASKS.md from current todos
-2. Create handoff files for each task
-3. Launch specialized agents to pick up tasks
-4. Review agent consolidates results
+- Update PROGRESS_LOG.md immediately on completion
+- Document any learnings or blockers in completion notes
+- Own the full delivery (don't wait for review)
 
 ## Example Session Starters
 
-### Planning Agent
+### Quant Researcher
 ```
 Read:
 - /workspaces/qetf/PROJECT_BRIEF.md
 - /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/artifacts/[latest_backtest_results]
 
-Your role: Planning Agent
-Task: Break down Phase 2 (Backtest Engine) into 5-10 independent tasks
+Your role: Quant Researcher Agent
+
+Our goal: Find a strategy that beats SPY in both 1-year and 3-year periods.
+
+Current status: Momentum strategy with 12-month lookback is underperforming.
+
+Task: Analyze the results and recommend 3-5 specific strategy modifications
+to test, with rationale grounded in quantitative finance theory.
+```
+
+### Architect/Planner
+```
+Read:
+- /workspaces/qetf/PROJECT_BRIEF.md
+- /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/TASKS.md
+
+Your role: Architect/Planner Agent
+
+Task: Based on the Quant Researcher's recommendations, create implementation
+tasks for the top 3 strategy variants.
 
 Create:
-- TASKS.md with task specifications
-- handoffs/ directory with handoff files for each task
+- Updated TASKS.md with new tasks
+- handoffs/ files for each task
 
 Make tasks parallelizable where possible.
 ```
@@ -275,14 +343,17 @@ Read:
 - /workspaces/qetf/handoffs/handoff-IMPL-001.md
 
 Your role: Coding Agent
+
 Task: Implement the task specified in handoff-IMPL-001.md
 
-Deliver:
+You own full delivery:
 - Working implementation
 - Tests (all passing)
+- Updated PROGRESS_LOG.md
 - handoffs/completion-IMPL-001.md
+- Updated TASKS.md status
 
-Update TASKS.md status when done.
+Commit when done.
 ```
 
 ## Tools
@@ -301,12 +372,20 @@ grep "Status: completed" TASKS.md
 
 ### Quick Agent Launch
 ```bash
-# For next session: point agent directly to task
+# Quant Researcher session
+claude "Your role is Quant Researcher. Read PROJECT_BRIEF.md and the latest
+backtest results, then analyze why our strategy underperforms SPY."
+
+# Architect/Planner session
+claude "Your role is Architect/Planner. Read TASKS.md and create tasks for
+implementing momentum acceleration."
+
+# Coding Agent session
 claude "Read handoffs/handoff-IMPL-001.md and implement it"
 ```
 
 ## References
 
 - Boris Cherny's agentic workflow: https://threadreaderapp.com/thread/2007179832300581177.html
-- Adapted for parallel multi-agent execution
+- Adapted for parallel multi-agent execution with quant domain expertise
 - Inspired by kanban / agile task management

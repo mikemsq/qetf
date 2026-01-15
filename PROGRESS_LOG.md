@@ -64,6 +64,41 @@ This section shows the last 7 days of activity. For full history, see [session-n
 
 ### Daily Logs
 
+#### Wednesday, January 15, 2026 (Agent Workflow Revision)
+
+**Duration:** ~30 minutes
+**Focus:** Revise agent workflow to align with project goals
+
+**Completed:**
+
+- ✅ **Revised AGENT_WORKFLOW.md with new 3-agent structure**
+  - Added **Quant Researcher** agent for financial domain expertise
+  - Merged Planning + Scheduling into **Architect/Planner** agent
+  - Removed **Review Agent** (responsibilities moved to Coding Agent)
+  - Updated workflow diagram, examples, and best practices
+  - Added "When to Use Each Agent" decision table
+
+- ✅ **Added "finalize" session command to CLAUDE_CONTEXT.md**
+  - Documents the finalize workflow for future sessions
+  - Ensures consistent session wrap-up process
+
+**Key Changes:**
+
+| Old Structure | New Structure |
+|---------------|---------------|
+| Planning Agent | → Merged into Architect/Planner |
+| Scheduling Agent | → Merged into Architect/Planner |
+| Review Agent | → Removed (now Coding Agent responsibility) |
+| *(none)* | → Added Quant Researcher |
+
+**Rationale:**
+
+- Project goal is financial (beat SPY), not just coding - needs quant expertise
+- Review Agent created unnecessary handoff friction
+- Planning + Scheduling split was artificial for a solo/small-team project
+
+---
+
 #### Wednesday, January 15, 2026 (REFACTOR-001 Verification)
 
 **Duration:** ~30 minutes

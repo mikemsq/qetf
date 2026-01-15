@@ -497,6 +497,14 @@ For quick reference:
 4. Update session notes as you go
 5. Commit and push changes
 
+### Session Commands
+
+**"finalize"** - When the user says "finalize", end the session by:
+1. Update PROGRESS_LOG.md with what was accomplished
+2. Review any other docs that need updating (TASKS.md if applicable)
+3. Commit all changes with a clear commit message
+4. Ensure the next session can continue seamlessly
+
 -----
 
 ## Version History
@@ -507,3 +515,4 @@ For quick reference:
 |2026-01-07|Updated for Python project|Fixed JS examples, added quant-specific guidelines|
 |2026-01-09|Streamlined duplication   |Removed session workflow (now in AGENT_WORKFLOW.md)|
 |2026-01-13|Added Path object standard|Mandate pathlib.Path for all file path handling  |
+|2026-01-15|Added session commands    |Added "finalize" command for session wrap-up     |
