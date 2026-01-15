@@ -709,11 +709,12 @@ This sprint implements an automated system to find ETF strategies that beat SPY 
 ---
 
 ### OPT-001: Parameter Grid Generator
-**Status:** ready
+**Status:** completed
 **Priority:** HIGH
 **Estimated:** 2-3 hours
+**Completed:** 2026-01-14
 **Dependencies:** []
-**Assigned:** Unassigned
+**Assigned:** Session-OPT-001
 
 **Description:**
 Create the parameter grid generator module that defines schedule-specific parameter search spaces for all 4 alpha models (momentum, momentum_acceleration, vol_adjusted_momentum, residual_momentum).
@@ -722,9 +723,9 @@ Create the parameter grid generator module that defines schedule-specific parame
 - Weekly rebalancing uses shorter lookback periods (faster signals match frequent trading)
 - Monthly rebalancing uses longer lookback periods (stable signals match infrequent trading)
 
-**Files to Create:**
-- `src/quantetf/optimization/grid.py`
-- `tests/optimization/test_grid.py`
+**Files Created:**
+- `src/quantetf/optimization/grid.py` (450+ lines)
+- `tests/optimization/test_grid.py` (47 tests)
 
 **Implementation Details:**
 - Define `PARAMETER_GRIDS_WEEKLY` and `PARAMETER_GRIDS_MONTHLY` dictionaries
@@ -733,29 +734,30 @@ Create the parameter grid generator module that defines schedule-specific parame
 - Implement `generate_configs()` to generate all valid combinations
 - Implement `count_configs()` for reporting
 
-**Expected Output:**
-- ~138 weekly configurations
-- ~216 monthly configurations
-- ~354 total configurations
+**Results:**
+- 324 total configurations generated
+- 47 comprehensive tests, all passing
+- Commit: `b9e4932`
 
 **Handoff:** `docs/handouts/HANDOUT_grid_generator.md`
 
 **Acceptance Criteria:**
-- [ ] All 4 alpha models have schedule-specific parameter grids
-- [ ] `is_valid_config()` rejects invalid combinations (short >= long for momentum_acceleration)
-- [ ] `generate_configs()` returns list of StrategyConfig objects
-- [ ] `count_configs()` returns breakdown by schedule and alpha type
-- [ ] 10+ tests covering edge cases and validation
-- [ ] Type hints and docstrings complete
+- [x] All 4 alpha models have schedule-specific parameter grids
+- [x] `is_valid_config()` rejects invalid combinations (short >= long for momentum_acceleration)
+- [x] `generate_configs()` returns list of StrategyConfig objects
+- [x] `count_configs()` returns breakdown by schedule and alpha type
+- [x] 10+ tests covering edge cases and validation (47 delivered)
+- [x] Type hints and docstrings complete
 
 ---
 
 ### OPT-002: Multi-Period Evaluator
-**Status:** ready
+**Status:** completed
 **Priority:** HIGH
 **Estimated:** 3-4 hours
-**Dependencies:** [OPT-001]
-**Assigned:** Unassigned
+**Completed:** 2026-01-15
+**Dependencies:** [OPT-001] (completed)
+**Assigned:** Session-OPT-002
 
 **Description:**
 Create the multi-period evaluator that runs a single strategy configuration across 3yr, 5yr, and 10yr windows and determines if it beats SPY.
@@ -766,14 +768,14 @@ Create the multi-period evaluator that runs a single strategy configuration acro
 - Determine "beats SPY" status (positive active return AND positive IR in ALL periods)
 - Calculate composite score for ranking
 
-**Files to Create:**
-- `src/quantetf/optimization/evaluator.py`
-- `tests/optimization/test_evaluator.py`
+**Files Created:**
+- `src/quantetf/optimization/evaluator.py` (400+ lines)
+- `tests/optimization/test_evaluator.py` (22 tests)
 
 **Implementation Details:**
-- Create `PeriodMetrics` dataclass (strategy return, SPY return, active return, IR, etc.)
-- Create `MultiPeriodResult` dataclass with `beats_spy_all_periods` flag and `composite_score`
-- Implement `MultiPeriodEvaluator` class with `evaluate()` method
+- Created `PeriodMetrics` dataclass (strategy return, SPY return, active return, IR, etc.)
+- Created `MultiPeriodResult` dataclass with `beats_spy_all_periods` flag and `composite_score`
+- Implemented `MultiPeriodEvaluator` class with `evaluate()` method
 - Composite score = avg(IR) - consistency_penalty + winner_bonus
 
 **Dependencies (existing modules):**
@@ -784,22 +786,30 @@ Create the multi-period evaluator that runs a single strategy configuration acro
 
 **Handoff:** `docs/handouts/HANDOUT_multi_period_evaluator.md`
 
+**Results:**
+- 22 comprehensive tests (exceeds target of 12+)
+- All tests passing (100%)
+- Integrates with existing backtest engine and alpha factory
+- Supports configurable evaluation periods
+- Total test count: 356 → 378 (+22 optimization tests)
+
 **Acceptance Criteria:**
-- [ ] Evaluates strategy across 3yr, 5yr, 10yr periods
-- [ ] Calculates all metrics: strategy return, SPY return, active return, IR, Sharpe, max DD
-- [ ] `beats_spy_all_periods` correctly identifies winning strategies
-- [ ] Composite score rewards consistency and penalizes volatility
-- [ ] Graceful error handling for failed evaluations
-- [ ] 12+ tests covering normal operation and edge cases
+- [x] Evaluates strategy across 3yr, 5yr, 10yr periods
+- [x] Calculates all metrics: strategy return, SPY return, active return, IR, Sharpe, max DD
+- [x] `beats_spy_all_periods` correctly identifies winning strategies
+- [x] Composite score rewards consistency and penalizes volatility
+- [x] Graceful error handling for failed evaluations
+- [x] 12+ tests covering normal operation and edge cases (22 delivered)
 
 ---
 
 ### OPT-003: Strategy Optimizer
-**Status:** ready
+**Status:** completed
 **Priority:** HIGH
 **Estimated:** 3-4 hours
-**Dependencies:** [OPT-001, OPT-002]
-**Assigned:** Unassigned
+**Completed:** 2026-01-15
+**Dependencies:** [OPT-001, OPT-002] (both completed)
+**Assigned:** Session-OPT-003
 
 **Description:**
 Create the main optimizer orchestrator that generates all configurations, runs evaluations, ranks results, and produces reports.
@@ -810,15 +820,15 @@ Create the main optimizer orchestrator that generates all configurations, runs e
 - Graceful error handling (log and skip failed configs)
 - Comprehensive output files
 
-**Files to Create:**
-- `src/quantetf/optimization/optimizer.py`
-- `tests/optimization/test_optimizer.py`
+**Files Created:**
+- `src/quantetf/optimization/optimizer.py` (450+ lines)
+- `tests/optimization/test_optimizer.py` (26 tests)
 
 **Implementation Details:**
-- Create `OptimizationResult` dataclass with all_results, winners, best_config
-- Implement `StrategyOptimizer` class with `run()` method
+- Created `OptimizationResult` dataclass with all_results, winners, best_config
+- Implemented `StrategyOptimizer` class with `run()` method
 - Support `max_workers` parameter for parallel execution
-- Generate output files:
+- Generates output files:
   - `all_results.csv` - every config with metrics
   - `winners.csv` - only configs that beat SPY
   - `best_strategy.yaml` - ready-to-use config file
@@ -835,15 +845,21 @@ artifacts/optimization/TIMESTAMP/
 
 **Handoff:** `docs/handouts/HANDOUT_optimizer.md`
 
+**Results:**
+- 26 comprehensive tests, all passing
+- Supports filtering by schedule_names and alpha_types
+- Progress callback for custom progress tracking
+- Integration tests with real snapshot data
+
 **Acceptance Criteria:**
-- [ ] Generates all configs via grid.py
-- [ ] Runs evaluations via evaluator.py
-- [ ] Sorts results by composite score
-- [ ] Identifies and exports winning strategies
-- [ ] Creates all 4 output files
-- [ ] Progress bar shows evaluation progress
-- [ ] Handles failed configs gracefully
-- [ ] 10+ tests
+- [x] Generates all configs via grid.py
+- [x] Runs evaluations via evaluator.py
+- [x] Sorts results by composite score
+- [x] Identifies and exports winning strategies
+- [x] Creates all 4 output files
+- [x] Progress bar shows evaluation progress
+- [x] Handles failed configs gracefully
+- [x] 10+ tests (26 delivered)
 
 ---
 
@@ -900,25 +916,26 @@ python scripts/find_best_strategy.py \
 ---
 
 ### OPT-005: Update __init__.py Exports
-**Status:** ready
+**Status:** completed
 **Priority:** MEDIUM
 **Estimated:** 30 minutes
-**Dependencies:** [OPT-001, OPT-002, OPT-003]
-**Assigned:** Unassigned
+**Completed:** 2026-01-15
+**Dependencies:** [OPT-001, OPT-002, OPT-003] (all completed)
+**Assigned:** Session-OPT-003
 
 **Description:**
 Update `src/quantetf/optimization/__init__.py` to export all new classes and functions.
 
-**Files to Update:**
+**Files Updated:**
 - `src/quantetf/optimization/__init__.py`
 
-**Exports to Add:**
+**Exports Added:**
 - From evaluator.py: `PeriodMetrics`, `MultiPeriodResult`, `MultiPeriodEvaluator`
 - From optimizer.py: `OptimizationResult`, `StrategyOptimizer`
 
 **Acceptance Criteria:**
-- [ ] All public classes importable from `quantetf.optimization`
-- [ ] `__all__` list updated
+- [x] All public classes importable from `quantetf.optimization`
+- [x] `__all__` list updated
 
 ---
 
