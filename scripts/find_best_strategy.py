@@ -103,8 +103,8 @@ Examples:
     parser.add_argument(
         '--periods',
         type=str,
-        default='3,5,10',
-        help='Comma-separated evaluation periods in years (default: 3,5,10)',
+        default='1,3',
+        help='Comma-separated evaluation periods in years (default: 1,3)',
     )
 
     parser.add_argument(

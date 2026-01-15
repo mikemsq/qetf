@@ -6,17 +6,33 @@
 
 -----
 
+## 🎯 PRIMARY GOAL
+
+**Find a strategy that beats SPY in both 1-year and 3-year evaluation periods.**
+
+| Requirement | Status |
+|-------------|--------|
+| Primary Universe | **Tier 4 (200 ETFs)** |
+| Data Period | 10 years (2016-2026) |
+| Evaluation Periods | 1yr AND 3yr |
+| Win Criteria | Active Return > 0, IR > 0 in BOTH periods |
+
+-----
+
 ## Current Status
 
-**Active Phase:** Phase 3 - Analytics & Visualization (50% complete - 6/12 tasks done)
+**Active Phase:** Strategy Search - Finding Winning Strategy
 **Branch:** main
 
 ### Quick Status
 
-- **What's working:** Complete end-to-end backtesting system with real data, momentum strategy, equal-weight portfolio, transaction costs, no-lookahead validation, **SPY benchmark comparison** (Phase 2 complete, Strategy Optimizer complete, 378+ tests passing)
-- **What's in progress:** Phase 3 analytics tasks
-- **What's blocked:** None currently
-- **Next priority:** VIZ-002 (Alpha Diagnostics), ANALYSIS-004 (Parameter Sensitivity), or VIZ-003 (Stress Test)
+- **What's working:** Complete end-to-end backtesting system, 4 alpha models, strategy optimizer (378+ tests passing)
+- **What's in progress:** Preparing Tier 4 data and running optimizer with 1yr/3yr periods
+- **What's blocked:** Need to ingest Tier 4 10-year data
+- **Next priority:**
+  1. Ingest Tier 4 (200 ETF) 10-year data
+  2. Run optimizer with 1yr/3yr evaluation periods
+  3. Find winning strategy
 
 ### ✅ Active Returns Refactor Complete (Jan 15, 2026)
 

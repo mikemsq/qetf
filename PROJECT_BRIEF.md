@@ -1,7 +1,21 @@
 # Project Brief - QuantETF
 
-**Last Updated:** January 9, 2026
-**Project Status:** Phase 1 Complete → Phase 2 In Progress
+**Last Updated:** January 15, 2026
+**Project Status:** Strategy Search Phase - Finding Winning Strategy
+
+-----
+
+## 🎯 PRIMARY GOAL
+
+**Find a strategy that beats SPY in both 1-year and 3-year evaluation periods.**
+
+Everything else (code, infrastructure, analytics) is a means to achieve this goal.
+
+### Success Criteria
+- ✅ **Active Return > 0** in BOTH 1-year AND 3-year periods
+- ✅ **Information Ratio > 0** in BOTH periods
+- Strategy must work on **Tier 4 universe (200 ETFs)**
+- Use **10 years of historical data** for robust evaluation
 
 -----
 
@@ -11,11 +25,11 @@
 
 QuantETF is a modular quantitative investment platform for ETF-based strategies. It provides:
 
+- **Automated strategy search** to find configurations that beat SPY
 - **Research tools** for exploring datasets, prototyping signals, and running backtests
 - **Production pipeline** that generates automated rebalancing recommendations
-- **Modular architecture** allowing easy swapping of data sources, alpha models, risk models, and portfolio construction methods
 
-The goal is to create and maintain a portfolio of ETFs that exceeds S&P 500 returns through systematic rebalancing based on quantitative signals.
+**The infrastructure exists to serve one purpose: find and validate winning strategies.**
 
 ### Problem Statement
 
@@ -34,26 +48,27 @@ Current solutions are either:
 
 ### Success Criteria
 
-**Primary goal:**
+**Primary goal (MUST ACHIEVE):**
 
-- [ ] Generate a portfolio that demonstrates superior risk-adjusted returns vs S&P 500 in backtest (Sharpe ratio > 0.8)
-- [ ] **All performance analysis must show strategy vs SPY comparison** - active performance is the key metric
+- [ ] **Find a strategy that beats SPY in 1-year AND 3-year periods**
+- [ ] Active Return > 0 in both evaluation windows
+- [ ] Information Ratio > 0 in both evaluation windows
 
 **Secondary goals:**
 
-- [ ] Reproducible backtests with documented methodology
+- [x] Reproducible backtests with documented methodology
+- [x] Automated strategy optimizer to search parameter space
 - [ ] Weekly rebalancing recommendations in production
-- [ ] Modular codebase where components can be swapped without rewriting the engine
 - [ ] Clear audit trail from data → signals → portfolio → recommendations
 
-**Performance Reporting Standard:**
+**Evaluation Standard:**
 
-Every analysis must show three metrics together:
-1. Portfolio performance (strategy returns)
-2. Benchmark performance (SPY buy-and-hold)
-3. Active performance (excess returns vs benchmark)
+| Period | Requirement |
+|--------|-------------|
+| 1-year | Active Return > 0, IR > 0 |
+| 3-year | Active Return > 0, IR > 0 |
 
-The goal is not just positive returns, but **beating SPY consistently**.
+A strategy WINS only if it beats SPY in **BOTH** periods.
 
 -----
 
@@ -108,7 +123,8 @@ The goal is not just positive returns, but **beating SPY consistently**.
 ### Assumptions
 
 1. **Data availability:** We can access historical ETF prices via API or CSV
-1. **Universe size:** Working with 50-200 ETFs (not thousands)
+1. **Universe size:** **Tier 4 (200 ETFs)** is the primary universe for strategy search
+1. **Data period:** 10 years of historical data (2016-2026)
 1. **Rebalancing frequency:** Weekly or monthly (not daily)
 1. **Computing resources:** Local machine or modest cloud VM is sufficient
 1. **User technical skill:** Comfortable with Python, terminal, and Jupyter notebooks

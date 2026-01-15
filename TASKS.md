@@ -1,7 +1,20 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 14, 2026
-**Active Phase:** Strategy Optimizer System Implementation
+**Last Updated:** January 15, 2026
+**Active Phase:** Strategy Search - Find Winning Strategy
+
+## 🎯 PRIMARY GOAL
+
+**Find a strategy that beats SPY in both 1-year and 3-year evaluation periods.**
+
+| Requirement | Value |
+|-------------|-------|
+| Primary Universe | **Tier 4 (200 ETFs)** |
+| Data Period | 10 years (2016-2026) |
+| Evaluation Periods | **1yr AND 3yr** (changed from 3yr/5yr/10yr) |
+| Win Criteria | Active Return > 0, IR > 0 in BOTH periods |
+
+---
 
 ## Task Status Legend
 
@@ -10,6 +23,69 @@
 - `blocked` - Waiting on dependencies
 - `completed` - Implementation done, needs review
 - `merged` - Reviewed and merged to main
+
+---
+
+## 🚀 IMMEDIATE PRIORITY: Find Winning Strategy
+
+### DATA-001: Ingest Tier 4 10-Year Data
+**Status:** ready
+**Priority:** CRITICAL
+**Estimated:** 30-60 minutes
+**Dependencies:** []
+
+**Description:**
+Ingest 10 years of historical data for the Tier 4 universe (200 ETFs) and create a snapshot for strategy optimization.
+
+**Steps:**
+1. Run ingest script for Tier 4 (200 ETFs, 2016-01-15 to 2026-01-15)
+2. Create snapshot from ingested data
+3. Validate data quality
+
+**Command:**
+```bash
+# Ingest data
+python scripts/ingest_etf_data.py \
+    --universe tier4_broad_200 \
+    --start-date 2016-01-15 \
+    --end-date 2026-01-15
+
+# Create snapshot
+python scripts/create_snapshot.py --universe tier4_broad_200
+```
+
+**Acceptance Criteria:**
+- [ ] 200 ETFs with 10 years of data
+- [ ] Snapshot created and validated
+- [ ] Ready for optimizer
+
+---
+
+### SEARCH-001: Run Strategy Optimizer on Tier 4
+**Status:** blocked
+**Priority:** CRITICAL
+**Estimated:** 1-2 hours (compute time)
+**Dependencies:** [DATA-001]
+
+**Description:**
+Run the strategy optimizer on Tier 4 data with 1yr/3yr evaluation periods to find winning strategies.
+
+**Command:**
+```bash
+python scripts/find_best_strategy.py \
+    --snapshot data/snapshots/<tier4_snapshot> \
+    --periods 1,3 \
+    --parallel 4
+```
+
+**Expected Output:**
+- `artifacts/optimization/<timestamp>/winners.csv` - Strategies that beat SPY in both periods
+- `artifacts/optimization/<timestamp>/best_strategy.yaml` - Best configuration
+
+**Acceptance Criteria:**
+- [ ] At least one strategy beats SPY in both 1yr AND 3yr periods
+- [ ] Winners documented with full metrics
+- [ ] Best strategy config saved for production use
 
 ---
 
@@ -768,7 +844,11 @@ Create the parameter grid generator module that defines schedule-specific parame
 **Assigned:** Session-OPT-002
 
 **Description:**
-Create the multi-period evaluator that runs a single strategy configuration across 3yr, 5yr, and 10yr windows and determines if it beats SPY.
+Create the multi-period evaluator that runs a single strategy configuration across configurable time windows and determines if it beats SPY.
+
+**UPDATED REQUIREMENT (Jan 15, 2026):**
+- **Evaluation periods changed to: 1yr AND 3yr** (from 3yr/5yr/10yr)
+- Strategy wins if it beats SPY in BOTH 1-year and 3-year periods
 
 **Key Features:**
 - Evaluate strategy across configurable time periods
@@ -785,6 +865,7 @@ Create the multi-period evaluator that runs a single strategy configuration acro
 - Created `MultiPeriodResult` dataclass with `beats_spy_all_periods` flag and `composite_score`
 - Implemented `MultiPeriodEvaluator` class with `evaluate()` method
 - Composite score = avg(IR) - consistency_penalty + winner_bonus
+- **Periods are configurable** - pass `--periods 1,3` to CLI for new requirement
 
 **Dependencies (existing modules):**
 - `src/quantetf/backtest/simple_engine.py` - `SimpleBacktestEngine`
@@ -802,7 +883,7 @@ Create the multi-period evaluator that runs a single strategy configuration acro
 - Total test count: 356 → 378 (+22 optimization tests)
 
 **Acceptance Criteria:**
-- [x] Evaluates strategy across 3yr, 5yr, 10yr periods
+- [x] Evaluates strategy across configurable periods (default: 1yr, 3yr)
 - [x] Calculates all metrics: strategy return, SPY return, active return, IR, Sharpe, max DD
 - [x] `beats_spy_all_periods` correctly identifies winning strategies
 - [x] Composite score rewards consistency and penalizes volatility
