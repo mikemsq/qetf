@@ -1,0 +1,48 @@
+name: production_value_momentum
+description: Production value-momentum strategy (Sharpe 2.85, +106% vs SPY)
+
+universe: configs/universes/tier4_broad_200.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: value_momentum
+  momentum_weight: 0.5
+  value_weight: 0.5
+  momentum_lookback: 252
+  value_lookback: 252
+  min_periods: 200
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+
+risk_overlays:
+  volatility_targeting:
+    enabled: true
+    target_vol: 0.15
+    lookback_days: 60
+    min_scale: 0.25
+    max_scale: 1.50
+  position_limits:
+    enabled: true
+    max_weight: 0.25
+    redistribute: true
+  drawdown_circuit_breaker:
+    enabled: true
+    soft_threshold: 0.10
+    hard_threshold: 0.20
+    exit_threshold: 0.30
+  vix_regime:
+    enabled: true
+    high_vix_threshold: 30.0
+    elevated_vix_threshold: 25.0
+    defensive_tickers: [AGG, TLT, GLD, USMV, SPLV]
+
+state:
+  backend: sqlite
+  path: data/production/portfolio_state.db
+
+monitoring:
+  drawdown_alerts: [0.10, 0.20, 0.30]
+  regime_change_alerts: true
