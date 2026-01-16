@@ -1229,10 +1229,11 @@ Update `src/quantetf/optimization/__init__.py` to export all new classes and fun
 - IMPL-010: Covariance estimation
 
 ### Phase 5: Production Pipeline
-- IMPL-011: Production recommendation generator
-- IMPL-012: Run manifest creation
-- IMPL-013: Alerting system
-- IMPL-014: Data freshness checks
+- IMPL-010: Risk Overlays Module
+- IMPL-011: Portfolio State Management ✅ (completed 2026-01-16)
+- IMPL-012: Enhanced Production Pipeline
+- IMPL-013: Monitoring & Alerts Module
+- IMPL-014: Production Config & Scripts
 
 ### Phase 6: Documentation & Polish
 - DOC-001: Tutorial notebook
