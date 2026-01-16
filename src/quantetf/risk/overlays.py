@@ -260,7 +260,7 @@ class DrawdownCircuitBreaker(RiskOverlay):
         return adjusted, diagnostics
 
 
-@dataclass
+@dataclass(frozen=True)
 class VIXRegimeOverlay(RiskOverlay):
     """Shift to defensive assets when VIX indicates high volatility regime.
 
