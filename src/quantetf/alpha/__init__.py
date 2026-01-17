@@ -12,6 +12,10 @@ from .selector import (
     ConfigurableSelector,
     compute_alpha_with_selection,
 )
+from .regime_aware import (
+    RegimeDetector,
+    RegimeAwareAlpha,
+)
 
 __all__ = [
     'AlphaModel',
@@ -28,4 +32,6 @@ __all__ = [
     'RegimeWeightedSelector',
     'ConfigurableSelector',
     'compute_alpha_with_selection',
+    'RegimeDetector',
+    'RegimeAwareAlpha',
 ]
