@@ -1,17 +1,42 @@
 # QuantETF
 
-QuantETF is a small, modular research and production platform for ETF based quantitative strategies.
+QuantETF is a systematic investment platform for ETF-based quantitative strategies designed to consistently outperform the S&P 500 (SPY).
 
-It is designed for two modes:
-- **Research**: explore datasets, define investable universes, prototype signals, run backtests, compare strategies.
-- **Production recommendations**: run a scheduled pipeline that outputs a **trade recommendation packet** (what to buy and sell, target weights, and an audit trail). This project does not include automated trading.
+## Primary Objective
+
+**Build a systematic investment process that consistently outperforms SPY on a universe of ETFs.**
+
+The platform uses historical data to generate, at any point in time, a portfolio of N ETFs designed to outperform SPY over the future time horizon. The investment process performs periodic rebalancing, generating a new optimized portfolio at each rebalance date.
+
+### Regime-Aware Alpha Generation
+
+The alpha generation process is designed to be **regime-aware**:
+
+1. **Market State Analysis**: Analyze current market conditions based on historical price behavior and macroeconomic indicators (VIX, interest rates, credit spreads, etc.)
+2. **Regime Detection**: Classify the market regime (e.g., risk-on, risk-off, high volatility, trending, mean-reverting)
+3. **Model Selection**: Select the most appropriate alpha model or model weights for the detected regime
+4. **Portfolio Generation**: Generate the optimal portfolio for the current market environment
+
+This adaptive approach aims to improve consistency by using strategies suited to current conditions rather than a single static model.
+
+### Success Criterion
+
+**The investment process must demonstrate positive active returns (outperformance vs SPY) for at least 80% of rebalance cycles during the backtest period.**
+
+This measures consistency rather than just aggregate performance - a strategy that beats SPY in 80%+ of rebalance periods is more robust and reliable than one with high total return but erratic period-by-period performance.
+
+## Two Modes of Operation
+
+- **Research**: explore datasets, define investable universes, prototype alpha signals, run backtests, and compare strategies to find winning configurations.
+- **Production**: run a scheduled pipeline that outputs periodic **rebalancing recommendations** (target portfolio, trades, and audit trail). This project does not include automated order execution.
 
 The codebase is structured so that you can swap components (data sources, alpha models, risk models, portfolio construction, rebalancing schedules) without rewriting the backtest engine or production runtime.
 
 
 ## Goals
 
-- Make strategy research reproducible with versioned datasets and config driven experiments.
+- Build an investment process that generates portfolios to outperform SPY through periodic rebalancing.
+- Make strategy research reproducible with versioned datasets and config-driven experiments.
 - Provide clean interfaces for the core building blocks of a quant workflow.
 - Support backtests that are realistic enough to avoid obvious traps (lookahead, data leakage, missing costs).
 - Produce production outputs that are easy to inspect, share, and audit.
@@ -29,10 +54,12 @@ A complete run, whether for research or production, looks like this:
 1. **Pick a dataset snapshot** (a versioned, curated view of the raw data).
 2. **Build an investable universe** for each rebalance date.
 3. **Compute features** as-of each rebalance date (no peeking).
-4. **Score the universe** using one or more alpha models.
-5. **Estimate risk** (covariance and exposures) as-of the same date.
-6. **Construct a portfolio** (target weights) subject to constraints and costs.
-7. **Simulate** holdings and returns (backtest) or **emit recommendations** (production).
+4. **Detect market regime** using macro indicators and price behavior.
+5. **Select alpha model(s)** appropriate for the detected regime.
+6. **Score the universe** using the selected alpha model(s).
+7. **Estimate risk** (covariance and exposures) as-of the same date.
+8. **Construct a portfolio** (target weights) subject to constraints and costs.
+9. **Simulate** holdings and returns (backtest) or **emit recommendations** (production).
 
 
 ## Repository Structure
@@ -82,12 +109,14 @@ QuantETF is intentionally interface first. The important interfaces you will see
 - **Data**: ingestors/connectors, curated stores, snapshot selection by `DatasetVersion`.
 - **UniverseProvider**: returns the eligible ETF list for a given as-of date.
 - **FeatureComputer**: produces a feature matrix as-of a date for a universe.
+- **RegimeDetector**: classifies market regime using macro indicators and price behavior as-of a date.
 - **AlphaModel**: produces scores (or expected returns) for a universe as-of a date.
+- **AlphaSelector**: selects or weights alpha models based on the detected regime.
 - **RiskModel**: produces covariance and exposure summaries as-of a date.
 - **PortfolioConstructor**: converts alpha + risk + constraints into target weights.
 - **TransactionCostModel**: estimates costs from turnover and liquidity proxies.
 - **BacktestEngine**: orchestrates a run on a schedule and returns a result bundle.
-- **ProductionRuntime**: runs “today”, writes a recommendation packet, and records a manifest.
+- **ProductionRuntime**: runs "today", writes a recommendation packet, and records a manifest.
 
 The key design rule is that all of these components accept an explicit `as_of` date and a `dataset_version`, so you can enforce point in time behavior and reproducibility.
 
