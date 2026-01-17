@@ -1,0 +1,56 @@
+# Example Regime-Weighted Alpha Selector Configuration
+#
+# In a regime-weighted selector, each market regime specifies weights for
+# a blend of alpha models. This allows creating dynamic ensembles that adapt
+# to market conditions while maintaining exposure to multiple signals.
+
+type: regime_weighted
+
+# Default weights to use if regime is not in the mapping below.
+# These weights will be normalized to sum to 1.0.
+default_weights:
+  momentum: 0.7
+  momentum_acceleration: 0.3
+
+# Regime-specific weight configurations.
+# For each regime, specify the models and their relative weights.
+# Weights don't need to sum to 1.0 - they'll be normalized automatically.
+regime_mapping:
+  # RISK_ON: Favor acceleration in uptrends
+  risk_on:
+    momentum: 0.5
+    momentum_acceleration: 0.5
+  
+  # ELEVATED_VOL: Add vol-adjustment
+  elevated_vol:
+    momentum: 0.4
+    vol_adjusted_momentum: 0.6
+  
+  # HIGH_VOL: Shift to conservative vol-adjusted approach
+  high_vol:
+    vol_adjusted_momentum: 0.7
+    dual_momentum: 0.3
+  
+  # RECESSION_WARNING: Diversify across multiple approaches
+  recession_warning:
+    momentum: 0.33
+    vol_adjusted_momentum: 0.33
+    dual_momentum: 0.34
+  
+  # TRENDING: Concentrate on momentum in trends
+  trending:
+    momentum: 0.4
+    momentum_acceleration: 0.6
+  
+  # MEAN_REVERTING: Revert-focused blend
+  mean_reverting:
+    momentum: 0.5
+    momentum_acceleration: 0.5
+
+# Notes:
+# - Regime names must match MarketRegime enum values exactly
+# - Model names must be registered in your AlphaModelRegistry
+# - Weights are normalized automatically (don't need to sum to 1.0)
+# - If a regime is detected but not in this mapping, default_weights is used
+# - Zero weights are allowed (effectively removing a model from that regime)
+# - This creates adaptive ensembles that balance multiple signals per regime

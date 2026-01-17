@@ -1,0 +1,42 @@
+# Example Regime-Based Alpha Selector Configuration
+#
+# In a regime-based selector, each market regime maps to a single alpha model.
+# This is useful for simple, interpretable selection rules where you want a
+# different model to lead in different market conditions.
+
+type: regime_based
+
+# Default model to use if regime is not in the mapping below.
+# This is a safety net for unmapped regimes.
+default_model: momentum
+
+# Regime-to-model mapping: each regime maps to exactly one model name.
+# Model names must correspond to models registered in the AlphaModelRegistry.
+regime_mapping:
+  # RISK_ON: Use aggressive momentum when markets are trending up
+  risk_on: momentum_acceleration
+  
+  # ELEVATED_VOL: Switch to vol-adjusted momentum in transition periods
+  elevated_vol: vol_adjusted_momentum
+  
+  # HIGH_VOL: Use conservative dual-momentum in high volatility
+  high_vol: dual_momentum
+  
+  # RECESSION_WARNING: Conservative diversified approach
+  recession_warning: momentum
+  
+  # TRENDING: Accelerate gains in trending markets
+  trending: momentum_acceleration
+  
+  # MEAN_REVERTING: Use mean reversion signals
+  mean_reverting: momentum
+  
+  # UNKNOWN: Fall back to base momentum
+  # (optional, can omit and default_model will be used)
+  unknown: momentum
+
+# Notes:
+# - Regime names must match MarketRegime enum values exactly
+# - Model names must be registered in your AlphaModelRegistry
+# - If a regime is detected but not in this mapping, default_model is used
+# - This creates simple, understandable switching logic that's easy to audit
