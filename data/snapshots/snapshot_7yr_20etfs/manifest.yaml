@@ -1,0 +1,47 @@
+snapshot_name: snapshot_7yr_20etfs
+created_at: '2026-01-16T18:51:04.728388'
+git_commit: e2cca858529689e5dc6caabcc9f23daf08390ee4
+source_files:
+  curated_data: tier1_initial_20_2019-01-01_2026-01-10_20260116_185053.parquet
+  curated_metadata: tier1_initial_20_2019-01-01_2026-01-10_20260116_185053.metadata.yaml
+data_summary:
+  universe: tier1_initial_20
+  num_tickers: 20
+  tickers:
+  - AGG
+  - DIA
+  - EEM
+  - EFA
+  - GLD
+  - IWM
+  - LQD
+  - QQQ
+  - SLV
+  - SPY
+  - TLT
+  - USDU
+  - VIXY
+  - VNQ
+  - VWO
+  - XLE
+  - XLF
+  - XLI
+  - XLK
+  - XLV
+  num_rows: 1766
+  date_range:
+    start: '2019-01-02T00:00:00'
+    end: '2026-01-09T00:00:00'
+  columns_format: MultiIndex (Ticker, Price)
+  price_fields:
+  - Close
+  - High
+  - Low
+  - Open
+  - Volume
+validation_summary:
+  total_tickers: 20
+  valid_tickers: 18
+  failed_tickers: 2
+  total_anomalies: 11
+notes: Immutable snapshot for reproducible backtesting

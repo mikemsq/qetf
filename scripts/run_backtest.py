@@ -42,6 +42,7 @@ from quantetf.portfolio.equal_weight import EqualWeightTopN
 from quantetf.portfolio.costs import FlatTransactionCost
 from quantetf.data.snapshot_store import SnapshotDataStore
 from quantetf.types import Universe
+from quantetf.evaluation.cycle_metrics import calculate_cycle_metrics, print_cycle_summary
 
 # Logging is set up in main() to write to out.txt file
 logger = logging.getLogger(__name__)
@@ -228,7 +229,7 @@ def run_backtest(args, output_dir):
     logger.info("Backtest complete!")
 
     # 6. Print metrics
-    print_metrics(result)
+    print_metrics(result, store)
 
     # 7. Save results
     output_dir = save_results(result, args, output_dir)
@@ -237,11 +238,12 @@ def run_backtest(args, output_dir):
     return result
 
 
-def print_metrics(result):
+def print_metrics(result, store):
     """Print backtest metrics to console.
 
     Args:
         result: BacktestResult object containing metrics and equity curve
+        store: SnapshotDataStore for retrieving SPY prices
     """
     logger.info("")
     logger.info("=" * 80)
@@ -264,6 +266,19 @@ def print_metrics(result):
     logger.info(f"Profit/Loss:      ${final_nav - initial_nav:>10,.2f}")
 
     logger.info("=" * 80)
+
+    # Calculate and print cycle metrics if SPY is available
+    try:
+        spy_prices = store.get_prices('SPY')
+        if spy_prices is not None and len(spy_prices) > 0:
+            cycle_metrics = calculate_cycle_metrics(
+                result,
+                spy_prices,
+                result.rebalance_dates,
+            )
+            print_cycle_summary(cycle_metrics)
+    except Exception as e:
+        logger.warning(f"Could not calculate cycle metrics: {e}")
 
 
 def save_results(result, args, output_dir):
