@@ -1,21 +1,29 @@
 # Project Brief - QuantETF
 
-**Last Updated:** January 15, 2026
+**Last Updated:** January 17, 2026
 **Project Status:** Strategy Search Phase - Finding Winning Strategy
 
 -----
 
 ## 🎯 PRIMARY GOAL
 
-**Find a strategy that beats SPY in both 1-year and 3-year evaluation periods.**
+**Build a systematic investment process that consistently outperforms the S&P 500 (SPY ETF) on a universe of ETFs.**
+
+The alpha generation component uses historical data to generate, at any point in time, a portfolio of N ETFs designed to outperform SPY over the future time horizon. The investment process performs periodic rebalancing, generating a new optimized portfolio at each rebalance date.
 
 Everything else (code, infrastructure, analytics) is a means to achieve this goal.
 
+### Core Investment Process
+1. **Alpha Generation**: Use historical data to score ETFs and identify expected outperformers
+2. **Portfolio Construction**: Select top N ETFs and determine optimal weights
+3. **Periodic Rebalancing**: Generate a new portfolio at each rebalance period (weekly/monthly)
+4. **Continuous Improvement**: Evaluate performance and refine the process
+
 ### Success Criteria
-- ✅ **Active Return > 0** in BOTH 1-year AND 3-year periods
-- ✅ **Information Ratio > 0** in BOTH periods
+- ✅ **Active Return > 0** consistently over multiple evaluation periods
+- ✅ **Information Ratio > 0** demonstrating skill-based outperformance
 - Strategy must work on **Tier 4 universe (200 ETFs)**
-- Use **10 years of historical data** for robust evaluation
+- Use **10 years of historical data** for robust evaluation and validation
 
 -----
 
@@ -25,19 +33,19 @@ Everything else (code, infrastructure, analytics) is a means to achieve this goa
 
 QuantETF is a modular quantitative investment platform for ETF-based strategies. It provides:
 
-- **Automated strategy search** to find configurations that beat SPY
+- **Systematic investment process** that generates portfolios to outperform SPY
 - **Research tools** for exploring datasets, prototyping signals, and running backtests
-- **Production pipeline** that generates automated rebalancing recommendations
+- **Production pipeline** that generates periodic rebalancing recommendations
 
-**The infrastructure exists to serve one purpose: find and validate winning strategies.**
+**The infrastructure exists to serve one purpose: build and operate a winning systematic investment process.**
 
 ### Problem Statement
 
 Individual investors and small fund managers need:
 
-1. A way to systematically evaluate ETF investment strategies
+1. A systematic way to construct portfolios that outperform market benchmarks
 1. Reproducible backtests that avoid common pitfalls (lookahead bias, survivorship bias)
-1. Automated trade recommendations without requiring full brokerage integration
+1. Automated periodic rebalancing recommendations without requiring full brokerage integration
 1. Ability to experiment with different alpha signals and portfolio construction methods
 
 Current solutions are either:
@@ -50,15 +58,15 @@ Current solutions are either:
 
 **Primary goal (MUST ACHIEVE):**
 
-- [ ] **Find a strategy that beats SPY in 1-year AND 3-year periods**
-- [ ] Active Return > 0 in both evaluation windows
-- [ ] Information Ratio > 0 in both evaluation windows
+- [ ] **Build an investment process that consistently outperforms SPY**
+- [ ] Active Return > 0 across multiple evaluation windows (1-year, 3-year, 5-year)
+- [ ] Information Ratio > 0 demonstrating systematic skill
 
 **Secondary goals:**
 
 - [x] Reproducible backtests with documented methodology
 - [x] Automated strategy optimizer to search parameter space
-- [ ] Weekly rebalancing recommendations in production
+- [ ] Weekly/monthly rebalancing recommendations in production
 - [ ] Clear audit trail from data → signals → portfolio → recommendations
 
 **Evaluation Standard:**
@@ -67,8 +75,9 @@ Current solutions are either:
 |--------|-------------|
 | 1-year | Active Return > 0, IR > 0 |
 | 3-year | Active Return > 0, IR > 0 |
+| 5-year | Active Return > 0, IR > 0 |
 
-A strategy WINS only if it beats SPY in **BOTH** periods.
+A strategy WINS if it consistently beats SPY across multiple time horizons.
 
 -----
 
