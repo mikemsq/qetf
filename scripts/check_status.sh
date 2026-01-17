@@ -112,25 +112,25 @@ check_processes() {
     if pgrep -f "find_best_strategy.py" > /dev/null; then
         echo -e "${GREEN}✓${NC} Optimization running"
         pgrep -f "find_best_strategy.py" | while read pid; do
-            echo "  PID: $pid, started: $(ps -p $pid -o lstart= | cut -d' ' -f1-3)"
+            echo "  PID: $pid"
         done
-        found=$((found + 1))
+        found=1
     fi
     
     if pgrep -f "run_backtest.py" > /dev/null; then
         echo -e "${GREEN}✓${NC} Backtest running"
         pgrep -f "run_backtest.py" | while read pid; do
-            echo "  PID: $pid, started: $(ps -p $pid -o lstart= | cut -d' ' -f1-3)"
+            echo "  PID: $pid"
         done
-        found=$((found + 1))
+        found=1
     fi
     
     if pgrep -f "walk_forward_test.py" > /dev/null; then
         echo -e "${GREEN}✓${NC} Walk-forward validation running"
         pgrep -f "walk_forward_test.py" | while read pid; do
-            echo "  PID: $pid, started: $(ps -p $pid -o lstart= | cut -d' ' -f1-3)"
+            echo "  PID: $pid"
         done
-        found=$((found + 1))
+        found=1
     fi
     
     if [ $found -eq 0 ]; then
@@ -149,25 +149,24 @@ show_optimization() {
         return
     fi
     
-    echo "Directory: $latest_dir"
+    echo -e "${YELLOW}Results directory:${NC} $latest_dir"
     echo ""
     
     if [ -f "$latest_dir/best_strategy.yaml" ]; then
-        echo -e "${GREEN}Best Strategy:${NC}"
-        head -20 "$latest_dir/best_strategy.yaml" | sed 's/^/  /'
+        echo -e "${GREEN}✓ Best Strategy Configuration:${NC}"
+        head -15 "$latest_dir/best_strategy.yaml" | sed 's/^/  /'
+        echo ""
     fi
     
-    if [ -f "$latest_dir/results_summary.json" ]; then
+    if [ -f "$latest_dir/winners.csv" ]; then
+        echo -e "${GREEN}✓ Top Strategies (winners.csv):${NC}"
+        head -3 "$latest_dir/winners.csv" | column -t -s',' | sed 's/^/  /'
         echo ""
-        echo -e "${GREEN}Summary Statistics:${NC}"
-        python3 << PYEOF 2>/dev/null || echo "  (Results file found)"
-import json
-with open("$latest_dir/results_summary.json") as f:
-    data = json.load(f)
-    for key in ['best_sharpe', 'best_return', 'mean_sharpe', 'mean_return', 'total_configs']:
-        if key in data:
-            print(f"  {key}: {data[key]}")
-PYEOF
+    fi
+    
+    if [ -f "$latest_dir/optimization_report.md" ]; then
+        echo -e "${GREEN}✓ Optimization Report:${NC}"
+        head -10 "$latest_dir/optimization_report.md" | sed 's/^/  /'
     fi
 }
 
@@ -182,20 +181,17 @@ show_backtest() {
         return
     fi
     
-    echo "Directory: $latest_dir"
+    echo -e "${YELLOW}Results directory:${NC} $latest_dir"
     echo ""
     
-    if [ -f "$latest_dir/performance_analysis.json" ]; then
-        echo -e "${GREEN}Performance Metrics:${NC}"
-        python3 << PYEOF 2>/dev/null || echo "  (Results file found)"
-import json
-with open("$latest_dir/performance_analysis.json") as f:
-    data = json.load(f)
-    metrics = ['total_return', 'annual_return', 'sharpe_ratio', 'max_drawdown', 'sortino_ratio']
-    for metric in metrics:
-        if metric in data:
-            print(f"  {metric}: {data[metric]}")
-PYEOF
+    if [ -f "$latest_dir/out.txt" ]; then
+        echo -e "${GREEN}✓ Backtest Output:${NC}"
+        head -20 "$latest_dir/out.txt" | sed 's/^/  /'
+        
+        local total_lines=$(wc -l < "$latest_dir/out.txt" 2>/dev/null || echo "0")
+        if [ "$total_lines" -gt 20 ]; then
+            echo "  ... ($total_lines total lines)"
+        fi
     fi
 }
 
@@ -210,28 +206,32 @@ show_walk_forward() {
         return
     fi
     
-    echo "Directory: $latest_dir"
+    echo -e "${YELLOW}Results directory:${NC} $latest_dir"
     echo ""
     
     if [ -f "$latest_dir/summary.json" ]; then
-        echo -e "${GREEN}Validation Summary:${NC}"
-        python3 << PYEOF 2>/dev/null || echo "  (Results file found)"
+        echo -e "${GREEN}✓ Validation Summary:${NC}"
+        python3 -c "
 import json
-with open("$latest_dir/summary.json") as f:
-    data = json.load(f)
-    metrics = ['num_windows', 'oos_sharpe_mean', 'oos_return_mean', 'pct_windows_oos_positive', 'pct_windows_oos_beats_is', 'sharpe_degradation']
-    for metric in metrics:
-        if metric in data:
-            val = data[metric]
-            if isinstance(val, float):
-                print(f"  {metric}: {val:.4f}")
-            else:
-                print(f"  {metric}: {val}")
-PYEOF
+try:
+    with open('$latest_dir/summary.json') as f:
+        data = json.load(f)
+        summary = data.get('summary_stats', {})
+        degradation = data.get('degradation_metrics', {})
+        
+        print(f'  Windows: {summary.get(\"num_windows\", \"N/A\")}')
+        print(f'  Out-of-sample Sharpe: {summary.get(\"oos_sharpe_mean\", 0):.4f}')
+        print(f'  Out-of-sample Return: {summary.get(\"oos_return_mean\", 0)*100:.2f}%')
+        print(f'  Windows positive (OOS): {degradation.get(\"pct_windows_oos_positive\", 0)*100:.0f}%')
+        print(f'  Windows beat training: {degradation.get(\"pct_windows_oos_beats_is\", 0)*100:.0f}%')
+        print(f'  Sharpe degradation: {degradation.get(\"sharpe_degradation\", 0):.4f}')
+except Exception as e:
+    print(f'  Error: {e}')
+" 2>/dev/null || echo "  (Could not parse summary.json)"
+        echo ""
     fi
     
-    echo ""
-    echo -e "${GREEN}Window Performance:${NC}"
+    echo -e "${GREEN}✓ Window Performance:${NC}"
     if [ -f "$latest_dir/window_results.csv" ]; then
         tail -6 "$latest_dir/window_results.csv" | column -t -s',' | sed 's/^/  /'
     fi
