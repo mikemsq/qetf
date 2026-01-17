@@ -1,0 +1,22 @@
+name: momentum_accel_1m_3m_tier5
+universe: configs/universes/tier5_comprehensive_300plus.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+
+alpha_model:
+  type: momentum_acceleration
+  short_lookback_days: 21    # ~1 month
+  long_lookback_days: 63     # ~3 months
+  min_periods: 50
+
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 5
+  constraints:
+    max_weight: 0.60
+    min_weight: 0.00
+
+description: |
+  Momentum acceleration with short timeframes (1M vs 3M).
+  Uses Tier 5 comprehensive universe (300+ ETFs).
+  Monthly rebalance with equal-weight top 5 holdings.

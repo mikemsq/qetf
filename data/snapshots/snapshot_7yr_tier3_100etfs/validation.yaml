@@ -1,0 +1,637 @@
+validation_timestamp: '2026-01-16T18:57:00.132196'
+tickers_validated: 100
+details:
+- ticker: AGG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKW
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BND
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BNDX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BOTZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: CPER
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBC
+  valid: false
+  error: Invalid OHLC relationships detected for DBC
+  anomalies: null
+- ticker: DIA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EEM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EFA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EMB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EPU
+  valid: false
+  error: Invalid OHLC relationships detected for EPU
+  anomalies: null
+- ticker: EWA
+  valid: false
+  error: Invalid OHLC relationships detected for EWA
+  anomalies: null
+- ticker: EWC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWJ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWT
+  valid: false
+  error: Invalid OHLC relationships detected for EWT
+  anomalies: null
+- ticker: EWU
+  valid: false
+  error: Invalid OHLC relationships detected for EWU
+  anomalies: null
+- ticker: EWY
+  valid: false
+  error: Invalid OHLC relationships detected for EWY
+  anomalies: null
+- ticker: EWZ
+  valid: false
+  error: Invalid OHLC relationships detected for EWZ
+  anomalies: null
+- ticker: FEZ
+  valid: false
+  error: Invalid OHLC relationships detected for FEZ
+  anomalies: null
+- ticker: FINX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FLOT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FXI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: GLD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HACK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HYG
+  valid: false
+  error: Invalid OHLC relationships detected for HYG
+  anomalies: null
+- ticker: IAU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IBB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ICLN
+  valid: false
+  error: Invalid OHLC relationships detected for ICLN
+  anomalies: null
+- ticker: IEF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IEMG
+  valid: false
+  error: Invalid OHLC relationships detected for IEMG
+  anomalies: null
+- ticker: IHI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: INDA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ITB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IVV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IWM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYR
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: JNK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: KBE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: KRE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: LIT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: LQD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MCHI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MTUM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MUB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PALL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PCY
+  valid: false
+  error: Invalid OHLC relationships detected for PCY
+  anomalies: null
+- ticker: PDBC
+  valid: false
+  error: Invalid OHLC relationships detected for PDBC
+  anomalies: null
+- ticker: PFF
+  valid: false
+  error: Invalid OHLC relationships detected for PFF
+  anomalies: null
+- ticker: PPLT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QQQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QUAL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: REET
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SCHP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SHY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SIZE
+  valid: false
+  error: Invalid OHLC relationships detected for SIZE
+  anomalies: null
+- ticker: SJNK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SKYY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SMH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SOXX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TAN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: THD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TIP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TLT
+  valid: false
+  error: Invalid OHLC relationships detected for TLT
+  anomalies: null
+- ticker: UNG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USDU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 10
+    extreme_changes: 0
+    zero_volume: 1
+- ticker: USMV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VCIT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VCSH
+  valid: false
+  error: Invalid OHLC relationships detected for VCSH
+  anomalies: null
+- ticker: VEA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VGK
+  valid: false
+  error: Invalid OHLC relationships detected for VGK
+  anomalies: null
+- ticker: VIXY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VLUE
+  valid: false
+  error: Invalid OHLC relationships detected for VLUE
+  anomalies: null
+- ticker: VMBS
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VNQ
+  valid: false
+  error: Invalid OHLC relationships detected for VNQ
+  anomalies: null
+- ticker: VO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VTI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VTV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VUG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VWO
+  valid: false
+  error: Invalid OHLC relationships detected for VWO
+  anomalies: null
+- ticker: VYM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XHB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLP
+  valid: false
+  error: Invalid OHLC relationships detected for XLP
+  anomalies: null
+- ticker: XLU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XRT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0

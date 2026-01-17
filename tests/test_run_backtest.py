@@ -90,12 +90,15 @@ def mock_backtest_result():
         initial_capital=100000.0
     )
 
+    rebalance_dates = pd.date_range("2023-01-01", "2023-12-31", freq="MS").tolist()
+
     return BacktestResult(
         equity_curve=equity_curve,
         holdings_history=holdings,
         weights_history=weights,
         metrics=metrics,
-        config=config
+        config=config,
+        rebalance_dates=rebalance_dates
     )
 
 
@@ -150,12 +153,20 @@ class TestArgumentParsing:
 class TestPrintMetrics:
     """Test metrics printing function."""
 
-    def test_print_metrics(self, mock_backtest_result, capsys):
+    def test_print_metrics(self, mock_backtest_result, caplog):
         """Test that metrics are printed correctly."""
-        run_backtest.print_metrics(mock_backtest_result)
+        import logging
+        
+        # Mock the store to avoid needing SPY data
+        mock_store = MagicMock()
+        mock_store.get_prices.return_value = None  # SPY prices unavailable
+        
+        # Ensure logger is set to INFO level
+        with caplog.at_level(logging.INFO):
+            run_backtest.print_metrics(mock_backtest_result, mock_store)
 
-        captured = capsys.readouterr()
-        output = captured.out
+        # Check logged output (logger writes to caplog)
+        output = caplog.text
 
         # Check that key metrics are in output
         assert 'Total Return:' in output
@@ -182,18 +193,21 @@ class TestSaveResults:
     def test_save_results_creates_directory(self, mock_backtest_result, mock_args, tmp_path):
         """Test that save_results creates output directory."""
         mock_args.output_dir = str(tmp_path / 'backtests')
+        
+        output_dir_path = tmp_path / 'test_output'
+        output_dir_path.mkdir()
 
-        output_dir = run_backtest.save_results(mock_backtest_result, mock_args)
+        output_dir = run_backtest.save_results(mock_backtest_result, mock_args, output_dir_path)
 
         assert output_dir.exists()
         assert output_dir.is_dir()
-        assert output_dir.name.endswith('_test-strategy')
 
     def test_save_results_creates_all_files(self, mock_backtest_result, mock_args, tmp_path):
         """Test that all expected output files are created."""
-        mock_args.output_dir = str(tmp_path / 'backtests')
+        output_dir_path = tmp_path / 'test_output'
+        output_dir_path.mkdir()
 
-        output_dir = run_backtest.save_results(mock_backtest_result, mock_args)
+        output_dir = run_backtest.save_results(mock_backtest_result, mock_args, output_dir_path)
 
         # Check that all files exist
         assert (output_dir / 'equity_curve.csv').exists()
@@ -204,9 +218,10 @@ class TestSaveResults:
 
     def test_save_results_equity_curve_content(self, mock_backtest_result, mock_args, tmp_path):
         """Test equity curve CSV content."""
-        mock_args.output_dir = str(tmp_path / 'backtests')
+        output_dir_path = tmp_path / 'test_output'
+        output_dir_path.mkdir()
 
-        output_dir = run_backtest.save_results(mock_backtest_result, mock_args)
+        output_dir = run_backtest.save_results(mock_backtest_result, mock_args, output_dir_path)
 
         # Read and verify equity curve
         equity_df = pd.read_csv(output_dir / 'equity_curve.csv', index_col=0, parse_dates=True)
@@ -217,9 +232,10 @@ class TestSaveResults:
 
     def test_save_results_metrics_content(self, mock_backtest_result, mock_args, tmp_path):
         """Test metrics JSON content."""
-        mock_args.output_dir = str(tmp_path / 'backtests')
+        output_dir_path = tmp_path / 'test_output'
+        output_dir_path.mkdir()
 
-        output_dir = run_backtest.save_results(mock_backtest_result, mock_args)
+        output_dir = run_backtest.save_results(mock_backtest_result, mock_args, output_dir_path)
 
         # Read and verify metrics
         with open(output_dir / 'metrics.json') as f:
@@ -233,9 +249,10 @@ class TestSaveResults:
 
     def test_save_results_config_content(self, mock_backtest_result, mock_args, tmp_path):
         """Test config JSON content."""
-        mock_args.output_dir = str(tmp_path / 'backtests')
+        output_dir_path = tmp_path / 'test_output'
+        output_dir_path.mkdir()
 
-        output_dir = run_backtest.save_results(mock_backtest_result, mock_args)
+        output_dir = run_backtest.save_results(mock_backtest_result, mock_args, output_dir_path)
 
         # Read and verify config
         with open(output_dir / 'config.json') as f:
@@ -293,7 +310,7 @@ class TestRunBacktest:
         mock_args.snapshot = str(snapshot_dir)
 
         # Run backtest
-        result = run_backtest.run_backtest(mock_args)
+        result = run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
         # Verify calls
         assert mock_store_class.called
@@ -301,12 +318,12 @@ class TestRunBacktest:
         assert mock_save.called
         assert result == mock_backtest_result
 
-    def test_run_backtest_snapshot_not_found(self, mock_args):
+    def test_run_backtest_snapshot_not_found(self, mock_args, tmp_path):
         """Test error handling when snapshot not found."""
         mock_args.snapshot = 'nonexistent/path'
 
         with pytest.raises(FileNotFoundError, match="Snapshot not found"):
-            run_backtest.run_backtest(mock_args)
+            run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
     @patch('run_backtest.SnapshotDataStore')
     def test_run_backtest_loads_metadata(self, mock_store_class, mock_args, tmp_path):
@@ -350,7 +367,7 @@ class TestRunBacktest:
             mock_engine.run.return_value = minimal_result
 
             with patch('run_backtest.save_results'):
-                run_backtest.run_backtest(mock_args)
+                run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
             # Verify engine.run was called with correct universe
             call_args = mock_engine.run.call_args
@@ -402,14 +419,17 @@ class TestIntegration:
             '--lookback', '126'
         ]):
             args = run_backtest.parse_args()
-            result = run_backtest.run_backtest(args)
+            # Create a temporary output directory for integration test
+            import tempfile
+            with tempfile.TemporaryDirectory() as tmpdir:
+                result = run_backtest.run_backtest(args, Path(tmpdir))
 
-            # Verify result structure
-            assert result is not None
-            assert hasattr(result, 'equity_curve')
-            assert hasattr(result, 'holdings_history')
-            assert hasattr(result, 'weights_history')
-            assert hasattr(result, 'metrics')
+                # Verify result structure
+                assert result is not None
+                assert hasattr(result, 'equity_curve')
+                assert hasattr(result, 'holdings_history')
+                assert hasattr(result, 'weights_history')
+                assert hasattr(result, 'metrics')
 
             # Verify metrics
             assert 'total_return' in result.metrics
@@ -431,7 +451,7 @@ class TestErrorHandling:
         mock_store_class.side_effect = ValueError("Invalid data format")
 
         with pytest.raises(ValueError, match="Invalid data format"):
-            run_backtest.run_backtest(mock_args)
+            run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
     @patch('run_backtest.SnapshotDataStore')
     @patch('run_backtest.SimpleBacktestEngine')
@@ -459,4 +479,4 @@ class TestErrorHandling:
         mock_engine_class.return_value = mock_engine
 
         with pytest.raises(ValueError, match="Insufficient data"):
-            run_backtest.run_backtest(mock_args)
+            run_backtest.run_backtest(mock_args, tmp_path / 'output')

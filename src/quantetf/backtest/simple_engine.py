@@ -42,6 +42,7 @@ class BacktestResult:
     weights_history: pd.DataFrame  # date x ticker (weights)
     metrics: dict
     config: BacktestConfig
+    rebalance_dates: list  # List of rebalance dates used in backtest
 
 
 class SimpleBacktestEngine:
@@ -290,7 +291,8 @@ class SimpleBacktestEngine:
             holdings_history=holdings_df,
             weights_history=weights_df,
             metrics=metrics,
-            config=config
+            config=config,
+            rebalance_dates=rebalance_dates,
         )
 
 
