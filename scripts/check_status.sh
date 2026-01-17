@@ -246,7 +246,7 @@ show_logs() {
         echo "  $line"
     done
     
-    if [ -f "walk_forward_"*.log ]; then
+    if ls walk_forward_*.log >/dev/null 2>&1; then
         echo ""
         echo -e "${GREEN}Latest walk-forward log (last $LOG_LINES lines):${NC}"
         tail -n "$LOG_LINES" "$(ls -t walk_forward_*.log 2>/dev/null | head -1)" | sed 's/^/  /'
