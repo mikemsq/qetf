@@ -1,0 +1,14 @@
+Walk-Forward Validation Log
+Started: 2026-01-17 18:23:29 UTC
+Command: python scripts/walk_forward_test.py --config artifacts/optimization/20260115_232613/best_strategy.yaml -v
+================================================================================
+
+usage: walk_forward_test.py [-h] [--snapshot SNAPSHOT] [--start START]
+                            [--end END] [--train-years TRAIN_YEARS]
+                            [--test-years TEST_YEARS]
+                            [--step-months STEP_MONTHS] [--top-n TOP_N]
+                            [--lookback LOOKBACK] [--cost-bps COST_BPS]
+                            [--rebalance-frequency {weekly,monthly,quarterly}]
+                            [--capital CAPITAL] [--output OUTPUT]
+                            [--save-plots] [--verbose]
+walk_forward_test.py: error: unrecognized arguments: --config artifacts/optimization/20260115_232613/best_strategy.yaml -v
