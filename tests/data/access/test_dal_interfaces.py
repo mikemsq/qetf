@@ -342,9 +342,13 @@ class TestDataAccessFactory:
             DataAccessFactory.create_price_accessor(source="snapshot")
     
     def test_create_macro_accessor_not_implemented(self):
-        """Test that macro accessor creation raises NotImplementedError for now."""
-        with pytest.raises(NotImplementedError):
-            DataAccessFactory.create_macro_accessor(source="fred")
+        """Test that macro accessor creation requires config."""
+        # Macro accessor is now implemented but requires proper config
+        from quantetf.data.access.fred_macro import FREDMacroAccessor
+        
+        # Creating without config should still work with defaults
+        accessor = DataAccessFactory.create_macro_accessor(source="fred")
+        assert isinstance(accessor, FREDMacroAccessor)
     
     def test_create_universe_accessor_not_implemented(self):
         """Test that universe accessor creation raises NotImplementedError for now."""

@@ -90,7 +90,8 @@ class DataAccessFactory:
         Args:
             source: "fred" (default) or "mock"
             config: Source-specific configuration
-            
+                For "fred": optional "data_dir" key for macro data directory
+                
         Returns:
             Configured MacroDataAccessor instance
             
@@ -103,10 +104,22 @@ class DataAccessFactory:
             - Tests: MockMacroAccessor
         """
         if source == "fred":
-            # Will be implemented in IMPL-021
-            raise NotImplementedError(
-                "FREDMacroAccessor implementation in IMPL-021"
-            )
+            # IMPL-021: FREDMacroAccessor
+            from .fred_macro import FREDMacroAccessor
+            from quantetf.data.macro_loader import MacroDataLoader
+            
+            if config is None:
+                config = {}
+            
+            data_dir = config.get("data_dir", None)
+            
+            # Create MacroDataLoader
+            if data_dir is not None:
+                loader = MacroDataLoader(data_dir=Path(data_dir))
+            else:
+                loader = MacroDataLoader()
+            
+            return FREDMacroAccessor(loader)
         elif source == "mock":
             # For testing
             raise NotImplementedError("MockMacroAccessor for testing")
