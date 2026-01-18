@@ -336,8 +336,9 @@ class TestDataAccessFactory:
         assert hasattr(DataAccessFactory, "create_context")
     
     def test_create_price_accessor_not_implemented(self):
-        """Test that price accessor creation raises NotImplementedError for now."""
-        with pytest.raises(NotImplementedError):
+        """Test that price accessor creation raises ValueError when config missing."""
+        # Snapshot is implemented but requires config
+        with pytest.raises(ValueError, match="snapshot_path"):
             DataAccessFactory.create_price_accessor(source="snapshot")
     
     def test_create_macro_accessor_not_implemented(self):

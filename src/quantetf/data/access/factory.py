@@ -44,12 +44,13 @@ class DataAccessFactory:
         Args:
             source: "snapshot" (default), "live", or "mock"
             config: Source-specific configuration dict
-            
+                For "snapshot": must contain "snapshot_path" key
+                
         Returns:
             Configured PriceDataAccessor instance
             
         Raises:
-            ValueError: If source type not supported
+            ValueError: If source type not supported or config invalid
             
         Note:
             Implementation of specific sources in:
@@ -58,10 +59,16 @@ class DataAccessFactory:
             - Tests: MockPriceAccessor
         """
         if source == "snapshot":
-            # Will be implemented in IMPL-020
-            raise NotImplementedError(
-                "SnapshotPriceAccessor implementation in IMPL-020"
-            )
+            # IMPL-020: SnapshotPriceAccessor
+            from .snapshot_price import SnapshotPriceAccessor
+            
+            if config is None or "snapshot_path" not in config:
+                raise ValueError(
+                    "snapshot source requires config with 'snapshot_path' key"
+                )
+            
+            snapshot_path = Path(config["snapshot_path"])
+            return SnapshotPriceAccessor(snapshot_path)
         elif source == "live":
             # Will be implemented in IMPL-032
             raise NotImplementedError(
