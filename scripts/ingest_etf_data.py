@@ -154,12 +154,11 @@ def save_to_curated(
         Path to the saved data file
     """
     # Create curated data directory
-    curated_dir = Path(__file__).parent.parent / "data" / "curated"
+    curated_dir = Path(__file__).parent.parent / "data" / "snapshots"
     curated_dir.mkdir(parents=True, exist_ok=True)
 
-    # Generate filename with timestamp
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{universe_name}_{start_date}_{end_date}_{timestamp}.parquet"
+    # Generate filename
+    filename = f"{universe_name}.parquet"
     filepath = curated_dir / filename
 
     # Save data as Parquet (efficient columnar format)
@@ -221,20 +220,20 @@ Examples:
 
     parser.add_argument(
         '--universe',
-        required=True,
-        help='Name of universe config file (without .yaml extension)'
+        required=False,
+        default='tier4_broad_200',
+        help='Name of universe config file (without .yaml extension). Default: tier4_broad_200'
     )
 
-    # Date range options (mutually exclusive)
-    date_group = parser.add_mutually_exclusive_group(required=True)
-    date_group.add_argument(
+    # Date range options (all optional)
+    parser.add_argument(
         '--lookback-years',
         type=int,
         help='Number of years of history to fetch (from today)'
     )
-    date_group.add_argument(
+    parser.add_argument(
         '--start-date',
-        help='Start date in YYYY-MM-DD format (requires --end-date)'
+        help='Start date in YYYY-MM-DD format'
     )
 
     parser.add_argument(
@@ -251,18 +250,51 @@ Examples:
     args = parser.parse_args()
 
     # Validate date arguments
-    if args.start_date and not args.end_date:
-        parser.error("--start-date requires --end-date")
-    if args.end_date and not args.start_date:
-        parser.error("--end-date requires --start-date")
+    #if args.start_date and not args.end_date:
+    #    parser.error("--start-date requires --end-date")
+    #if args.end_date and not args.start_date:
+    #    parser.error("--end-date requires --start-date")
 
     # Calculate date range
+    today = datetime.now().strftime('%Y-%m-%d')
+    def get_latest_end_date(universe_name):
+        import os, re
+        from glob import glob
+        curated_dir = os.path.join('data', 'curated')
+        pattern = os.path.join(curated_dir, f'{universe_name}_*.parquet')
+        files = glob(pattern)
+        if not files:
+            return None
+        date_re = re.compile(rf'{universe_name}_(\\d{{4}}-\\d{{2}}-\\d{{2}})_(\\d{{4}}-\\d{{2}}-\\d{{2}})_\\d+\\.parquet$')
+        latest_end = None
+        for f in files:
+            m = date_re.search(os.path.basename(f))
+            if m:
+                end = m.group(2)
+                if latest_end is None or end > latest_end:
+                    latest_end = end
+        return latest_end
+
     if args.lookback_years:
-        end_date = datetime.now().strftime('%Y-%m-%d')
+        end_date = today
         start_date = (datetime.now() - timedelta(days=args.lookback_years * 365)).strftime('%Y-%m-%d')
     else:
-        start_date = args.start_date
-        end_date = args.end_date
+        end_date = args.end_date if args.end_date else today
+        if args.start_date:
+            start_date = args.start_date
+        else:
+            # Try to get the latest available date in the snapshot and add one day
+            latest_end = get_latest_end_date(args.universe)
+            if latest_end:
+                try:
+                    next_day = (datetime.strptime(latest_end, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
+                    start_date = next_day
+                except Exception:
+                    start_date = None
+            else:
+                start_date = None
+        if not start_date:
+            parser.error('Could not determine a default start date. Please specify --start-date.')
 
     logger.info("=" * 80)
     logger.info("ETF Data Ingestion")
