@@ -364,9 +364,9 @@ class TestDataAccessFactory:
         accessor = DataAccessFactory.create_reference_accessor()
         assert isinstance(accessor, StaticReferenceDataAccessor)
     
-    def test_create_context_not_implemented(self):
-        """Test that context creation raises NotImplementedError for now."""
-        with pytest.raises(NotImplementedError):
+    def test_create_context_requires_snapshot_path(self):
+        """Test that context creation requires snapshot_path for snapshot source."""
+        with pytest.raises(ValueError, match="snapshot_path"):
             DataAccessFactory.create_context()
     
     def test_create_price_accessor_invalid_source(self):
@@ -404,3 +404,11 @@ class TestPublicExports:
         assert hasattr(access, "TickerMetadata")
         assert hasattr(access, "ExchangeInfo")
         assert hasattr(access, "DataAccessMetadata")
+
+    def test_package_exports_caching(self):
+        """Test that caching components are exported."""
+        from quantetf.data import access
+        assert hasattr(access, "CachedPriceAccessor")
+        assert hasattr(access, "CachedMacroAccessor")
+        assert hasattr(access, "CacheManager")
+        assert hasattr(access, "get_global_cache_manager")

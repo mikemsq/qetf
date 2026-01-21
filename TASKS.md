@@ -28,15 +28,6 @@
 
 ### Data Access Layer - Phase 1 (Foundation)
 
-#### IMPL-024: CachingLayer & Integration
-**Status:** ready
-**Priority:** HIGH
-**Dependencies:** IMPL-020, IMPL-021, IMPL-022, IMPL-023 (all completed)
-
-Implement transparent caching layer for all accessors.
-
-**Handoff:** [handoffs/architecture/data-access-layer-tasks.md](handoffs/architecture/data-access-layer-tasks.md)
-
 ---
 
 ### Strategy Optimizer
@@ -155,6 +146,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-021 | FREDMacroAccessor | 2026-01-18 |
 | IMPL-022 | ConfigFileUniverseAccessor | 2026-01-21 |
 | IMPL-023 | ReferenceDataAccessor | 2026-01-21 |
+| IMPL-024 | CachingLayer & Integration | 2026-01-21 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |

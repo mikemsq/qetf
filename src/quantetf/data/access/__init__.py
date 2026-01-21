@@ -12,12 +12,19 @@ Core Components:
 - DataAccessContext: Unified container for all accessors
 - DataAccessFactory: Factory for creating configured accessors
 
+Caching Components:
+- CachedPriceAccessor: LRU-cached price accessor
+- CachedMacroAccessor: TTL-cached macro accessor
+- CacheManager: Centralized cache management
+
 Usage:
     from quantetf.data.access import DataAccessFactory
-    
-    # Create context with default configuration
-    ctx = DataAccessFactory.create_context()
-    
+
+    # Create context with caching enabled (default)
+    ctx = DataAccessFactory.create_context(
+        config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+    )
+
     # Use accessors
     prices = ctx.prices.read_prices_as_of(as_of="2024-01-31")
     regime = ctx.macro.get_regime(as_of="2024-01-31")
@@ -35,6 +42,8 @@ from .factory import DataAccessFactory
 from .types import Regime, TickerMetadata, ExchangeInfo, DataAccessMetadata
 from .universe import ConfigFileUniverseAccessor
 from .reference import StaticReferenceDataAccessor
+from .caching import CachedPriceAccessor, CachedMacroAccessor
+from .cache_manager import CacheManager, get_global_cache_manager
 
 __all__ = [
     # Abstract interfaces
@@ -48,6 +57,11 @@ __all__ = [
     # Concrete implementations
     "ConfigFileUniverseAccessor",
     "StaticReferenceDataAccessor",
+    # Caching
+    "CachedPriceAccessor",
+    "CachedMacroAccessor",
+    "CacheManager",
+    "get_global_cache_manager",
     # Types
     "Regime",
     "TickerMetadata",
