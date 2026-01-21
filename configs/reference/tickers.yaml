@@ -1,0 +1,1063 @@
+# Reference data for ETF tickers
+# Includes name, sector classification, exchange, and currency
+
+tickers:
+  # ===== Broad Market ETFs =====
+  SPY:
+    name: "SPDR S&P 500 ETF Trust"
+    sector: "Broad Market"
+    exchange: "NYSE"
+    currency: "USD"
+  IVV:
+    name: "iShares Core S&P 500 ETF"
+    sector: "Broad Market"
+    exchange: "NYSE"
+    currency: "USD"
+  VTI:
+    name: "Vanguard Total Stock Market ETF"
+    sector: "Broad Market"
+    exchange: "NYSE"
+    currency: "USD"
+  QQQ:
+    name: "Invesco QQQ Trust"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  DIA:
+    name: "SPDR Dow Jones Industrial Average ETF"
+    sector: "Broad Market"
+    exchange: "NYSE"
+    currency: "USD"
+  IWM:
+    name: "iShares Russell 2000 ETF"
+    sector: "Small Cap"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Size Factor ETFs =====
+  VB:
+    name: "Vanguard Small-Cap ETF"
+    sector: "Small Cap"
+    exchange: "NYSE"
+    currency: "USD"
+  VO:
+    name: "Vanguard Mid-Cap ETF"
+    sector: "Mid Cap"
+    exchange: "NYSE"
+    currency: "USD"
+  VUG:
+    name: "Vanguard Growth ETF"
+    sector: "Growth"
+    exchange: "NYSE"
+    currency: "USD"
+  VTV:
+    name: "Vanguard Value ETF"
+    sector: "Value"
+    exchange: "NYSE"
+    currency: "USD"
+  SIZE:
+    name: "iShares MSCI USA Size Factor ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Factor ETFs =====
+  MTUM:
+    name: "iShares MSCI USA Momentum Factor ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+  QUAL:
+    name: "iShares MSCI USA Quality Factor ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+  VLUE:
+    name: "iShares MSCI USA Value Factor ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+  USMV:
+    name: "iShares MSCI USA Min Vol Factor ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+  SPLV:
+    name: "Invesco S&P 500 Low Volatility ETF"
+    sector: "Factor"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Sector ETFs - Select Sector SPDRs =====
+  XLF:
+    name: "Financial Select Sector SPDR Fund"
+    sector: "Financials"
+    exchange: "NYSE"
+    currency: "USD"
+  XLE:
+    name: "Energy Select Sector SPDR Fund"
+    sector: "Energy"
+    exchange: "NYSE"
+    currency: "USD"
+  XLK:
+    name: "Technology Select Sector SPDR Fund"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  XLV:
+    name: "Health Care Select Sector SPDR Fund"
+    sector: "Healthcare"
+    exchange: "NYSE"
+    currency: "USD"
+  XLI:
+    name: "Industrial Select Sector SPDR Fund"
+    sector: "Industrials"
+    exchange: "NYSE"
+    currency: "USD"
+  XLY:
+    name: "Consumer Discretionary Select Sector SPDR Fund"
+    sector: "Consumer Discretionary"
+    exchange: "NYSE"
+    currency: "USD"
+  XLP:
+    name: "Consumer Staples Select Sector SPDR Fund"
+    sector: "Consumer Staples"
+    exchange: "NYSE"
+    currency: "USD"
+  XLU:
+    name: "Utilities Select Sector SPDR Fund"
+    sector: "Utilities"
+    exchange: "NYSE"
+    currency: "USD"
+  XLB:
+    name: "Materials Select Sector SPDR Fund"
+    sector: "Materials"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Sector ETFs - iShares =====
+  IYF:
+    name: "iShares U.S. Financials ETF"
+    sector: "Financials"
+    exchange: "NYSE"
+    currency: "USD"
+  IYE:
+    name: "iShares U.S. Energy ETF"
+    sector: "Energy"
+    exchange: "NYSE"
+    currency: "USD"
+  IYW:
+    name: "iShares U.S. Technology ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  IYC:
+    name: "iShares U.S. Consumer Discretionary ETF"
+    sector: "Consumer Discretionary"
+    exchange: "NYSE"
+    currency: "USD"
+  IYK:
+    name: "iShares U.S. Consumer Staples ETF"
+    sector: "Consumer Staples"
+    exchange: "NYSE"
+    currency: "USD"
+  IYM:
+    name: "iShares U.S. Basic Materials ETF"
+    sector: "Materials"
+    exchange: "NYSE"
+    currency: "USD"
+  IYR:
+    name: "iShares U.S. Real Estate ETF"
+    sector: "Real Estate"
+    exchange: "NYSE"
+    currency: "USD"
+  IYT:
+    name: "iShares U.S. Transportation ETF"
+    sector: "Industrials"
+    exchange: "NYSE"
+    currency: "USD"
+  IYZ:
+    name: "iShares U.S. Telecommunications ETF"
+    sector: "Communication Services"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Thematic/Industry ETFs =====
+  IBB:
+    name: "iShares Biotechnology ETF"
+    sector: "Healthcare"
+    exchange: "NASDAQ"
+    currency: "USD"
+  IHI:
+    name: "iShares U.S. Medical Devices ETF"
+    sector: "Healthcare"
+    exchange: "NYSE"
+    currency: "USD"
+  IHF:
+    name: "iShares U.S. Healthcare Providers ETF"
+    sector: "Healthcare"
+    exchange: "NYSE"
+    currency: "USD"
+  SMH:
+    name: "VanEck Semiconductor ETF"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  SOXX:
+    name: "iShares Semiconductor ETF"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  IGV:
+    name: "iShares Expanded Tech-Software Sector ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  IGM:
+    name: "iShares Expanded Tech Sector ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  IGN:
+    name: "iShares North American Tech-Multimedia Networking ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  KBE:
+    name: "SPDR S&P Bank ETF"
+    sector: "Financials"
+    exchange: "NYSE"
+    currency: "USD"
+  KRE:
+    name: "SPDR S&P Regional Banking ETF"
+    sector: "Financials"
+    exchange: "NYSE"
+    currency: "USD"
+  XHB:
+    name: "SPDR S&P Homebuilders ETF"
+    sector: "Consumer Discretionary"
+    exchange: "NYSE"
+    currency: "USD"
+  XRT:
+    name: "SPDR S&P Retail ETF"
+    sector: "Consumer Discretionary"
+    exchange: "NYSE"
+    currency: "USD"
+  ITB:
+    name: "iShares U.S. Home Construction ETF"
+    sector: "Consumer Discretionary"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Innovation/Theme ETFs =====
+  ARKK:
+    name: "ARK Innovation ETF"
+    sector: "Innovation"
+    exchange: "NYSE"
+    currency: "USD"
+  ARKG:
+    name: "ARK Genomic Revolution ETF"
+    sector: "Healthcare"
+    exchange: "NYSE"
+    currency: "USD"
+  ARKW:
+    name: "ARK Next Generation Internet ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  BOTZ:
+    name: "Global X Robotics & Artificial Intelligence ETF"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  HACK:
+    name: "ETFMG Prime Cyber Security ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  SKYY:
+    name: "First Trust Cloud Computing ETF"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  FINX:
+    name: "Global X FinTech ETF"
+    sector: "Technology"
+    exchange: "NASDAQ"
+    currency: "USD"
+  LIT:
+    name: "Global X Lithium & Battery Tech ETF"
+    sector: "Materials"
+    exchange: "NYSE"
+    currency: "USD"
+  PAVE:
+    name: "Global X U.S. Infrastructure Development ETF"
+    sector: "Industrials"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Clean Energy =====
+  ICLN:
+    name: "iShares Global Clean Energy ETF"
+    sector: "Clean Energy"
+    exchange: "NASDAQ"
+    currency: "USD"
+  TAN:
+    name: "Invesco Solar ETF"
+    sector: "Clean Energy"
+    exchange: "NYSE"
+    currency: "USD"
+  PBW:
+    name: "Invesco WilderHill Clean Energy ETF"
+    sector: "Clean Energy"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== International Developed =====
+  EFA:
+    name: "iShares MSCI EAFE ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  VEA:
+    name: "Vanguard FTSE Developed Markets ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  IEMG:
+    name: "iShares Core MSCI Emerging Markets ETF"
+    sector: "Emerging Markets"
+    exchange: "NYSE"
+    currency: "USD"
+  VGK:
+    name: "Vanguard FTSE Europe ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  FEZ:
+    name: "SPDR EURO STOXX 50 ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Country ETFs - Developed =====
+  EWJ:
+    name: "iShares MSCI Japan ETF"
+    sector: "Japan"
+    exchange: "NYSE"
+    currency: "USD"
+  EWG:
+    name: "iShares MSCI Germany ETF"
+    sector: "Germany"
+    exchange: "NYSE"
+    currency: "USD"
+  EWU:
+    name: "iShares MSCI United Kingdom ETF"
+    sector: "United Kingdom"
+    exchange: "NYSE"
+    currency: "USD"
+  EWQ:
+    name: "iShares MSCI France ETF"
+    sector: "France"
+    exchange: "NYSE"
+    currency: "USD"
+  EWI:
+    name: "iShares MSCI Italy ETF"
+    sector: "Italy"
+    exchange: "NYSE"
+    currency: "USD"
+  EWP:
+    name: "iShares MSCI Spain ETF"
+    sector: "Spain"
+    exchange: "NYSE"
+    currency: "USD"
+  EWL:
+    name: "iShares MSCI Switzerland ETF"
+    sector: "Switzerland"
+    exchange: "NYSE"
+    currency: "USD"
+  EWA:
+    name: "iShares MSCI Australia ETF"
+    sector: "Australia"
+    exchange: "NYSE"
+    currency: "USD"
+  EWC:
+    name: "iShares MSCI Canada ETF"
+    sector: "Canada"
+    exchange: "NYSE"
+    currency: "USD"
+  EWH:
+    name: "iShares MSCI Hong Kong ETF"
+    sector: "Hong Kong"
+    exchange: "NYSE"
+    currency: "USD"
+  EWS:
+    name: "iShares MSCI Singapore ETF"
+    sector: "Singapore"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Emerging Markets =====
+  EEM:
+    name: "iShares MSCI Emerging Markets ETF"
+    sector: "Emerging Markets"
+    exchange: "NYSE"
+    currency: "USD"
+  VWO:
+    name: "Vanguard FTSE Emerging Markets ETF"
+    sector: "Emerging Markets"
+    exchange: "NYSE"
+    currency: "USD"
+  FXI:
+    name: "iShares China Large-Cap ETF"
+    sector: "China"
+    exchange: "NYSE"
+    currency: "USD"
+  MCHI:
+    name: "iShares MSCI China ETF"
+    sector: "China"
+    exchange: "NASDAQ"
+    currency: "USD"
+  EWT:
+    name: "iShares MSCI Taiwan ETF"
+    sector: "Taiwan"
+    exchange: "NYSE"
+    currency: "USD"
+  EWY:
+    name: "iShares MSCI South Korea ETF"
+    sector: "South Korea"
+    exchange: "NYSE"
+    currency: "USD"
+  EWZ:
+    name: "iShares MSCI Brazil ETF"
+    sector: "Brazil"
+    exchange: "NYSE"
+    currency: "USD"
+  EWW:
+    name: "iShares MSCI Mexico ETF"
+    sector: "Mexico"
+    exchange: "NYSE"
+    currency: "USD"
+  INDA:
+    name: "iShares MSCI India ETF"
+    sector: "India"
+    exchange: "NYSE"
+    currency: "USD"
+  RSX:
+    name: "VanEck Russia ETF"
+    sector: "Russia"
+    exchange: "NYSE"
+    currency: "USD"
+  EZA:
+    name: "iShares MSCI South Africa ETF"
+    sector: "South Africa"
+    exchange: "NYSE"
+    currency: "USD"
+  THD:
+    name: "iShares MSCI Thailand ETF"
+    sector: "Thailand"
+    exchange: "NYSE"
+    currency: "USD"
+  TUR:
+    name: "iShares MSCI Turkey ETF"
+    sector: "Turkey"
+    exchange: "NASDAQ"
+    currency: "USD"
+  VNM:
+    name: "VanEck Vietnam ETF"
+    sector: "Vietnam"
+    exchange: "NYSE"
+    currency: "USD"
+  EIDO:
+    name: "iShares MSCI Indonesia ETF"
+    sector: "Indonesia"
+    exchange: "NYSE"
+    currency: "USD"
+  ECH:
+    name: "iShares MSCI Chile ETF"
+    sector: "Chile"
+    exchange: "NYSE"
+    currency: "USD"
+  EPU:
+    name: "iShares MSCI Peru ETF"
+    sector: "Peru"
+    exchange: "NYSE"
+    currency: "USD"
+  EGPT:
+    name: "VanEck Egypt Index ETF"
+    sector: "Egypt"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Frontier Markets =====
+  FM:
+    name: "iShares MSCI Frontier and Select EM ETF"
+    sector: "Frontier Markets"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Currency Hedged International =====
+  HEFA:
+    name: "iShares Currency Hedged MSCI EAFE ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  HEEM:
+    name: "iShares Currency Hedged MSCI Emerging Markets ETF"
+    sector: "Emerging Markets"
+    exchange: "NYSE"
+    currency: "USD"
+  HEWJ:
+    name: "iShares Currency Hedged MSCI Japan ETF"
+    sector: "Japan"
+    exchange: "NYSE"
+    currency: "USD"
+  HEWG:
+    name: "iShares Currency Hedged MSCI Germany ETF"
+    sector: "Germany"
+    exchange: "NYSE"
+    currency: "USD"
+  HEWU:
+    name: "iShares Currency Hedged MSCI United Kingdom ETF"
+    sector: "United Kingdom"
+    exchange: "NYSE"
+    currency: "USD"
+  HEZU:
+    name: "iShares Currency Hedged MSCI Eurozone ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  DBEF:
+    name: "Xtrackers MSCI EAFE Hedged Equity ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  DBEM:
+    name: "Xtrackers MSCI Emerging Markets Hedged Equity ETF"
+    sector: "Emerging Markets"
+    exchange: "NYSE"
+    currency: "USD"
+  DBEU:
+    name: "Xtrackers MSCI Europe Hedged Equity ETF"
+    sector: "International Developed"
+    exchange: "NYSE"
+    currency: "USD"
+  DBJP:
+    name: "Xtrackers MSCI Japan Hedged Equity ETF"
+    sector: "Japan"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Fixed Income - Aggregate =====
+  AGG:
+    name: "iShares Core U.S. Aggregate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  BND:
+    name: "Vanguard Total Bond Market ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  BNDX:
+    name: "Vanguard Total International Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+
+  # ===== Fixed Income - Treasuries =====
+  TLT:
+    name: "iShares 20+ Year Treasury Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  IEF:
+    name: "iShares 7-10 Year Treasury Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  SHY:
+    name: "iShares 1-3 Year Treasury Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  TIP:
+    name: "iShares TIPS Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  SCHP:
+    name: "Schwab U.S. TIPS ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Fixed Income - Corporate =====
+  LQD:
+    name: "iShares iBoxx $ Investment Grade Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  HYG:
+    name: "iShares iBoxx $ High Yield Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  JNK:
+    name: "SPDR Bloomberg High Yield Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  VCIT:
+    name: "Vanguard Intermediate-Term Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  VCSH:
+    name: "Vanguard Short-Term Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  IGIB:
+    name: "iShares Intermediate-Term Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  SPIB:
+    name: "SPDR Portfolio Intermediate Term Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Fixed Income - High Yield/Loans =====
+  ANGL:
+    name: "VanEck Fallen Angel High Yield Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  FALN:
+    name: "iShares Fallen Angels USD Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  BKLN:
+    name: "Invesco Senior Loan ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  SRLN:
+    name: "SPDR Blackstone Senior Loan ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  SHYG:
+    name: "iShares 0-5 Year High Yield Corporate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  SJNK:
+    name: "SPDR Bloomberg Short Term High Yield Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Fixed Income - Short Duration =====
+  FLOT:
+    name: "iShares Floating Rate Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  MINT:
+    name: "PIMCO Enhanced Short Maturity Active ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  NEAR:
+    name: "iShares Short Duration Bond Active ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  JPST:
+    name: "JPMorgan Ultra-Short Income ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Fixed Income - Other =====
+  EMB:
+    name: "iShares J.P. Morgan USD Emerging Markets Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  PCY:
+    name: "Invesco Emerging Markets Sovereign Debt ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  MUB:
+    name: "iShares National Muni Bond ETF"
+    sector: "Fixed Income"
+    exchange: "NYSE"
+    currency: "USD"
+  VMBS:
+    name: "Vanguard Mortgage-Backed Securities ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+  PFF:
+    name: "iShares Preferred and Income Securities ETF"
+    sector: "Fixed Income"
+    exchange: "NASDAQ"
+    currency: "USD"
+
+  # ===== Real Estate =====
+  VNQ:
+    name: "Vanguard Real Estate ETF"
+    sector: "Real Estate"
+    exchange: "NYSE"
+    currency: "USD"
+  REET:
+    name: "iShares Global REIT ETF"
+    sector: "Real Estate"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Commodities - Precious Metals =====
+  GLD:
+    name: "SPDR Gold Trust"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  IAU:
+    name: "iShares Gold Trust"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  SLV:
+    name: "iShares Silver Trust"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  PPLT:
+    name: "abrdn Physical Platinum Shares ETF"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  PALL:
+    name: "abrdn Physical Palladium Shares ETF"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Commodities - Energy =====
+  USO:
+    name: "United States Oil Fund"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  UNG:
+    name: "United States Natural Gas Fund"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Commodities - Broad/Diversified =====
+  DBC:
+    name: "Invesco DB Commodity Index Tracking Fund"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  PDBC:
+    name: "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF"
+    sector: "Commodities"
+    exchange: "NASDAQ"
+    currency: "USD"
+  GSG:
+    name: "iShares S&P GSCI Commodity-Indexed Trust"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  DJP:
+    name: "iPath Bloomberg Commodity Index Total Return ETN"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  COMT:
+    name: "iShares U.S. ETF Trust iShares GSCI Commodity Dynamic Roll Strategy ETF"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  GCC:
+    name: "WisdomTree Enhanced Commodity Strategy Fund"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  BCI:
+    name: "abrdn Bloomberg All Commodity Strategy K-1 Free ETF"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+  CPER:
+    name: "United States Copper Index Fund"
+    sector: "Commodities"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Natural Resources =====
+  GUNR:
+    name: "FlexShares Morningstar Global Upstream Natural Resources Index Fund"
+    sector: "Natural Resources"
+    exchange: "NYSE"
+    currency: "USD"
+  IXC:
+    name: "iShares Global Energy ETF"
+    sector: "Energy"
+    exchange: "NYSE"
+    currency: "USD"
+  IXJ:
+    name: "iShares Global Healthcare ETF"
+    sector: "Healthcare"
+    exchange: "NYSE"
+    currency: "USD"
+  IXN:
+    name: "iShares Global Tech ETF"
+    sector: "Technology"
+    exchange: "NYSE"
+    currency: "USD"
+  FRAK:
+    name: "VanEck Unconventional Oil & Gas ETF"
+    sector: "Energy"
+    exchange: "NYSE"
+    currency: "USD"
+  MOO:
+    name: "VanEck Agribusiness ETF"
+    sector: "Agriculture"
+    exchange: "NYSE"
+    currency: "USD"
+  WOOD:
+    name: "iShares Global Timber & Forestry ETF"
+    sector: "Materials"
+    exchange: "NASDAQ"
+    currency: "USD"
+
+  # ===== Dividend/Income ETFs =====
+  VIG:
+    name: "Vanguard Dividend Appreciation ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  VYM:
+    name: "Vanguard High Dividend Yield ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  SCHD:
+    name: "Schwab U.S. Dividend Equity ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  DVY:
+    name: "iShares Select Dividend ETF"
+    sector: "Dividend"
+    exchange: "NASDAQ"
+    currency: "USD"
+  HDV:
+    name: "iShares Core High Dividend ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  SDY:
+    name: "SPDR S&P Dividend ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  NOBL:
+    name: "ProShares S&P 500 Dividend Aristocrats ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  DGRO:
+    name: "iShares Core Dividend Growth ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  IDV:
+    name: "iShares International Select Dividend ETF"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  DHS:
+    name: "WisdomTree U.S. High Dividend Fund"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+  FVD:
+    name: "First Trust Value Line Dividend Index Fund"
+    sector: "Dividend"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== ESG/Sustainable ETFs =====
+  ESGU:
+    name: "iShares ESG Aware MSCI USA ETF"
+    sector: "ESG"
+    exchange: "NASDAQ"
+    currency: "USD"
+  ESGV:
+    name: "Vanguard ESG U.S. Stock ETF"
+    sector: "ESG"
+    exchange: "NYSE"
+    currency: "USD"
+  ESGD:
+    name: "iShares ESG Aware MSCI EAFE ETF"
+    sector: "ESG"
+    exchange: "NASDAQ"
+    currency: "USD"
+  SUSA:
+    name: "iShares MSCI USA ESG Select ETF"
+    sector: "ESG"
+    exchange: "NYSE"
+    currency: "USD"
+  SUSL:
+    name: "iShares ESG MSCI USA Leaders ETF"
+    sector: "ESG"
+    exchange: "NASDAQ"
+    currency: "USD"
+  DSI:
+    name: "iShares MSCI KLD 400 Social ETF"
+    sector: "ESG"
+    exchange: "NYSE"
+    currency: "USD"
+  USSG:
+    name: "Xtrackers MSCI USA ESG Leaders Equity ETF"
+    sector: "ESG"
+    exchange: "NYSE"
+    currency: "USD"
+  VSGX:
+    name: "Vanguard ESG International Stock ETF"
+    sector: "ESG"
+    exchange: "NYSE"
+    currency: "USD"
+  KRMA:
+    name: "Global X Conscious Companies ETF"
+    sector: "ESG"
+    exchange: "NASDAQ"
+    currency: "USD"
+
+  # ===== Volatility ETFs =====
+  VIXY:
+    name: "ProShares VIX Short-Term Futures ETF"
+    sector: "Volatility"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Currency ETFs =====
+  USDU:
+    name: "WisdomTree Bloomberg U.S. Dollar Bullish Fund"
+    sector: "Currency"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Leveraged ETFs (2x Long) =====
+  SSO:
+    name: "ProShares Ultra S&P500"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  QLD:
+    name: "ProShares Ultra QQQ"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  DDM:
+    name: "ProShares Ultra Dow30"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  UWM:
+    name: "ProShares Ultra Russell2000"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  MVV:
+    name: "ProShares Ultra MidCap400"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  ROM:
+    name: "ProShares Ultra Technology"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  UYG:
+    name: "ProShares Ultra Financials"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  RXL:
+    name: "ProShares Ultra Health Care"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  UCC:
+    name: "ProShares Ultra Consumer Services"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+  URE:
+    name: "ProShares Ultra Real Estate"
+    sector: "Leveraged"
+    exchange: "NYSE"
+    currency: "USD"
+
+  # ===== Inverse ETFs (-1x) =====
+  SH:
+    name: "ProShares Short S&P500"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  PSQ:
+    name: "ProShares Short QQQ"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  DOG:
+    name: "ProShares Short Dow30"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  RWM:
+    name: "ProShares Short Russell2000"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  MYY:
+    name: "ProShares Short MidCap400"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  EFZ:
+    name: "ProShares Short MSCI EAFE"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  EUM:
+    name: "ProShares Short MSCI Emerging Markets"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  TBF:
+    name: "ProShares Short 20+ Year Treasury"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  TBT:
+    name: "ProShares UltraShort 20+ Year Treasury"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"
+  SJB:
+    name: "ProShares Short High Yield"
+    sector: "Inverse"
+    exchange: "NYSE"
+    currency: "USD"

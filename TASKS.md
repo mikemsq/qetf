@@ -1,6 +1,6 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 20, 2026
+**Last Updated:** January 21, 2026
 **Active Phase:** Data Access Layer Implementation
 
 ## Primary Goal
@@ -28,21 +28,10 @@
 
 ### Data Access Layer - Phase 1 (Foundation)
 
-#### IMPL-023: ReferenceDataAccessor
-**Status:** in_progress
-**Priority:** HIGH
-**Dependencies:** IMPL-019 (completed)
-
-Implement static reference data accessor (ticker metadata, sectors).
-
-**Handoff:** [handoffs/architecture/data-access-layer-tasks.md](handoffs/architecture/data-access-layer-tasks.md)
-
----
-
 #### IMPL-024: CachingLayer & Integration
-**Status:** blocked
+**Status:** ready
 **Priority:** HIGH
-**Dependencies:** IMPL-020, IMPL-021, IMPL-022, IMPL-023
+**Dependencies:** IMPL-020, IMPL-021, IMPL-022, IMPL-023 (all completed)
 
 Implement transparent caching layer for all accessors.
 
@@ -165,6 +154,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-020 | SnapshotPriceAccessor | 2026-01-18 |
 | IMPL-021 | FREDMacroAccessor | 2026-01-18 |
 | IMPL-022 | ConfigFileUniverseAccessor | 2026-01-21 |
+| IMPL-023 | ReferenceDataAccessor | 2026-01-21 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |

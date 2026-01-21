@@ -1,0 +1,33 @@
+# Exchange reference data
+# Trading hours, timezone, and settlement information
+
+exchanges:
+  NYSE:
+    name: "New York Stock Exchange"
+    trading_hours: "09:30-16:00"
+    timezone: "US/Eastern"
+    settlement_days: 2
+
+  NASDAQ:
+    name: "NASDAQ Stock Market"
+    trading_hours: "09:30-16:00"
+    timezone: "US/Eastern"
+    settlement_days: 2
+
+  NYSE_ARCA:
+    name: "NYSE Arca"
+    trading_hours: "09:30-16:00"
+    timezone: "US/Eastern"
+    settlement_days: 2
+
+  CBOE:
+    name: "Chicago Board Options Exchange"
+    trading_hours: "09:30-16:00"
+    timezone: "US/Eastern"
+    settlement_days: 2
+
+  BATS:
+    name: "BATS Global Markets"
+    trading_hours: "09:30-16:00"
+    timezone: "US/Eastern"
+    settlement_days: 2
