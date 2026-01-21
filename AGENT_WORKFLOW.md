@@ -17,7 +17,7 @@ Architect/Planner → Task Queue → Coding Agents
        ↓                              ↓
    TASKS.md                    Implementation
        ↓                              ↓
-Documentation ← ─────────────── PROGRESS_LOG.md
+Documentation ← ─────────────── STATUS.md
 ```
 
 ## Agent Roles
@@ -65,7 +65,7 @@ Consider:
 **Purpose:** Design implementation approaches and manage the task queue.
 
 - **Responsibility:** Break down features into tasks, maintain priorities and dependencies, design technical approaches
-- **Input:** PROJECT_BRIEF.md, PROGRESS_LOG.md, Quant Researcher recommendations, user requirements
+- **Input:** PROJECT_BRIEF.md, STATUS.md, Quant Researcher recommendations, user requirements
 - **Output:** TASKS.md with detailed task specifications, handoff files
 - **When to use:**
   - Start of each phase or feature
@@ -87,7 +87,7 @@ Your role: Architect/Planner Agent
 
 Read:
 - /workspaces/qetf/PROJECT_BRIEF.md
-- /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/STATUS.md
 - /workspaces/qetf/TASKS.md
 
 Task: The Quant Researcher recommended we implement momentum acceleration
@@ -106,7 +106,7 @@ Ensure tasks are parallelizable where possible.
 
 - **Responsibility:** Implement tasks, write tests, run tests, update documentation, mark tasks complete
 - **Input:** Single task from TASKS.md, CLAUDE_CONTEXT.md, handoff file
-- **Output:** Working code + passing tests + updated PROGRESS_LOG.md + completion note
+- **Output:** Working code + passing tests + updated STATUS.md + completion note
 - **When to use:** Pick up any task marked "ready"
 
 **Full Ownership Includes:**
@@ -114,7 +114,7 @@ Ensure tasks are parallelizable where possible.
 - Implementing the feature following CLAUDE_CONTEXT.md standards
 - Writing comprehensive tests
 - Running tests and ensuring they pass
-- Updating PROGRESS_LOG.md with what was completed
+- Updating STATUS.md with what was completed
 - Creating completion note in handoffs/
 - Marking task as complete in TASKS.md
 - Committing code with clear message
@@ -132,7 +132,7 @@ Task: Implement the task specified in handoff-IMPL-001.md
 Deliver:
 - Working implementation
 - Tests (all passing)
-- Updated PROGRESS_LOG.md
+- Updated STATUS.md
 - handoffs/completion-IMPL-001.md
 
 Update TASKS.md status when done.
@@ -143,7 +143,7 @@ Update TASKS.md status when done.
 ### Core Documentation (Always Read)
 - **CLAUDE_CONTEXT.md** - Coding standards, patterns, principles
 - **PROJECT_BRIEF.md** - Overall goals, phases, architecture
-- **PROGRESS_LOG.md** - Daily updates, decisions, status
+- **STATUS.md** - Daily updates, decisions, status
 
 ### Agent Workflow Files
 - **TASKS.md** - Task queue with statuses
@@ -208,7 +208,7 @@ Agent:
 1. Implements the feature following CLAUDE_CONTEXT.md
 2. Writes comprehensive tests
 3. Runs tests (`pytest tests/`)
-4. Updates PROGRESS_LOG.md with completion summary
+4. Updates STATUS.md with completion summary
 5. Creates completion note: `handoffs/completion-IMPL-001.md`
 6. Updates TASKS.md status to `completed`
 7. Commits code with clear message
@@ -294,7 +294,7 @@ Architect/Planner updates to `ready` when dependencies complete.
 - Read handoff file completely first
 - Follow CLAUDE_CONTEXT.md standards
 - Write tests before marking complete
-- Update PROGRESS_LOG.md immediately on completion
+- Update STATUS.md immediately on completion
 - Document any learnings or blockers in completion notes
 - Own the full delivery (don't wait for review)
 
@@ -304,7 +304,7 @@ Architect/Planner updates to `ready` when dependencies complete.
 ```
 Read:
 - /workspaces/qetf/PROJECT_BRIEF.md
-- /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/STATUS.md
 - /workspaces/qetf/artifacts/[latest_backtest_results]
 
 Your role: Quant Researcher Agent
@@ -321,7 +321,7 @@ to test, with rationale grounded in quantitative finance theory.
 ```
 Read:
 - /workspaces/qetf/PROJECT_BRIEF.md
-- /workspaces/qetf/PROGRESS_LOG.md
+- /workspaces/qetf/STATUS.md
 - /workspaces/qetf/TASKS.md
 
 Your role: Architect/Planner Agent
@@ -349,7 +349,7 @@ Task: Implement the task specified in handoff-IMPL-001.md
 You own full delivery:
 - Working implementation
 - Tests (all passing)
-- Updated PROGRESS_LOG.md
+- Updated STATUS.md
 - handoffs/completion-IMPL-001.md
 - Updated TASKS.md status
 

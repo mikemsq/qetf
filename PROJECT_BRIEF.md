@@ -429,13 +429,13 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 ### Decision-Making Process
 
-- Solo project, decisions documented in PROGRESS_LOG.md
+- Solo project, decisions documented in STATUS.md
 - Major architecture decisions recorded in session notes
 - Strategy choices documented in CLAUDE_CONTEXT.md
 
 ### Progress Updates
 
-- **Frequency:** Daily (PROGRESS_LOG.md updates)
+- **Frequency:** Daily (STATUS.md updates)
 - **Format:** Session notes for substantial work
 
 -----
@@ -479,7 +479,7 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 - [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) - Coding standards and patterns
 - [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) - Multi-agent development process
-- [PROGRESS_LOG.md](PROGRESS_LOG.md) - Current status and recent activity
+- [STATUS.md](STATUS.md) - Current status and recent activity
 - [TASKS.md](TASKS.md) - Task queue for parallel development
 - [README.md](README.md) - Public-facing overview
 
@@ -519,4 +519,4 @@ Scheduled Trigger → Load Latest Snapshot → Compute Signals
 
 **Current Focus:** Complete portfolio construction, transaction costs, and backtest engine
 
-**See:** [PROGRESS_LOG.md](PROGRESS_LOG.md) for detailed current status and [TASKS.md](TASKS.md) for ready tasks
+**See:** [STATUS.md](STATUS.md) for detailed current status and [TASKS.md](TASKS.md) for ready tasks

@@ -1,6 +1,6 @@
 # CLAUDE_CONTEXT.md
 
-**Last Updated:** January 13, 2026
+**Last Updated:** January 20, 2026
 **Project:** QuantETF
 
 -----
@@ -13,7 +13,7 @@ This file contains instructions and context for Claude across all sessions. Read
 https://raw.githubusercontent.com/mikemsq/qetf/refs/heads/main/CLAUDE_CONTEXT.md
 ```
 
-Always check PROGRESS_LOG.md for current status.
+Always check STATUS.md for current status.
 
 -----
 
@@ -42,10 +42,12 @@ Planning / Initial Development
 
 ```
 qetf/
-├── PROJECT_BRIEF.md          # Strategic overview and goals
-├── CLAUDE_CONTEXT.md         # This file - read first
-├── PROGRESS_LOG.md           # Daily updates - check current status
 ├── README.md                 # Public-facing documentation
+├── PROJECT_BRIEF.md          # Strategic overview and goals
+├── STATUS.md                 # Current status - check first
+├── TASKS.md                  # Task queue
+├── CLAUDE_CONTEXT.md         # This file - coding standards
+├── AGENT_WORKFLOW.md         # Agent roles and workflow
 ├── pyproject.toml            # Python dependencies and config
 ├── uv.lock                   # Locked dependency versions
 ├── /configs                  # Strategy and universe configs (YAML)
@@ -56,7 +58,14 @@ qetf/
 ├── /artifacts                # Output bundles (metrics, plots, recommendations)
 ├── /notebooks                # Jupyter notebooks for research
 ├── /scripts                  # Utility scripts (ingest, backtest, etc.)
-├── /session-notes            # Notes from each Claude session
+├── /handoffs                 # Task handoffs and completions
+│   ├── /architecture         # Long-lived architectural docs
+│   ├── /research             # Research findings
+│   ├── /tasks                # Active task handoffs
+│   └── /completions          # Task completion records
+├── /docs                     # Reference documentation
+│   ├── /handouts             # Agent-focused specifications
+│   └── /archive              # Archived/historical docs
 ├── /src/quantetf             # Main library code
 │   ├── /data                 # Data ingestion and connectors
 │   ├── /universe             # Universe builders and filters
@@ -92,7 +101,7 @@ qetf/
 
 ### 3. Document as you go
 
-- Update PROGRESS_LOG.md after completing tasks
+- Update STATUS.md after completing tasks
 - Add docstrings for all functions and classes
 - Document decisions in /docs/decisions/ (if needed)
 - Explain calculation methods and data sources
@@ -176,12 +185,78 @@ qetf/
 
 -----
 
+## Documentation Standards
+
+### Single Source of Truth
+
+| File | Purpose | Update When |
+|------|---------|-------------|
+| STATUS.md | Current project state, recent progress | Significant progress made |
+| TASKS.md | Task queue and status | Starting/completing tasks |
+| handoffs/completions/ | Detailed completion records | Task completed |
+
+**No duplication:** Don't repeat status information across multiple files.
+
+### Handoffs Directory Structure
+
+```
+handoffs/
+├── TEMPLATE-COMPLETION.md    # Standard completion template
+├── architecture/             # Long-lived architectural docs
+├── research/                 # Research findings and analysis
+├── tasks/                    # Active task handoffs (delete when done)
+└── completions/              # Task completion records
+```
+
+### Completion Reports
+
+Use the standard template at `handoffs/TEMPLATE-COMPLETION.md`:
+- Maximum ~100 lines for routine tasks
+- Include: summary, files changed, test results, acceptance criteria
+- Delete the handoff file after creating the completion file
+
+### File Naming Conventions
+
+| Type | Pattern | Example |
+|------|---------|---------|
+| Root docs | `UPPERCASE_SNAKE.md` | `PROJECT_BRIEF.md` |
+| Task handoffs | `handoff-TASK-ID.md` | `handoff-IMPL-019.md` |
+| Completions | `completion-TASK-ID.md` | `completion-IMPL-019.md` |
+| Architecture | `lowercase-kebab.md` | `data-access-layer.md` |
+| Handouts | `HANDOUT_description.md` | `HANDOUT_momentum.md` |
+
+### Task IDs
+
+Format: `TYPE-NNN` where TYPE is one of:
+- `IMPL` - Implementation tasks
+- `ANALYSIS` - Analysis/analytics tasks
+- `VIZ` - Visualization tasks
+- `TEST` - Testing tasks
+- `INFRA` - Infrastructure tasks
+- `OPT` - Optimization tasks
+- `EXP` - Experiments
+- `DOC` - Documentation tasks
+- `DATA` - Data tasks
+- `SEARCH` - Search/optimizer runs
+
+### When to Update What
+
+| Action | Update |
+|--------|--------|
+| Start task | TASKS.md status → `in_progress` |
+| Complete task | Create completion file, TASKS.md → `completed` |
+| Significant progress | STATUS.md "Recent Progress" section |
+| Architecture decision | handoffs/architecture/ |
+| Research finding | handoffs/research/ |
+
+-----
+
 ## Things to ALWAYS Do
 
-✅ Read PROGRESS_LOG.md before starting work  
+✅ Read STATUS.md before starting work  
 ✅ Check if similar code exists before creating new patterns  
 ✅ Run tests before marking work complete (`pytest tests/`)  
-✅ Update PROGRESS_LOG.md when finishing a task  
+✅ Update STATUS.md when finishing a task  
 ✅ Create small, focused commits with clear messages  
 ✅ Add error handling for data fetching and API calls  
 ✅ Validate input data before calculations  
@@ -197,7 +272,7 @@ qetf/
 
 ❌ Don’t modify files outside the current task scope  
 ❌ Don’t delete or comment out code without discussion  
-❌ Don’t introduce new dependencies without noting in PROGRESS_LOG.md  
+❌ Don’t introduce new dependencies without noting in STATUS.md  
 ❌ Don’t commit broken/non-functional code  
 ❌ Don’t ignore errors or warnings  
 ❌ Don’t hardcode API keys or credentials (use environment variables)  
@@ -475,7 +550,7 @@ If you're unsure about anything, ask these questions:
 
 ## Important Reminders
 
-- 📖 Always read PROGRESS_LOG.md first for current status
+- 📖 Always read STATUS.md first for current status
 - 🎯 Understand the goal before coding
 - ⏰ Use explicit as_of dates for all point-in-time operations
 - 🚫 Never use future data in backtests (lookahead bias)
@@ -492,8 +567,8 @@ When starting a session, tell Claude which agent role to assume. Claude will aut
 
 | Agent | Required Reading | Purpose |
 |-------|------------------|---------|
-| **Quant Researcher** | PROJECT_BRIEF.md, PROGRESS_LOG.md, latest artifacts/ | Analyze results, recommend strategies |
-| **Architect/Planner** | PROJECT_BRIEF.md, PROGRESS_LOG.md, TASKS.md | Design tasks, manage priorities |
+| **Quant Researcher** | PROJECT_BRIEF.md, STATUS.md, latest artifacts/ | Analyze results, recommend strategies |
+| **Architect/Planner** | PROJECT_BRIEF.md, STATUS.md, TASKS.md | Design tasks, manage priorities |
 | **Coding Agent** | CLAUDE_CONTEXT.md, specific handoff file | Implement features, write tests |
 
 **Usage:** Just say "You are the [Agent Name] agent" and Claude will read the appropriate files.
@@ -516,7 +591,7 @@ For quick reference:
 ### Session Commands
 
 **"finalize"** - When the user says "finalize", end the session by:
-1. Update PROGRESS_LOG.md with what was accomplished
+1. Update STATUS.md with what was accomplished
 2. Review any other docs that need updating (TASKS.md if applicable)
 3. Commit all changes with a clear commit message
 4. Ensure the next session can continue seamlessly

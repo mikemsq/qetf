@@ -93,11 +93,9 @@ A complete run, whether for research or production, looks like this:
 - **`tests/`** - Unit tests, integration tests, golden tests
 - **`artifacts/`** - Output from runs (metrics, plots, recommendations)
 
-### Multi-Agent Workflow
-- **`handoffs/`** - Agent-to-agent task handoff files
-- **`session-notes/`** - Detailed session history
-
 ### Documentation
+- **`handoffs/`** - Task handoffs and completions (organized by type)
+- **`docs/`** - Reference documentation and handouts
 
 See **Documentation Guide** section below for file purposes.
 
@@ -165,65 +163,45 @@ The key design rule is that all of these components accept an explicit `as_of` d
 
 ## Documentation Guide
 
-This project uses a clear separation of concerns for documentation:
+This project uses 6 essential root-level documentation files:
 
-### For All Sessions
-- **[CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md)** - Coding standards, patterns, and best practices
-  - What: Python style guide, common patterns, financial data guidelines
-  - Use: Reference when writing code
+| File | Purpose |
+|------|---------|
+| [README.md](README.md) | This file - public overview |
+| [PROJECT_BRIEF.md](PROJECT_BRIEF.md) | Vision, goals, architecture |
+| [STATUS.md](STATUS.md) | Current status - check first |
+| [TASKS.md](TASKS.md) | Task queue |
+| [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) | Coding standards |
+| [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) | Agent roles and workflow |
 
-### For Understanding the Project
-- **[PROJECT_BRIEF.md](PROJECT_BRIEF.md)** - Vision, goals, and architecture
-  - What: Overall project goals, success criteria, phases, technical decisions
-  - Use: Understand what we're building and why
+### Handoffs Directory
 
-### For Current Status
-- **[PROGRESS_LOG.md](PROGRESS_LOG.md)** - Current status and recent activity
-  - What: Current phase, recent decisions, last 7 days of work
-  - Use: Know where we are and what's happening now
+Task handoffs and completions are organized in [handoffs/](handoffs/):
 
-### For Development Process
-- **[AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)** - Multi-agent development process
-  - What: How specialized agents work in parallel, task lifecycle, handoff patterns
-  - Use: Understand the development workflow
+```
+handoffs/
+├── architecture/     # Long-lived architectural docs
+├── research/         # Research findings
+├── tasks/            # Active task handoffs
+└── completions/      # Task completion records
+```
 
-- **[TASKS.md](TASKS.md)** - Task queue for parallel development
-  - What: Ready/blocked/completed tasks with dependencies and priorities
-  - Use: Find work to do
+### For New Agents
 
-- **[handoffs/](handoffs/)** - Detailed task specifications
-  - What: Context, steps, acceptance criteria for specific tasks
-  - Use: Pick up and implement a task
-
-### For History
-- **[SESSION_INDEX.md](SESSION_INDEX.md)** - Complete session history
-  - What: Chronological record of all development sessions
-  - Use: Find historical context and past decisions
-
-- **[session-notes/](session-notes/)** - Detailed session notes
-  - What: In-depth notes from each development session
-  - Use: Deep dive into specific sessions
+1. Read [STATUS.md](STATUS.md) for current project state
+2. Check [TASKS.md](TASKS.md) for available tasks
+3. Read [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) for coding standards
+4. Read the relevant handoff file from [handoffs/tasks/](handoffs/tasks/)
 
 -----
 
 ## Multi-Agent Development Workflow
 
-This project uses a **distributed multi-agent workflow** for development:
+This project uses a **distributed multi-agent workflow**:
 
 - Multiple specialized agents work in parallel from shared documentation
-- Tasks are managed in [TASKS.md](TASKS.md) with clear dependencies
-- Each task has a detailed handoff file in [handoffs/](handoffs/)
-- No context loss between sessions - each agent starts fresh
+- Tasks managed in [TASKS.md](TASKS.md) with clear dependencies
+- Detailed handoffs in [handoffs/](handoffs/) for each task
+- No context loss - each agent starts fresh with explicit documentation
 
-**For developers:**
-1. Read [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) to understand the process
-2. Check [TASKS.md](TASKS.md) for available tasks
-3. Pick up a task and read its handoff file
-4. Follow [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md) coding standards
-5. Update session notes as you go
-
-**Benefits:**
-- 3x speedup through parallel execution
-- Clear task handoffs eliminate confusion
-- Resilient to context limits and session interruptions
-- Scalable - add more agents as needed
+See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for details on agent roles and workflow
