@@ -2,6 +2,8 @@
 
 Ranks tickers by the difference between short-term and long-term momentum,
 capturing trend acceleration or deceleration signals.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
@@ -14,7 +16,7 @@ import numpy as np
 
 from quantetf.alpha.base import AlphaModel
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +49,16 @@ class MomentumAccelerationAlpha(AlphaModel):
     Point-in-time compliance:
         - Uses only data BEFORE as_of date (T-1 and earlier)
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = MomentumAccelerationAlpha(
         ...     short_lookback_days=63,
         ...     long_lookback_days=252
@@ -55,8 +66,8 @@ class MomentumAccelerationAlpha(AlphaModel):
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
     """
 
@@ -106,7 +117,7 @@ class MomentumAccelerationAlpha(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Compute momentum acceleration scores.
@@ -117,37 +128,27 @@ class MomentumAccelerationAlpha(AlphaModel):
             as_of: Decision date
             universe: Set of eligible tickers
             features: Pre-computed features (not used)
-            store: Data store for price history
+            data_access: DataAccessContext for price history
             dataset_version: Optional dataset version
 
         Returns:
             AlphaScores with acceleration scores.
             Positive = accelerating trend, Negative = decelerating.
             NaN = insufficient data.
-
-        Raises:
-            TypeError: If store is not SnapshotDataStore
         """
         logger.info(
             f"Computing momentum acceleration as of {as_of} "
             f"for {len(universe.tickers)} tickers"
         )
 
-        # Validate store type
-        from quantetf.data.snapshot_store import SnapshotDataStore
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(
-                f"MomentumAccelerationAlpha requires SnapshotDataStore, "
-                f"got {type(store)}"
-            )
-
         # Get prices - add buffer for calculations
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=self.long_lookback_days + 50
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             logger.error(f"Failed to get prices: {e}")
             # Return NaN scores if we can't get data

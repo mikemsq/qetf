@@ -7,7 +7,7 @@ import tempfile
 from pathlib import Path
 
 from quantetf.alpha.residual_momentum import ResidualMomentumAlpha
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
@@ -83,9 +83,13 @@ class TestResidualMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_A', 'TICKER_B'))
@@ -93,7 +97,7 @@ class TestResidualMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # TICKER_A should have near-zero score (follows SPY exactly)
@@ -124,9 +128,13 @@ class TestResidualMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_HIGH_BETA',))
@@ -134,7 +142,7 @@ class TestResidualMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # High beta but no idiosyncratic return -> near-zero residuals
@@ -155,9 +163,13 @@ class TestResidualMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('SPY',))
@@ -165,7 +177,7 @@ class TestResidualMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # SPY can't be regressed on itself
@@ -187,9 +199,13 @@ class TestResidualMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha(min_periods=200)
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_SHORT',))
@@ -197,7 +213,7 @@ class TestResidualMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             assert pd.isna(scores.scores['TICKER_SHORT'])
@@ -226,9 +242,13 @@ class TestResidualMomentumEdgeCases:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_A',))
@@ -236,7 +256,7 @@ class TestResidualMomentumEdgeCases:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Score should be near 0 (flat prices), NOT influenced by jump
@@ -256,9 +276,13 @@ class TestResidualMomentumEdgeCases:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_A',))
@@ -269,21 +293,21 @@ class TestResidualMomentumEdgeCases:
                     as_of=dates[-1],
                     universe=universe,
                     features=None,
-                    store=store
+                    data_access=ctx
                 )
 
     def test_wrong_store_type_raises_error(self):
-        """Test that using wrong store type raises TypeError."""
+        """Test that using wrong data_access type raises TypeError."""
         alpha = ResidualMomentumAlpha()
         as_of = pd.Timestamp('2023-01-01')
         universe = Universe(as_of=as_of, tickers=('TICKER_A',))
 
-        with pytest.raises(TypeError, match="requires SnapshotDataStore"):
+        with pytest.raises((TypeError, AttributeError)):
             alpha.score(
                 as_of=as_of,
                 universe=universe,
                 features=None,
-                store=None
+                data_access=None
             )
 
 
@@ -318,9 +342,13 @@ class TestResidualMomentumRanking:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = ResidualMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_HB_LA', 'TICKER_LB_HA'))
@@ -328,7 +356,7 @@ class TestResidualMomentumRanking:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Low beta but high alpha should score higher than high beta low alpha

@@ -8,6 +8,8 @@ The value-momentum blend attempts to balance two opposing forces:
 
 By blending these signals, the strategy aims to capture both trend-following
 and contrarian opportunities while reducing exposure to each signal's failure modes.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
@@ -19,8 +21,7 @@ import numpy as np
 import pandas as pd
 
 from quantetf.alpha.base import AlphaModel
-from quantetf.data.snapshot_store import SnapshotDataStore
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
 
 logger = logging.getLogger(__name__)
@@ -37,13 +38,22 @@ class ValueMomentum(AlphaModel):
 
     Both signals are z-scored before blending to ensure comparable scales.
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = ValueMomentum(momentum_weight=0.6, value_weight=0.4)
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
 
     Attributes:
@@ -92,7 +102,7 @@ class ValueMomentum(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Calculate blended value-momentum scores.
@@ -101,7 +111,7 @@ class ValueMomentum(AlphaModel):
             as_of: Date for which to calculate scores
             universe: Set of eligible tickers
             features: Pre-computed features (not used)
-            store: Data store for accessing price history
+            data_access: DataAccessContext for accessing price history
             dataset_version: Optional dataset version
 
         Returns:
@@ -113,20 +123,16 @@ class ValueMomentum(AlphaModel):
             f"(mom_weight={self.momentum_weight:.2f}, val_weight={self.value_weight:.2f})"
         )
 
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(
-                f"ValueMomentum requires SnapshotDataStore, got {type(store)}"
-            )
-
         # Get price data
         required_lookback = max(self.momentum_lookback, self.value_lookback) + 50
 
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=required_lookback
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             logger.error(f"Failed to get prices: {e}")
             return AlphaScores(
@@ -242,7 +248,7 @@ class ValueMomentum(AlphaModel):
 
     def get_signal_components(
         self,
-        store: DataStore,
+        data_access: DataAccessContext,
         as_of: pd.Timestamp,
         universe: Universe,
     ) -> dict:
@@ -251,26 +257,22 @@ class ValueMomentum(AlphaModel):
         Useful for debugging and understanding the blend.
 
         Args:
-            store: Data store for accessing prices
+            data_access: DataAccessContext for accessing prices
             as_of: Date for calculation
             universe: Set of eligible tickers
 
         Returns:
             Dict with 'momentum_z', 'value_z', and 'blended' Series
         """
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(
-                f"ValueMomentum requires SnapshotDataStore, got {type(store)}"
-            )
-
         required_lookback = max(self.momentum_lookback, self.value_lookback) + 50
 
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=required_lookback
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError:
             return {
                 'momentum_z': pd.Series(dtype=float),

@@ -7,6 +7,8 @@ The dual momentum strategy was popularized by Gary Antonacci and combines:
 2. Relative momentum: Among qualifying assets, select the best performers
 
 When no assets pass the absolute momentum filter, allocate to safe assets.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
@@ -18,8 +20,7 @@ import numpy as np
 import pandas as pd
 
 from quantetf.alpha.base import AlphaModel
-from quantetf.data.snapshot_store import SnapshotDataStore
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
 
 logger = logging.getLogger(__name__)
@@ -36,13 +37,22 @@ class DualMomentum(AlphaModel):
     This approach aims to avoid holding assets in downtrends while still
     capturing relative momentum among assets that are trending up.
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = DualMomentum(lookback=252, risk_free_rate=0.02)
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
 
     Attributes:
@@ -80,7 +90,7 @@ class DualMomentum(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Calculate dual momentum scores.
@@ -89,7 +99,7 @@ class DualMomentum(AlphaModel):
             as_of: Date for which to calculate scores
             universe: Set of eligible tickers
             features: Pre-computed features (not used)
-            store: Data store for accessing price history
+            data_access: DataAccessContext for accessing price history
             dataset_version: Optional dataset version
 
         Returns:
@@ -100,21 +110,17 @@ class DualMomentum(AlphaModel):
             f"for {len(universe.tickers)} tickers"
         )
 
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(
-                f"DualMomentum requires SnapshotDataStore, got {type(store)}"
-            )
-
         # Filter universe to exclude safe tickers from momentum calculation
         # Safe tickers are only used when momentum is negative
         risky_tickers = [t for t in universe.tickers if t not in self.safe_tickers]
 
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=self.lookback + 50
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             logger.error(f"Failed to get prices: {e}")
             return AlphaScores(
@@ -220,14 +226,14 @@ class DualMomentum(AlphaModel):
 
     def get_signal_type(
         self,
-        store: DataStore,
+        data_access: DataAccessContext,
         as_of: pd.Timestamp,
         universe: Universe,
     ) -> str:
         """Return whether using momentum or safe assets.
 
         Args:
-            store: Data store for accessing prices
+            data_access: DataAccessContext for accessing prices
             as_of: Date for calculation
             universe: Set of eligible tickers
 
@@ -238,7 +244,7 @@ class DualMomentum(AlphaModel):
             as_of=as_of,
             universe=universe,
             features=None,
-            store=store
+            data_access=data_access
         )
 
         # Check if we're in safe mode

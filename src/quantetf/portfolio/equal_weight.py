@@ -2,6 +2,8 @@
 
 This module provides a simple portfolio constructor that selects the top N
 assets by alpha score and assigns equal weights to each.
+
+Migrated to use DataAccessContext (DAL) instead of direct DataStore dependency.
 """
 
 from __future__ import annotations
@@ -13,7 +15,7 @@ import pandas as pd
 
 from quantetf.portfolio.base import PortfolioConstructor
 from quantetf.types import AlphaScores, DatasetVersion, RiskModelOutput, TargetWeights, Universe, CASH_TICKER
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +27,10 @@ class EqualWeightTopN(PortfolioConstructor):
     select the top N, and give each an equal weight of 1/N.
 
     The constructor ignores risk model output, previous weights, and does not access
-    the data store - it operates purely on the provided alpha scores.
+    data - it operates purely on the provided alpha scores.
+
+    Uses DataAccessContext (DAL) for all data access (though this particular
+    implementation doesn't need data access).
 
     Example:
         >>> constructor = EqualWeightTopN(top_n=5)
@@ -34,7 +39,7 @@ class EqualWeightTopN(PortfolioConstructor):
         ...     universe=universe,
         ...     alpha=alpha_scores,
         ...     risk=None,  # Not used
-        ...     store=None  # Not used
+        ...     data_access=ctx
         ... )
         >>> # weights.weights will have 5 non-zero entries summing to 1.0
     """
@@ -59,7 +64,7 @@ class EqualWeightTopN(PortfolioConstructor):
         universe: Universe,
         alpha: AlphaScores,
         risk: RiskModelOutput,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
         prev_weights: Optional[pd.Series] = None,
     ) -> TargetWeights:
@@ -74,7 +79,7 @@ class EqualWeightTopN(PortfolioConstructor):
             universe: Set of eligible tickers
             alpha: Alpha scores for the universe
             risk: Risk model output (not used in equal-weight)
-            store: Data store (not used in equal-weight)
+            data_access: DataAccessContext (not used in equal-weight)
             dataset_version: Optional dataset version
             prev_weights: Optional previous weights (not used in equal-weight)
 

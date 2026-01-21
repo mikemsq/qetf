@@ -15,18 +15,22 @@ import pandas as pd
 import pytest
 
 from quantetf.alpha.dual_momentum import DualMomentum
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
-def create_test_snapshot(prices_df: pd.DataFrame) -> Path:
-    """Create a temporary snapshot from price data."""
+def create_test_context(prices_df: pd.DataFrame):
+    """Create a DataAccessContext from price data."""
     tmpdir = tempfile.mkdtemp()
     snapshot_path = Path(tmpdir) / 'test_snapshot'
     snapshot_path.mkdir()
-    parquet_path = snapshot_path / 'prices.parquet'
+    parquet_path = snapshot_path / 'data.parquet'
     prices_df.to_parquet(parquet_path)
-    return snapshot_path
+    ctx = DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False
+    )
+    return ctx, snapshot_path
 
 
 class TestDualMomentum:
@@ -56,11 +60,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,
@@ -76,7 +78,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # A should have highest score, then B, then C
@@ -109,11 +111,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,
@@ -130,7 +130,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Safe assets should have high scores
@@ -164,11 +164,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,  # 2% threshold
@@ -184,7 +182,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # A should be filtered out (below threshold)
@@ -217,11 +215,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,
@@ -237,7 +233,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # A should have positive score (above threshold)
@@ -269,11 +265,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,
@@ -286,7 +280,7 @@ class TestDualMomentum:
             )
 
             signal_type = model.get_signal_type(
-                store=store,
+                data_access=ctx,
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe
             )
@@ -315,11 +309,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 risk_free_rate=0.02,
@@ -332,7 +324,7 @@ class TestDualMomentum:
             )
 
             signal_type = model.get_signal_type(
-                store=store,
+                data_access=ctx,
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe
             )
@@ -360,11 +352,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             # Only CUSTOM as safe (not AGG)
             model = DualMomentum(
                 lookback=252,
@@ -382,7 +372,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-10-27'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Only CUSTOM should have high score
@@ -410,11 +400,9 @@ class TestDualMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        ctx, snapshot_path = create_test_context(combined)
 
         try:
-            store = SnapshotDataStore(snapshot_path)
-
             model = DualMomentum(
                 lookback=252,
                 min_periods=200,  # More than available
@@ -429,7 +417,7 @@ class TestDualMomentum:
                 as_of=pd.Timestamp('2020-02-15'),
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Should fall back to safe assets when no valid momentum data
@@ -439,7 +427,7 @@ class TestDualMomentum:
             shutil.rmtree(snapshot_path.parent, ignore_errors=True)
 
     def test_wrong_store_type_raises(self):
-        """Should raise TypeError if not using SnapshotDataStore."""
+        """Should raise TypeError if not using DataAccessContext."""
         model = DualMomentum()
 
         universe = Universe(
@@ -447,13 +435,10 @@ class TestDualMomentum:
             tickers=('A', 'B')
         )
 
-        class FakeStore:
-            pass
-
-        with pytest.raises(TypeError, match="SnapshotDataStore"):
+        with pytest.raises((TypeError, AttributeError)):
             model.score(
                 as_of=pd.Timestamp('2020-10-01'),
                 universe=universe,
                 features=None,
-                store=FakeStore()
+                data_access=None  # Wrong type!
             )

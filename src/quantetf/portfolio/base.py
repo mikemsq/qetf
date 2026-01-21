@@ -7,7 +7,7 @@ from typing import Any, Mapping, Optional
 import pandas as pd
 
 from quantetf.types import AlphaScores, DatasetVersion, RiskModelOutput, TargetWeights, Universe
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 
 @dataclass(frozen=True)
@@ -32,7 +32,13 @@ class CostModel(ABC):
 
 
 class PortfolioConstructor(ABC):
-    """Builds target weights from alpha and risk, subject to constraints."""
+    """Builds target weights from alpha and risk, subject to constraints.
+
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+    """
 
     @abstractmethod
     def construct(
@@ -42,7 +48,7 @@ class PortfolioConstructor(ABC):
         universe: Universe,
         alpha: AlphaScores,
         risk: RiskModelOutput,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
         prev_weights: Optional[pd.Series] = None,
     ) -> TargetWeights:

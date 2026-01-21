@@ -1,6 +1,8 @@
 """Momentum alpha models for ETF strategies.
 
 Momentum strategies bet on the continuation of recent price trends.
+
+Migrated to use DataAccessContext (DAL) instead of direct DataStore dependency.
 """
 
 from __future__ import annotations
@@ -13,7 +15,7 @@ import numpy as np
 
 from quantetf.alpha.base import AlphaModel
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +35,7 @@ class CrossSectionalMomentum(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: DatasetVersion | None = None,
     ) -> AlphaScores:
         if self.feature_name not in features.frame.columns:
@@ -51,13 +53,22 @@ class MomentumAlpha(AlphaModel):
 
     The model uses point-in-time data to ensure no lookahead bias.
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = MomentumAlpha(lookback_days=252)  # 12-month momentum
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
     """
 
@@ -77,7 +88,7 @@ class MomentumAlpha(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Compute momentum scores for the universe.
@@ -89,7 +100,7 @@ class MomentumAlpha(AlphaModel):
             as_of: Date as of which to compute scores (decisions made on this date)
             universe: Set of eligible tickers
             features: Pre-computed features (not used in simple momentum)
-            store: Data store for accessing price history
+            data_access: DataAccessContext for accessing price history
             dataset_version: Optional dataset version for reproducibility
 
         Returns:
@@ -97,20 +108,15 @@ class MomentumAlpha(AlphaModel):
         """
         logger.info(f"Computing momentum scores as of {as_of} for {len(universe.tickers)} tickers")
 
-        # Verify store has required methods
-        if not hasattr(store, 'get_close_prices'):
-            raise TypeError(
-                f"MomentumAlpha requires a DataStore with get_close_prices method, "
-                f"got {type(store)}"
-            )
-
         # Get price data - this automatically uses T-1 and earlier (no lookahead)
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=self.lookback_days + 50  # Extra buffer for rolling calculations
             )
+            # Extract Close prices
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             logger.error(f"Failed to get prices: {e}")
             # Return zero scores if we can't get data

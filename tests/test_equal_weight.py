@@ -52,7 +52,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Verify type
@@ -99,7 +99,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Top 2 valid: C (0.8), E (0.6)
@@ -135,7 +135,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # All 3 should be selected with equal weight
@@ -167,7 +167,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # All weights should be 0.0
@@ -197,7 +197,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Single ticker gets 100% weight
@@ -226,7 +226,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Weights index should match universe tickers exactly
@@ -254,7 +254,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Top 2: D (0.3), B (0.1) - highest values even if some are negative
@@ -286,7 +286,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # C (0.8) is definitely selected, then one of A or B (0.5 each)
@@ -323,7 +323,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         assert weights.as_of == as_of_date
@@ -349,7 +349,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Check all expected diagnostic fields are present
@@ -398,7 +398,7 @@ class TestEqualWeightTopN:
             universe=universe,
             alpha=alpha,
             risk=None,
-            store=None
+            data_access=None
         )
 
         # Verify exactly 5 non-zero weights

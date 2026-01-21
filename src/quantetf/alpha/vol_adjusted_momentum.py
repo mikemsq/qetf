@@ -2,6 +2,8 @@
 
 Ranks tickers by risk-adjusted returns using a Sharpe-style metric.
 Penalizes volatile assets in favor of smooth, consistent performers.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
@@ -14,7 +16,7 @@ import numpy as np
 
 from quantetf.alpha.base import AlphaModel
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
 
@@ -43,13 +45,22 @@ class VolAdjustedMomentumAlpha(AlphaModel):
         - Uses only data BEFORE as_of date (T-1 and earlier)
         - No lookahead bias
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = VolAdjustedMomentumAlpha(lookback_days=252)
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
     """
 
@@ -95,7 +106,7 @@ class VolAdjustedMomentumAlpha(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Compute volatility-adjusted momentum scores.
@@ -106,37 +117,27 @@ class VolAdjustedMomentumAlpha(AlphaModel):
             as_of: Decision date
             universe: Set of eligible tickers
             features: Pre-computed features (not used)
-            store: Data store for price history
+            data_access: DataAccessContext for price history
             dataset_version: Optional dataset version
 
         Returns:
             AlphaScores with vol-adjusted momentum scores.
             Higher scores = better risk-adjusted returns.
             NaN scores = insufficient data.
-
-        Raises:
-            TypeError: If store is not SnapshotDataStore
         """
         logger.info(
             f"Computing vol-adjusted momentum as of {as_of} "
             f"for {len(universe.tickers)} tickers"
         )
 
-        # Validate store type
-        from quantetf.data.snapshot_store import SnapshotDataStore
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(
-                f"VolAdjustedMomentumAlpha requires SnapshotDataStore, "
-                f"got {type(store)}"
-            )
-
         # Get prices
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=list(universe.tickers),
                 lookback_days=self.lookback_days + 50
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             logger.error(f"Failed to get prices: {e}")
             # Return NaN scores if we can't get data

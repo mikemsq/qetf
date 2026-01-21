@@ -3,6 +3,8 @@
 This module implements beta-neutral momentum by regressing ticker returns
 against SPY and ranking by residuals. This isolates idiosyncratic momentum
 independent of market beta exposure.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
@@ -15,7 +17,7 @@ import numpy as np
 
 from quantetf.alpha.base import AlphaModel
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
-from quantetf.data.store import DataStore
+from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
 
@@ -39,13 +41,22 @@ class ResidualMomentumAlpha(AlphaModel):
         - Uses only data BEFORE as_of date (T-1 and earlier)
         - No lookahead bias in regression or scoring
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> alpha = ResidualMomentumAlpha(lookback_days=252)
         >>> scores = alpha.score(
         ...     as_of=pd.Timestamp("2023-12-31"),
         ...     universe=universe,
-        ...     features=features,
-        ...     store=store
+        ...     features=None,
+        ...     data_access=ctx
         ... )
     """
 
@@ -86,7 +97,7 @@ class ResidualMomentumAlpha(AlphaModel):
         as_of: pd.Timestamp,
         universe: Universe,
         features: FeatureFrame,
-        store: DataStore,
+        data_access: DataAccessContext,
         dataset_version: Optional[DatasetVersion] = None,
     ) -> AlphaScores:
         """Compute residual momentum scores for the universe.
@@ -97,7 +108,7 @@ class ResidualMomentumAlpha(AlphaModel):
             as_of: Decision date (score computed using data up to T-1)
             universe: Set of eligible tickers to score
             features: Pre-computed features (not used in this model)
-            store: Data store for accessing price history
+            data_access: DataAccessContext for accessing price history
             dataset_version: Optional dataset version for reproducibility
 
         Returns:
@@ -105,25 +116,20 @@ class ResidualMomentumAlpha(AlphaModel):
             NaN scores indicate insufficient data for regression.
 
         Raises:
-            TypeError: If store is not SnapshotDataStore
             ValueError: If SPY data is unavailable or insufficient
         """
         logger.info(f"Computing residual momentum as of {as_of} for {len(universe.tickers)} tickers")
-
-        # Validate store type
-        from quantetf.data.snapshot_store import SnapshotDataStore
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(f"ResidualMomentumAlpha requires SnapshotDataStore, got {type(store)}")
 
         # Get prices for SPY and universe tickers
         tickers_with_spy = list(set(list(universe.tickers) + [self.spy_ticker]))
 
         try:
-            prices = store.get_close_prices(
+            ohlcv_data = data_access.prices.read_prices_as_of(
                 as_of=as_of,
                 tickers=tickers_with_spy,
                 lookback_days=self.lookback_days + 50
             )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except ValueError as e:
             # If error mentions SPY specifically, raise it
             if self.spy_ticker in str(e) or "SPY" in str(e):

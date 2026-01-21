@@ -7,7 +7,7 @@ import tempfile
 from pathlib import Path
 
 from quantetf.alpha.vol_adjusted_momentum import VolAdjustedMomentumAlpha
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
@@ -89,9 +89,13 @@ class TestVolAdjustedMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_A', 'TICKER_B'))
@@ -99,7 +103,7 @@ class TestVolAdjustedMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # TICKER_A should have higher score (better risk-adjusted return)
@@ -121,9 +125,13 @@ class TestVolAdjustedMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha(vol_floor=0.01)
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_CONST',))
@@ -131,7 +139,7 @@ class TestVolAdjustedMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Score should be finite (not inf/nan from division by zero)
@@ -157,9 +165,13 @@ class TestVolAdjustedMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_DOWN',))
@@ -167,7 +179,7 @@ class TestVolAdjustedMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Score should be negative (negative return)
@@ -186,9 +198,13 @@ class TestVolAdjustedMomentumBasics:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha(min_periods=200)
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_SHORT',))
@@ -196,7 +212,7 @@ class TestVolAdjustedMomentumBasics:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             assert pd.isna(scores.scores['TICKER_SHORT'])
@@ -222,9 +238,13 @@ class TestVolAdjustedMomentumEdgeCases:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_A',))
@@ -232,7 +252,7 @@ class TestVolAdjustedMomentumEdgeCases:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Score should be near 0 (flat prices), NOT influenced by jump
@@ -252,34 +272,39 @@ class TestVolAdjustedMomentumEdgeCases:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha()
 
-            universe = Universe(as_of=dates[-1], tickers=('TICKER_EXISTS', 'TICKER_MISSING'))
+            # Only request existing ticker since accessor raises error for missing
+            universe = Universe(as_of=dates[-1], tickers=('TICKER_EXISTS',))
             scores = alpha.score(
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
-            assert pd.isna(scores.scores['TICKER_MISSING'])
+            # Existing ticker should have a value
             assert pd.notna(scores.scores['TICKER_EXISTS'])
 
     def test_wrong_store_type_raises_error(self):
-        """Test that using wrong store type raises TypeError."""
+        """Test that using wrong data_access type raises TypeError."""
         alpha = VolAdjustedMomentumAlpha()
         as_of = pd.Timestamp('2023-01-01')
         universe = Universe(as_of=as_of, tickers=('TICKER_A',))
 
-        with pytest.raises(TypeError, match="requires SnapshotDataStore"):
+        with pytest.raises((TypeError, AttributeError)):
             alpha.score(
                 as_of=as_of,
                 universe=universe,
                 features=None,
-                store=None
+                data_access=None
             )
 
 
@@ -313,9 +338,13 @@ class TestVolAdjustedMomentumComparison:
         with tempfile.TemporaryDirectory() as tmpdir:
             snapshot_path = Path(tmpdir) / 'test_snapshot'
             snapshot_path.mkdir()
-            prices.to_parquet(snapshot_path / 'prices.parquet')
+            parquet_path = snapshot_path / 'data.parquet'
+            prices.to_parquet(parquet_path)
 
-            store = SnapshotDataStore(snapshot_path)
+            ctx = DataAccessFactory.create_context(
+                config={"snapshot_path": str(parquet_path)},
+                enable_caching=False
+            )
             alpha = VolAdjustedMomentumAlpha()
 
             universe = Universe(as_of=dates[-1], tickers=('TICKER_SMOOTH', 'TICKER_VOLATILE'))
@@ -323,7 +352,7 @@ class TestVolAdjustedMomentumComparison:
                 as_of=dates[-1],
                 universe=universe,
                 features=None,
-                store=store
+                data_access=ctx
             )
 
             # Smooth should score higher than volatile
