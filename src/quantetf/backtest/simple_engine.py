@@ -3,12 +3,14 @@
 This module provides a straightforward backtest implementation that orchestrates
 the various Phase 2 components (alpha, portfolio construction, costs) into a
 complete backtesting system.
+
+Migrated to use DataAccessContext (DAL) instead of direct SnapshotDataStore dependency.
 """
 
 from __future__ import annotations
 
 import logging
-from typing import Optional
+from typing import Optional, Union
 from dataclasses import dataclass
 
 import pandas as pd
@@ -17,9 +19,111 @@ import numpy as np
 from quantetf.types import Universe, CASH_TICKER
 from quantetf.alpha.base import AlphaModel
 from quantetf.portfolio.base import PortfolioConstructor, CostModel
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext, PriceDataAccessor
+from quantetf.data.store import DataStore
+from quantetf.types import DatasetVersion
 
 logger = logging.getLogger(__name__)
+
+
+class _DataAccessAdapter(DataStore):
+    """Adapter that wraps DataAccessContext to provide DataStore interface.
+
+    This enables backward compatibility with alpha models and portfolio
+    constructors that still use the DataStore interface. This adapter will
+    be removed once IMPL-026 (alpha models migration) and related tasks
+    migrate those components to use DataAccessContext directly.
+    """
+
+    def __init__(self, data_access: DataAccessContext):
+        """Initialize adapter with DataAccessContext.
+
+        Args:
+            data_access: The DataAccessContext to wrap
+        """
+        self._data_access = data_access
+        self._prices_accessor = data_access.prices
+
+    def read_prices(
+        self,
+        as_of: pd.Timestamp,
+        tickers: Optional[list[str]] = None,
+        lookback_days: Optional[int] = None
+    ) -> pd.DataFrame:
+        """Read price data as-of a specific date (point-in-time).
+
+        Delegates to the underlying PriceDataAccessor.
+        """
+        return self._prices_accessor.read_prices_as_of(
+            as_of=as_of,
+            tickers=tickers,
+            lookback_days=lookback_days,
+        )
+
+    def get_close_prices(
+        self,
+        as_of: pd.Timestamp,
+        tickers: Optional[list[str]] = None,
+        lookback_days: Optional[int] = None
+    ) -> pd.DataFrame:
+        """Get close prices in simple format (date × ticker).
+
+        Extracts Close prices from OHLCV data returned by the accessor.
+        """
+        data = self.read_prices(as_of, tickers, lookback_days)
+
+        # Extract Close prices and pivot to simple format
+        close_prices = data.xs('Close', level='Price', axis=1)
+
+        return close_prices
+
+    def read_prices_total_return(
+        self,
+        version: Optional[DatasetVersion] = None
+    ) -> pd.DataFrame:
+        """Return DataFrame of daily total returns.
+
+        Note: Gets all data up to latest date and computes returns.
+        """
+        latest_date = self._prices_accessor.get_latest_price_date()
+        # Add one day to ensure we get data up to latest_date
+        data = self._prices_accessor.read_prices_as_of(
+            as_of=latest_date + pd.Timedelta(days=1)
+        )
+        close_prices = data.xs('Close', level='Price', axis=1)
+        returns = close_prices.pct_change()
+        return returns
+
+    def read_instrument_master(
+        self,
+        version: Optional[DatasetVersion] = None
+    ) -> pd.DataFrame:
+        """Return instrument metadata.
+
+        For compatibility, returns basic metadata from the price accessor.
+        """
+        # Get available tickers if the accessor supports it
+        if hasattr(self._prices_accessor, 'get_available_tickers'):
+            tickers = self._prices_accessor.get_available_tickers()
+        else:
+            # Fallback: read all data and extract tickers
+            latest_date = self._prices_accessor.get_latest_price_date()
+            data = self._prices_accessor.read_prices_as_of(
+                as_of=latest_date + pd.Timedelta(days=1)
+            )
+            tickers = data.columns.get_level_values('Ticker').unique().tolist()
+
+        return pd.DataFrame({'ticker': tickers}).set_index('ticker')
+
+    def create_snapshot(
+        self,
+        *,
+        snapshot_id: str,
+        as_of: pd.Timestamp,
+        description: str = ""
+    ):
+        """Not implemented - adapter is read-only."""
+        raise NotImplementedError("DataAccessAdapter is read-only")
 
 
 @dataclass
@@ -56,7 +160,16 @@ class SimpleBacktestEngine:
     - Making decisions sequentially (no vectorization across future dates)
     - Tracking state explicitly (NAV, holdings, weights)
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> engine = SimpleBacktestEngine()
         >>> config = BacktestConfig(
         ...     start_date=pd.Timestamp("2021-01-01"),
@@ -69,7 +182,7 @@ class SimpleBacktestEngine:
         ...     alpha_model=MomentumAlpha(lookback_days=252),
         ...     portfolio=EqualWeightTopN(top_n=5),
         ...     cost_model=FlatTransactionCost(cost_bps=10.0),
-        ...     store=store
+        ...     data_access=ctx
         ... )
         >>> print(f"Total Return: {result.metrics['total_return']:.2%}")
     """
@@ -81,7 +194,7 @@ class SimpleBacktestEngine:
         alpha_model: AlphaModel,
         portfolio: PortfolioConstructor,
         cost_model: CostModel,
-        store: SnapshotDataStore,
+        data_access: DataAccessContext,
     ) -> BacktestResult:
         """Run the backtest.
 
@@ -90,7 +203,7 @@ class SimpleBacktestEngine:
             alpha_model: Alpha model to generate signals
             portfolio: Portfolio constructor for target weights
             cost_model: Transaction cost model
-            store: Data store for historical prices
+            data_access: DataAccessContext for historical prices and macro data
 
         Returns:
             BacktestResult with equity curve, holdings, metrics
@@ -98,6 +211,9 @@ class SimpleBacktestEngine:
         Raises:
             ValueError: If configuration is invalid or insufficient data
         """
+        # Create adapter for backward compatibility with alpha models and
+        # portfolio constructors that still use DataStore interface
+        store = _DataAccessAdapter(data_access)
         logger.info("=" * 80)
         logger.info("Starting SimpleBacktestEngine")
         logger.info("=" * 80)

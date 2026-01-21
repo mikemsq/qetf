@@ -147,6 +147,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-022 | ConfigFileUniverseAccessor | 2026-01-21 |
 | IMPL-023 | ReferenceDataAccessor | 2026-01-21 |
 | IMPL-024 | CachingLayer & Integration | 2026-01-21 |
+| IMPL-025 | Backtest Engine Migration | 2026-01-21 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |
@@ -210,7 +211,6 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 ## Backlog (Future Phases)
 
 ### Data Access Layer - Phase 2 (Migration)
-- IMPL-025: Backtest engine migration
 - IMPL-026: Alpha models migration
 - IMPL-027: Portfolio optimization migration
 - IMPL-028: Production pipeline migration

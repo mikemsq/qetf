@@ -97,11 +97,12 @@ class MomentumAlpha(AlphaModel):
         """
         logger.info(f"Computing momentum scores as of {as_of} for {len(universe.tickers)} tickers")
 
-        # Import here to avoid circular dependency
-        from quantetf.data.snapshot_store import SnapshotDataStore
-
-        if not isinstance(store, SnapshotDataStore):
-            raise TypeError(f"MomentumAlpha requires SnapshotDataStore, got {type(store)}")
+        # Verify store has required methods
+        if not hasattr(store, 'get_close_prices'):
+            raise TypeError(
+                f"MomentumAlpha requires a DataStore with get_close_prices method, "
+                f"got {type(store)}"
+            )
 
         # Get price data - this automatically uses T-1 and earlier (no lookahead)
         try:

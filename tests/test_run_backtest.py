@@ -156,14 +156,16 @@ class TestPrintMetrics:
     def test_print_metrics(self, mock_backtest_result, caplog):
         """Test that metrics are printed correctly."""
         import logging
-        
-        # Mock the store to avoid needing SPY data
-        mock_store = MagicMock()
-        mock_store.get_prices.return_value = None  # SPY prices unavailable
-        
+
+        # Mock the data_access to avoid needing SPY data
+        mock_data_access = MagicMock()
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.side_effect = Exception("No data")  # Trigger the except block
+        mock_data_access.prices = mock_prices
+
         # Ensure logger is set to INFO level
         with caplog.at_level(logging.INFO):
-            run_backtest.print_metrics(mock_backtest_result, mock_store)
+            run_backtest.print_metrics(mock_backtest_result, mock_data_access)
 
         # Check logged output (logger writes to caplog)
         output = caplog.text
@@ -269,23 +271,26 @@ class TestSaveResults:
 class TestRunBacktest:
     """Test main backtest execution function."""
 
-    @patch('run_backtest.SnapshotDataStore')
+    @patch('run_backtest.DataAccessFactory')
     @patch('run_backtest.SimpleBacktestEngine')
     @patch('run_backtest.save_results')
     def test_run_backtest_success(
         self,
         mock_save,
         mock_engine_class,
-        mock_store_class,
+        mock_factory_class,
         mock_args,
         mock_backtest_result,
         tmp_path
     ):
         """Test successful backtest execution."""
         # Setup mocks
-        mock_store = Mock()
-        mock_store.tickers = ['SPY', 'QQQ', 'AGG']
-        mock_store_class.return_value = mock_store
+        mock_data_access = Mock()
+        mock_prices = Mock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2023-12-31')
+        mock_prices.read_prices_as_of.return_value = pd.DataFrame()
+        mock_data_access.prices = mock_prices
+        mock_factory_class.create_context.return_value = mock_data_access
 
         mock_engine = Mock()
         mock_engine.run.return_value = mock_backtest_result
@@ -313,7 +318,7 @@ class TestRunBacktest:
         result = run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
         # Verify calls
-        assert mock_store_class.called
+        assert mock_factory_class.create_context.called
         assert mock_engine.run.called
         assert mock_save.called
         assert result == mock_backtest_result
@@ -325,8 +330,8 @@ class TestRunBacktest:
         with pytest.raises(FileNotFoundError, match="Snapshot not found"):
             run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
-    @patch('run_backtest.SnapshotDataStore')
-    def test_run_backtest_loads_metadata(self, mock_store_class, mock_args, tmp_path):
+    @patch('run_backtest.DataAccessFactory')
+    def test_run_backtest_loads_metadata(self, mock_factory_class, mock_args, tmp_path):
         """Test that backtest correctly loads metadata."""
         # Create temporary snapshot directory
         snapshot_dir = tmp_path / 'snapshot'
@@ -344,9 +349,13 @@ class TestRunBacktest:
 
         mock_args.snapshot = str(snapshot_dir)
 
-        # Setup mock store
-        mock_store = Mock()
-        mock_store_class.return_value = mock_store
+        # Setup mock data access
+        mock_data_access = Mock()
+        mock_prices = Mock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2023-12-31')
+        mock_prices.read_prices_as_of.return_value = pd.DataFrame()
+        mock_data_access.prices = mock_prices
+        mock_factory_class.create_context.return_value = mock_data_access
 
         # Setup mock engine
         with patch('run_backtest.SimpleBacktestEngine') as mock_engine_class:
@@ -440,25 +449,25 @@ class TestIntegration:
 class TestErrorHandling:
     """Test error handling scenarios."""
 
-    @patch('run_backtest.SnapshotDataStore')
-    def test_handles_store_initialization_error(self, mock_store_class, mock_args, tmp_path):
-        """Test handling of SnapshotDataStore initialization errors."""
+    @patch('run_backtest.DataAccessFactory')
+    def test_handles_store_initialization_error(self, mock_factory_class, mock_args, tmp_path):
+        """Test handling of DataAccessContext initialization errors."""
         snapshot_dir = tmp_path / 'snapshot'
         snapshot_dir.mkdir()
         (snapshot_dir / 'data.parquet').touch()
 
         mock_args.snapshot = str(snapshot_dir)
-        mock_store_class.side_effect = ValueError("Invalid data format")
+        mock_factory_class.create_context.side_effect = ValueError("Invalid data format")
 
         with pytest.raises(ValueError, match="Invalid data format"):
             run_backtest.run_backtest(mock_args, tmp_path / 'output')
 
-    @patch('run_backtest.SnapshotDataStore')
+    @patch('run_backtest.DataAccessFactory')
     @patch('run_backtest.SimpleBacktestEngine')
     def test_handles_backtest_engine_error(
         self,
         mock_engine_class,
-        mock_store_class,
+        mock_factory_class,
         mock_args,
         tmp_path
     ):
@@ -472,7 +481,8 @@ class TestErrorHandling:
         mock_args.snapshot = str(snapshot_dir)
 
         # Setup mocks
-        mock_store_class.return_value = Mock()
+        mock_data_access = Mock()
+        mock_factory_class.create_context.return_value = mock_data_access
 
         mock_engine = Mock()
         mock_engine.run.side_effect = ValueError("Insufficient data")

@@ -48,7 +48,7 @@ from quantetf.backtest.simple_engine import (
 from quantetf.alpha.momentum import MomentumAlpha
 from quantetf.portfolio.equal_weight import EqualWeightTopN
 from quantetf.portfolio.costs import FlatTransactionCost
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext
 from quantetf.types import Universe
 from quantetf.evaluation.metrics import sharpe, max_drawdown
 
@@ -223,7 +223,7 @@ def run_backtest_for_window(
     *,
     window: WalkForwardWindow,
     period_type: str,  # 'train' or 'test'
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     universe: Universe,
     strategy_params: dict,
     initial_capital: float = 100_000.0,
@@ -233,7 +233,7 @@ def run_backtest_for_window(
     Args:
         window: Walk-forward window configuration
         period_type: Either 'train' or 'test' to select period
-        store: Data store for historical prices
+        data_access: DataAccessContext for historical prices and macro data
         universe: List of tickers to trade
         strategy_params: Strategy configuration (top_n, lookback_days, cost_bps)
         initial_capital: Starting capital in dollars
@@ -279,7 +279,7 @@ def run_backtest_for_window(
         alpha_model=alpha_model,
         portfolio=portfolio,
         cost_model=cost_model,
-        store=store,
+        data_access=data_access,
     )
 
     logger.info(
@@ -294,7 +294,7 @@ def run_backtest_for_window(
 def run_walk_forward_window(
     *,
     window: WalkForwardWindow,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     universe: Universe,
     strategy_params: dict,
     initial_capital: float = 100_000.0,
@@ -303,7 +303,7 @@ def run_walk_forward_window(
 
     Args:
         window: Walk-forward window configuration
-        store: Data store for historical prices
+        data_access: DataAccessContext for historical prices and macro data
         universe: List of tickers to trade
         strategy_params: Strategy configuration
         initial_capital: Starting capital in dollars
@@ -317,7 +317,7 @@ def run_walk_forward_window(
     train_result = run_backtest_for_window(
         window=window,
         period_type="train",
-        store=store,
+        data_access=data_access,
         universe=universe,
         strategy_params=strategy_params,
         initial_capital=initial_capital,
@@ -327,7 +327,7 @@ def run_walk_forward_window(
     test_result = run_backtest_for_window(
         window=window,
         period_type="test",
-        store=store,
+        data_access=data_access,
         universe=universe,
         strategy_params=strategy_params,
         initial_capital=initial_capital,
@@ -405,7 +405,12 @@ def run_walk_forward_validation(
     if not data_path.exists():
         raise FileNotFoundError(f"Data file not found: {data_path}")
 
-    store = SnapshotDataStore(data_path)
+    # Create DataAccessContext using factory
+    from quantetf.data.access import DataAccessFactory
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(data_path)},
+        enable_caching=False  # Disable caching for walk-forward validation
+    )
 
     # Load universe from metadata
     if not metadata_path.exists():
@@ -443,7 +448,7 @@ def run_walk_forward_validation(
         try:
             window_result = run_walk_forward_window(
                 window=window,
-                store=store,
+                data_access=data_access,
                 universe=universe,
                 strategy_params=strategy_params,
                 initial_capital=initial_capital,

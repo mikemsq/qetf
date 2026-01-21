@@ -40,7 +40,7 @@ from quantetf.backtest.simple_engine import SimpleBacktestEngine, BacktestConfig
 from quantetf.alpha.momentum import MomentumAlpha
 from quantetf.portfolio.equal_weight import EqualWeightTopN
 from quantetf.portfolio.costs import FlatTransactionCost
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 from quantetf.evaluation.cycle_metrics import calculate_cycle_metrics, print_cycle_summary
 
@@ -172,7 +172,11 @@ def run_backtest(args, output_dir):
     if not data_path.exists():
         raise FileNotFoundError(f"Data file not found: {data_path}")
 
-    store = SnapshotDataStore(data_path)
+    # Create DataAccessContext using factory
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(data_path)},
+        enable_caching=True  # Enable caching for performance
+    )
 
     # 2. Load universe from snapshot metadata
     if metadata_path.exists():
@@ -182,7 +186,14 @@ def run_backtest(args, output_dir):
     else:
         # Fallback to extracting tickers from data
         logger.warning(f"Metadata file not found: {metadata_path}, extracting tickers from data")
-        tickers = tuple(store.tickers)
+        # Get tickers from the price accessor if available
+        if hasattr(data_access.prices, 'get_available_tickers'):
+            tickers = tuple(data_access.prices.get_available_tickers())
+        else:
+            # Read prices and extract tickers
+            latest_date = data_access.prices.get_latest_price_date()
+            prices = data_access.prices.read_prices_as_of(as_of=latest_date + pd.Timedelta(days=1))
+            tickers = tuple(prices.columns.get_level_values('Ticker').unique().tolist())
 
     logger.info(f"Universe: {len(tickers)} ETFs")
     logger.info(f"Tickers: {', '.join(tickers)}")
@@ -223,13 +234,13 @@ def run_backtest(args, output_dir):
         alpha_model=alpha_model,
         portfolio=portfolio,
         cost_model=cost_model,
-        store=store
+        data_access=data_access
     )
 
     logger.info("Backtest complete!")
 
     # 6. Print metrics
-    print_metrics(result, store)
+    print_metrics(result, data_access)
 
     # 7. Save results
     output_dir = save_results(result, args, output_dir)
@@ -238,12 +249,12 @@ def run_backtest(args, output_dir):
     return result
 
 
-def print_metrics(result, store):
+def print_metrics(result, data_access):
     """Print backtest metrics to console.
 
     Args:
         result: BacktestResult object containing metrics and equity curve
-        store: SnapshotDataStore for retrieving SPY prices
+        data_access: DataAccessContext for retrieving SPY prices
     """
     logger.info("")
     logger.info("=" * 80)
@@ -269,7 +280,12 @@ def print_metrics(result, store):
 
     # Calculate and print cycle metrics if SPY is available
     try:
-        spy_prices = store.get_prices('SPY')
+        latest_date = data_access.prices.get_latest_price_date()
+        prices = data_access.prices.read_prices_as_of(
+            as_of=latest_date + pd.Timedelta(days=1),
+            tickers=['SPY']
+        )
+        spy_prices = prices.xs('Close', level='Price', axis=1)['SPY']
         if spy_prices is not None and len(spy_prices) > 0:
             cycle_metrics = calculate_cycle_metrics(
                 result,

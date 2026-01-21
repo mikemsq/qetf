@@ -2,6 +2,8 @@
 
 These tests verify the event-driven backtest engine works correctly with
 Phase 2 components (momentum alpha, equal-weight portfolio, transaction costs).
+
+Updated to use DataAccessContext (DAL) instead of direct SnapshotDataStore.
 """
 
 import pytest
@@ -20,6 +22,7 @@ from quantetf.alpha.momentum import MomentumAlpha
 from quantetf.portfolio.equal_weight import EqualWeightTopN
 from quantetf.portfolio.costs import FlatTransactionCost
 from quantetf.types import Universe
+from quantetf.data.access import DataAccessFactory
 
 
 # ============================================================================
@@ -133,10 +136,11 @@ def test_calculate_max_drawdown_empty():
 
 
 @pytest.fixture
-def synthetic_snapshot(tmp_path):
-    """Create a synthetic snapshot for testing.
+def synthetic_data_access(tmp_path):
+    """Create a DataAccessContext with synthetic snapshot for testing.
 
     Creates 3 tickers with 3 years of daily data for sufficient lookback.
+    Returns a DataAccessContext configured to use the synthetic snapshot.
     """
     dates = pd.date_range("2021-01-01", "2023-12-31", freq='B')
 
@@ -173,15 +177,18 @@ def synthetic_snapshot(tmp_path):
     parquet_path = snapshot_dir / "data.parquet"
     data.to_parquet(parquet_path)
 
-    return snapshot_dir
+    # Create DataAccessContext using the factory
+    ctx = DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False  # Disable caching for tests
+    )
+
+    return ctx
 
 
-def test_backtest_runs_successfully(synthetic_snapshot):
+def test_backtest_runs_successfully(synthetic_data_access):
     """Test that a basic backtest completes successfully."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
     # Setup
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -195,14 +202,14 @@ def test_backtest_runs_successfully(synthetic_snapshot):
         rebalance_frequency='monthly'
     )
 
-    # Run backtest
+    # Run backtest with DataAccessContext
     engine = SimpleBacktestEngine()
     result = engine.run(
         config=config,
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     # Verify structure
@@ -226,11 +233,8 @@ def test_backtest_runs_successfully(synthetic_snapshot):
     assert len(result.weights_history) == len(result.equity_curve)
 
 
-def test_backtest_costs_applied(synthetic_snapshot):
+def test_backtest_costs_applied(synthetic_data_access):
     """Test that transaction costs are properly applied."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -251,7 +255,7 @@ def test_backtest_costs_applied(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=50.0),  # High costs
-        store=store
+        data_access=synthetic_data_access
     )
 
     # Run without costs
@@ -260,7 +264,7 @@ def test_backtest_costs_applied(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=0.0),  # Zero costs
-        store=store
+        data_access=synthetic_data_access
     )
 
     # With costs should have lower final NAV
@@ -273,11 +277,8 @@ def test_backtest_costs_applied(synthetic_snapshot):
     assert result_no_costs.metrics['total_costs'] == 0.0
 
 
-def test_backtest_weights_sum_to_one(synthetic_snapshot):
+def test_backtest_weights_sum_to_one(synthetic_data_access):
     """Test that portfolio weights always sum to ~1.0."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -296,7 +297,7 @@ def test_backtest_weights_sum_to_one(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     # Check all weight rows sum to ~1.0
@@ -306,11 +307,8 @@ def test_backtest_weights_sum_to_one(synthetic_snapshot):
         assert abs(weight_sum - 1.0) < 0.01, f"Weights don't sum to 1.0 on {date}: {weight_sum}"
 
 
-def test_backtest_top_n_positions(synthetic_snapshot):
+def test_backtest_top_n_positions(synthetic_data_access):
     """Test that we hold exactly top_n positions."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -330,7 +328,7 @@ def test_backtest_top_n_positions(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=top_n),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     # Check that each rebalance has exactly top_n positions
@@ -339,11 +337,8 @@ def test_backtest_top_n_positions(synthetic_snapshot):
         assert num_positions == top_n, f"Expected {top_n} positions on {date}, got {num_positions}"
 
 
-def test_backtest_nav_evolution(synthetic_snapshot):
+def test_backtest_nav_evolution(synthetic_data_access):
     """Test that NAV evolves correctly over time."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -362,7 +357,7 @@ def test_backtest_nav_evolution(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     # NAV should start near initial capital (after first rebalance costs)
@@ -399,11 +394,15 @@ def test_backtest_insufficient_data(tmp_path):
 
     snapshot_dir = tmp_path / "limited_snapshot"
     snapshot_dir.mkdir()
-    data.to_parquet(snapshot_dir / "data.parquet")
+    parquet_path = snapshot_dir / "data.parquet"
+    data.to_parquet(parquet_path)
 
-    from quantetf.data.snapshot_store import SnapshotDataStore
+    # Create DataAccessContext
+    ctx = DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False
+    )
 
-    store = SnapshotDataStore(snapshot_dir / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ')
@@ -424,18 +423,15 @@ def test_backtest_insufficient_data(tmp_path):
         alpha_model=MomentumAlpha(lookback_days=252, min_periods=10),  # Lower min_periods
         portfolio=EqualWeightTopN(top_n=1),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=ctx
     )
 
     # Should have at least one rebalance
     assert len(result.equity_curve) >= 1
 
 
-def test_backtest_reproducibility(synthetic_snapshot):
+def test_backtest_reproducibility(synthetic_data_access):
     """Test that running same backtest twice gives same results."""
-    from quantetf.data.snapshot_store import SnapshotDataStore
-
-    store = SnapshotDataStore(synthetic_snapshot / "data.parquet")
     universe = Universe(
         as_of=pd.Timestamp('2023-12-31'),
         tickers=('SPY', 'QQQ', 'IWM')
@@ -456,7 +452,7 @@ def test_backtest_reproducibility(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     result2 = engine.run(
@@ -464,7 +460,7 @@ def test_backtest_reproducibility(synthetic_snapshot):
         alpha_model=MomentumAlpha(lookback_days=60, min_periods=50),
         portfolio=EqualWeightTopN(top_n=2),
         cost_model=FlatTransactionCost(cost_bps=10.0),
-        store=store
+        data_access=synthetic_data_access
     )
 
     # Results should be identical
