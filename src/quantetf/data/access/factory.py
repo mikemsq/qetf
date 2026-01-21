@@ -131,19 +131,37 @@ class DataAccessFactory:
         config: Optional[Dict[str, Any]] = None,
     ) -> UniverseDataAccessor:
         """Create universe accessor.
-        
+
         Args:
-            config: Universe configuration (config_dir, etc.)
-            
+            config: Universe configuration dictionary. Optional keys:
+                - config_dir: Path to universe config directory
+                             (default: configs/universes)
+                - cache: Whether to cache parsed configs (default: True)
+
         Returns:
             Configured UniverseDataAccessor instance
-            
-        Note:
-            Implementation in IMPL-022: ConfigFileUniverseAccessor
+
+        Example:
+            >>> accessor = DataAccessFactory.create_universe_accessor()
+            >>> tickers = accessor.get_universe("tier1_initial_20")
+
+            >>> # With custom config directory
+            >>> accessor = DataAccessFactory.create_universe_accessor(
+            ...     config={"config_dir": "my_configs/universes"}
+            ... )
         """
-        # Will be implemented in IMPL-022
-        raise NotImplementedError(
-            "ConfigFileUniverseAccessor implementation in IMPL-022"
+        from .universe import ConfigFileUniverseAccessor
+
+        if config is None:
+            config = {}
+
+        # Default config directory
+        config_dir = config.get("config_dir", "configs/universes")
+        cache = config.get("cache", True)
+
+        return ConfigFileUniverseAccessor(
+            config_dir=Path(config_dir),
+            cache=cache,
         )
     
     @staticmethod
@@ -151,20 +169,39 @@ class DataAccessFactory:
         config: Optional[Dict[str, Any]] = None,
     ) -> ReferenceDataAccessor:
         """Create reference data accessor.
-        
+
         Args:
-            config: Reference data configuration
-            
+            config: Reference data configuration dictionary. Optional keys:
+                - config_dir: Path to directory containing reference YAML files
+                              (tickers.yaml, exchanges.yaml)
+                              Defaults to "configs/reference"
+
         Returns:
             Configured ReferenceDataAccessor instance
-            
-        Note:
-            Implementation in IMPL-023: ReferenceDataAccessor
+
+        Raises:
+            ValueError: If config_dir does not exist
+
+        Example:
+            >>> accessor = DataAccessFactory.create_reference_accessor()
+            >>> spy_info = accessor.get_ticker_info("SPY")
+            >>> print(spy_info.sector)
+            "Broad Market"
+
+            >>> # With custom config directory
+            >>> accessor = DataAccessFactory.create_reference_accessor(
+            ...     config={"config_dir": "my_configs/reference"}
+            ... )
         """
-        # Will be implemented in IMPL-023
-        raise NotImplementedError(
-            "ReferenceDataAccessor implementation in IMPL-023"
-        )
+        from .reference import StaticReferenceDataAccessor
+
+        if config is None:
+            config = {}
+
+        # Default to configs/reference directory
+        config_dir = config.get("config_dir", "configs/reference")
+
+        return StaticReferenceDataAccessor(config_dir=Path(config_dir))
     
     @staticmethod
     def create_context(

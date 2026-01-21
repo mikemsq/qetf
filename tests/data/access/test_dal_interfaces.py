@@ -350,15 +350,19 @@ class TestDataAccessFactory:
         accessor = DataAccessFactory.create_macro_accessor(source="fred")
         assert isinstance(accessor, FREDMacroAccessor)
     
-    def test_create_universe_accessor_not_implemented(self):
-        """Test that universe accessor creation raises NotImplementedError for now."""
-        with pytest.raises(NotImplementedError):
-            DataAccessFactory.create_universe_accessor()
+    def test_create_universe_accessor_works(self):
+        """Test that universe accessor can be created."""
+        from quantetf.data.access.universe import ConfigFileUniverseAccessor
+
+        accessor = DataAccessFactory.create_universe_accessor()
+        assert isinstance(accessor, ConfigFileUniverseAccessor)
     
-    def test_create_reference_accessor_not_implemented(self):
-        """Test that reference accessor creation raises NotImplementedError for now."""
-        with pytest.raises(NotImplementedError):
-            DataAccessFactory.create_reference_accessor()
+    def test_create_reference_accessor_works(self):
+        """Test that reference accessor can be created."""
+        from quantetf.data.access.reference import StaticReferenceDataAccessor
+
+        accessor = DataAccessFactory.create_reference_accessor()
+        assert isinstance(accessor, StaticReferenceDataAccessor)
     
     def test_create_context_not_implemented(self):
         """Test that context creation raises NotImplementedError for now."""

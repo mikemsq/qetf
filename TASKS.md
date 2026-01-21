@@ -28,19 +28,8 @@
 
 ### Data Access Layer - Phase 1 (Foundation)
 
-#### IMPL-022: ConfigFileUniverseAccessor
-**Status:** ready
-**Priority:** HIGH
-**Dependencies:** IMPL-019 (completed)
-
-Implement universe accessor that reads from YAML config files.
-
-**Handoff:** [handoffs/architecture/data-access-layer-tasks.md](handoffs/architecture/data-access-layer-tasks.md)
-
----
-
 #### IMPL-023: ReferenceDataAccessor
-**Status:** ready
+**Status:** in_progress
 **Priority:** HIGH
 **Dependencies:** IMPL-019 (completed)
 
@@ -175,6 +164,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-019 | DAL Core Interfaces & Types | 2026-01-18 |
 | IMPL-020 | SnapshotPriceAccessor | 2026-01-18 |
 | IMPL-021 | FREDMacroAccessor | 2026-01-18 |
+| IMPL-022 | ConfigFileUniverseAccessor | 2026-01-21 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |

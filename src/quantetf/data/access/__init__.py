@@ -33,6 +33,8 @@ from .abstract import (
 from .context import DataAccessContext
 from .factory import DataAccessFactory
 from .types import Regime, TickerMetadata, ExchangeInfo, DataAccessMetadata
+from .universe import ConfigFileUniverseAccessor
+from .reference import StaticReferenceDataAccessor
 
 __all__ = [
     # Abstract interfaces
@@ -43,6 +45,9 @@ __all__ = [
     # Context and factory
     "DataAccessContext",
     "DataAccessFactory",
+    # Concrete implementations
+    "ConfigFileUniverseAccessor",
+    "StaticReferenceDataAccessor",
     # Types
     "Regime",
     "TickerMetadata",
