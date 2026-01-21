@@ -17,6 +17,24 @@ Always check STATUS.md for current status.
 
 -----
 
+## Coder Agent Startup
+
+When assigned a task (e.g., "You're a coder agent. Implement IMPL-022"):
+
+1. **Read this file** (CLAUDE_CONTEXT.md) for coding standards
+2. **Find the task in TASKS.md** and note the handoff file path
+3. **Read the handoff file** for detailed requirements
+4. **Check for similar code** in the codebase before implementing
+5. **Update TASKS.md** status to `in_progress` before starting
+
+When complete:
+1. Run tests: `pytest tests/`
+2. Create completion file in `handoffs/completions/`
+3. Update TASKS.md status to `completed`
+4. Commit with clear message
+
+-----
+
 ## Project Overview
 
 **What we’re building:**  
