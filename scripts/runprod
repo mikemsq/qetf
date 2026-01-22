@@ -9,7 +9,7 @@ cd "$PROJECT_DIR"
 
 PYTHON="${VENV_PYTHON:-python3}"
 CONFIG="configs/strategies/production_value_momentum.yaml"
-SNAP="data/snapshots/snapshot_latest"
+SNAP="data/snapshots/snapshot_20260122_010523"
 
 exec "$PYTHON" scripts/run_production_pipeline.py \
   --config "$CONFIG" \
