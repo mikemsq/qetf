@@ -153,6 +153,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-028 | Production Pipeline Migration | 2026-01-22 |
 | IMPL-029 | Research Scripts Migration | 2026-01-22 |
 | IMPL-030 | Monitoring System Migration | 2026-01-22 |
+| IMPL-031 | Test Utilities & Mocking | 2026-01-22 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |
@@ -215,13 +216,13 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 
 ## Backlog (Future Phases)
 
-### Data Access Layer - Phase 2 (Migration)
+### Data Access Layer - Phase 2 (Migration) - COMPLETE
 - ~~IMPL-026: Alpha models migration~~ (completed)
 - ~~IMPL-027: Portfolio optimization migration~~ (completed)
 - ~~IMPL-028: Production pipeline migration~~ (completed)
 - ~~IMPL-029: Research scripts migration~~ (completed)
 - ~~IMPL-030: Monitoring system migration~~ (completed)
-- IMPL-031: Test utilities & mocking
+- ~~IMPL-031: Test utilities & mocking~~ (completed)
 
 ### Data Access Layer - Phase 3 (Optional)
 - IMPL-032: Live data connector
