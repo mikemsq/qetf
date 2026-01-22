@@ -10,4 +10,4 @@ cd "$PROJECT_DIR"
 PYTHON="${VENV_PYTHON:-python3}"
 
 exec "$PYTHON" scripts/data_health_check.py \
-  --snapshot "data/snapshots/snapshot_5yr_20etfs"
+  --snapshot "data/snapshots/snapshot_20260122_010523"

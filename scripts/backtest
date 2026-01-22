@@ -16,7 +16,7 @@ fi
 
 # Fallback: call Python script with default args
 exec "$PYTHON" scripts/run_backtest.py \
-  --snapshot "data/snapshots/snapshot_5yr_20etfs" \
+  --snapshot "data/snapshots/snapshot_20260122_010523" \
   --start "2016-01-01" \
   --end "2026-01-15" \
   --strategy "momentum-ew-top5" \
