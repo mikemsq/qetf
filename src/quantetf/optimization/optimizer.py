@@ -3,6 +3,11 @@
 This module provides the main optimizer orchestrator that generates all
 configurations, runs evaluations, ranks results, and produces reports.
 
+Uses DataAccessContext (DAL) for all data access, enabling:
+- Decoupling from specific data storage implementations
+- Easy mocking in tests
+- Transparent caching
+
 Key Features:
 - Sequential or parallel execution (configurable via max_workers)
 - Progress tracking with tqdm
@@ -11,11 +16,14 @@ Key Features:
 
 Example:
     >>> from quantetf.optimization.optimizer import StrategyOptimizer
-    >>> from pathlib import Path
+    >>> from quantetf.data.access import DataAccessFactory
     >>>
+    >>> ctx = DataAccessFactory.create_context(
+    ...     config={"snapshot_path": "data/snapshots/snapshot_20260113/data.parquet"}
+    ... )
     >>> optimizer = StrategyOptimizer(
-    ...     snapshot_path=Path("data/snapshots/snapshot_20260113/data.parquet"),
-    ...     output_dir=Path("artifacts/optimization"),
+    ...     data_access=ctx,
+    ...     output_dir="artifacts/optimization",
     ...     periods_years=[3, 5, 10],
     ...     max_workers=1,
     ... )
@@ -27,14 +35,15 @@ from __future__ import annotations
 
 import logging
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import pandas as pd
 import yaml
 
+from quantetf.data.access import DataAccessContext
 from quantetf.optimization.evaluator import MultiPeriodEvaluator, MultiPeriodResult
 from quantetf.optimization.grid import StrategyConfig, generate_configs
 
@@ -125,9 +134,18 @@ class StrategyOptimizer:
     3. Ranks results by composite score
     4. Saves comprehensive output files
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/snapshot_20260113/data.parquet"}
+        ... )
         >>> optimizer = StrategyOptimizer(
-        ...     snapshot_path="data/snapshots/snapshot_20260113/data.parquet",
+        ...     data_access=ctx,
         ...     output_dir="artifacts/optimization",
         ... )
         >>> result = optimizer.run()
@@ -136,8 +154,8 @@ class StrategyOptimizer:
 
     def __init__(
         self,
-        snapshot_path: Union[str, Path],
-        output_dir: Union[str, Path] = "artifacts/optimization",
+        data_access: DataAccessContext,
+        output_dir: str | Path = "artifacts/optimization",
         periods_years: Optional[List[int]] = None,
         max_workers: int = 1,
         cost_bps: float = 10.0,
@@ -145,28 +163,24 @@ class StrategyOptimizer:
         """Initialize the optimizer.
 
         Args:
-            snapshot_path: Path to data snapshot parquet file
+            data_access: DataAccessContext for historical prices and macro data
             output_dir: Base directory for output files (run subdirectory created)
             periods_years: Evaluation periods in years (default: [3, 5, 10])
             max_workers: Number of parallel workers (1 = sequential)
             cost_bps: Transaction cost in basis points (default: 10)
         """
-        self.snapshot_path = Path(snapshot_path)
+        self.data_access = data_access
         self.output_dir = Path(output_dir)
         self.periods_years = periods_years if periods_years is not None else [3, 5, 10]
         self.max_workers = max_workers
         self.cost_bps = cost_bps
-
-        # Validate snapshot path exists
-        if not self.snapshot_path.exists():
-            raise FileNotFoundError(f"Snapshot not found: {self.snapshot_path}")
 
         # Run directory will be created when run() is called
         self._run_dir: Optional[Path] = None
         self._run_timestamp: Optional[str] = None
 
         logger.info(
-            f"StrategyOptimizer initialized: snapshot={self.snapshot_path}, "
+            f"StrategyOptimizer initialized: "
             f"periods={self.periods_years}, max_workers={max_workers}"
         )
 
@@ -286,7 +300,7 @@ class StrategyOptimizer:
 
         # Create evaluator
         evaluator = MultiPeriodEvaluator(
-            snapshot_path=self.snapshot_path,
+            data_access=self.data_access,
             cost_bps=self.cost_bps,
         )
 
@@ -319,7 +333,7 @@ class StrategyOptimizer:
         """Run evaluations in parallel.
 
         Note: Parallel execution requires the evaluator and all dependencies
-        to be picklable. Use sequential execution for debugging.
+        to be picklable. Workers recreate the DataAccessContext from config.
 
         Args:
             configs: List of configurations to evaluate
@@ -332,9 +346,19 @@ class StrategyOptimizer:
         failed = 0
         total = len(configs)
 
+        # Extract snapshot_path from data accessor for worker processes
+        # Workers will recreate the DataAccessContext
+        snapshot_path = _get_snapshot_path_from_accessor(self.data_access)
+        if snapshot_path is None:
+            logger.warning(
+                "Could not extract snapshot_path for parallel execution. "
+                "Falling back to sequential execution."
+            )
+            return self._run_sequential(configs, progress_callback)
+
         # Package arguments for worker function
         eval_args = [
-            (config, self.snapshot_path, self.periods_years, self.cost_bps)
+            (config, snapshot_path, self.periods_years, self.cost_bps)
             for config in configs
         ]
 
@@ -471,12 +495,16 @@ class StrategyOptimizer:
         """Generate and save summary report in Markdown format."""
         periods_str = ', '.join(f'{y}yr' for y in self.periods_years)
 
+        # Try to get snapshot path for report
+        snapshot_info = _get_snapshot_path_from_accessor(self.data_access)
+        snapshot_str = str(snapshot_info) if snapshot_info else "DataAccessContext"
+
         lines = [
             "# Strategy Optimization Report",
             "",
             f"**Run timestamp:** {result.run_timestamp}",
             f"**Periods evaluated:** {periods_str}",
-            f"**Snapshot:** {self.snapshot_path}",
+            f"**Data source:** {snapshot_str}",
             "",
             "## Summary",
             "",
@@ -596,12 +624,37 @@ class StrategyOptimizer:
         return lines
 
 
+def _get_snapshot_path_from_accessor(data_access: DataAccessContext) -> Optional[Path]:
+    """Extract snapshot_path from a DataAccessContext if available.
+
+    Attempts to find the snapshot_path by unwrapping cached accessors.
+
+    Args:
+        data_access: DataAccessContext to inspect
+
+    Returns:
+        Path to snapshot file if found, None otherwise
+    """
+    prices = data_access.prices
+
+    # Handle CachedPriceAccessor wrapper
+    if hasattr(prices, '_wrapped'):
+        prices = prices._wrapped
+
+    # Check for snapshot_path attribute
+    if hasattr(prices, 'snapshot_path'):
+        return Path(prices.snapshot_path)
+
+    return None
+
+
 def _evaluate_config_worker(
     args: Tuple[StrategyConfig, Path, List[int], float],
 ) -> Optional[MultiPeriodResult]:
     """Worker function for parallel evaluation.
 
     This function is called in a separate process for parallel execution.
+    Creates a fresh DataAccessContext for each worker to avoid serialization issues.
 
     Args:
         args: Tuple of (config, snapshot_path, periods_years, cost_bps)
@@ -609,11 +662,18 @@ def _evaluate_config_worker(
     Returns:
         MultiPeriodResult or None if evaluation failed
     """
+    from quantetf.data.access import DataAccessFactory
+
     config, snapshot_path, periods_years, cost_bps = args
 
     try:
+        # Create fresh DataAccessContext in worker process
+        data_access = DataAccessFactory.create_context(
+            config={"snapshot_path": str(snapshot_path)},
+            enable_caching=False  # Caching not useful in separate processes
+        )
         evaluator = MultiPeriodEvaluator(
-            snapshot_path=snapshot_path,
+            data_access=data_access,
             cost_bps=cost_bps,
         )
         return evaluator.evaluate(config, periods_years)

@@ -4,6 +4,10 @@
 This script runs the strategy optimizer to search across all parameter
 combinations and find strategies that consistently outperform SPY.
 
+Uses DataAccessContext (DAL) for all data access, enabling:
+- Decoupling from specific data storage implementations
+- Transparent caching for improved performance
+
 Example:
     # Basic run with defaults
     $ python scripts/find_best_strategy.py \\
@@ -35,6 +39,7 @@ import logging
 import sys
 from pathlib import Path
 
+from quantetf.data.access import DataAccessFactory
 from quantetf.optimization.optimizer import StrategyOptimizer
 from quantetf.optimization.grid import count_configs, get_alpha_types, get_schedule_names
 
@@ -256,8 +261,15 @@ def main() -> int:
         print(f"(Limited to {args.max_configs} for testing)")
 
     try:
+        # Create DataAccessContext using factory
+        logger.info("Creating DataAccessContext...")
+        data_access = DataAccessFactory.create_context(
+            config={"snapshot_path": str(snapshot_path)},
+            enable_caching=True  # Enable caching for sequential execution performance
+        )
+
         optimizer = StrategyOptimizer(
-            snapshot_path=snapshot_path,
+            data_access=data_access,
             output_dir=args.output,
             periods_years=periods,
             max_workers=args.parallel,

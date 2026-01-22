@@ -11,6 +11,7 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+from quantetf.data.access import DataAccessFactory
 from quantetf.optimization.evaluator import (
     PeriodMetrics,
     MultiPeriodResult,
@@ -446,8 +447,8 @@ class TestMultiPeriodEvaluatorIntegration:
     """Integration tests for MultiPeriodEvaluator (requires real data)."""
 
     @pytest.fixture
-    def snapshot_path(self):
-        """Get path to test snapshot (skip if not available)."""
+    def data_access(self):
+        """Get DataAccessContext for test snapshot (skip if not available)."""
         # Check for available snapshots
         snapshot_dir = Path('data/snapshots')
         if not snapshot_dir.exists():
@@ -457,10 +458,13 @@ class TestMultiPeriodEvaluatorIntegration:
         if not snapshots:
             pytest.skip("No snapshots available for integration testing")
 
-        return snapshots[0]
+        return DataAccessFactory.create_context(
+            config={"snapshot_path": str(snapshots[0])},
+            enable_caching=True
+        )
 
     @pytest.mark.integration
-    def test_evaluate_single_config(self, snapshot_path):
+    def test_evaluate_single_config(self, data_access):
         """Test evaluating a single configuration."""
         config = StrategyConfig(
             alpha_type='momentum',
@@ -471,7 +475,7 @@ class TestMultiPeriodEvaluatorIntegration:
             schedule_name='monthly',
         )
 
-        evaluator = MultiPeriodEvaluator(snapshot_path)
+        evaluator = MultiPeriodEvaluator(data_access=data_access)
 
         # Only test 3yr period for speed
         result = evaluator.evaluate(config, periods_years=[3])
@@ -482,7 +486,7 @@ class TestMultiPeriodEvaluatorIntegration:
         assert result.composite_score != float('-inf') or not result.periods['3yr'].evaluation_success
 
     @pytest.mark.integration
-    def test_evaluate_multiple_periods(self, snapshot_path):
+    def test_evaluate_multiple_periods(self, data_access):
         """Test evaluating multiple time periods."""
         config = StrategyConfig(
             alpha_type='momentum',
@@ -493,7 +497,7 @@ class TestMultiPeriodEvaluatorIntegration:
             schedule_name='monthly',
         )
 
-        evaluator = MultiPeriodEvaluator(snapshot_path)
+        evaluator = MultiPeriodEvaluator(data_access=data_access)
         result = evaluator.evaluate(config, periods_years=[3, 5])
 
         assert '3yr' in result.periods

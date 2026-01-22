@@ -8,14 +8,20 @@ A strategy "beats SPY" when it achieves:
 2. Information Ratio > 0 (positive risk-adjusted excess return)
 3. Consistent across ALL evaluated periods
 
+Uses DataAccessContext (DAL) for all data access, enabling:
+- Decoupling from specific data storage implementations
+- Easy mocking in tests
+- Transparent caching
+
 Example:
     >>> from quantetf.optimization.evaluator import MultiPeriodEvaluator
     >>> from quantetf.optimization.grid import generate_configs
-    >>> from quantetf.data.snapshot_store import SnapshotDataStore
-    >>> from pathlib import Path
+    >>> from quantetf.data.access import DataAccessFactory
     >>>
-    >>> store = SnapshotDataStore(Path("data/snapshots/snapshot_20260113/data.parquet"))
-    >>> evaluator = MultiPeriodEvaluator(store)
+    >>> ctx = DataAccessFactory.create_context(
+    ...     config={"snapshot_path": "data/snapshots/snapshot_20260113/data.parquet"}
+    ... )
+    >>> evaluator = MultiPeriodEvaluator(data_access=ctx)
     >>> config = generate_configs()[0]
     >>> result = evaluator.evaluate(config)
     >>> print(f"Beats SPY: {result.beats_spy_all_periods}")
@@ -24,17 +30,16 @@ Example:
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
 
 from quantetf.alpha.factory import create_alpha_model
 from quantetf.backtest.simple_engine import BacktestConfig, BacktestResult, SimpleBacktestEngine
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext
 from quantetf.evaluation.metrics import (
     calculate_active_metrics,
     max_drawdown,
@@ -187,36 +192,43 @@ class MultiPeriodEvaluator:
     It calculates comprehensive metrics and determines if the strategy
     consistently beats the SPY benchmark.
 
+    Uses DataAccessContext (DAL) for all data access, enabling:
+    - Decoupling from specific data storage implementations
+    - Easy mocking in tests
+    - Transparent caching
+
     Example:
-        >>> store = SnapshotDataStore(Path("data/snapshots/snapshot/data.parquet"))
-        >>> evaluator = MultiPeriodEvaluator(store)
+        >>> from quantetf.data.access import DataAccessFactory
+        >>> ctx = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/snapshot/data.parquet"}
+        ... )
+        >>> evaluator = MultiPeriodEvaluator(data_access=ctx)
         >>> result = evaluator.evaluate(config, periods_years=[3, 5, 10])
         >>> print(f"Composite score: {result.composite_score:.3f}")
     """
 
     def __init__(
         self,
-        snapshot_path: Union[str, Path],
+        data_access: DataAccessContext,
         end_date: Optional[pd.Timestamp] = None,
         cost_bps: float = 10.0,
     ):
         """Initialize the evaluator.
 
         Args:
-            snapshot_path: Path to the snapshot data.parquet file
-            end_date: End date for all evaluation periods (defaults to snapshot end)
+            data_access: DataAccessContext for historical prices and macro data
+            end_date: End date for all evaluation periods (defaults to latest price date)
             cost_bps: Transaction cost in basis points (default: 10)
         """
-        self.snapshot_path = Path(snapshot_path)
-        self.store = SnapshotDataStore(self.snapshot_path)
+        self.data_access = data_access
         self.cost_bps = cost_bps
 
-        # Determine end date from snapshot if not provided
+        # Determine end date from data accessor if not provided
         if end_date is not None:
             self.end_date = pd.Timestamp(end_date)
         else:
-            _, snapshot_end = self.store.date_range
-            self.end_date = pd.Timestamp(snapshot_end)
+            latest_date = self.data_access.prices.get_latest_price_date()
+            self.end_date = pd.Timestamp(latest_date)
 
         logger.info(f"MultiPeriodEvaluator initialized: end_date={self.end_date}")
 
@@ -289,8 +301,8 @@ class MultiPeriodEvaluator:
 
         logger.debug(f"Period {period_name}: {start_date} to {self.end_date}")
 
-        # Get tickers from universe (simplified - using stored tickers)
-        tickers = self.store.tickers
+        # Get tickers from price accessor
+        tickers = self.data_access.prices.get_available_tickers()
 
         # Create backtest components
         alpha_config = {
@@ -320,7 +332,7 @@ class MultiPeriodEvaluator:
             alpha_model=alpha_model,
             portfolio=portfolio_constructor,
             cost_model=cost_model,
-            store=self.store,
+            data_access=self.data_access,
         )
 
         # Calculate SPY benchmark returns for same period
@@ -379,14 +391,16 @@ class MultiPeriodEvaluator:
         end_date = dates.max() + pd.Timedelta(days=1)
 
         try:
-            spy_prices = self.store.get_close_prices(
+            ohlcv_data = self.data_access.prices.read_prices_as_of(
                 as_of=end_date,
                 tickers=['SPY'],
             )
+            spy_prices = ohlcv_data.xs('Close', level='Price', axis=1)
         except (ValueError, KeyError):
             # SPY might not be in snapshot, create synthetic benchmark
-            logger.warning("SPY not found in snapshot, using equal-weight proxy")
-            all_prices = self.store.get_close_prices(as_of=end_date)
+            logger.warning("SPY not found in data, using equal-weight proxy")
+            ohlcv_data = self.data_access.prices.read_prices_as_of(as_of=end_date)
+            all_prices = ohlcv_data.xs('Close', level='Price', axis=1)
             spy_prices = all_prices.mean(axis=1).to_frame('SPY')
 
         # Calculate returns

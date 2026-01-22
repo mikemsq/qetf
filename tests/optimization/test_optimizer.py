@@ -14,6 +14,7 @@ import tempfile
 import shutil
 import yaml
 
+from quantetf.data.access import DataAccessFactory
 from quantetf.optimization.optimizer import (
     OptimizationResult,
     StrategyOptimizer,
@@ -161,59 +162,51 @@ class TestStrategyOptimizerInit:
     """Tests for StrategyOptimizer initialization."""
 
     @pytest.fixture
-    def temp_snapshot(self):
-        """Create a temporary snapshot file."""
-        temp_dir = tempfile.mkdtemp()
-        snapshot_path = Path(temp_dir) / 'data.parquet'
-        # Create empty parquet file
-        df = pd.DataFrame({'ticker': ['SPY'], 'close': [100.0]})
-        df.to_parquet(snapshot_path)
-        yield snapshot_path
-        shutil.rmtree(temp_dir)
+    def mock_data_access(self):
+        """Create a mock DataAccessContext."""
+        mock_ctx = MagicMock()
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+        mock_prices.get_available_tickers.return_value = ['SPY', 'QQQ', 'IWM']
+        mock_prices.snapshot_path = Path('/tmp/mock/data.parquet')
+        mock_ctx.prices = mock_prices
+        return mock_ctx
 
-    def test_init_with_valid_path(self, temp_snapshot):
-        """Optimizer should initialize with valid snapshot path."""
+    def test_init_with_valid_data_access(self, mock_data_access):
+        """Optimizer should initialize with valid DataAccessContext."""
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_snapshot,
+            data_access=mock_data_access,
             output_dir='/tmp/output',
         )
 
-        assert optimizer.snapshot_path == temp_snapshot
+        assert optimizer.data_access == mock_data_access
         assert optimizer.periods_years == [3, 5, 10]
         assert optimizer.max_workers == 1
 
-    def test_init_with_custom_periods(self, temp_snapshot):
+    def test_init_with_custom_periods(self, mock_data_access):
         """Optimizer should accept custom evaluation periods."""
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_snapshot,
+            data_access=mock_data_access,
             output_dir='/tmp/output',
             periods_years=[5, 10],
         )
 
         assert optimizer.periods_years == [5, 10]
 
-    def test_init_with_parallel_workers(self, temp_snapshot):
+    def test_init_with_parallel_workers(self, mock_data_access):
         """Optimizer should accept parallel worker count."""
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_snapshot,
+            data_access=mock_data_access,
             output_dir='/tmp/output',
             max_workers=4,
         )
 
         assert optimizer.max_workers == 4
 
-    def test_init_with_invalid_path_raises(self):
-        """Optimizer should raise FileNotFoundError for invalid path."""
-        with pytest.raises(FileNotFoundError):
-            StrategyOptimizer(
-                snapshot_path='/nonexistent/path/data.parquet',
-                output_dir='/tmp/output',
-            )
-
-    def test_run_dir_before_run_raises(self, temp_snapshot):
+    def test_run_dir_before_run_raises(self, mock_data_access):
         """Accessing run_dir before run() should raise RuntimeError."""
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_snapshot,
+            data_access=mock_data_access,
             output_dir='/tmp/output',
         )
 
@@ -226,25 +219,28 @@ class TestStrategyOptimizerRun:
 
     @pytest.fixture
     def temp_dirs(self):
-        """Create temporary directories for snapshot and output."""
+        """Create temporary directories for output."""
         temp_dir = tempfile.mkdtemp()
-        snapshot_dir = Path(temp_dir) / 'snapshot'
         output_dir = Path(temp_dir) / 'output'
-        snapshot_dir.mkdir()
         output_dir.mkdir()
-
-        # Create snapshot file
-        snapshot_path = snapshot_dir / 'data.parquet'
-        df = pd.DataFrame({'ticker': ['SPY'], 'close': [100.0]})
-        df.to_parquet(snapshot_path)
 
         yield {
             'temp_dir': temp_dir,
-            'snapshot_path': snapshot_path,
             'output_dir': output_dir,
         }
 
         shutil.rmtree(temp_dir)
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create a mock DataAccessContext."""
+        mock_ctx = MagicMock()
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+        mock_prices.get_available_tickers.return_value = ['SPY', 'QQQ', 'IWM']
+        mock_prices.snapshot_path = Path('/tmp/mock/data.parquet')
+        mock_ctx.prices = mock_prices
+        return mock_ctx
 
     @pytest.fixture
     def mock_evaluator(self):
@@ -278,7 +274,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_creates_output_directory(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_creates_output_directory(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should create timestamped output directory."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -293,7 +289,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -304,7 +300,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_returns_optimization_result(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_returns_optimization_result(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should return OptimizationResult."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -319,7 +315,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -332,7 +328,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_with_max_configs_limit(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_with_max_configs_limit(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should respect max_configs limit."""
         # Generate 10 configs
         configs = [
@@ -350,7 +346,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -361,7 +357,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_saves_all_results_csv(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_saves_all_results_csv(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should save all_results.csv."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -376,7 +372,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -392,7 +388,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_saves_winners_csv_when_winners_exist(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_saves_winners_csv_when_winners_exist(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should save winners.csv when there are winners."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -407,7 +403,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -418,7 +414,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_saves_best_strategy_yaml(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_saves_best_strategy_yaml(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should save best_strategy.yaml when there are winners."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -433,7 +429,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -451,7 +447,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_saves_optimization_report(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_saves_optimization_report(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should save optimization_report.md."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -466,7 +462,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_evaluator
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -483,7 +479,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_handles_failed_evaluations(self, mock_gen, mock_eval_class, temp_dirs):
+    def test_run_handles_failed_evaluations(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access):
         """run() should handle failed evaluations gracefully."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -519,7 +515,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_eval
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -530,7 +526,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_sorts_by_composite_score(self, mock_gen, mock_eval_class, temp_dirs):
+    def test_run_sorts_by_composite_score(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access):
         """run() should sort results by composite score descending."""
         configs = [
             StrategyConfig(
@@ -579,7 +575,7 @@ class TestStrategyOptimizerRun:
         mock_eval_class.return_value = mock_eval
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -592,7 +588,7 @@ class TestStrategyOptimizerRun:
 
     @patch('quantetf.optimization.optimizer.MultiPeriodEvaluator')
     @patch('quantetf.optimization.optimizer.generate_configs')
-    def test_run_calls_progress_callback(self, mock_gen, mock_eval_class, temp_dirs, mock_evaluator):
+    def test_run_calls_progress_callback(self, mock_gen, mock_eval_class, temp_dirs, mock_data_access, mock_evaluator):
         """run() should call progress callback during evaluation."""
         mock_gen.return_value = [
             StrategyConfig(
@@ -620,7 +616,7 @@ class TestStrategyOptimizerRun:
             progress_calls.append((current, total))
 
         optimizer = StrategyOptimizer(
-            snapshot_path=temp_dirs['snapshot_path'],
+            data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
         )
 
@@ -772,8 +768,8 @@ class TestStrategyOptimizerIntegration:
     """Integration tests for StrategyOptimizer (requires real data)."""
 
     @pytest.fixture
-    def snapshot_path(self):
-        """Get path to test snapshot (skip if not available)."""
+    def data_access(self):
+        """Get DataAccessContext for test snapshot (skip if not available)."""
         snapshot_dir = Path('data/snapshots')
         if not snapshot_dir.exists():
             pytest.skip("No snapshot directory found")
@@ -782,7 +778,10 @@ class TestStrategyOptimizerIntegration:
         if not snapshots:
             pytest.skip("No snapshots available for integration testing")
 
-        return snapshots[0]
+        return DataAccessFactory.create_context(
+            config={"snapshot_path": str(snapshots[0])},
+            enable_caching=True
+        )
 
     @pytest.fixture
     def temp_output_dir(self):
@@ -792,10 +791,10 @@ class TestStrategyOptimizerIntegration:
         shutil.rmtree(temp_dir)
 
     @pytest.mark.integration
-    def test_integration_small_run(self, snapshot_path, temp_output_dir):
+    def test_integration_small_run(self, data_access, temp_output_dir):
         """Test a small optimization run with real data."""
         optimizer = StrategyOptimizer(
-            snapshot_path=snapshot_path,
+            data_access=data_access,
             output_dir=temp_output_dir,
             periods_years=[3],  # Single period for speed
             max_workers=1,
@@ -810,10 +809,10 @@ class TestStrategyOptimizerIntegration:
         assert (optimizer.run_dir / 'optimization_report.md').exists()
 
     @pytest.mark.integration
-    def test_integration_filters_by_schedule(self, snapshot_path, temp_output_dir):
+    def test_integration_filters_by_schedule(self, data_access, temp_output_dir):
         """Test filtering by schedule type."""
         optimizer = StrategyOptimizer(
-            snapshot_path=snapshot_path,
+            data_access=data_access,
             output_dir=temp_output_dir,
             periods_years=[3],
             max_workers=1,
@@ -829,10 +828,10 @@ class TestStrategyOptimizerIntegration:
             assert 'monthly' in r.config_name
 
     @pytest.mark.integration
-    def test_integration_filters_by_alpha_type(self, snapshot_path, temp_output_dir):
+    def test_integration_filters_by_alpha_type(self, data_access, temp_output_dir):
         """Test filtering by alpha type."""
         optimizer = StrategyOptimizer(
-            snapshot_path=snapshot_path,
+            data_access=data_access,
             output_dir=temp_output_dir,
             periods_years=[3],
             max_workers=1,
