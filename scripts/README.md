@@ -265,31 +265,31 @@ Strategy optimization CLI that searches across all parameter combinations to fin
 ```bash
 # Basic run (all 324 configurations)
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157
+    --snapshot data/snapshots/snapshot_20260122_010523
 
 # Quick test with limited configs
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --snapshot data/snapshots/snapshot_20260122_010523 \
     --max-configs 20 --verbose
 
 # Parallel execution (faster)
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --snapshot data/snapshots/snapshot_20260122_010523 \
     --parallel 4
 
 # Dry run (count configs only)
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --snapshot data/snapshots/snapshot_20260122_010523 \
     --dry-run
 
 # Custom evaluation periods
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --snapshot data/snapshots/snapshot_20260122_010523 \
     --periods 1,3,5
 
 # Filter by schedule and alpha type
 python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
+    --snapshot data/snapshots/snapshot_20260122_010523 \
     --schedules weekly \
     --alpha-types momentum,vol_adjusted_momentum
 ```

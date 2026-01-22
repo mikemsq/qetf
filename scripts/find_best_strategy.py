@@ -11,26 +11,26 @@ Uses DataAccessContext (DAL) for all data access, enabling:
 Example:
     # Basic run with defaults
     $ python scripts/find_best_strategy.py \\
-        --snapshot data/snapshots/snapshot_20260113_232157
+        --snapshot data/snapshots/snapshot_20260122_010523
 
     # Quick test with 20 configs
     $ python scripts/find_best_strategy.py \\
-        --snapshot data/snapshots/snapshot_20260113_232157 \\
+        --snapshot data/snapshots/snapshot_20260122_010523 \\
         --max-configs 20 --verbose
 
     # Parallel execution with 4 workers
     $ python scripts/find_best_strategy.py \\
-        --snapshot data/snapshots/snapshot_20260113_232157 \\
+        --snapshot data/snapshots/snapshot_20260122_010523 \\
         --parallel 4
 
     # Custom evaluation periods
     $ python scripts/find_best_strategy.py \\
-        --snapshot data/snapshots/snapshot_20260113_232157 \\
+        --snapshot data/snapshots/snapshot_20260122_010523 \\
         --periods 1,3,5
 
     # Dry run (just count configs)
     $ python scripts/find_best_strategy.py \\
-        --snapshot data/snapshots/snapshot_20260113_232157 \\
+        --snapshot data/snapshots/snapshot_20260122_010523 \\
         --dry-run
 """
 
@@ -78,16 +78,16 @@ def parse_args() -> argparse.Namespace:
         epilog="""
 Examples:
   # Basic run
-  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260113
+  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260122_010523
 
   # Quick test with limited configs
-  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260113 --max-configs 20 -v
+  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260122_010523 --max-configs 20 -v
 
   # Parallel execution
-  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260113 --parallel 4
+  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260122_010523 --parallel 4
 
   # Dry run to count configs
-  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260113 --dry-run
+  python scripts/find_best_strategy.py --snapshot data/snapshots/snapshot_20260122_010523 --dry-run
         """,
     )
 

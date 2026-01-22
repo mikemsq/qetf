@@ -44,13 +44,13 @@ def parse_args():
 Examples:
   # Run trend-filtered momentum (EXP-002)
   python scripts/run_experiment.py \\
-      --snapshot data/snapshots/snapshot_20260115_170559 \\
+      --snapshot data/snapshots/snapshot_20260122_010523 \\
       --alpha-type trend_filtered_momentum \\
       --experiment exp002_trend_filtered
 
   # Run dual momentum
   python scripts/run_experiment.py \\
-      --snapshot data/snapshots/snapshot_20260115_170559 \\
+      --snapshot data/snapshots/snapshot_20260122_010523 \\
       --alpha-type dual_momentum \\
       --alpha-params '{"momentum_lookback": 252, "absolute_threshold": 0.0}'
 

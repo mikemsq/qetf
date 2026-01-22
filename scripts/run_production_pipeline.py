@@ -8,19 +8,19 @@ Examples:
     # Run in dry-run mode (no state changes)
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --dry-run
 
     # Execute with state updates
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --execute
 
     # Output as JSON
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --dry-run --output-format json
 """
 
@@ -65,13 +65,13 @@ Examples:
   # Dry run (no state changes)
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
-    --snapshot data/snapshots/snapshot_20260115_170559 \\
+    --snapshot data/snapshots/snapshot_20260122_010523 \\
     --dry-run
 
   # Execute with state updates
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
-    --snapshot data/snapshots/snapshot_20260115_170559 \\
+    --snapshot data/snapshots/snapshot_20260122_010523 \\
     --execute
         """,
     )

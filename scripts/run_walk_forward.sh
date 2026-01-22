@@ -15,7 +15,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Default parameters
-SNAPSHOT="data/snapshots/snapshot_20260113_232157"
+SNAPSHOT="data/snapshots/snapshot_20260122_010523"
 TRAIN_YEARS=5
 TEST_YEARS=1
 STEP_MONTHS=12
