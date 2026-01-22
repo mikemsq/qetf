@@ -36,8 +36,7 @@ from typing import Any
 import pandas as pd
 import yaml
 
-from quantetf.data.macro_loader import MacroDataLoader
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext, DataAccessFactory
 from quantetf.monitoring import (
     AlertManager,
     ConsoleAlertHandler,
@@ -220,7 +219,7 @@ def create_alert_manager(alert_file: str | None) -> AlertManager:
 
 
 def run_quality_check(
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     tickers: list[str],
     alert_manager: AlertManager,
     as_of: pd.Timestamp,
@@ -228,7 +227,7 @@ def run_quality_check(
     """Run data quality checks.
 
     Args:
-        store: Data store
+        data_access: Data access context
         tickers: Tickers to check
         alert_manager: Alert manager
         as_of: Date for checks
@@ -239,46 +238,39 @@ def run_quality_check(
     logger.info("Running data quality checks...")
 
     checker = DataQualityChecker(
+        data_access=data_access,
         alert_manager=alert_manager,
         stale_threshold_days=3,
         gap_threshold_days=5,
         spike_threshold=0.10,
     )
 
-    # Get price data from store
+    # Use DataAccessContext to fetch and check prices
     try:
-        # Filter to tickers that exist in the store
-        available_tickers = [
-            t for t in tickers
-            if t in store._data.columns.get_level_values("Ticker")
-        ]
-        prices = store.get_close_prices(as_of=as_of, tickers=available_tickers)
+        result = checker.check_all(
+            tickers=tickers,
+            as_of=as_of,
+        )
     except Exception as e:
-        logger.warning(f"Could not load prices: {e}")
+        logger.warning(f"Could not run quality check: {e}")
         return {
             "error": str(e),
             "overall_status": "ERROR",
             "summary": {"stale_count": 0, "gap_count": 0, "anomaly_count": 0},
         }
 
-    result = checker.check_all(
-        prices=prices,
-        tickers=available_tickers,
-        as_of=as_of,
-    )
-
     return result.to_dict()
 
 
 def run_regime_check(
-    macro_loader: MacroDataLoader,
+    data_access: DataAccessContext,
     alert_manager: AlertManager,
     as_of: str,
 ) -> dict[str, Any]:
     """Check market regime.
 
     Args:
-        macro_loader: Macro data loader
+        data_access: Data access context
         alert_manager: Alert manager
         as_of: Date string for check
 
@@ -288,7 +280,7 @@ def run_regime_check(
     logger.info("Checking market regime...")
 
     monitor = RegimeMonitor(
-        macro_loader=macro_loader,
+        data_access=data_access,
         alert_manager=alert_manager,
     )
 
@@ -519,21 +511,44 @@ def main() -> int:
             "checks_performed": [],
         }
 
+        # Create DataAccessContext if needed for quality or regime checks
+        data_access: DataAccessContext | None = None
+        if args.check_quality or args.check_regime:
+            # Build data access config from args and strategy config
+            dal_config: dict[str, Any] = {}
+
+            if args.snapshot:
+                snapshot_path = Path(args.snapshot)
+                if snapshot_path.is_dir():
+                    dal_config["snapshot_path"] = str(snapshot_path / "data.parquet")
+                else:
+                    dal_config["snapshot_path"] = str(snapshot_path)
+
+                if not Path(dal_config["snapshot_path"]).exists():
+                    logger.error(f"Snapshot data not found: {dal_config['snapshot_path']}")
+                    return 1
+
+            # Get macro data dir from config
+            macro_dir = config.get("risk_overlays", {}).get(
+                "vix_regime", {}
+            ).get("macro_data_dir", "data/raw/macro")
+            dal_config["macro_data_dir"] = str(macro_dir)
+
+            # Get universe config dir
+            universe_path = config.get("universe")
+            if universe_path:
+                universe_config_dir = str(config_path.parent.parent.parent / Path(universe_path).parent)
+                dal_config["universe_config_dir"] = universe_config_dir
+
+            try:
+                data_access = DataAccessFactory.create_context(config=dal_config)
+            except Exception as e:
+                logger.error(f"Failed to create DataAccessContext: {e}")
+                return 1
+
         # Run data quality check
         if args.check_quality:
             results["checks_performed"].append("quality")
-
-            snapshot_path = Path(args.snapshot)
-            if snapshot_path.is_dir():
-                data_path = snapshot_path / "data.parquet"
-            else:
-                data_path = snapshot_path
-
-            if not data_path.exists():
-                logger.error(f"Snapshot data not found: {data_path}")
-                return 1
-
-            store = SnapshotDataStore(data_path)
 
             # Get tickers from universe config
             universe_path = config.get("universe")
@@ -545,10 +560,15 @@ def main() -> int:
                     "tickers", universe_config.get("tickers", [])
                 )
             else:
-                tickers = list(store._data.columns.get_level_values("Ticker").unique())
+                # Try to get tickers from data access
+                try:
+                    ohlcv = data_access.prices.read_prices_as_of(as_of, lookback_days=1)
+                    tickers = list(ohlcv.columns.get_level_values("Ticker").unique())
+                except Exception:
+                    tickers = []
 
             results["quality_check"] = run_quality_check(
-                store=store,
+                data_access=data_access,
                 tickers=tickers,
                 alert_manager=alert_manager,
                 as_of=as_of,
@@ -558,14 +578,9 @@ def main() -> int:
         if args.check_regime:
             results["checks_performed"].append("regime")
 
-            macro_dir = Path(config.get("risk_overlays", {}).get(
-                "vix_regime", {}
-            ).get("macro_data_dir", "data/raw/macro"))
-
             try:
-                macro_loader = MacroDataLoader(data_dir=macro_dir)
                 results["regime_check"] = run_regime_check(
-                    macro_loader=macro_loader,
+                    data_access=data_access,
                     alert_manager=alert_manager,
                     as_of=as_of_str,
                 )

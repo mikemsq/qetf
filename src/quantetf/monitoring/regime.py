@@ -11,9 +11,12 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any
 
+import pandas as pd
+
 from quantetf.monitoring.alerts import Alert, AlertManager
 
 if TYPE_CHECKING:
+    from quantetf.data.access import DataAccessContext
     from quantetf.data.macro_loader import MacroDataLoader
 
 logger = logging.getLogger(__name__)
@@ -82,7 +85,7 @@ class RegimeCheckResult:
 class RegimeMonitor:
     """Monitor market regime and emit alerts on changes.
 
-    The RegimeMonitor uses the MacroDataLoader and RegimeDetector to
+    The RegimeMonitor uses the DataAccessContext (or legacy MacroDataLoader) to
     classify the current market regime and emit alerts when the regime
     changes (e.g., from RISK_ON to HIGH_VOL).
 
@@ -92,12 +95,18 @@ class RegimeMonitor:
         - HIGH_VOL: VIX above 30
         - RECESSION_WARNING: Inverted yield curve
 
-    Example:
-        >>> from quantetf.data import MacroDataLoader
+    Example using DataAccessContext (recommended):
+        >>> from quantetf.data.access import DataAccessFactory
         >>> from quantetf.monitoring import AlertManager, RegimeMonitor
-        >>> macro_loader = MacroDataLoader()
+        >>> ctx = DataAccessFactory.create_context(config={"snapshot_path": "..."})
         >>> alert_manager = AlertManager()
-        >>> monitor = RegimeMonitor(macro_loader, alert_manager)
+        >>> monitor = RegimeMonitor(data_access=ctx, alert_manager=alert_manager)
+        >>> result = monitor.check("2024-01-15")
+
+    Example with legacy MacroDataLoader:
+        >>> from quantetf.data import MacroDataLoader
+        >>> macro_loader = MacroDataLoader()
+        >>> monitor = RegimeMonitor(macro_loader=macro_loader, alert_manager=alert_manager)
         >>> result = monitor.check("2024-01-15")
     """
 
@@ -112,25 +121,37 @@ class RegimeMonitor:
 
     def __init__(
         self,
-        macro_loader: "MacroDataLoader",
-        alert_manager: AlertManager,
+        data_access: "DataAccessContext | None" = None,
+        alert_manager: AlertManager | None = None,
         vix_elevated_threshold: float = 20.0,
         vix_high_threshold: float = 30.0,
+        *,
+        macro_loader: "MacroDataLoader | None" = None,
     ) -> None:
         """Initialize regime monitor.
 
         Args:
-            macro_loader: MacroDataLoader for accessing VIX and yield curve data.
+            data_access: DataAccessContext for accessing macro data (recommended).
             alert_manager: AlertManager for emitting notifications.
             vix_elevated_threshold: VIX level for elevated volatility regime.
             vix_high_threshold: VIX level for high volatility regime.
+            macro_loader: Legacy MacroDataLoader (deprecated, use data_access instead).
+
+        Raises:
+            ValueError: If neither data_access nor macro_loader is provided.
         """
+        self._data_access = data_access
         self._macro_loader = macro_loader
         self._alert_manager = alert_manager
         self._vix_elevated_threshold = vix_elevated_threshold
         self._vix_high_threshold = vix_high_threshold
         self._last_regime: str | None = None
         self._regime_history: list[RegimeState] = []
+
+        if data_access is None and macro_loader is None:
+            raise ValueError(
+                "Either data_access or macro_loader must be provided"
+            )
 
     @property
     def last_regime(self) -> str | None:
@@ -154,15 +175,12 @@ class RegimeMonitor:
         vix: float | None = None
         spread: float | None = None
 
-        try:
-            vix = self._macro_loader.get_vix(date)
-        except Exception as e:
-            logger.warning(f"Could not load VIX data: {e}")
-
-        try:
-            spread = self._macro_loader.get_yield_curve_spread(date)
-        except Exception as e:
-            logger.warning(f"Could not load yield curve spread: {e}")
+        if self._data_access is not None:
+            # Use DataAccessContext
+            vix, spread = self._detect_regime_via_accessor(date)
+        else:
+            # Use legacy MacroDataLoader
+            vix, spread = self._detect_regime_via_loader(date)
 
         # Determine regime
         if spread is not None and spread < 0:
@@ -178,6 +196,67 @@ class RegimeMonitor:
             regime = "UNKNOWN"
 
         return regime, vix, spread
+
+    def _detect_regime_via_accessor(
+        self, date: str
+    ) -> tuple[float | None, float | None]:
+        """Detect regime indicators using DataAccessContext.
+
+        Args:
+            date: Date string (YYYY-MM-DD).
+
+        Returns:
+            Tuple of (vix, yield_curve_spread).
+        """
+        vix: float | None = None
+        spread: float | None = None
+        as_of = pd.Timestamp(date)
+
+        try:
+            vix_data = self._data_access.macro.read_macro_indicator(
+                "VIX", as_of, lookback_days=1
+            )
+            if not vix_data.empty:
+                vix = float(vix_data.iloc[-1, 0])
+        except Exception as e:
+            logger.warning(f"Could not load VIX data: {e}")
+
+        try:
+            spread_data = self._data_access.macro.read_macro_indicator(
+                "T10Y2Y", as_of, lookback_days=1
+            )
+            if not spread_data.empty:
+                spread = float(spread_data.iloc[-1, 0])
+        except Exception as e:
+            logger.warning(f"Could not load yield curve spread: {e}")
+
+        return vix, spread
+
+    def _detect_regime_via_loader(
+        self, date: str
+    ) -> tuple[float | None, float | None]:
+        """Detect regime indicators using legacy MacroDataLoader.
+
+        Args:
+            date: Date string (YYYY-MM-DD).
+
+        Returns:
+            Tuple of (vix, yield_curve_spread).
+        """
+        vix: float | None = None
+        spread: float | None = None
+
+        try:
+            vix = self._macro_loader.get_vix(date)
+        except Exception as e:
+            logger.warning(f"Could not load VIX data: {e}")
+
+        try:
+            spread = self._macro_loader.get_yield_curve_spread(date)
+        except Exception as e:
+            logger.warning(f"Could not load yield curve spread: {e}")
+
+        return vix, spread
 
     def _get_alert_level(self, old_regime: str | None, new_regime: str) -> str:
         """Determine alert level based on regime transition.
@@ -271,12 +350,15 @@ class RegimeMonitor:
         """Get current regime status without emitting alerts.
 
         Args:
-            as_of: Optional date to check. Uses latest data if None.
+            as_of: Optional date to check. Uses today if None.
 
         Returns:
             Dictionary with current regime status.
         """
-        regime, vix, spread = self._detect_regime(as_of or "")
+        if as_of is None:
+            as_of = pd.Timestamp.now().strftime("%Y-%m-%d")
+
+        regime, vix, spread = self._detect_regime(as_of)
 
         return {
             "regime": regime,

@@ -1,10 +1,12 @@
-"""Tests for enhanced production pipeline (IMPL-012).
+"""Tests for enhanced production pipeline (IMPL-012, IMPL-028).
 
 Tests for:
 - Pre-trade checks (MaxTurnoverCheck, SectorConcentrationCheck, MinTradeThresholdCheck)
 - Rebalance scheduling (should_rebalance, get_next_rebalance_date)
 - PipelineConfig and PipelineResult
 - ProductionPipeline.run_enhanced()
+
+IMPL-028: Updated to use mock DataAccessContext instead of MockDataStore.
 """
 from __future__ import annotations
 
@@ -53,29 +55,85 @@ class MockStateManager:
         return self._state
 
 
-class MockDataStore:
-    """Mock data store for testing."""
+class MockPriceAccessor:
+    """Mock price accessor for testing."""
 
     def __init__(self, prices: Optional[pd.DataFrame] = None):
         self._prices = prices
-        self.tickers = ["SPY", "QQQ", "AAPL", "MSFT", "AGG"]
 
-    def get_close_prices(
+    def read_prices_as_of(
         self,
+        as_of: pd.Timestamp,
         tickers: list[str],
-        start: pd.Timestamp,
-        end: pd.Timestamp,
+        lookback_days: int = 252,
     ) -> pd.DataFrame:
+        """Return mock OHLCV data."""
         if self._prices is not None:
             return self._prices
-        dates = pd.date_range(start=start, end=end, freq="B")
-        data = {}
-        for ticker in tickers:
-            np.random.seed(hash(ticker) % 2**32)
-            returns = np.random.normal(0.0005, 0.02, len(dates))
-            prices = 100 * np.cumprod(1 + returns)
-            data[ticker] = prices
-        return pd.DataFrame(data, index=dates)
+        start = as_of - pd.tseries.offsets.BDay(lookback_days)
+        dates = pd.date_range(start=start, end=as_of, freq="B")
+
+        # Create multi-level columns (ticker, price_type)
+        columns = pd.MultiIndex.from_product(
+            [tickers, ['Open', 'High', 'Low', 'Close', 'Volume']],
+            names=['Ticker', 'Price']
+        )
+        data = np.random.randn(len(dates), len(columns)) * 10 + 100
+        df = pd.DataFrame(data, index=dates, columns=columns)
+        return df
+
+
+class MockMacroAccessor:
+    """Mock macro accessor for testing."""
+
+    def __init__(self, vix_value: float = 20.0):
+        self._vix = vix_value
+
+    def read_macro_indicator(self, indicator: str, as_of: pd.Timestamp) -> float:
+        """Return mock macro indicator value."""
+        if indicator == "VIX":
+            return self._vix
+        return 0.0
+
+    def get_regime(self, as_of: pd.Timestamp) -> str:
+        """Return mock regime."""
+        return "NORMAL"
+
+
+class MockUniverseAccessor:
+    """Mock universe accessor for testing."""
+
+    def get_universe(self, name: str) -> list[str]:
+        """Return mock universe tickers."""
+        return ["SPY", "QQQ", "AAPL", "MSFT", "AGG"]
+
+
+class MockReferenceAccessor:
+    """Mock reference accessor for testing."""
+
+    def get_ticker_info(self, ticker: str) -> dict:
+        """Return mock ticker info."""
+        return {"ticker": ticker, "sector": "Unknown"}
+
+
+@dataclass
+class MockDataAccessContext:
+    """Mock DataAccessContext for testing (IMPL-028)."""
+
+    prices: MockPriceAccessor
+    macro: MockMacroAccessor
+    universes: MockUniverseAccessor
+    references: MockReferenceAccessor
+
+    @classmethod
+    def create_default(cls, prices: Optional[pd.DataFrame] = None, vix: float = 20.0):
+        """Create a default mock context for testing."""
+        return cls(
+            prices=MockPriceAccessor(prices),
+            macro=MockMacroAccessor(vix),
+            universes=MockUniverseAccessor(),
+            references=MockReferenceAccessor(),
+        )
 
 
 @pytest.fixture

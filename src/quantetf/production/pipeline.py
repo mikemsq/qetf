@@ -5,6 +5,8 @@ This module provides an enhanced production pipeline that integrates:
 - Pre-trade checks for risk validation
 - Portfolio state management
 - Rebalance scheduling
+
+IMPL-028: Updated to use DataAccessContext (DAL) instead of legacy store parameter.
 """
 from __future__ import annotations
 
@@ -20,6 +22,7 @@ from quantetf.production.recommendations import diff_trades
 from quantetf.types import DatasetVersion, RecommendationPacket
 
 if TYPE_CHECKING:
+    from quantetf.data.access import DataAccessContext
     from quantetf.production.state import PortfolioState, PortfolioStateManager
     from quantetf.risk.overlays import RiskOverlay
 
@@ -389,10 +392,13 @@ class ProductionPipeline:
     - Pre-trade checks for risk validation
     - Rebalance scheduling
 
+    IMPL-028: Now uses DataAccessContext (DAL) for all data access.
+
     Example:
         >>> from quantetf.production import ProductionPipeline, PipelineConfig
         >>> from quantetf.production.state import InMemoryStateManager
         >>> from quantetf.risk import PositionLimitOverlay, VolatilityTargeting
+        >>> from quantetf.data.access import DataAccessFactory
         >>>
         >>> config = PipelineConfig(
         ...     risk_overlays=[
@@ -404,9 +410,12 @@ class ProductionPipeline:
         ...     rebalance_schedule="monthly",
         ... )
         >>> pipeline = ProductionPipeline(config=config)
+        >>> data_access = DataAccessFactory.create_context(
+        ...     config={"snapshot_path": "data/snapshots/latest/data.parquet"}
+        ... )
         >>> result = pipeline.run_enhanced(
         ...     as_of=pd.Timestamp("2024-01-31"),
-        ...     store=data_store,
+        ...     data_access=data_access,
         ...     target_weights=target_weights,
         ... )
     """
@@ -464,7 +473,7 @@ class ProductionPipeline:
         *,
         as_of: pd.Timestamp,
         target_weights: pd.Series,
-        store: Optional[Any] = None,
+        data_access: Optional["DataAccessContext"] = None,
         current_weights: Optional[pd.Series] = None,
         force_rebalance: bool = False,
     ) -> PipelineResult:
@@ -473,7 +482,7 @@ class ProductionPipeline:
         Args:
             as_of: Current date for the pipeline run
             target_weights: Target portfolio weights from portfolio construction
-            store: Data store for market data access (required for risk overlays)
+            data_access: DataAccessContext for market/macro data (required for risk overlays)
             current_weights: Current portfolio weights (optional, loaded from state if not provided)
             force_rebalance: If True, ignore rebalance schedule
 
@@ -514,14 +523,14 @@ class ProductionPipeline:
         adjusted_weights = target_weights.copy()
         overlay_diagnostics_dict: dict[str, dict[str, Any]] = {}
 
-        if config.risk_overlays and store is not None:
+        if config.risk_overlays and data_access is not None:
             from quantetf.risk.overlays import apply_overlay_chain
 
             adjusted_weights, overlay_diagnostics_dict = apply_overlay_chain(
                 target_weights=target_weights,
                 overlays=config.risk_overlays,
                 as_of=as_of,
-                store=store,
+                data_access=data_access,
                 portfolio_state=portfolio_state,
             )
             logger.info(f"Applied {len(config.risk_overlays)} risk overlays")

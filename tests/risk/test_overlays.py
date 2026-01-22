@@ -1,6 +1,7 @@
 """Tests for risk overlay implementations.
 
 Tests for IMPL-010: Risk Overlays Module
+IMPL-028: Updated to use DataAccessContext mock instead of DataStore mock.
 """
 from __future__ import annotations
 
@@ -34,8 +35,8 @@ class MockPortfolioState:
     as_of: pd.Timestamp = pd.Timestamp("2024-01-15")
 
 
-class MockDataStore:
-    """Mock data store for testing."""
+class MockPriceAccessor:
+    """Mock price accessor for testing."""
 
     def __init__(
         self,
@@ -43,31 +44,87 @@ class MockDataStore:
         tickers: Optional[list[str]] = None,
     ):
         self._prices = prices
-        self.tickers = tickers or ["SPY", "QQQ", "AAPL", "MSFT", "AGG", "TLT", "GLD"]
+        self._tickers = tickers or ["SPY", "QQQ", "AAPL", "MSFT", "AGG", "TLT", "GLD"]
 
-    def get_close_prices(
+    def read_prices_as_of(
         self,
+        as_of: pd.Timestamp,
         tickers: list[str],
-        start: pd.Timestamp,
-        end: pd.Timestamp,
+        lookback_days: int = 60,
     ) -> pd.DataFrame:
+        """Return mock OHLCV data."""
         if self._prices is not None:
-            return self._prices
+            # Convert single-level DataFrame to multi-level if needed
+            if isinstance(self._prices.columns, pd.MultiIndex):
+                return self._prices
+            # Create multi-level columns (ticker, price_type)
+            columns = pd.MultiIndex.from_product(
+                [self._prices.columns, ['Open', 'High', 'Low', 'Close', 'Volume']],
+                names=['Ticker', 'Price']
+            )
+            # Broadcast single column to OHLCV format
+            data = np.tile(self._prices.values, (1, 5))
+            return pd.DataFrame(data, index=self._prices.index, columns=columns)
+
         # Generate default price data
-        dates = pd.date_range(start=start, end=end, freq="B")
+        start = as_of - pd.tseries.offsets.BDay(lookback_days)
+        dates = pd.date_range(start=start, end=as_of, freq="B")
+
+        # Create multi-level columns (ticker, price_type)
+        columns = pd.MultiIndex.from_product(
+            [tickers, ['Open', 'High', 'Low', 'Close', 'Volume']],
+            names=['Ticker', 'Price']
+        )
+
         data = {}
         for ticker in tickers:
-            # Random walk prices
             np.random.seed(hash(ticker) % 2**32)
             returns = np.random.normal(0.0005, 0.02, len(dates))
             prices = 100 * np.cumprod(1 + returns)
-            data[ticker] = prices
-        return pd.DataFrame(data, index=dates)
+            for price_type in ['Open', 'High', 'Low', 'Close']:
+                data[(ticker, price_type)] = prices
+            data[(ticker, 'Volume')] = np.random.randint(1000000, 10000000, len(dates))
+
+        return pd.DataFrame(data, index=dates, columns=columns)
+
+
+class MockMacroAccessor:
+    """Mock macro accessor for testing."""
+
+    def __init__(self, vix_value: float = 20.0):
+        self._vix = vix_value
+
+    def read_macro_indicator(self, indicator: str, as_of: pd.Timestamp) -> float:
+        """Return mock macro indicator value."""
+        if indicator == "VIX":
+            return self._vix
+        return 0.0
+
+
+@dataclass
+class MockDataAccessContext:
+    """Mock DataAccessContext for testing (IMPL-028)."""
+
+    prices: MockPriceAccessor
+    macro: MockMacroAccessor
+
+    @classmethod
+    def create_default(
+        cls,
+        prices: Optional[pd.DataFrame] = None,
+        vix: float = 20.0,
+        tickers: Optional[list[str]] = None,
+    ):
+        """Create a default mock context for testing."""
+        return cls(
+            prices=MockPriceAccessor(prices, tickers),
+            macro=MockMacroAccessor(vix),
+        )
 
 
 @pytest.fixture
-def mock_store() -> MockDataStore:
-    return MockDataStore()
+def mock_data_access() -> MockDataAccessContext:
+    return MockDataAccessContext.create_default()
 
 
 @pytest.fixture
@@ -83,7 +140,7 @@ class TestVolatilityTargeting:
 
     def test_volatility_targeting_scales_correctly(self):
         """Verify scale factor calculation based on realized vs target vol."""
-        # Create store with known volatility data
+        # Create mock context with known volatility data
         dates = pd.date_range("2024-01-01", periods=60, freq="B")
         # Create prices with ~20% annualized volatility
         np.random.seed(42)
@@ -92,7 +149,7 @@ class TestVolatilityTargeting:
         prices = 100 * np.cumprod(1 + returns)
         price_df = pd.DataFrame({"SPY": prices}, index=dates)
 
-        store = MockDataStore(prices=price_df)
+        data_access = MockDataAccessContext.create_default(prices=price_df)
         weights = pd.Series({"SPY": 1.0})
 
         overlay = VolatilityTargeting(
@@ -105,7 +162,7 @@ class TestVolatilityTargeting:
         result, diag = overlay.apply(
             weights,
             as_of=dates[-1],
-            store=store,
+            data_access=data_access,
             portfolio_state=None,
         )
 
@@ -132,10 +189,10 @@ class TestVolatilityTargeting:
             {"SPY": 100 * np.cumprod(1 + np.random.normal(0, 0.10, 60))},
             index=dates,
         )
-        store_high_vol = MockDataStore(prices=high_vol_prices)
+        data_access_high_vol = MockDataAccessContext.create_default(prices=high_vol_prices)
         weights = pd.Series({"SPY": 1.0})
 
-        result_high, diag_high = overlay.apply(weights, dates[-1], store_high_vol, None)
+        result_high, diag_high = overlay.apply(weights, dates[-1], data_access_high_vol, None)
 
         # High vol should clamp to min_scale
         assert diag_high["scale_factor"] == pytest.approx(0.25, rel=0.01)
@@ -148,12 +205,12 @@ class TestVolatilityTargeting:
         """Verify graceful handling when not enough data."""
         dates = pd.date_range("2024-01-01", periods=10, freq="B")
         prices = pd.DataFrame({"SPY": [100] * 10}, index=dates)
-        store = MockDataStore(prices=prices)
+        data_access = MockDataAccessContext.create_default(prices=prices)
 
         overlay = VolatilityTargeting()
         weights = pd.Series({"SPY": 1.0})
 
-        result, diag = overlay.apply(weights, dates[-1], store, None)
+        result, diag = overlay.apply(weights, dates[-1], data_access, None)
 
         # Should pass through unchanged with error
         assert "error" in diag
@@ -318,17 +375,15 @@ class TestVIXRegimeOverlay:
         )
 
         weights = pd.Series({"SPY": 0.6, "QQQ": 0.4})
-        store = MockDataStore(tickers=["SPY", "QQQ", "AGG", "TLT", "GLD"])
+        # Create mock context with high VIX
+        data_access = MockDataAccessContext.create_default(
+            vix=35.0,
+            tickers=["SPY", "QQQ", "AGG", "TLT", "GLD"],
+        )
 
-        # Mock VIX at 35 (high regime)
-        with patch("quantetf.data.macro_loader.MacroDataLoader") as mock_loader_class:
-            mock_loader = MagicMock()
-            mock_loader.get_vix.return_value = 35.0
-            mock_loader_class.return_value = mock_loader
-
-            result, diag = overlay.apply(
-                weights, pd.Timestamp("2024-01-15"), store, None
-            )
+        result, diag = overlay.apply(
+            weights, pd.Timestamp("2024-01-15"), data_access, None
+        )
 
         assert diag["regime"] == "HIGH_VOL"
         assert diag["vix"] == 35.0
@@ -344,16 +399,11 @@ class TestVIXRegimeOverlay:
         """Verify reduced defensive allocation at elevated VIX."""
         overlay = VIXRegimeOverlay()
         weights = pd.Series({"SPY": 0.6, "QQQ": 0.4})
-        store = MockDataStore()
+        data_access = MockDataAccessContext.create_default(vix=27.0)  # Elevated
 
-        with patch("quantetf.data.macro_loader.MacroDataLoader") as mock_loader_class:
-            mock_loader = MagicMock()
-            mock_loader.get_vix.return_value = 27.0  # Elevated
-            mock_loader_class.return_value = mock_loader
-
-            result, diag = overlay.apply(
-                weights, pd.Timestamp("2024-01-15"), store, None
-            )
+        result, diag = overlay.apply(
+            weights, pd.Timestamp("2024-01-15"), data_access, None
+        )
 
         assert diag["regime"] == "ELEVATED_VOL"
         assert diag["defensive_weight"] == 0.25
@@ -362,16 +412,11 @@ class TestVIXRegimeOverlay:
         """Verify no defensive shift in normal VIX regime."""
         overlay = VIXRegimeOverlay()
         weights = pd.Series({"SPY": 0.6, "QQQ": 0.4})
-        store = MockDataStore()
+        data_access = MockDataAccessContext.create_default(vix=15.0)  # Normal
 
-        with patch("quantetf.data.macro_loader.MacroDataLoader") as mock_loader_class:
-            mock_loader = MagicMock()
-            mock_loader.get_vix.return_value = 15.0  # Normal
-            mock_loader_class.return_value = mock_loader
-
-            result, diag = overlay.apply(
-                weights, pd.Timestamp("2024-01-15"), store, None
-            )
+        result, diag = overlay.apply(
+            weights, pd.Timestamp("2024-01-15"), data_access, None
+        )
 
         assert diag["regime"] == "NORMAL"
         assert diag["defensive_weight"] == 0.0
@@ -383,14 +428,18 @@ class TestVIXRegimeOverlay:
         """Verify graceful handling when VIX data unavailable."""
         overlay = VIXRegimeOverlay()
         weights = pd.Series({"SPY": 0.6, "QQQ": 0.4})
-        store = MockDataStore()
 
-        with patch("quantetf.data.macro_loader.MacroDataLoader") as mock_loader_class:
-            mock_loader_class.side_effect = Exception("VIX data not available")
+        # Create a mock that raises an exception
+        mock_macro = MagicMock()
+        mock_macro.read_macro_indicator.side_effect = Exception("VIX data not available")
+        data_access = MockDataAccessContext(
+            prices=MockPriceAccessor(),
+            macro=mock_macro,
+        )
 
-            result, diag = overlay.apply(
-                weights, pd.Timestamp("2024-01-15"), store, None
-            )
+        result, diag = overlay.apply(
+            weights, pd.Timestamp("2024-01-15"), data_access, None
+        )
 
         assert diag["regime"] == "UNKNOWN"
         assert "error" in diag
@@ -411,7 +460,7 @@ class TestVIXRegimeOverlay:
 class TestApplyOverlayChain:
     """Tests for apply_overlay_chain function."""
 
-    def test_chain_applies_overlays_sequentially(self, mock_store, sample_weights):
+    def test_chain_applies_overlays_sequentially(self, mock_data_access, sample_weights):
         """Verify overlays are applied in order."""
         overlays = [
             PositionLimitOverlay(max_weight=0.30),
@@ -422,7 +471,7 @@ class TestApplyOverlayChain:
             target_weights=sample_weights,
             overlays=overlays,
             as_of=pd.Timestamp("2024-01-15"),
-            store=mock_store,
+            data_access=mock_data_access,
             portfolio_state=None,
         )
 
@@ -431,7 +480,7 @@ class TestApplyOverlayChain:
         # Final result should respect 25% limit
         assert all(w <= 0.25 + 0.001 for w in result)
 
-    def test_chain_collects_all_diagnostics(self, mock_store):
+    def test_chain_collects_all_diagnostics(self, mock_data_access):
         """Verify diagnostics from all overlays are collected."""
         weights = pd.Series({"SPY": 0.5, "QQQ": 0.5})
         state = MockPortfolioState(nav=90, peak_nav=100)
@@ -445,7 +494,7 @@ class TestApplyOverlayChain:
             target_weights=weights,
             overlays=overlays,
             as_of=pd.Timestamp("2024-01-15"),
-            store=mock_store,
+            data_access=mock_data_access,
             portfolio_state=state,
         )
 
@@ -453,20 +502,20 @@ class TestApplyOverlayChain:
         assert "DrawdownCircuitBreaker" in diagnostics
         assert diagnostics["DrawdownCircuitBreaker"]["level"] == "SOFT"
 
-    def test_chain_handles_empty_overlays(self, mock_store, sample_weights):
+    def test_chain_handles_empty_overlays(self, mock_data_access, sample_weights):
         """Verify chain handles empty overlay list."""
         result, diagnostics = apply_overlay_chain(
             target_weights=sample_weights,
             overlays=[],
             as_of=pd.Timestamp("2024-01-15"),
-            store=mock_store,
+            data_access=mock_data_access,
             portfolio_state=None,
         )
 
         assert result.equals(sample_weights)
         assert diagnostics == {}
 
-    def test_chain_preserves_weight_structure(self, mock_store):
+    def test_chain_preserves_weight_structure(self, mock_data_access):
         """Verify chain preserves Series structure."""
         weights = pd.Series({"A": 0.3, "B": 0.3, "C": 0.4})
         overlays = [PositionLimitOverlay(max_weight=0.35)]
@@ -475,7 +524,7 @@ class TestApplyOverlayChain:
             target_weights=weights,
             overlays=overlays,
             as_of=pd.Timestamp("2024-01-15"),
-            store=mock_store,
+            data_access=mock_data_access,
             portfolio_state=None,
         )
 
