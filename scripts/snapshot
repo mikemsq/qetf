@@ -10,4 +10,4 @@ cd "$PROJECT_DIR"
 PYTHON="${VENV_PYTHON:-python3}"
 
 exec "$PYTHON" scripts/create_snapshot.py \
-  --universe "initial_20_etfs"
+  --universe "tier4_broad_200"

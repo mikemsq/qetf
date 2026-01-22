@@ -10,5 +10,5 @@ cd "$PROJECT_DIR"
 PYTHON="${VENV_PYTHON:-python3}"
 
 exec "$PYTHON" scripts/ingest_etf_data.py \
-  --universe "initial_20_etfs" \
+  --universe "tier4_broad_200" \
   --lookback-years 5
