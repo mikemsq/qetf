@@ -373,3 +373,102 @@ A strategy beats SPY when it achieves:
        --snapshot data/snapshots/snapshot_5yr_20etfs \
        --periods 3,5,10
    ```
+
+---
+
+## Single-Word Wrappers (Mobile-Friendly)
+
+For convenience in Codespaces and mobile terminal use, we provide a set of single-word bash wrapper scripts that run common workflows with sensible defaults **without requiring any arguments**.
+
+These wrappers are designed to:
+- Work on mobile devices where typing long commands is tedious
+- Provide zero-argument convenience commands for quick testing
+- Delegate to existing shell orchestrators when available
+- Use `VENV_PYTHON` environment variable if set, otherwise fall back to `python3`
+
+### Available Wrappers
+
+| Command | Description | Delegates To |
+|---------|-------------|--------------|
+| `./scripts/backtest` | Run standard backtest with default snapshot and parameters | `run_backtest.sh` (if exists) |
+| `./scripts/walkforward` | Run walk-forward validation with 2yr train / 1yr test windows | `run_walk_forward.sh` (if exists) |
+| `./scripts/all` | Run complete workflow (optimize → backtest → walk-forward) | `run_all.sh` (if exists) |
+| `./scripts/status` | Show current status and recent results | `check_status.sh --all` (if exists) |
+| `./scripts/view` | View latest results and list backtests | `view_results.sh --list-all` (if exists) |
+| `./scripts/ingest` | Ingest ETF data for initial_20_etfs, 5yr lookback | Direct Python call |
+| `./scripts/snapshot` | Create snapshot from initial_20_etfs universe | Direct Python call |
+| `./scripts/optimize` | Run optimizer on default snapshot (max 100 configs) | Direct Python call |
+| `./scripts/compare` | Compare all backtests, save to comparisons/latest | Direct Python call |
+| `./scripts/healthcheck` | Validate snapshot data quality | Direct Python call |
+| `./scripts/download` | Download OHLCV data from Stooq for curated universe | Direct Python call |
+| `./scripts/harmonize` | Harmonize ETF lists into unified universe | Direct Python call |
+| `./scripts/runprod` | Run production pipeline in dry-run mode | Direct Python call |
+
+### Usage
+
+**Option 1: Run directly from scripts/ directory:**
+```bash
+./scripts/backtest
+./scripts/status
+./scripts/walkforward
+```
+
+**Option 2: Add scripts/ to your PATH for even simpler use:**
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+export PATH="$PATH:$HOME/path/to/qetf/scripts"
+
+# Then run from anywhere:
+backtest
+status
+view
+```
+
+**Option 3: Make executable (already done in repo):**
+```bash
+chmod +x scripts/*
+```
+
+### Examples
+
+```bash
+# Quick backtest with defaults
+./scripts/backtest
+
+# Check what's been run
+./scripts/status
+
+# View recent results
+./scripts/view
+
+# Run full workflow
+./scripts/all
+
+# Ingest fresh data and create snapshot
+./scripts/ingest
+./scripts/snapshot
+
+# Optimize strategy parameters
+./scripts/optimize
+
+# Compare all backtests
+./scripts/compare
+
+# Validate data quality
+./scripts/healthcheck
+```
+
+### Customization
+
+To customize defaults, you can either:
+1. Edit the wrapper scripts directly (they're simple bash files)
+2. Set the `VENV_PYTHON` environment variable to use a specific Python interpreter
+3. Pass custom arguments to the underlying Python scripts or shell wrappers
+
+### Design Philosophy
+
+These wrappers follow the **principle of sensible defaults**:
+- They prefer existing shell orchestrators (`run_backtest.sh`, `run_all.sh`, etc.) to maintain consistency with established workflows
+- They fall back to Python scripts with carefully chosen default parameters
+- They require **zero arguments** to run, making them mobile-friendly
+- They use `exec` to replace the shell process, ensuring clean process management

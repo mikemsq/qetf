@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Single-word wrapper: status
+# Show current status / results summary.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_DIR"
+
+if [ -x "$SCRIPT_DIR/check_status.sh" ]; then
+  exec "$SCRIPT_DIR/check_status.sh" --all
+fi
+
+# Minimal status fallback
+echo "Backtests directory:"
+ls -1d artifacts/backtests/*/ 2>/dev/null | tail -5 || echo "  (none)"
+echo
+echo "Optimization results:"
+ls -1d artifacts/optimization/*/ 2>/dev/null | tail -5 || echo "  (none)"

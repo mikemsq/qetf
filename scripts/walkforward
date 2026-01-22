@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Single-word wrapper: walkforward
+# Runs walk-forward validation with default windows (no args required).
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_DIR"
+
+PYTHON="${VENV_PYTHON:-python3}"
+
+if [ -x "$SCRIPT_DIR/run_walk_forward.sh" ]; then
+  exec "$SCRIPT_DIR/run_walk_forward.sh"
+fi
+
+exec "$PYTHON" scripts/walk_forward_test.py \
+  --snapshot "data/snapshots/snapshot_5yr_20etfs" \
+  --train-years 2 \
+  --test-years 1 \
+  --step-months 6 \
+  --top-n 5 \
+  --lookback 252

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Single-word wrapper: harmonize
+# Harmonize ETF lists (no args).
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_DIR"
+
+PYTHON="${VENV_PYTHON:-python3}"
+
+exec "$PYTHON" scripts/harmonize_etf_lists.py \
+  --etf-list "data/raw/etf_list.csv" \
+  --ishares-list "data/raw/ishares_list.csv" \
+  --out "data/curated/etf_universe.csv"
