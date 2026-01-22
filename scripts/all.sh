@@ -13,5 +13,5 @@ if [ -x "$SCRIPT_DIR/run_all.sh" ]; then
 fi
 
 # Fallback: run a minimal sequence
-./scripts/backtest
+./scripts/backtest.sh
 ./scripts/walkforward
