@@ -4,23 +4,23 @@
 This script loads a production strategy configuration and runs the enhanced
 pipeline with risk overlays, pre-trade checks, and state management.
 
+IMPL-028: Updated to use DataAccessContext (DAL) instead of snapshot paths.
+
 Examples:
     # Run in dry-run mode (no state changes)
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
+        --data-config configs/data_access.yaml \
         --dry-run
 
-    # Execute with state updates
+    # Execute with state updates (uses default data config)
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
-        --execute
+        --dry-run
 
     # Output as JSON
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
-        --snapshot data/snapshots/snapshot_20260115_170559 \
         --dry-run --output-format json
 """
 
@@ -36,7 +36,7 @@ import pandas as pd
 import yaml
 
 from quantetf.config.loader import load_strategy_config
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext, DataAccessFactory
 from quantetf.production import (
     MaxTurnoverCheck,
     MinTradeThresholdCheck,
@@ -65,13 +65,17 @@ Examples:
   # Dry run (no state changes)
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
-    --snapshot data/snapshots/snapshot_20260115_170559 \\
+    --dry-run
+
+  # With explicit data config
+  python scripts/run_production_pipeline.py \\
+    --config configs/strategies/production_value_momentum.yaml \\
+    --data-config configs/data_access.yaml \\
     --dry-run
 
   # Execute with state updates
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
-    --snapshot data/snapshots/snapshot_20260115_170559 \\
     --execute
         """,
     )
@@ -84,10 +88,17 @@ Examples:
     )
 
     parser.add_argument(
-        "--snapshot",
+        "--data-config",
         type=str,
-        required=True,
-        help="Path to snapshot directory containing price data",
+        default=None,
+        help="Path to data access config YAML file (default: uses strategy config's data_access section)",
+    )
+
+    parser.add_argument(
+        "--snapshot-path",
+        type=str,
+        default=None,
+        help="Path to snapshot data file (alternative to --data-config)",
     )
 
     parser.add_argument(
@@ -247,14 +258,14 @@ def create_state_manager(config: dict[str, Any], dry_run: bool):
 
 def generate_target_weights(
     strategy_config,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     as_of: pd.Timestamp,
 ) -> pd.Series:
     """Generate target weights using strategy's alpha model and portfolio construction.
 
     Args:
         strategy_config: Loaded StrategyConfig
-        store: Data store
+        data_access: DataAccessContext for price/macro data
         as_of: Date for weight generation
 
     Returns:
@@ -272,7 +283,7 @@ def generate_target_weights(
         as_of=as_of,
         universe=universe,
         features=None,  # Not used for simple alpha models
-        store=store,
+        data_access=data_access,
     )
 
     # Construct portfolio
@@ -281,7 +292,7 @@ def generate_target_weights(
         universe=universe,
         alpha=alpha_scores,
         risk=None,  # Not using risk model
-        store=store,
+        data_access=data_access,
     )
 
     return target_weights.weights
@@ -383,7 +394,8 @@ def save_results(
         result_dict = result.to_dict()
         result_dict["strategy_name"] = strategy_name
         result_dict["config_file"] = str(args.config)
-        result_dict["snapshot"] = str(args.snapshot)
+        result_dict["data_config"] = str(args.data_config) if args.data_config else None
+        result_dict["snapshot_path"] = str(args.snapshot_path) if args.snapshot_path else None
         result_dict["mode"] = "dry-run" if args.dry_run else "execute"
 
         output_file = output_dir / f"pipeline_result_{timestamp}.json"
@@ -451,28 +463,56 @@ def main() -> int:
         raw_config = load_production_config(config_path)
         strategy_config = load_strategy_config(config_path)
 
-        # Load snapshot
-        snapshot_path = Path(args.snapshot)
-        logger.info(f"Loading snapshot: {snapshot_path}")
+        # Create DataAccessContext using DAL (IMPL-028)
+        data_access_config = {}
 
-        if snapshot_path.is_dir():
-            data_path = snapshot_path / "data.parquet"
+        if args.data_config:
+            # Use explicit data config file
+            data_config_path = Path(args.data_config)
+            logger.info(f"Loading data config: {data_config_path}")
+            data_access = DataAccessFactory.create_context(config_file=data_config_path)
+        elif args.snapshot_path:
+            # Use snapshot path directly
+            snapshot_path = Path(args.snapshot_path)
+            logger.info(f"Loading snapshot: {snapshot_path}")
+
+            if snapshot_path.is_dir():
+                data_path = snapshot_path / "data.parquet"
+            else:
+                data_path = snapshot_path
+
+            if not data_path.exists():
+                logger.error(f"Snapshot data not found: {data_path}")
+                return 1
+
+            data_access_config["snapshot_path"] = str(data_path)
+            data_access = DataAccessFactory.create_context(config=data_access_config)
+        elif "data_access" in raw_config:
+            # Use data_access section from strategy config
+            logger.info("Using data_access config from strategy file")
+            data_access_config = raw_config["data_access"]
+            data_access = DataAccessFactory.create_context(config=data_access_config)
         else:
-            data_path = snapshot_path
-
-        if not data_path.exists():
-            logger.error(f"Snapshot data not found: {data_path}")
+            logger.error("No data source specified. Use --data-config, --snapshot-path, or add data_access section to config.")
             return 1
-
-        store = SnapshotDataStore(data_path)
 
         # Determine as_of date
         if args.as_of:
             as_of = pd.Timestamp(args.as_of)
         else:
-            # Use latest date in snapshot
-            as_of = store._data.index.max()
-            logger.info(f"Using latest snapshot date: {as_of}")
+            # Use latest available date from price data
+            try:
+                # Read a small sample to get latest date
+                ohlcv = data_access.prices.read_prices_as_of(
+                    as_of=pd.Timestamp.now(),
+                    tickers=["SPY"],  # Use SPY as reference ticker
+                    lookback_days=5,
+                )
+                as_of = ohlcv.index.max()
+                logger.info(f"Using latest available date: {as_of}")
+            except Exception as e:
+                logger.error(f"Could not determine latest date: {e}")
+                return 1
 
         # Create components
         risk_overlays = create_risk_overlays(raw_config)
@@ -499,7 +539,7 @@ def main() -> int:
 
         # Generate target weights
         logger.info("Generating target weights...")
-        target_weights = generate_target_weights(strategy_config, store, as_of)
+        target_weights = generate_target_weights(strategy_config, data_access, as_of)
         logger.info(f"Generated weights for {len(target_weights)} positions")
 
         # Run enhanced pipeline
@@ -507,7 +547,7 @@ def main() -> int:
         result = pipeline.run_enhanced(
             as_of=as_of,
             target_weights=target_weights,
-            store=store,
+            data_access=data_access,
             force_rebalance=args.force_rebalance,
         )
 

@@ -2,6 +2,8 @@
 
 Risk overlays modify target weights to enforce risk constraints and
 respond to market conditions. They are applied as a chain of responsibility.
+
+IMPL-028: Updated to use DataAccessContext (DAL) instead of legacy DataStore.
 """
 from __future__ import annotations
 
@@ -13,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 if TYPE_CHECKING:
-    from quantetf.data.store import DataStore
+    from quantetf.data.access import DataAccessContext
     from quantetf.production.state import PortfolioState
 
 
@@ -29,7 +31,7 @@ class RiskOverlay(ABC):
         self,
         target_weights: pd.Series,
         as_of: pd.Timestamp,
-        store: "DataStore",
+        data_access: "DataAccessContext",
         portfolio_state: Optional["PortfolioState"],
     ) -> tuple[pd.Series, dict[str, Any]]:
         """Apply the overlay to target weights.
@@ -37,7 +39,7 @@ class RiskOverlay(ABC):
         Args:
             target_weights: Target portfolio weights (ticker -> weight)
             as_of: Current date for overlay calculation
-            store: Data store for price/return data access
+            data_access: DataAccessContext for price/macro data access
             portfolio_state: Current portfolio state (may be None for initial)
 
         Returns:
@@ -69,19 +71,23 @@ class VolatilityTargeting(RiskOverlay):
         self,
         target_weights: pd.Series,
         as_of: pd.Timestamp,
-        store: "DataStore",
+        data_access: "DataAccessContext",
         portfolio_state: Optional["PortfolioState"],
     ) -> tuple[pd.Series, dict[str, Any]]:
         """Scale weights to target volatility."""
         # Get returns for volatility estimation
-        start = as_of - pd.tseries.offsets.BDay(self.lookback_days)
         tickers = list(target_weights[target_weights > 0].index)
 
         if not tickers:
             return target_weights, {"scale_factor": 1.0, "realized_vol": 0.0}
 
         try:
-            prices = store.get_close_prices(tickers=tickers, start=start, end=as_of)
+            ohlcv_data = data_access.prices.read_prices_as_of(
+                as_of=as_of,
+                tickers=tickers,
+                lookback_days=self.lookback_days,
+            )
+            prices = ohlcv_data.xs('Close', level='Price', axis=1)
             returns = prices.pct_change().dropna()
         except Exception:
             # If we can't get data, pass through unchanged
@@ -142,7 +148,7 @@ class PositionLimitOverlay(RiskOverlay):
         self,
         target_weights: pd.Series,
         as_of: pd.Timestamp,
-        store: "DataStore",
+        data_access: "DataAccessContext",
         portfolio_state: Optional["PortfolioState"],
     ) -> tuple[pd.Series, dict[str, Any]]:
         """Apply position limits."""
@@ -207,7 +213,7 @@ class DrawdownCircuitBreaker(RiskOverlay):
         self,
         target_weights: pd.Series,
         as_of: pd.Timestamp,
-        store: "DataStore",
+        data_access: "DataAccessContext",
         portfolio_state: Optional["PortfolioState"],
     ) -> tuple[pd.Series, dict[str, Any]]:
         """Apply drawdown-based exposure reduction."""
@@ -268,6 +274,8 @@ class VIXRegimeOverlay(RiskOverlay):
     toward defensive assets (bonds, gold, low-vol ETFs) when VIX exceeds
     specified thresholds. This helps protect the portfolio during market
     stress periods.
+
+    IMPL-028: Now uses DataAccessContext.macro for VIX data access.
     """
 
     high_vix_threshold: float = 30.0
@@ -275,24 +283,18 @@ class VIXRegimeOverlay(RiskOverlay):
     defensive_tickers: tuple[str, ...] = ("AGG", "TLT", "GLD", "USMV", "SPLV")
     high_vix_defensive_weight: float = 0.50
     elevated_vix_defensive_weight: float = 0.25
-    macro_data_dir: str = "data/raw/macro"
 
     def apply(
         self,
         target_weights: pd.Series,
         as_of: pd.Timestamp,
-        store: "DataStore",
+        data_access: "DataAccessContext",
         portfolio_state: Optional["PortfolioState"],
     ) -> tuple[pd.Series, dict[str, Any]]:
         """Apply VIX-based regime shift."""
-        from pathlib import Path
-
-        from quantetf.data.macro_loader import MacroDataLoader
-
-        # Load VIX data
+        # Load VIX data via DataAccessContext
         try:
-            macro_loader = MacroDataLoader(data_dir=Path(self.macro_data_dir))
-            vix = macro_loader.get_vix(str(as_of.date()))
+            vix = data_access.macro.read_macro_indicator("VIX", as_of)
         except Exception as e:
             # If VIX data unavailable, pass through unchanged
             return target_weights, {
@@ -331,8 +333,10 @@ class VIXRegimeOverlay(RiskOverlay):
             scale = (1 - defensive_weight)
             adjusted[non_defensive_mask] *= scale / non_defensive_sum * non_defensive_sum
 
-            # Distribute defensive_weight among available defensive tickers
-            available_defensive = [t for t in self.defensive_tickers if t in store.tickers]
+            # Distribute defensive_weight among defensive tickers
+            # Always use all defensive tickers (add them if not in portfolio)
+            available_defensive = list(self.defensive_tickers)
+
             if available_defensive:
                 per_ticker_weight = defensive_weight / len(available_defensive)
                 for ticker in available_defensive:
@@ -359,7 +363,7 @@ def apply_overlay_chain(
     target_weights: pd.Series,
     overlays: list[RiskOverlay],
     as_of: pd.Timestamp,
-    store: "DataStore",
+    data_access: "DataAccessContext",
     portfolio_state: Optional["PortfolioState"],
 ) -> tuple[pd.Series, dict[str, dict[str, Any]]]:
     """Apply a chain of risk overlays to target weights.
@@ -368,7 +372,7 @@ def apply_overlay_chain(
         target_weights: Initial target portfolio weights
         overlays: List of RiskOverlay instances to apply in order
         as_of: Current date
-        store: Data store for market data access
+        data_access: DataAccessContext for market/macro data access
         portfolio_state: Current portfolio state
 
     Returns:
@@ -382,7 +386,7 @@ def apply_overlay_chain(
         current_weights, diag = overlay.apply(
             target_weights=current_weights,
             as_of=as_of,
-            store=store,
+            data_access=data_access,
             portfolio_state=portfolio_state,
         )
         all_diagnostics[overlay_name] = diag
