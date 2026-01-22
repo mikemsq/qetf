@@ -15,7 +15,7 @@ from quantetf.alpha.regime_aware import RegimeAwareAlpha, RegimeDetector
 from quantetf.data.macro_loader import MacroDataLoader
 from quantetf.portfolio.equal_weight import EqualWeightTopN
 from quantetf.portfolio.costs import FlatTransactionCost
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.universe import Universe
 
 
@@ -109,8 +109,17 @@ def example_backtest_with_regime_alpha():
     portfolio = EqualWeightTopN(top_n=3)
     cost_model = FlatTransactionCost(cost_bps=10.0)
 
-    # Load data store
-    store = SnapshotDataStore(snapshot_dir=Path("data/snapshots"))
+    # Create DataAccessContext
+    snapshot_path = Path("data/snapshots/snapshot_5yr_20etfs")
+    if snapshot_path.is_dir():
+        data_path = snapshot_path / 'data.parquet'
+    else:
+        data_path = snapshot_path
+
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(data_path)},
+        enable_caching=True
+    )
 
     # Run backtest
     engine = SimpleBacktestEngine()
@@ -119,7 +128,7 @@ def example_backtest_with_regime_alpha():
         alpha_model=alpha_model,
         portfolio=portfolio,
         cost_model=cost_model,
-        store=store,
+        data_access=data_access,
     )
 
     # Print results

@@ -17,6 +17,7 @@ import pandas as pd
 from quantetf.monitoring.alerts import Alert, AlertManager
 
 if TYPE_CHECKING:
+    from quantetf.data.access import DataAccessContext
     from quantetf.data.store import DataStore
 
 logger = logging.getLogger(__name__)
@@ -148,17 +149,22 @@ class DataQualityChecker:
     - Gaps: Identifies tickers with missing data periods
     - Anomalies: Identifies unusual price movements or values
 
-    Example:
-        >>> from quantetf.data import SnapshotDataStore
+    Example using DataAccessContext (recommended):
+        >>> from quantetf.data.access import DataAccessFactory
         >>> from quantetf.monitoring import AlertManager, DataQualityChecker
-        >>> store = SnapshotDataStore("data/snapshots/latest")
+        >>> ctx = DataAccessFactory.create_context(config={"snapshot_path": "..."})
         >>> alert_manager = AlertManager()
-        >>> checker = DataQualityChecker(alert_manager)
-        >>> result = checker.check_all(store, tickers=["SPY", "QQQ", "IWM"])
+        >>> checker = DataQualityChecker(data_access=ctx, alert_manager=alert_manager)
+        >>> result = checker.check_all(tickers=["SPY", "QQQ", "IWM"], as_of=pd.Timestamp("2024-01-31"))
+
+    Example with direct DataFrame (legacy):
+        >>> checker = DataQualityChecker(alert_manager=alert_manager)
+        >>> result = checker.check_all(prices=prices_df, tickers=["SPY", "QQQ", "IWM"])
     """
 
     def __init__(
         self,
+        data_access: "DataAccessContext | None" = None,
         alert_manager: AlertManager | None = None,
         stale_threshold_days: int = 3,
         gap_threshold_days: int = 5,
@@ -167,11 +173,14 @@ class DataQualityChecker:
         """Initialize data quality checker.
 
         Args:
+            data_access: Optional DataAccessContext for fetching price data.
+                        If provided, check_all() can be called without a prices DataFrame.
             alert_manager: Optional AlertManager for emitting notifications.
             stale_threshold_days: Days without data to consider stale.
             gap_threshold_days: Gap size in trading days to flag.
             spike_threshold: Price change threshold for spike detection (e.g., 0.10 = 10%).
         """
+        self._data_access = data_access
         self._alert_manager = alert_manager
         self._stale_threshold_days = stale_threshold_days
         self._gap_threshold_days = gap_threshold_days
@@ -438,22 +447,52 @@ class DataQualityChecker:
 
     def check_all(
         self,
-        prices: pd.DataFrame,
+        prices: pd.DataFrame | None = None,
         volume: pd.DataFrame | None = None,
         tickers: list[str] | None = None,
         as_of: pd.Timestamp | None = None,
+        lookback_days: int = 252,
     ) -> QualityCheckResult:
         """Run all quality checks and emit alerts.
 
         Args:
-            prices: DataFrame with price data.
+            prices: DataFrame with price data. If None and data_access is configured,
+                   prices will be fetched using the accessor.
             volume: Optional DataFrame with volume data.
             tickers: Optional list of tickers to check.
-            as_of: Reference date for checks.
+            as_of: Reference date for checks. Required if prices is None.
+            lookback_days: Number of days to look back when fetching from accessor.
 
         Returns:
             QualityCheckResult with all findings.
+
+        Raises:
+            ValueError: If prices is None and no data_access is configured,
+                       or if prices is None and as_of is not provided.
         """
+        # Fetch prices from data_access if not provided directly
+        if prices is None:
+            if self._data_access is None:
+                raise ValueError(
+                    "prices DataFrame required when DataAccessContext not configured"
+                )
+            if as_of is None:
+                raise ValueError(
+                    "as_of is required when fetching prices from DataAccessContext"
+                )
+
+            # Fetch prices using the accessor
+            ohlcv = self._data_access.prices.read_prices_as_of(
+                as_of=as_of,
+                tickers=tickers,
+                lookback_days=lookback_days,
+            )
+            # Extract Close prices - ohlcv has MultiIndex columns (Ticker, Field)
+            if ohlcv.empty:
+                prices = pd.DataFrame()
+            else:
+                # Get Close prices for each ticker
+                prices = ohlcv.xs("Close", axis=1, level="Field")
         check_timestamp = datetime.now(timezone.utc)
         alerts_emitted: list[Alert] = []
 

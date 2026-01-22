@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 from unittest.mock import MagicMock
 
+import pandas as pd
 import pytest
 
 from quantetf.monitoring.alerts import AlertManager, InMemoryAlertHandler
@@ -110,8 +111,8 @@ class TestRegimeMonitor:
 
     @pytest.fixture
     def monitor(self, mock_macro_loader, alert_manager):
-        """Create regime monitor."""
-        return RegimeMonitor(mock_macro_loader, alert_manager)
+        """Create regime monitor using legacy macro_loader."""
+        return RegimeMonitor(macro_loader=mock_macro_loader, alert_manager=alert_manager)
 
     def test_detect_risk_on_regime(self, monitor, mock_macro_loader):
         """Test detecting RISK_ON regime."""
@@ -326,8 +327,8 @@ class TestRegimeMonitor:
     def test_custom_vix_thresholds(self, mock_macro_loader, alert_manager):
         """Test using custom VIX thresholds."""
         monitor = RegimeMonitor(
-            mock_macro_loader,
-            alert_manager,
+            macro_loader=mock_macro_loader,
+            alert_manager=alert_manager,
             vix_elevated_threshold=15.0,
             vix_high_threshold=25.0,
         )
@@ -349,3 +350,180 @@ class TestRegimeMonitor:
         monitor.check("2024-01-15")
 
         assert monitor.last_regime == "RISK_ON"
+
+
+class TestRegimeMonitorWithDataAccess:
+    """Tests for RegimeMonitor using DataAccessContext."""
+
+    @pytest.fixture
+    def alert_handler(self):
+        """Create in-memory alert handler."""
+        return InMemoryAlertHandler()
+
+    @pytest.fixture
+    def alert_manager(self, alert_handler):
+        """Create alert manager with in-memory handler."""
+        return AlertManager(handlers=[alert_handler])
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create mock DataAccessContext with macro accessor."""
+        data_access = MagicMock()
+
+        # Mock VIX data
+        vix_df = pd.DataFrame({"VIX": [15.0]}, index=[pd.Timestamp("2024-01-15")])
+        # Mock yield curve spread data
+        spread_df = pd.DataFrame({"T10Y2Y": [0.50]}, index=[pd.Timestamp("2024-01-15")])
+
+        def read_macro_indicator(indicator, as_of, lookback_days=None):
+            if indicator == "VIX":
+                return vix_df
+            elif indicator == "T10Y2Y":
+                return spread_df
+            else:
+                raise ValueError(f"Unknown indicator: {indicator}")
+
+        data_access.macro.read_macro_indicator.side_effect = read_macro_indicator
+
+        return data_access
+
+    @pytest.fixture
+    def monitor_with_data_access(self, mock_data_access, alert_manager):
+        """Create regime monitor with DataAccessContext."""
+        return RegimeMonitor(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+    def test_detect_risk_on_regime(self, monitor_with_data_access):
+        """Test detecting RISK_ON regime via DataAccessContext."""
+        result = monitor_with_data_access.check("2024-01-15")
+
+        assert result.current_state.regime == "RISK_ON"
+        assert result.current_state.vix == 15.0
+
+    def test_detect_elevated_vol_regime(self, mock_data_access, alert_manager):
+        """Test detecting ELEVATED_VOL regime via DataAccessContext."""
+        vix_df = pd.DataFrame({"VIX": [25.0]}, index=[pd.Timestamp("2024-01-15")])
+        spread_df = pd.DataFrame({"T10Y2Y": [0.30]}, index=[pd.Timestamp("2024-01-15")])
+
+        def read_macro_indicator(indicator, as_of, lookback_days=None):
+            if indicator == "VIX":
+                return vix_df
+            elif indicator == "T10Y2Y":
+                return spread_df
+            else:
+                raise ValueError(f"Unknown indicator: {indicator}")
+
+        mock_data_access.macro.read_macro_indicator.side_effect = read_macro_indicator
+
+        monitor = RegimeMonitor(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+        result = monitor.check("2024-01-15")
+
+        assert result.current_state.regime == "ELEVATED_VOL"
+
+    def test_detect_high_vol_regime(self, mock_data_access, alert_manager):
+        """Test detecting HIGH_VOL regime via DataAccessContext."""
+        vix_df = pd.DataFrame({"VIX": [35.0]}, index=[pd.Timestamp("2024-01-15")])
+        spread_df = pd.DataFrame({"T10Y2Y": [0.20]}, index=[pd.Timestamp("2024-01-15")])
+
+        def read_macro_indicator(indicator, as_of, lookback_days=None):
+            if indicator == "VIX":
+                return vix_df
+            elif indicator == "T10Y2Y":
+                return spread_df
+            else:
+                raise ValueError(f"Unknown indicator: {indicator}")
+
+        mock_data_access.macro.read_macro_indicator.side_effect = read_macro_indicator
+
+        monitor = RegimeMonitor(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+        result = monitor.check("2024-01-15")
+
+        assert result.current_state.regime == "HIGH_VOL"
+
+    def test_detect_recession_warning(self, mock_data_access, alert_manager):
+        """Test detecting RECESSION_WARNING regime via DataAccessContext."""
+        vix_df = pd.DataFrame({"VIX": [20.0]}, index=[pd.Timestamp("2024-01-15")])
+        spread_df = pd.DataFrame({"T10Y2Y": [-0.25]}, index=[pd.Timestamp("2024-01-15")])
+
+        def read_macro_indicator(indicator, as_of, lookback_days=None):
+            if indicator == "VIX":
+                return vix_df
+            elif indicator == "T10Y2Y":
+                return spread_df
+            else:
+                raise ValueError(f"Unknown indicator: {indicator}")
+
+        mock_data_access.macro.read_macro_indicator.side_effect = read_macro_indicator
+
+        monitor = RegimeMonitor(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+        result = monitor.check("2024-01-15")
+
+        assert result.current_state.regime == "RECESSION_WARNING"
+
+    def test_handles_vix_data_unavailable(self, mock_data_access, alert_manager):
+        """Test handling when VIX data is unavailable via accessor."""
+        spread_df = pd.DataFrame({"T10Y2Y": [0.50]}, index=[pd.Timestamp("2024-01-15")])
+
+        def read_macro_indicator(indicator, as_of, lookback_days=None):
+            if indicator == "VIX":
+                raise Exception("Data unavailable")
+            elif indicator == "T10Y2Y":
+                return spread_df
+            else:
+                raise ValueError(f"Unknown indicator: {indicator}")
+
+        mock_data_access.macro.read_macro_indicator.side_effect = read_macro_indicator
+
+        monitor = RegimeMonitor(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+        result = monitor.check("2024-01-15")
+
+        assert result.current_state.regime == "UNKNOWN"
+        assert result.current_state.vix is None
+
+    def test_requires_data_access_or_macro_loader(self, alert_manager):
+        """Test that either data_access or macro_loader must be provided."""
+        with pytest.raises(ValueError, match="Either data_access or macro_loader"):
+            RegimeMonitor(alert_manager=alert_manager)
+
+    def test_get_current_regime(self, monitor_with_data_access):
+        """Test getting current regime without emitting alerts."""
+        status = monitor_with_data_access.get_current_regime("2024-01-15")
+
+        assert status["regime"] == "RISK_ON"
+        assert status["vix"] == 15.0
+        assert "description" in status
+
+    def test_backward_compat_with_macro_loader(self, alert_manager):
+        """Test backward compatibility with macro_loader parameter."""
+        mock_loader = MagicMock()
+        mock_loader.get_vix.return_value = 15.0
+        mock_loader.get_yield_curve_spread.return_value = 0.50
+
+        # Use keyword argument for macro_loader
+        monitor = RegimeMonitor(
+            macro_loader=mock_loader,
+            alert_manager=alert_manager,
+        )
+
+        result = monitor.check("2024-01-15")
+
+        assert result.current_state.regime == "RISK_ON"
+        mock_loader.get_vix.assert_called_once()

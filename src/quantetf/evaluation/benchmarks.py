@@ -21,7 +21,7 @@ import pandas as pd
 import numpy as np
 
 from quantetf.types import Universe, CASH_TICKER
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessContext
 from quantetf.backtest.simple_engine import BacktestConfig, BacktestResult
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ class BenchmarkResult:
 def run_spy_benchmark(
     *,
     config: BacktestConfig,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
 ) -> BenchmarkResult:
     """Run SPY buy-and-hold benchmark.
 
@@ -51,13 +51,13 @@ def run_spy_benchmark(
 
     Args:
         config: Backtest configuration (dates, initial capital)
-        store: Data store for historical prices
+        data_access: Data access context for historical prices
 
     Returns:
         BenchmarkResult with equity curve and metrics
 
     Example:
-        >>> result = run_spy_benchmark(config=config, store=store)
+        >>> result = run_spy_benchmark(config=config, data_access=data_access)
         >>> print(f"SPY Return: {result.metrics['total_return']:.2%}")
     """
     logger.info("Running SPY buy-and-hold benchmark")
@@ -82,7 +82,8 @@ def run_spy_benchmark(
 
     # Buy SPY on first date
     first_date = rebalance_dates[0]
-    spy_prices_df = store.get_close_prices(as_of=first_date, tickers=['SPY'])
+    prices = data_access.prices.read_prices_as_of(as_of=first_date, tickers=['SPY'])
+    spy_prices_df = prices.xs('Close', level='Price', axis=1) if not prices.empty else pd.DataFrame()
 
     if spy_prices_df.empty or 'SPY' not in spy_prices_df.columns:
         raise ValueError(f"No SPY price data available as of {first_date}")
@@ -100,7 +101,8 @@ def run_spy_benchmark(
 
     # Track performance on all dates
     for date in rebalance_dates:
-        spy_prices_df = store.get_close_prices(as_of=date, tickers=['SPY'])
+        prices = data_access.prices.read_prices_as_of(as_of=date, tickers=['SPY'])
+        spy_prices_df = prices.xs('Close', level='Price', axis=1) if not prices.empty else pd.DataFrame()
 
         if spy_prices_df.empty or 'SPY' not in spy_prices_df.columns:
             logger.warning(f"No SPY price data on {date}, using previous NAV")
@@ -152,7 +154,7 @@ def run_spy_benchmark(
 def run_60_40_benchmark(
     *,
     config: BacktestConfig,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     rebalance_frequency: str = 'quarterly'
 ) -> BenchmarkResult:
     """Run 60/40 portfolio benchmark (60% SPY, 40% AGG).
@@ -162,14 +164,14 @@ def run_60_40_benchmark(
 
     Args:
         config: Backtest configuration (dates, initial capital)
-        store: Data store for historical prices
+        data_access: Data access context for historical prices
         rebalance_frequency: How often to rebalance ('quarterly', 'monthly')
 
     Returns:
         BenchmarkResult with equity curve and metrics
 
     Example:
-        >>> result = run_60_40_benchmark(config=config, store=store)
+        >>> result = run_60_40_benchmark(config=config, data_access=data_access)
         >>> print(f"60/40 Return: {result.metrics['total_return']:.2%}")
     """
     logger.info("Running 60/40 (SPY/AGG) benchmark")
@@ -195,7 +197,8 @@ def run_60_40_benchmark(
 
     for i, date in enumerate(rebalance_dates):
         # Get current prices
-        prices_df = store.get_close_prices(as_of=date, tickers=['SPY', 'AGG'])
+        price_data = data_access.prices.read_prices_as_of(as_of=date, tickers=['SPY', 'AGG'])
+        prices_df = price_data.xs('Close', level='Price', axis=1) if not price_data.empty else pd.DataFrame()
 
         if prices_df.empty:
             logger.warning(f"No price data on {date}")
@@ -267,7 +270,7 @@ def run_60_40_benchmark(
 def run_equal_weight_benchmark(
     *,
     config: BacktestConfig,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     rebalance_frequency: str = 'monthly'
 ) -> BenchmarkResult:
     """Run equal-weight universe benchmark.
@@ -277,14 +280,14 @@ def run_equal_weight_benchmark(
 
     Args:
         config: Backtest configuration with universe
-        store: Data store for historical prices
+        data_access: Data access context for historical prices
         rebalance_frequency: How often to rebalance
 
     Returns:
         BenchmarkResult with equity curve and metrics
 
     Example:
-        >>> result = run_equal_weight_benchmark(config=config, store=store)
+        >>> result = run_equal_weight_benchmark(config=config, data_access=data_access)
         >>> print(f"Equal Weight Return: {result.metrics['total_return']:.2%}")
     """
     logger.info(f"Running equal-weight benchmark ({len(config.universe.tickers)} tickers)")
@@ -313,7 +316,8 @@ def run_equal_weight_benchmark(
 
     for i, date in enumerate(rebalance_dates):
         # Get current prices
-        prices_df = store.get_close_prices(as_of=date, tickers=tickers)
+        price_data = data_access.prices.read_prices_as_of(as_of=date, tickers=tickers)
+        prices_df = price_data.xs('Close', level='Price', axis=1) if not price_data.empty else pd.DataFrame()
 
         if prices_df.empty:
             logger.warning(f"No price data on {date}")
@@ -386,7 +390,7 @@ def run_equal_weight_benchmark(
 def run_random_selection_benchmark(
     *,
     config: BacktestConfig,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     n_selections: int = 5,
     n_trials: int = 100,
     rebalance_frequency: str = 'monthly',
@@ -399,7 +403,7 @@ def run_random_selection_benchmark(
 
     Args:
         config: Backtest configuration with universe
-        store: Data store for historical prices
+        data_access: Data access context for historical prices
         n_selections: Number of tickers to randomly select
         n_trials: Number of random trials to average
         rebalance_frequency: How often to rebalance
@@ -410,7 +414,7 @@ def run_random_selection_benchmark(
 
     Example:
         >>> result = run_random_selection_benchmark(
-        ...     config=config, store=store, n_selections=5, n_trials=100
+        ...     config=config, data_access=data_access, n_selections=5, n_trials=100
         ... )
         >>> print(f"Random (N={n_selections}) Return: {result.metrics['total_return']:.2%}")
     """
@@ -444,7 +448,8 @@ def run_random_selection_benchmark(
 
         for i, date in enumerate(rebalance_dates):
             # Get prices
-            prices_df = store.get_close_prices(as_of=date, tickers=tickers)
+            price_data = data_access.prices.read_prices_as_of(as_of=date, tickers=tickers)
+            prices_df = price_data.xs('Close', level='Price', axis=1) if not price_data.empty else pd.DataFrame()
 
             if prices_df.empty:
                 if i > 0:
@@ -526,7 +531,7 @@ def run_random_selection_benchmark(
 def run_oracle_benchmark(
     *,
     config: BacktestConfig,
-    store: SnapshotDataStore,
+    data_access: DataAccessContext,
     n_selections: int = 5,
     rebalance_frequency: str = 'monthly'
 ) -> BenchmarkResult:
@@ -538,7 +543,7 @@ def run_oracle_benchmark(
 
     Args:
         config: Backtest configuration with universe
-        store: Data store for historical prices
+        data_access: Data access context for historical prices
         n_selections: Number of top performers to select
         rebalance_frequency: How often to rebalance
 
@@ -546,7 +551,7 @@ def run_oracle_benchmark(
         BenchmarkResult with equity curve and metrics
 
     Example:
-        >>> result = run_oracle_benchmark(config=config, store=store, n_selections=5)
+        >>> result = run_oracle_benchmark(config=config, data_access=data_access, n_selections=5)
         >>> print(f"Oracle Return: {result.metrics['total_return']:.2%}")
     """
     logger.info(f"Running oracle benchmark (perfect foresight, N={n_selections})")
@@ -574,7 +579,8 @@ def run_oracle_benchmark(
 
     for i, date in enumerate(rebalance_dates[:-1]):  # Stop at second-to-last
         # Get current prices
-        current_prices_df = store.get_close_prices(as_of=date, tickers=tickers)
+        price_data = data_access.prices.read_prices_as_of(as_of=date, tickers=tickers)
+        current_prices_df = price_data.xs('Close', level='Price', axis=1) if not price_data.empty else pd.DataFrame()
 
         if current_prices_df.empty:
             logger.warning(f"No price data on {date}")
@@ -595,7 +601,8 @@ def run_oracle_benchmark(
 
         # Look ahead to next period to get future returns (ORACLE!)
         next_date = rebalance_dates[i + 1]
-        next_prices_df = store.get_close_prices(as_of=next_date, tickers=tickers)
+        next_price_data = data_access.prices.read_prices_as_of(as_of=next_date, tickers=tickers)
+        next_prices_df = next_price_data.xs('Close', level='Price', axis=1) if not next_price_data.empty else pd.DataFrame()
 
         if next_prices_df.empty:
             logger.warning(f"No price data on {next_date}")
@@ -652,7 +659,8 @@ def run_oracle_benchmark(
 
     # Final update for last date
     last_date = rebalance_dates[-1]
-    last_prices_df = store.get_close_prices(as_of=last_date, tickers=tickers)
+    last_price_data = data_access.prices.read_prices_as_of(as_of=last_date, tickers=tickers)
+    last_prices_df = last_price_data.xs('Close', level='Price', axis=1) if not last_price_data.empty else pd.DataFrame()
 
     if not last_prices_df.empty:
         last_prices = last_prices_df.iloc[-1]

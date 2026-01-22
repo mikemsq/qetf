@@ -36,7 +36,7 @@ import pandas as pd
 
 from quantetf.config.loader import load_strategy_config
 from quantetf.backtest.simple_engine import SimpleBacktestEngine, BacktestConfig
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.evaluation.comparison import (
     load_backtest_result,
     compute_comparison_metrics,
@@ -176,13 +176,13 @@ def expand_config_patterns(patterns: List[str]) -> List[Path]:
     return unique_paths
 
 
-def run_single_backtest(strategy_config, args, store, backtest_dir):
+def run_single_backtest(strategy_config, args, data_access, backtest_dir):
     """Run backtest for a single strategy config.
 
     Args:
         strategy_config: StrategyConfig object
         args: Command-line arguments
-        store: SnapshotDataStore object
+        data_access: DataAccessContext object
         backtest_dir: Directory to save results
 
     Returns:
@@ -210,7 +210,7 @@ def run_single_backtest(strategy_config, args, store, backtest_dir):
         alpha_model=strategy_config.alpha_model,
         portfolio=strategy_config.portfolio_construction,
         cost_model=strategy_config.cost_model,
-        store=store
+        data_access=data_access
     )
 
     # Save results
@@ -246,11 +246,11 @@ def run_single_backtest(strategy_config, args, store, backtest_dir):
     return result
 
 
-def add_spy_benchmark(store, args) -> StrategyResult:
+def add_spy_benchmark(data_access, args) -> StrategyResult:
     """Run SPY benchmark and return as StrategyResult.
 
     Args:
-        store: SnapshotDataStore object
+        data_access: DataAccessContext object
         args: Command-line arguments
 
     Returns:
@@ -271,7 +271,7 @@ def add_spy_benchmark(store, args) -> StrategyResult:
         rebalance_frequency='monthly'
     )
 
-    spy_result = run_spy_benchmark(config=spy_config, store=store)
+    spy_result = run_spy_benchmark(config=spy_config, data_access=data_access)
 
     return StrategyResult(
         name='SPY Benchmark',
@@ -313,7 +313,11 @@ def main():
         if not data_path.exists():
             raise FileNotFoundError(f"Snapshot data not found: {data_path}")
 
-        store = SnapshotDataStore(data_path)
+        # Create DataAccessContext using factory
+        data_access = DataAccessFactory.create_context(
+            config={"snapshot_path": str(data_path)},
+            enable_caching=True
+        )
 
         # Create output directory
         if args.output:
@@ -341,7 +345,7 @@ def main():
             backtest_dir = output_dir / 'backtests' / strategy_config.name
 
             # Run backtest
-            result = run_single_backtest(strategy_config, args, store, backtest_dir)
+            result = run_single_backtest(strategy_config, args, data_access, backtest_dir)
 
             backtest_dirs.append(str(backtest_dir))
 
@@ -357,7 +361,7 @@ def main():
 
         # Add SPY benchmark
         if not args.no_spy_benchmark:
-            spy_result = add_spy_benchmark(store, args)
+            spy_result = add_spy_benchmark(data_access, args)
             results.append(spy_result)
 
         # Generate comparison report

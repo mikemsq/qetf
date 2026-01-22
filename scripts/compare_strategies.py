@@ -46,7 +46,7 @@ from quantetf.evaluation.comparison import (
     generate_comparison_report,
     StrategyResult
 )
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.backtest.simple_engine import BacktestConfig
 from quantetf.evaluation.benchmarks import run_spy_benchmark
 from quantetf.types import Universe
@@ -196,10 +196,17 @@ def add_spy_benchmark(results: List[StrategyResult]) -> List[StrategyResult]:
             config = json.load(f)
 
         snapshot_dir = config.get('snapshot_dir', 'data/snapshots/snapshot_5yr_20etfs')
-        snapshot_path = Path(snapshot_dir) / 'data.parquet'
+        snapshot_path_obj = Path(snapshot_dir)
+        if snapshot_path_obj.is_dir():
+            data_path = snapshot_path_obj / 'data.parquet'
+        else:
+            data_path = snapshot_path_obj
 
-        # Load snapshot data
-        store = SnapshotDataStore(snapshot_path)
+        # Create DataAccessContext
+        data_access = DataAccessFactory.create_context(
+            config={"snapshot_path": str(data_path)},
+            enable_caching=True
+        )
 
         # Determine date range from first result's equity curve
         start_date = first_result.equity_curve.index.min()
@@ -219,7 +226,7 @@ def add_spy_benchmark(results: List[StrategyResult]) -> List[StrategyResult]:
         )
 
         # Run SPY benchmark
-        spy_result = run_spy_benchmark(config=spy_config, store=store)
+        spy_result = run_spy_benchmark(config=spy_config, data_access=data_access)
 
         # Convert to StrategyResult format
         # Note: StrategyResult expects equity_curve to be a Series (NAV values)

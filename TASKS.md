@@ -1,6 +1,6 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 21, 2026
+**Last Updated:** January 22, 2026
 **Active Phase:** Data Access Layer Implementation
 
 ## Primary Goal
@@ -148,6 +148,9 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-023 | ReferenceDataAccessor | 2026-01-21 |
 | IMPL-024 | CachingLayer & Integration | 2026-01-21 |
 | IMPL-025 | Backtest Engine Migration | 2026-01-21 |
+| IMPL-026 | Alpha Models Migration | 2026-01-21 |
+| IMPL-027 | Portfolio Optimization Migration | 2026-01-21 |
+| IMPL-029 | Research Scripts Migration | 2026-01-22 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |
@@ -211,10 +214,10 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 ## Backlog (Future Phases)
 
 ### Data Access Layer - Phase 2 (Migration)
-- IMPL-026: Alpha models migration
-- IMPL-027: Portfolio optimization migration
+- ~~IMPL-026: Alpha models migration~~ (completed)
+- ~~IMPL-027: Portfolio optimization migration~~ (completed)
 - IMPL-028: Production pipeline migration
-- IMPL-029: Research scripts migration
+- ~~IMPL-029: Research scripts migration~~ (completed)
 - IMPL-030: Monitoring system migration
 - IMPL-031: Test utilities & mocking
 

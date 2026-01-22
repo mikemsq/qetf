@@ -34,7 +34,7 @@ import pandas as pd
 
 from quantetf.config.loader import load_strategy_config
 from quantetf.backtest.simple_engine import SimpleBacktestEngine, BacktestConfig
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 
 logger = logging.getLogger(__name__)
 
@@ -150,7 +150,11 @@ def run_backtest(args, strategy_config, output_dir):
     if not data_path.exists():
         raise FileNotFoundError(f"Data file not found: {data_path}")
 
-    store = SnapshotDataStore(data_path)
+    # Create DataAccessContext using factory
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(data_path)},
+        enable_caching=True
+    )
 
     # 2. Create universe from config
     logger.info(f"Universe: {len(strategy_config.universe_tickers)} ETFs")
@@ -187,7 +191,7 @@ def run_backtest(args, strategy_config, output_dir):
         alpha_model=alpha_model,
         portfolio=portfolio,
         cost_model=cost_model,
-        store=store
+        data_access=data_access
     )
 
     logger.info("Backtest complete!")

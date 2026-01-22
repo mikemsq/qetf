@@ -34,7 +34,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from quantetf.backtest.simple_engine import BacktestConfig, BacktestResult
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.evaluation import benchmarks
 from quantetf.evaluation import metrics
 from quantetf.evaluation import comparison
@@ -142,7 +142,7 @@ def load_strategy_result(path: str) -> BacktestResult:
 
 def run_benchmarks(
     strategy_result: BacktestResult,
-    store: SnapshotDataStore,
+    data_access,
     benchmark_names: list[str],
     random_trials: int,
     random_seed: int
@@ -160,21 +160,21 @@ def run_benchmarks(
         logger.info("Running SPY benchmark...")
         results['SPY Buy-and-Hold'] = benchmarks.run_spy_benchmark(
             config=config,
-            store=store
+            data_access=data_access
         )
 
     if '60_40' in benchmark_names:
         logger.info("Running 60/40 benchmark...")
         results['60/40 Portfolio'] = benchmarks.run_60_40_benchmark(
             config=config,
-            store=store
+            data_access=data_access
         )
 
     if 'equal_weight' in benchmark_names:
         logger.info("Running equal weight benchmark...")
         results['Equal Weight Universe'] = benchmarks.run_equal_weight_benchmark(
             config=config,
-            store=store,
+            data_access=data_access,
             rebalance_frequency=config.rebalance_frequency
         )
 
@@ -187,7 +187,7 @@ def run_benchmarks(
 
         results[f'Random Selection (N={n_selections})'] = benchmarks.run_random_selection_benchmark(
             config=config,
-            store=store,
+            data_access=data_access,
             n_selections=n_selections,
             n_trials=random_trials,
             rebalance_frequency=config.rebalance_frequency,
@@ -203,7 +203,7 @@ def run_benchmarks(
 
         results[f'Oracle (N={n_selections})'] = benchmarks.run_oracle_benchmark(
             config=config,
-            store=store,
+            data_access=data_access,
             n_selections=n_selections,
             rebalance_frequency=config.rebalance_frequency
         )
@@ -486,12 +486,22 @@ def main():
 
     # Load snapshot data
     logger.info(f"Loading snapshot data from {args.snapshot}")
-    store = SnapshotDataStore(snapshot_dir=args.snapshot)
+    snapshot_path = Path(args.snapshot)
+    if snapshot_path.is_dir():
+        data_path = snapshot_path / 'data.parquet'
+    else:
+        data_path = snapshot_path
+
+    # Create DataAccessContext
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(data_path)},
+        enable_caching=True
+    )
 
     # Run benchmarks
     benchmark_results = run_benchmarks(
         strategy_result=strategy_result,
-        store=store,
+        data_access=data_access,
         benchmark_names=args.benchmarks,
         random_trials=args.random_trials,
         random_seed=args.random_seed
