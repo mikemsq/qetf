@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Single-word wrapper: view
+# Open the view_results convenience script (shows latest results).
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_DIR"
+
+if [ -x "$SCRIPT_DIR/view_results.sh" ]; then
+  exec "$SCRIPT_DIR/view_results.sh" --list-all
+fi
+
+echo "No view_results.sh found in scripts/ — list available backtests instead:"
+ls -1d artifacts/backtests/*/ 2>/dev/null | tail -10 || echo "  (none)"

@@ -10,17 +10,20 @@ Examples:
     # Run in dry-run mode (no state changes)
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --data-config configs/data_access.yaml \
         --dry-run
 
     # Execute with state updates (uses default data config)
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --dry-run
 
     # Output as JSON
     $ python scripts/run_production_pipeline.py \
         --config configs/strategies/production_value_momentum.yaml \
+        --snapshot data/snapshots/snapshot_20260122_010523 \
         --dry-run --output-format json
 """
 
@@ -65,6 +68,7 @@ Examples:
   # Dry run (no state changes)
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
+    --snapshot data/snapshots/snapshot_20260122_010523 \\
     --dry-run
 
   # With explicit data config
@@ -76,6 +80,7 @@ Examples:
   # Execute with state updates
   python scripts/run_production_pipeline.py \\
     --config configs/strategies/production_value_momentum.yaml \\
+    --snapshot data/snapshots/snapshot_20260122_010523 \\
     --execute
         """,
     )

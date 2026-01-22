@@ -15,7 +15,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Default parameters
-SNAPSHOT="data/snapshots/snapshot_20260113_232157"
+SNAPSHOT="data/snapshots/snapshot_20260122_010523"
 UNIVERSE="US_CORE_ETFS"
 STRATEGY="trend_filtered_momentum"
 TOP_N=5

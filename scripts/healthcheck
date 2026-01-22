@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Single-word wrapper: healthcheck
+# Validate snapshot data and print a short report (no args).
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_DIR"
+
+PYTHON="${VENV_PYTHON:-python3}"
+
+exec "$PYTHON" scripts/data_health_check.py \
+  --snapshot "data/snapshots/snapshot_20260122_010523"
