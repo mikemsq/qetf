@@ -1,6 +1,7 @@
 """Tests for the data quality monitoring module."""
 
 from datetime import datetime, timezone
+from unittest.mock import MagicMock
 
 import numpy as np
 import pandas as pd
@@ -398,3 +399,124 @@ class TestQualityCheckResult:
         assert data["overall_status"] == "WARNING"
         assert data["summary"]["stale_count"] == 1
         assert len(data["stale_tickers"]) == 1
+
+
+class TestDataQualityCheckerWithDataAccess:
+    """Tests for DataQualityChecker using DataAccessContext."""
+
+    @pytest.fixture
+    def alert_handler(self):
+        """Create in-memory alert handler."""
+        return InMemoryAlertHandler()
+
+    @pytest.fixture
+    def alert_manager(self, alert_handler):
+        """Create alert manager with in-memory handler."""
+        return AlertManager(handlers=[alert_handler])
+
+    @pytest.fixture
+    def sample_ohlcv(self):
+        """Create sample OHLCV data with MultiIndex columns."""
+        dates = pd.bdate_range("2024-01-01", periods=30)
+        tickers = ["SPY", "QQQ", "IWM"]
+        fields = ["Open", "High", "Low", "Close", "Volume"]
+
+        # Create MultiIndex columns (Ticker, Field)
+        columns = pd.MultiIndex.from_product([tickers, fields], names=["Ticker", "Field"])
+        data = np.random.randn(30, len(tickers) * len(fields))
+
+        df = pd.DataFrame(data, index=dates, columns=columns)
+
+        # Make Close prices positive
+        for ticker in tickers:
+            df[(ticker, "Close")] = np.abs(df[(ticker, "Close")]) + 100
+
+        return df
+
+    @pytest.fixture
+    def mock_data_access(self, sample_ohlcv):
+        """Create mock DataAccessContext."""
+        data_access = MagicMock()
+        data_access.prices.read_prices_as_of.return_value = sample_ohlcv
+        return data_access
+
+    @pytest.fixture
+    def checker_with_data_access(self, mock_data_access, alert_manager):
+        """Create data quality checker with DataAccessContext."""
+        return DataQualityChecker(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+            stale_threshold_days=3,
+            gap_threshold_days=5,
+            spike_threshold=0.10,
+        )
+
+    def test_check_all_fetches_prices_from_accessor(
+        self, checker_with_data_access, mock_data_access
+    ):
+        """Test that check_all fetches prices from DataAccessContext."""
+        as_of = pd.Timestamp("2024-01-31")
+        tickers = ["SPY", "QQQ"]
+
+        result = checker_with_data_access.check_all(
+            tickers=tickers, as_of=as_of
+        )
+
+        # Verify accessor was called
+        mock_data_access.prices.read_prices_as_of.assert_called_once()
+        call_args = mock_data_access.prices.read_prices_as_of.call_args
+
+        assert call_args.kwargs["as_of"] == as_of
+        assert call_args.kwargs["tickers"] == tickers
+
+        # Verify result is valid
+        assert isinstance(result, QualityCheckResult)
+        assert result.overall_status in ("OK", "WARNING", "CRITICAL")
+
+    def test_check_all_requires_as_of_when_using_accessor(
+        self, checker_with_data_access
+    ):
+        """Test that as_of is required when fetching from accessor."""
+        with pytest.raises(ValueError, match="as_of is required"):
+            checker_with_data_access.check_all(tickers=["SPY"])
+
+    def test_check_all_requires_data_access_or_prices(self, alert_manager):
+        """Test that either data_access or prices DataFrame is required."""
+        checker = DataQualityChecker(alert_manager=alert_manager)
+
+        with pytest.raises(ValueError, match="prices DataFrame required"):
+            checker.check_all(tickers=["SPY"], as_of=pd.Timestamp("2024-01-31"))
+
+    def test_check_all_with_empty_ohlcv_response(
+        self, alert_manager
+    ):
+        """Test handling empty OHLCV response from accessor."""
+        mock_data_access = MagicMock()
+        mock_data_access.prices.read_prices_as_of.return_value = pd.DataFrame()
+
+        checker = DataQualityChecker(
+            data_access=mock_data_access,
+            alert_manager=alert_manager,
+        )
+
+        result = checker.check_all(
+            tickers=["SPY"],
+            as_of=pd.Timestamp("2024-01-31"),
+        )
+
+        assert isinstance(result, QualityCheckResult)
+
+    def test_check_all_backward_compat_with_prices_dataframe(
+        self, checker_with_data_access
+    ):
+        """Test backward compatibility: prices DataFrame takes precedence."""
+        dates = pd.bdate_range("2024-01-01", periods=10)
+        prices = pd.DataFrame(
+            {"SPY": [100.0 + i * 0.5 for i in range(10)]},
+            index=dates,
+        )
+
+        # When prices is provided, accessor should not be called
+        result = checker_with_data_access.check_all(prices=prices)
+
+        assert result.overall_status == "OK"

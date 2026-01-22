@@ -380,6 +380,7 @@ def main():
     }
 
     # Run walk-forward validation
+    # Note: run_walk_forward_validation already uses DataAccessContext internally
     try:
         results = run_walk_forward_validation(
             snapshot_path=args.snapshot,

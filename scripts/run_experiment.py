@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 from quantetf.alpha.factory import create_alpha_model, AlphaModelRegistry
 from quantetf.backtest.simple_engine import SimpleBacktestEngine
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.evaluation.metrics import (
     cagr, max_drawdown, sharpe, sortino_ratio, calmar_ratio,
     win_rate, value_at_risk, conditional_value_at_risk, information_ratio,
@@ -132,17 +132,24 @@ def main():
         parquet_path = snapshot_path
 
     logger.info(f"Loading snapshot from {parquet_path}")
-    store = SnapshotDataStore(parquet_path)
+
+    # Create DataAccessContext using factory
+    data_access = DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=True
+    )
 
     # Get date range and tickers from data
-    all_dates = store._data.index
+    latest_date = data_access.prices.get_latest_price_date()
+    prices = data_access.prices.read_prices_as_of(as_of=latest_date + pd.Timedelta(days=1))
+    all_dates = prices.index
     start_date = pd.Timestamp(args.start) if args.start else all_dates[0]
     end_date = pd.Timestamp(args.end) if args.end else all_dates[-1]
 
     logger.info(f"Backtest period: {start_date.date()} to {end_date.date()}")
 
     # Get tickers
-    tickers = store._data.columns.get_level_values('Ticker').unique().tolist()
+    tickers = prices.columns.get_level_values('Ticker').unique().tolist()
     logger.info(f"Universe: {len(tickers)} tickers")
 
     # Import BacktestConfig
@@ -171,7 +178,7 @@ def main():
         alpha_model=alpha_model,
         portfolio=portfolio_constructor,
         cost_model=cost_model,
-        store=store,
+        data_access=data_access,
     )
 
     # Calculate metrics - extract NAV column from equity curve DataFrame
@@ -192,8 +199,8 @@ def main():
 
     # Get SPY returns for comparison
     try:
-        spy_prices = store.get_close_prices(as_of=end_date, tickers=['SPY'], lookback_days=2600)
-        spy_prices = spy_prices['SPY'].loc[start_date:end_date]
+        spy_prices_data = data_access.prices.read_prices_as_of(as_of=end_date + pd.Timedelta(days=1), tickers=['SPY'])
+        spy_prices = spy_prices_data.xs('Close', level='Price', axis=1)['SPY'].loc[start_date:end_date]
         spy_returns = spy_prices.pct_change().dropna()
         # Align returns
         common_dates = returns.index.intersection(spy_returns.index)
