@@ -220,8 +220,8 @@ Examples:
 
     parser.add_argument(
         '--universe',
-        required=False,
-        default='tier4_broad_200',
+        required=True,
+        #default='tier4_broad_200',
         help='Name of universe config file (without .yaml extension). Default: tier4_broad_200'
     )
 

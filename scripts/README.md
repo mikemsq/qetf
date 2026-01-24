@@ -395,9 +395,9 @@ These wrappers are designed to:
 | `./scripts/all.sh` | Run complete workflow (optimize → backtest → walk-forward) | `run_all.sh` (if exists) |
 | `./scripts/status` | Show current status and recent results | `check_status.sh --all` (if exists) |
 | `./scripts/view` | View latest results and list backtests | `view_results.sh --list-all` (if exists) |
-| `./scripts/ingest` | Ingest ETF data for initial_20_etfs, 5yr lookback | Direct Python call |
+| `./scripts/ingest.sh` | Ingest ETF data for initial_20_etfs, 5yr lookback | Direct Python call |
 | `./scripts/snapshot` | Create snapshot from initial_20_etfs universe | Direct Python call |
-| `./scripts/optimize` | Run optimizer on default snapshot (max 100 configs) | Direct Python call |
+| `./scripts/optimize.sh` | Run optimizer on default snapshot (max 100 configs) | Direct Python call |
 | `./scripts/compare` | Compare all backtests, save to comparisons/latest | Direct Python call |
 | `./scripts/healthcheck` | Validate snapshot data quality | Direct Python call |
 | `./scripts/download` | Download OHLCV data from Stooq for curated universe | Direct Python call |
@@ -445,8 +445,7 @@ chmod +x scripts/*
 ./scripts/all.sh
 
 # Ingest fresh data and create snapshot
-./scripts/ingest
-./scripts/snapshot
+./scripts/ingest.sh
 
 # Optimize strategy parameters
 ./scripts/optimize
