@@ -1,7 +1,7 @@
 # Research Agenda Quick Reference
 
-**Last Updated:** 2026-01-15
-**Status:** Active Research Program
+**Last Updated:** 2026-01-24
+**Status:** Active Research Program → **PRODUCTION DESIGN APPROVED**
 
 ---
 
@@ -13,6 +13,20 @@
 - Perfect foresight: 10/10 years beatable (avg +55.8%/year spread)
 - Simple momentum: 3/9 years win rate (33%)
 - Regimes confirmed: Bull (7), Bear (1), High Vol (1), Moderate (2)
+
+## APPROVED PRODUCTION DESIGN (2026-01-24)
+
+Architecture Decision Record: `handoffs/architecture/ADR-001-regime-based-strategy-selection.md`
+
+| Decision | Choice |
+|----------|--------|
+| Regimes | 4 (trend × vol matrix) |
+| Detection | SPY vs 200MA + VIX with hysteresis |
+| Thresholds | MA ±2%, VIX 20/25 |
+| Mapping | Empirical (from optimization) |
+| Frequency | Daily check, rebalance-day action |
+
+**Implementation Task:** IMPL-035 (ready for architect pickup)
 
 ---
 
@@ -100,9 +114,11 @@
 
 | Document | Purpose |
 |----------|---------|
-| [RESEARCH-001-REGIME-HYPOTHESIS.md](./RESEARCH-001-REGIME-HYPOTHESIS.md) | Full research findings |
-| [IMPL-006-NEW-ALPHA-MODELS.md](./IMPL-006-NEW-ALPHA-MODELS.md) | New strategy specs |
-| [IMPL-007-DATA-INGESTION.md](./IMPL-007-DATA-INGESTION.md) | FRED data ingestion |
+| [ADR-001-regime-based-strategy-selection.md](../architecture/ADR-001-regime-based-strategy-selection.md) | **Production design decisions** |
+| [handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md](../tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md) | **Implementation task handoff** |
+| [regime-hypothesis.md](./regime-hypothesis.md) | Full research findings |
+| [IMPL-006-NEW-ALPHA-MODELS.md](../tasks/IMPL-006-NEW-ALPHA-MODELS.md) | New strategy specs |
+| [IMPL-007-DATA-INGESTION.md](../tasks/IMPL-007-DATA-INGESTION.md) | FRED data ingestion |
 
 ---
 

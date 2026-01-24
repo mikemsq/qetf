@@ -26,6 +26,34 @@
 
 ## Active Tasks
 
+### Production System - Regime-Based Strategy Selection
+
+#### IMPL-035: Regime-Based Strategy Selection System
+**Status:** ready
+**Priority:** HIGH
+**Dependencies:** None (supersedes/refines IMPL-018)
+**Handoff:** [handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md](handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md)
+**Architecture Decision:** [handoffs/architecture/ADR-001-regime-based-strategy-selection.md](handoffs/architecture/ADR-001-regime-based-strategy-selection.md)
+
+Implement production-ready regime-based strategy selection:
+- 4 regimes (trend × volatility matrix)
+- Regime detection with hysteresis (SPY/200MA + VIX)
+- Strategy-to-regime mapping from optimization
+- Daily monitoring + rebalance-day execution
+
+**Subtasks for architect to break down:**
+- IMPL-035a: Regime Detector (2-3h)
+- IMPL-035b: Config Files (1h)
+- IMPL-035c: VIX Ingestion (1-2h)
+- IMPL-035d: Regime Analyzer (3-4h)
+- IMPL-035e: Extended Optimizer (2-3h)
+- IMPL-035f: Daily Monitor (2-3h)
+- IMPL-035g: Production Rebalancer (3-4h)
+- IMPL-035h: Integration Tests (2-3h)
+- IMPL-035i: CLI Scripts (2h)
+
+---
+
 ### Critical Bug Fixes
 
 #### BUG-001: Fix SPY Benchmark Calculation in Strategy Optimizer
