@@ -12,4 +12,5 @@ SNAP="data/snapshots/snapshot_20260122_010523"
 
 exec "$PYTHON" scripts/find_best_strategy.py \
   --snapshot "$SNAP" \
+  --periods 1 \
   --parallel 4
