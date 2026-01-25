@@ -88,7 +88,7 @@ A complete run, whether for research or production, looks like this:
 - **`configs/`** - YAML configs for strategies, universes, schedules, costs
 
 ### Development
-- **`scripts/`** - Utility scripts (ingest, snapshot, backtest)
+- **`scripts/`** - Utility scripts (ingest.sh, backtest)
 - **`notebooks/`** - Jupyter notebooks for research
 - **`tests/`** - Unit tests, integration tests, golden tests
 - **`artifacts/`** - Output from runs (metrics, plots, recommendations)

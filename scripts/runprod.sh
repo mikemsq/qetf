@@ -8,7 +8,8 @@ PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_DIR"
 
 PYTHON="${VENV_PYTHON:-python3}"
-CONFIG="configs/strategies/production_value_momentum.yaml"
+#CONFIG="configs/strategies/production_value_momentum.yaml"
+CONFIG="configs/strategies/best_strategy.yaml"
 SNAP="data/snapshots/snapshot_20260122_010523"
 
 exec "$PYTHON" scripts/run_production_pipeline.py \

@@ -142,9 +142,19 @@ class ValueMomentum(AlphaModel):
 
         # Calculate momentum returns
         mom_returns = self._calculate_returns(prices, universe.tickers, self.momentum_lookback)
+        logger.info(
+            f"Momentum returns: count={len(mom_returns)}, "
+            f"mean={mom_returns.mean():.4f}, std={mom_returns.std():.4f}, "
+            f"min={mom_returns.min():.4f}, max={mom_returns.max():.4f}"
+        )
 
         # Calculate value returns (using potentially different lookback)
         val_returns = self._calculate_returns(prices, universe.tickers, self.value_lookback)
+        logger.info(
+            f"Value returns: count={len(val_returns)}, "
+            f"mean={val_returns.mean():.4f}, std={val_returns.std():.4f}, "
+            f"min={val_returns.min():.4f}, max={val_returns.max():.4f}"
+        )
 
         # Z-score both signals
         mom_z = self._zscore(mom_returns)
