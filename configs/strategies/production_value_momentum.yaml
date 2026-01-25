@@ -9,9 +9,9 @@ alpha_model:
   type: value_momentum
   momentum_weight: 0.5
   value_weight: 0.5
-  momentum_lookback: 252
-  value_lookback: 252
-  min_periods: 200
+  momentum_lookback: 252  # 12-month trend following
+  value_lookback: 63      # 3-month mean reversion
+  min_periods: 60
 
 portfolio_construction:
   type: equal_weight_top_n

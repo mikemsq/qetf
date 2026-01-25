@@ -1,6 +1,6 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 22, 2026
+**Last Updated:** January 23, 2026
 **Active Phase:** Data Access Layer Implementation
 
 ## Primary Goal
@@ -25,6 +25,48 @@
 ---
 
 ## Active Tasks
+
+### Production System - Regime-Based Strategy Selection
+
+#### IMPL-035: Regime-Based Strategy Selection System
+**Status:** ready
+**Priority:** HIGH
+**Dependencies:** None (supersedes/refines IMPL-018)
+**Handoff:** [handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md](handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md)
+**Architecture Decision:** [handoffs/architecture/ADR-001-regime-based-strategy-selection.md](handoffs/architecture/ADR-001-regime-based-strategy-selection.md)
+
+Implement production-ready regime-based strategy selection:
+- 4 regimes (trend × volatility matrix)
+- Regime detection with hysteresis (SPY/200MA + VIX)
+- Strategy-to-regime mapping from optimization
+- Daily monitoring + rebalance-day execution
+
+**Subtasks for architect to break down:**
+- IMPL-035a: Regime Detector (2-3h)
+- IMPL-035b: Config Files (1h)
+- IMPL-035c: VIX Ingestion (1-2h)
+- IMPL-035d: Regime Analyzer (3-4h)
+- IMPL-035e: Extended Optimizer (2-3h)
+- IMPL-035f: Daily Monitor (2-3h)
+- IMPL-035g: Production Rebalancer (3-4h)
+- IMPL-035h: Integration Tests (2-3h)
+- IMPL-035i: CLI Scripts (2h)
+
+---
+
+### Critical Bug Fixes
+
+#### BUG-001: Fix SPY Benchmark Calculation in Strategy Optimizer
+**Status:** ready
+**Priority:** CRITICAL
+**Dependencies:** None
+**Handoff:** [handoffs/tasks/handoff-BUG-001-SPY-BENCHMARK-CALCULATION.md](handoffs/tasks/handoff-BUG-001-SPY-BENCHMARK-CALCULATION.md)
+
+The multi-period evaluator calculates SPY benchmark returns using only rebalance dates (14 monthly dates), missing 258+ trading days. This causes SPY returns to be **drastically underestimated** (1.9% instead of 14.9%), making all active returns appear ~13% better than reality.
+
+**Impact:** All previous optimization results are invalid. Strategies that appear to beat SPY may actually be underperforming.
+
+---
 
 ### Data Access Layer - Phase 1 (Foundation)
 
@@ -153,6 +195,7 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | IMPL-028 | Production Pipeline Migration | 2026-01-22 |
 | IMPL-029 | Research Scripts Migration | 2026-01-22 |
 | IMPL-030 | Monitoring System Migration | 2026-01-22 |
+| IMPL-031 | Test Utilities & Mocking | 2026-01-22 |
 
 ### Regime-Aware Infrastructure
 | ID | Task | Completed |
@@ -215,13 +258,13 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 
 ## Backlog (Future Phases)
 
-### Data Access Layer - Phase 2 (Migration)
+### Data Access Layer - Phase 2 (Migration) - COMPLETE
 - ~~IMPL-026: Alpha models migration~~ (completed)
 - ~~IMPL-027: Portfolio optimization migration~~ (completed)
 - ~~IMPL-028: Production pipeline migration~~ (completed)
 - ~~IMPL-029: Research scripts migration~~ (completed)
 - ~~IMPL-030: Monitoring system migration~~ (completed)
-- IMPL-031: Test utilities & mocking
+- ~~IMPL-031: Test utilities & mocking~~ (completed)
 
 ### Data Access Layer - Phase 3 (Optional)
 - IMPL-032: Live data connector

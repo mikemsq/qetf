@@ -390,25 +390,25 @@ These wrappers are designed to:
 
 | Command | Description | Delegates To |
 |---------|-------------|--------------|
-| `./scripts/backtest` | Run standard backtest with default snapshot and parameters | `run_backtest.sh` (if exists) |
+| `./scripts/backtest.sh` | Run standard backtest with default snapshot and parameters | `run_backtest.sh` (if exists) |
 | `./scripts/walkforward` | Run walk-forward validation with 2yr train / 1yr test windows | `run_walk_forward.sh` (if exists) |
-| `./scripts/all` | Run complete workflow (optimize → backtest → walk-forward) | `run_all.sh` (if exists) |
+| `./scripts/all.sh` | Run complete workflow (optimize → backtest → walk-forward) | `run_all.sh` (if exists) |
 | `./scripts/status` | Show current status and recent results | `check_status.sh --all` (if exists) |
 | `./scripts/view` | View latest results and list backtests | `view_results.sh --list-all` (if exists) |
-| `./scripts/ingest` | Ingest ETF data for initial_20_etfs, 5yr lookback | Direct Python call |
+| `./scripts/ingest.sh` | Ingest ETF data for initial_20_etfs, 5yr lookback | Direct Python call |
 | `./scripts/snapshot` | Create snapshot from initial_20_etfs universe | Direct Python call |
-| `./scripts/optimize` | Run optimizer on default snapshot (max 100 configs) | Direct Python call |
+| `./scripts/optimize.sh` | Run optimizer on default snapshot (max 100 configs) | Direct Python call |
 | `./scripts/compare` | Compare all backtests, save to comparisons/latest | Direct Python call |
 | `./scripts/healthcheck` | Validate snapshot data quality | Direct Python call |
 | `./scripts/download` | Download OHLCV data from Stooq for curated universe | Direct Python call |
 | `./scripts/harmonize` | Harmonize ETF lists into unified universe | Direct Python call |
-| `./scripts/runprod` | Run production pipeline in dry-run mode | Direct Python call |
+| `./scripts/runprod.sh` | Run production pipeline in dry-run mode | Direct Python call |
 
 ### Usage
 
 **Option 1: Run directly from scripts/ directory:**
 ```bash
-./scripts/backtest
+./scripts/backtest.sh
 ./scripts/status
 ./scripts/walkforward
 ```
@@ -419,7 +419,7 @@ These wrappers are designed to:
 export PATH="$PATH:$HOME/path/to/qetf/scripts"
 
 # Then run from anywhere:
-backtest
+backtest.sh
 status
 view
 ```
@@ -433,7 +433,7 @@ chmod +x scripts/*
 
 ```bash
 # Quick backtest with defaults
-./scripts/backtest
+./scripts/backtest.sh
 
 # Check what's been run
 ./scripts/status
@@ -442,11 +442,10 @@ chmod +x scripts/*
 ./scripts/view
 
 # Run full workflow
-./scripts/all
+./scripts/all.sh
 
 # Ingest fresh data and create snapshot
-./scripts/ingest
-./scripts/snapshot
+./scripts/ingest.sh
 
 # Optimize strategy parameters
 ./scripts/optimize

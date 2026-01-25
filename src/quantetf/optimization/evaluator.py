@@ -335,13 +335,24 @@ class MultiPeriodEvaluator:
             data_access=self.data_access,
         )
 
-        # Calculate SPY benchmark returns for same period
-        spy_returns = self._get_spy_returns(result.equity_curve.index)
-
         # Calculate strategy returns from equity curve
         strategy_returns = result.equity_curve['returns'].dropna()
 
-        # Align returns
+        # Get the actual date range from strategy returns
+        eval_start = strategy_returns.index.min()
+        eval_end = strategy_returns.index.max()
+
+        # Calculate SPY return using prices (not sparse aligned daily returns)
+        # This fixes BUG-001: SPY return was incorrectly calculated using only
+        # returns on rebalance dates, missing ~250 of ~260 trading days per year
+        spy_prices = self._get_spy_prices(eval_start, eval_end)
+        if len(spy_prices) < 2:
+            raise ValueError("Insufficient SPY price data for return calculation")
+        spy_total_return = (spy_prices.iloc[-1] / spy_prices.iloc[0]) - 1
+
+        # Get SPY returns for active metrics calculation (tracking error, IR)
+        # These metrics still need aligned returns at rebalance frequency
+        spy_returns = self._get_spy_returns(result.equity_curve.index)
         common_dates = strategy_returns.index.intersection(spy_returns.index)
         if len(common_dates) == 0:
             raise ValueError("No overlapping dates between strategy and SPY")
@@ -349,16 +360,15 @@ class MultiPeriodEvaluator:
         aligned_strategy = strategy_returns.loc[common_dates]
         aligned_spy = spy_returns.loc[common_dates]
 
-        # Calculate active metrics
+        # Calculate active metrics using aligned returns at rebalance frequency
         active_metrics = calculate_active_metrics(
             strategy_returns=aligned_strategy,
             benchmark_returns=aligned_spy,
             periods_per_year=self._get_periods_per_year(config.schedule_name),
         )
 
-        # Calculate cumulative returns
+        # Strategy total return from compounded strategy returns
         strategy_total_return = (1 + aligned_strategy).prod() - 1
-        spy_total_return = (1 + aligned_spy).prod() - 1
 
         return PeriodMetrics(
             period_name=period_name,
@@ -410,6 +420,33 @@ class MultiPeriodEvaluator:
         spy_returns = spy_returns[spy_returns.index >= start_date]
 
         return spy_returns
+
+    def _get_spy_prices(self, start_date: pd.Timestamp, end_date: pd.Timestamp) -> pd.Series:
+        """Get SPY closing prices for date range.
+
+        Args:
+            start_date: Start of date range
+            end_date: End of date range
+
+        Returns:
+            Series of SPY closing prices
+        """
+        try:
+            ohlcv_data = self.data_access.prices.read_prices_as_of(
+                as_of=end_date + pd.Timedelta(days=1),
+                tickers=['SPY'],
+            )
+            spy_prices = ohlcv_data.xs('Close', level='Price', axis=1)['SPY']
+        except (ValueError, KeyError):
+            # SPY might not be in snapshot, create synthetic benchmark
+            logger.warning("SPY not found in data, using equal-weight proxy for prices")
+            ohlcv_data = self.data_access.prices.read_prices_as_of(
+                as_of=end_date + pd.Timedelta(days=1)
+            )
+            all_prices = ohlcv_data.xs('Close', level='Price', axis=1)
+            spy_prices = all_prices.mean(axis=1)
+
+        return spy_prices[(spy_prices.index >= start_date) & (spy_prices.index <= end_date)]
 
     def _get_warmup_days(self, config: StrategyConfig) -> int:
         """Calculate warmup period needed for alpha model.

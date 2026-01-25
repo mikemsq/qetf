@@ -1,0 +1,34 @@
+# Default Regime to Strategy Mapping
+# See: handoffs/architecture/ADR-001-regime-based-strategy-selection.md
+#
+# This is the INITIAL mapping based on financial intuition.
+# The optimizer will generate an empirical mapping that supersedes this.
+# This file serves as a fallback and documentation of expected behavior.
+
+version: "1.0"
+created: "2026-01-24"
+generated_by: "manual_default"
+
+# Default mapping (hypothesis - to be validated empirically)
+mapping:
+  uptrend_low_vol: "momentum_acceleration"
+  # Rationale: Clean trends favor momentum with acceleration detection
+
+  uptrend_high_vol: "vol_adjusted_momentum"
+  # Rationale: Trends exist but noisy, vol-adjustment helps
+
+  downtrend_low_vol: "momentum"
+  # Rationale: Shorter lookback for faster signals in declining market
+
+  downtrend_high_vol: "vol_adjusted_momentum"
+  # Rationale: Capital preservation focus, reduce exposure via vol adjustment
+
+# Fallback when regime detection fails or data is missing
+# This should be the most robust strategy from optimization
+fallback: "momentum_acceleration"
+
+# Notes for optimizer
+# When generating empirical mapping, save to:
+#   artifacts/optimization/{timestamp}/regime_mapping.yaml
+# The production system loads the latest optimization mapping,
+# falling back to this file if none exists.
