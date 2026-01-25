@@ -265,7 +265,7 @@ def generate_target_weights(
     strategy_config,
     data_access: DataAccessContext,
     as_of: pd.Timestamp,
-) -> pd.Series:
+) -> tuple[pd.Series, pd.Series]:
     """Generate target weights using strategy's alpha model and portfolio construction.
 
     Args:
@@ -274,7 +274,7 @@ def generate_target_weights(
         as_of: Date for weight generation
 
     Returns:
-        Series of target weights
+        Tuple of (target weights Series, alpha scores Series)
     """
     # Get alpha scores
     alpha_model = strategy_config.alpha_model
@@ -284,31 +284,57 @@ def generate_target_weights(
     universe = strategy_config.create_universe(as_of=as_of)
 
     # Generate alpha scores
-    alpha_scores = alpha_model.score(
+    alpha_result = alpha_model.score(
         as_of=as_of,
         universe=universe,
         features=None,  # Not used for simple alpha models
         data_access=data_access,
     )
 
+    logger.info(f"Alpha scores generated for {len(alpha_result.scores)} tickers")
+
     # Construct portfolio
     target_weights = portfolio_constructor.construct(
         as_of=as_of,
         universe=universe,
-        alpha=alpha_scores,
+        alpha=alpha_result,
         risk=None,  # Not using risk model
         data_access=data_access,
     )
 
-    return target_weights.weights
+    return target_weights.weights, alpha_result.scores
 
 
-def print_text_output(result, strategy_name: str) -> None:
+def get_ticker_name(data_access: DataAccessContext, ticker: str) -> str:
+    """Get asset name for a ticker, falling back to ticker if not found.
+
+    Args:
+        data_access: DataAccessContext with reference data
+        ticker: Ticker symbol
+
+    Returns:
+        Asset name or ticker if not found
+    """
+    try:
+        info = data_access.references.get_ticker_info(ticker)
+        return info.name
+    except (ValueError, AttributeError):
+        return ticker
+
+
+def print_text_output(
+    result,
+    strategy_name: str,
+    data_access: DataAccessContext,
+    alpha_scores: pd.Series,
+) -> None:
     """Print pipeline result as formatted text.
 
     Args:
         result: PipelineResult
         strategy_name: Strategy name
+        data_access: DataAccessContext for looking up asset names
+        alpha_scores: Alpha scores for all assets
     """
     print("=" * 80)
     print("PRODUCTION PIPELINE RESULT")
@@ -342,11 +368,22 @@ def print_text_output(result, strategy_name: str) -> None:
                     print(f"    {key}: {value}")
         print()
 
+    # Alpha scores (sorted by score descending)
+    print("ALPHA SCORES (all assets, sorted by score):")
+    print("-" * 80)
+    print(f"{'Rank':<6} {'Ticker':<10} {'Name':<40} {'Score':>12}")
+    print("-" * 80)
+    sorted_scores = alpha_scores.sort_values(ascending=False)
+    for rank, (ticker, score) in enumerate(sorted_scores.items(), 1):
+        name = get_ticker_name(data_access, ticker)[:40]
+        print(f"{rank:<6} {ticker:<10} {name:<40} {score:>12.6f}")
+    print()
+
     # Target vs adjusted weights
     print("WEIGHTS:")
-    print("-" * 40)
-    print(f"{'Ticker':<10} {'Target':>10} {'Adjusted':>10} {'Change':>10}")
-    print("-" * 40)
+    print("-" * 80)
+    print(f"{'Ticker':<10} {'Name':<30} {'Target':>10} {'Adjusted':>10} {'Change':>10}")
+    print("-" * 80)
 
     all_tickers = set(result.target_weights.index) | set(result.adjusted_weights.index)
     for ticker in sorted(all_tickers):
@@ -354,18 +391,21 @@ def print_text_output(result, strategy_name: str) -> None:
         adjusted = result.adjusted_weights.get(ticker, 0.0)
         if target > 0.001 or adjusted > 0.001:
             change = adjusted - target
-            print(f"{ticker:<10} {target:>10.2%} {adjusted:>10.2%} {change:>+10.2%}")
+            name = get_ticker_name(data_access, ticker)[:30]
+            print(f"{ticker:<10} {name:<30} {target:>10.2%} {adjusted:>10.2%} {change:>+10.2%}")
     print()
 
     # Trades
     if not result.trades.empty:
         print("RECOMMENDED TRADES:")
-        print("-" * 60)
-        print(f"{'Ticker':<10} {'Current':>12} {'Target':>12} {'Delta':>12}")
-        print("-" * 60)
+        print("-" * 90)
+        print(f"{'Ticker':<10} {'Name':<30} {'Current':>12} {'Target':>12} {'Delta':>12}")
+        print("-" * 90)
         for _, row in result.trades.iterrows():
+            name = get_ticker_name(data_access, row['ticker'])[:30]
             print(
                 f"{row['ticker']:<10} "
+                f"{name:<30} "
                 f"{row['current_weight']:>12.2%} "
                 f"{row['target_weight']:>12.2%} "
                 f"{row['delta_weight']:>+12.2%}"
@@ -544,7 +584,7 @@ def main() -> int:
 
         # Generate target weights
         logger.info("Generating target weights...")
-        target_weights = generate_target_weights(strategy_config, data_access, as_of)
+        target_weights, alpha_scores = generate_target_weights(strategy_config, data_access, as_of)
         logger.info(f"Generated weights for {len(target_weights)} positions")
 
         # Run enhanced pipeline
@@ -562,7 +602,7 @@ def main() -> int:
 
         # Output results
         if args.output_format == "text":
-            print_text_output(result, strategy_config.name)
+            print_text_output(result, strategy_config.name, data_access, alpha_scores)
         elif args.output_format == "json":
             print(json.dumps(result.to_dict(), indent=2, default=str))
 

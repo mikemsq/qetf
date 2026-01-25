@@ -1,0 +1,46 @@
+# Regime Detection Thresholds Configuration
+# See: handoffs/architecture/ADR-001-regime-based-strategy-selection.md
+#
+# This file defines the thresholds for regime classification.
+# Changes to these values affect production strategy selection.
+
+version: "1.0"
+created: "2026-01-24"
+
+# Trend detection using SPY vs 200-day Moving Average
+trend:
+  indicator: "spy_vs_200ma"
+  # Hysteresis prevents rapid switching at boundaries
+  # Enter downtrend when SPY < 200MA * (1 - hysteresis_pct)
+  # Exit downtrend when SPY > 200MA * (1 + hysteresis_pct)
+  hysteresis_pct: 0.02  # 2% buffer
+
+# Volatility detection using VIX
+volatility:
+  indicator: "vix"
+  # Enter high_vol when VIX > high_threshold
+  # Exit high_vol when VIX < low_threshold
+  high_threshold: 25.0
+  low_threshold: 20.0
+
+# Regime definitions (2x2 matrix)
+regimes:
+  - name: "uptrend_low_vol"
+    description: "Calm bull market - clean trends"
+    trend: "uptrend"
+    vol: "low_vol"
+
+  - name: "uptrend_high_vol"
+    description: "Volatile rally - trends with noise"
+    trend: "uptrend"
+    vol: "high_vol"
+
+  - name: "downtrend_low_vol"
+    description: "Grinding bear market"
+    trend: "downtrend"
+    vol: "low_vol"
+
+  - name: "downtrend_high_vol"
+    description: "Crisis/panic - capital preservation"
+    trend: "downtrend"
+    vol: "high_vol"
