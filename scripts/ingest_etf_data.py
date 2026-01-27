@@ -29,6 +29,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# Helper to compute output file path
+def get_output_filepath(universe_name: str) -> Path:
+    """Return the output file path for the given universe name."""
+    curated_dir = Path(__file__).parent.parent / "data" / "curated"
+    curated_dir.mkdir(parents=True, exist_ok=True)
+    filename = f"{universe_name}.parquet"
+    return curated_dir / filename
+
+
 def load_universe_config(universe_name: str) -> dict:
     """Load universe configuration from YAML file.
 
@@ -153,13 +162,10 @@ def save_to_curated(
     Returns:
         Path to the saved data file
     """
-    # Create curated data directory
-    curated_dir = Path(__file__).parent.parent / "data" / "snapshots"
-    curated_dir.mkdir(parents=True, exist_ok=True)
 
-    # Generate filename
-    filename = f"{universe_name}.parquet"
-    filepath = curated_dir / filename
+    # Compute output file path in one place
+    filepath = get_output_filepath(universe_name)
+
 
     # Save data as Parquet (efficient columnar format)
     logger.info(f"Saving curated data to {filepath}")
@@ -256,25 +262,25 @@ Examples:
     #    parser.error("--end-date requires --start-date")
 
     # Calculate date range
-    today = datetime.now().strftime('%Y-%m-%d')
     def get_latest_end_date(universe_name):
-        import os, re
-        from glob import glob
-        curated_dir = os.path.join('data', 'curated')
-        pattern = os.path.join(curated_dir, f'{universe_name}_*.parquet')
-        files = glob(pattern)
-        if not files:
-            return None
-        date_re = re.compile(rf'{universe_name}_(\\d{{4}}-\\d{{2}}-\\d{{2}})_(\\d{{4}}-\\d{{2}}-\\d{{2}})_\\d+\\.parquet$')
-        latest_end = None
-        for f in files:
-            m = date_re.search(os.path.basename(f))
-            if m:
-                end = m.group(2)
-                if latest_end is None or end > latest_end:
-                    latest_end = end
-        return latest_end
+            """Get the latest end date from the data in the output Parquet file for the given universe."""
+            try:
+                filepath = get_output_filepath(universe_name)
+                if not filepath.exists():
+                    return None
+                df = pd.read_parquet(filepath)
+                if df.empty:
+                    return None
+                # Assume index is datetime or convertible to string
+                last_date = df.index.max()
+                if hasattr(last_date, 'strftime'):
+                    return last_date.strftime('%Y-%m-%d')
+                return str(last_date)
+            except Exception as e:
+                logger.warning(f"Could not determine latest end date from file: {e}")
+                return None
 
+    today = datetime.now().strftime('%Y-%m-%d')
     if args.lookback_years:
         end_date = today
         start_date = (datetime.now() - timedelta(days=args.lookback_years * 365)).strftime('%Y-%m-%d')

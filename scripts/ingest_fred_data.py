@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import shutil
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Optional
@@ -139,7 +140,7 @@ def download_all_indicators(
         "failed": failed,
     }
 
-    with open(output_dir / "manifest.yaml", "w") as f:
+    with open(output_dir / "macro.metadata.yaml", "w") as f:
         yaml.dump(metadata, f, default_flow_style=False)
 
     print(f"\nDownloaded {len(results)}/{len(indicators)} indicators")
@@ -150,7 +151,7 @@ def download_all_indicators(
 
 def create_combined_macro_dataset(
     data_dir: Path = Path("data/raw/macro"),
-    output_path: Optional[Path] = None,
+    output_dir: Optional[Path] = None,
 ) -> pd.DataFrame:
     """Combine all macro indicators into single DataFrame.
 
@@ -163,7 +164,7 @@ def create_combined_macro_dataset(
     """
     dfs = []
     for parquet_file in data_dir.glob("*.parquet"):
-        if parquet_file.name == "combined.parquet":
+        if parquet_file.name == "macro.parquet":
             continue
         df = pd.read_parquet(parquet_file)
         df.columns = [parquet_file.stem]
@@ -175,9 +176,12 @@ def create_combined_macro_dataset(
     combined = pd.concat(dfs, axis=1)
     combined = combined.sort_index()
 
-    if output_path:
-        combined.to_parquet(output_path)
-        print(f"Combined dataset saved to {output_path}")
+    if output_dir:
+        combined.to_parquet(output_dir / "macro.parquet")
+        src = data_dir / "macro.metadata.yaml"
+        dst = output_dir / "macro.metadata.yaml"
+        shutil.copy2(src, dst)
+        print(f"Combined dataset saved to {output_dir / 'macro.parquet'}")
 
     return combined
 
@@ -234,11 +238,6 @@ Examples:
         action="store_true",
         help="List available indicators and exit",
     )
-    parser.add_argument(
-        "--combine",
-        action="store_true",
-        help="Also create combined dataset",
-    )
 
     args = parser.parse_args()
 
@@ -274,10 +273,10 @@ Examples:
     )
 
     # Optionally combine
-    if args.combine and results:
+    if results:
         create_combined_macro_dataset(
             data_dir=output_dir,
-            output_path=output_dir / "combined.parquet",
+            output_dir=Path("data/curated"),
         )
 
     return 0
