@@ -1,7 +1,7 @@
 # QuantETF Project Status
 
-**Last Updated:** January 20, 2026
-**Current Phase:** Data Access Layer Implementation
+**Last Updated:** January 28, 2026
+**Current Phase:** Strategy Optimization Execution
 **Branch:** main
 
 ---
@@ -27,30 +27,34 @@
 | Backtest Engine | Complete | Event-driven, T-1 enforcement, 300+ tests |
 | Analytics | Complete | Metrics, risk analysis, walk-forward validation |
 | Regime Detection | Complete | IMPL-015 through IMPL-018 |
-| Data Access Layer | In Progress | IMPL-019 through IMPL-021 complete |
-| Strategy Optimizer | Ready | Awaiting execution on Tier 4 data |
+| Data Access Layer | Complete | IMPL-019 through IMPL-031 (13 tasks) |
+| Regime Strategy System | Complete | IMPL-035 (4-regime system) |
+| Bug Fixes | Complete | BUG-001 SPY benchmark calculation fixed |
+| Strategy Optimizer | Ready | Ready to run on Tier 4 data |
 
 ---
 
 ## Recent Progress
 
-### January 18-20, 2026: Data Access Layer Phase 1
+### January 28, 2026: IMPL-035 & BUG-001 Complete
 
-Implemented foundational Data Access Layer (DAL) components:
+- **IMPL-035**: Regime-Based Strategy Selection System
+  - 4-regime system (trend × volatility matrix)
+  - SPY/200MA + VIX for regime detection
+  - Hysteresis thresholds to prevent whipsawing
+  - Regime detection analysis notebook added
 
-- **IMPL-019**: DAL Core Interfaces & Types (30 tests)
-  - Abstract base classes for all data accessors
-  - Type definitions, factory pattern, context container
+- **BUG-001**: Fixed SPY Benchmark Calculation
+  - SPY returns now calculated from prices (not sparse aligned returns)
+  - All optimization results are now valid
 
-- **IMPL-020**: SnapshotPriceAccessor (24 tests)
-  - Wraps SnapshotDataStore with DAL interface
-  - Point-in-time guarantees maintained
+### January 21-22, 2026: Data Access Layer Complete
 
-- **IMPL-021**: FREDMacroAccessor (18 tests)
-  - Wraps MacroDataLoader with DAL interface
-  - Regime detection integration
-
-**Total:** 72 new tests, all passing
+Completed all 13 DAL tasks (IMPL-019 through IMPL-031):
+- Core interfaces, price accessor, macro accessor
+- Universe and reference data accessors
+- Caching layer, all component migrations
+- Test utilities and mocking infrastructure
 
 ### January 17, 2026: Regime-Aware Infrastructure Complete
 
@@ -59,12 +63,6 @@ Completed IMPL-015 through IMPL-018:
 - Alpha selector framework for regime-based model selection
 - Enhanced macro data API with point-in-time access
 - Regime-aware alpha integration layer
-
-### January 15, 2026: Active Returns Refactor
-
-- `calculate_active_metrics()` helper implemented
-- Backtest notebook shows strategy vs SPY overlay
-- compare_strategies.py auto-adds SPY benchmark
 
 ---
 
@@ -84,31 +82,30 @@ Completed IMPL-015 through IMPL-018:
 
 ### Immediate Priority
 
-1. **Complete DAL Phase 1** (IMPL-022, IMPL-023, IMPL-024)
-   - ConfigFileUniverseAccessor
-   - ReferenceDataAccessor
-   - CachingLayer
-
-2. **Run Strategy Optimizer on Tier 4**
+1. **SEARCH-001: Run Strategy Optimizer on Tier 4**
    ```bash
    python scripts/find_best_strategy.py \
-       --snapshot data/snapshots/snapshot_20260115_* \
+       --snapshot data/snapshots/snapshot_latest \
        --periods 1,3 \
        --parallel 4
    ```
 
-3. **Validate Best Strategy**
+2. **Validate Best Strategy**
    - Walk-forward test
    - Cycle metrics (80% criterion)
    - Stress test analysis
 
+3. **Verify regime-to-strategy mapping**
+   - Determine which strategies perform best in each regime
+   - Configure production system
+
 ### Backlog
 
-- DAL Phase 2: Component migrations
-- DAL Phase 3: Live connector, documentation
 - VIZ-002: Alpha diagnostics notebook
 - ANALYSIS-004: Parameter sensitivity
+- ANALYSIS-007: Transaction cost analysis
 - Production deployment
+- DAL Phase 3: Live connector, documentation
 
 ---
 
@@ -150,8 +147,8 @@ Backtest & Analytics Layer
 | Total Tests | 300+ |
 | Test Pass Rate | 100% |
 | Code Coverage | ~80% |
-| Implementations Complete | 21 |
-| DAL Tasks Remaining | 3 (Phase 1) |
+| Implementations Complete | 32 |
+| Tasks Remaining | SEARCH-001 + validation |
 
 ---
 

@@ -1,7 +1,7 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 23, 2026
-**Active Phase:** Data Access Layer Implementation
+**Last Updated:** January 28, 2026
+**Active Phase:** Strategy Optimization Execution
 
 ## Primary Goal
 
@@ -25,48 +25,6 @@
 ---
 
 ## Active Tasks
-
-### Production System - Regime-Based Strategy Selection
-
-#### IMPL-035: Regime-Based Strategy Selection System
-**Status:** ready
-**Priority:** HIGH
-**Dependencies:** None (supersedes/refines IMPL-018)
-**Handoff:** [handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md](handoffs/tasks/handoff-IMPL-035-REGIME-STRATEGY-SYSTEM.md)
-**Architecture Decision:** [handoffs/architecture/ADR-001-regime-based-strategy-selection.md](handoffs/architecture/ADR-001-regime-based-strategy-selection.md)
-
-Implement production-ready regime-based strategy selection:
-- 4 regimes (trend × volatility matrix)
-- Regime detection with hysteresis (SPY/200MA + VIX)
-- Strategy-to-regime mapping from optimization
-- Daily monitoring + rebalance-day execution
-
-**Subtasks for architect to break down:**
-- IMPL-035a: Regime Detector (2-3h)
-- IMPL-035b: Config Files (1h)
-- IMPL-035c: VIX Ingestion (1-2h)
-- IMPL-035d: Regime Analyzer (3-4h)
-- IMPL-035e: Extended Optimizer (2-3h)
-- IMPL-035f: Daily Monitor (2-3h)
-- IMPL-035g: Production Rebalancer (3-4h)
-- IMPL-035h: Integration Tests (2-3h)
-- IMPL-035i: CLI Scripts (2h)
-
----
-
-### Critical Bug Fixes
-
-#### BUG-001: Fix SPY Benchmark Calculation in Strategy Optimizer
-**Status:** ready
-**Priority:** CRITICAL
-**Dependencies:** None
-**Handoff:** [handoffs/tasks/handoff-BUG-001-SPY-BENCHMARK-CALCULATION.md](handoffs/tasks/handoff-BUG-001-SPY-BENCHMARK-CALCULATION.md)
-
-The multi-period evaluator calculates SPY benchmark returns using only rebalance dates (14 monthly dates), missing 258+ trading days. This causes SPY returns to be **drastically underestimated** (1.9% instead of 14.9%), making all active returns appear ~13% better than reality.
-
-**Impact:** All previous optimization results are invalid. Strategies that appear to beat SPY may actually be underperforming.
-
----
 
 ### Data Access Layer - Phase 1 (Foundation)
 
@@ -241,6 +199,16 @@ For detailed completion reports, see [handoffs/completions/](handoffs/completion
 | ANALYSIS-006 | Walk-Forward Validation | 2026-01-11 |
 | REFACTOR-001 | Active Returns Focus | 2026-01-15 |
 | VIZ-001 | Backtest Analysis Notebook | 2026-01-11 |
+
+### Production System
+| ID | Task | Completed |
+|----|------|-----------|
+| IMPL-035 | Regime-Based Strategy Selection System | 2026-01-28 |
+
+### Bug Fixes
+| ID | Task | Completed |
+|----|------|-----------|
+| BUG-001 | Fix SPY Benchmark Calculation | 2026-01-28 |
 
 ---
 

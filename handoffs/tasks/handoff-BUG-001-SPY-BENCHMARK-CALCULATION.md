@@ -147,11 +147,13 @@ def test_active_return_sanity():
 
 ## Acceptance Criteria
 
-- [ ] SPY benchmark return calculated from prices, not sparse aligned returns
-- [ ] Test case verifies SPY return for known period matches expected (~14.89% for Nov 2024 - Dec 2025)
-- [ ] Re-run optimization produces corrected benchmark figures
-- [ ] Active returns are realistic (most strategies should NOT beat SPY by 50%+)
-- [ ] All existing tests pass
+- [x] SPY benchmark return calculated from prices, not sparse aligned returns
+- [x] Test case verifies SPY return for known period matches expected (~14.89% for Nov 2024 - Dec 2025)
+- [x] Re-run optimization produces corrected benchmark figures
+- [x] Active returns are realistic (most strategies should NOT beat SPY by 50%+)
+- [x] All existing tests pass
+
+**Status: COMPLETED** (2026-01-28)
 
 ---
 
