@@ -27,6 +27,39 @@ Comprehensive backtest analysis dashboard with 8 key visualizations:
 jupyter notebook notebooks/backtest_analysis.ipynb
 ```
 
+### regime_detection_analysis.ipynb
+Market regime detection analysis using SPY price data and VIX from macro indicators.
+
+**Features:**
+1. **Regime Detection** - Classifies market into 4 regimes based on trend (SPY vs 200MA) and volatility (VIX)
+2. **Daily Time Series Chart** - 3-panel visualization showing SPY with regime shading, VIX, and regime timeline
+3. **Yearly Breakdown** - Stacked bar chart of regime distribution by year
+4. **Returns by Regime** - SPY daily returns analysis segmented by regime
+5. **Regime Statistics** - Distribution, transitions, and current regime status
+
+**Regimes:**
+| Regime | Conditions |
+|--------|------------|
+| uptrend_low_vol | SPY > 200MA, VIX < 20 |
+| uptrend_high_vol | SPY > 200MA, VIX > 25 |
+| downtrend_low_vol | SPY < 200MA, VIX < 20 |
+| downtrend_high_vol | SPY < 200MA, VIX > 25 |
+
+**Data Sources:**
+- `data/snapshots/snapshot_latest/` - SPY price data
+- `data/snapshots/macro.parquet` - VIX and macro indicators
+
+**Outputs:**
+- `artifacts/regime_detection_chart.png` - Main visualization
+- `artifacts/regime_yearly_breakdown.png` - Yearly distribution
+- `artifacts/regime_returns_boxplot.png` - Returns by regime
+- `data/snapshots/regime_timeseries.parquet` - Daily regime classifications
+
+**To Run:**
+```bash
+jupyter notebook notebooks/regime_detection_analysis.ipynb
+```
+
 ## Guidelines
 
 - Keep notebooks thin and call into `src/quantetf/` for logic
