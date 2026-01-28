@@ -177,6 +177,8 @@ def save_to_curated(
 ) -> Path:
     """Save curated data and metadata to disk.
 
+    Merges new data with existing data if the file exists, avoiding duplicates.
+
     Args:
         df: DataFrame with MultiIndex columns (Ticker, Price_Field)
         universe_name: Name of the universe
@@ -191,6 +193,16 @@ def save_to_curated(
     # Compute output file path in one place
     filepath = get_output_filepath(universe_name)
 
+    # Merge with existing data if file exists
+    if filepath.exists():
+        logger.info(f"Merging with existing data from {filepath}")
+        existing_df = pd.read_parquet(filepath)
+        # Concatenate and remove duplicate dates (keep new data)
+        df = pd.concat([existing_df, df])
+        df = df[~df.index.duplicated(keep='last')]
+        df = df.sort_index()
+        # Update start_date to reflect full range
+        start_date = df.index.min().strftime('%Y-%m-%d')
 
     # Save data as Parquet (efficient columnar format)
     logger.info(f"Saving curated data to {filepath}")
@@ -306,11 +318,13 @@ Examples:
                 return None
 
     today = datetime.now().strftime('%Y-%m-%d')
+    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     if args.lookback_years:
         end_date = today
         start_date = (datetime.now() - timedelta(days=args.lookback_years * 365)).strftime('%Y-%m-%d')
     else:
-        end_date = args.end_date if args.end_date else today
+        # Use yesterday as default end date since today's data may not be available yet
+        end_date = args.end_date if args.end_date else yesterday
         if args.start_date:
             start_date = args.start_date
         else:
@@ -326,6 +340,13 @@ Examples:
                 start_date = None
         if not start_date:
             parser.error('Could not determine a default start date. Please specify --start-date.')
+
+    # Check if data is already up to date
+    if start_date > end_date:
+        logger.info("=" * 80)
+        logger.info("Data is already up to date. Nothing to fetch.")
+        logger.info("=" * 80)
+        return 0
 
     logger.info("=" * 80)
     logger.info("ETF Data Ingestion")

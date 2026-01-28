@@ -8,7 +8,7 @@ PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_DIR"
 
 PYTHON="${VENV_PYTHON:-python3}"
-SNAP="data/snapshots/snapshot_20260122_010523"
+SNAP="data/snapshots/snapshot_latest"
 
 exec "$PYTHON" scripts/find_best_strategy.py \
   --snapshot "$SNAP" \

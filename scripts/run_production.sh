@@ -11,5 +11,5 @@ cd "$PROJECT_ROOT"
 
 python3 scripts/run_production_pipeline.py \
     --config configs/strategies/production_value_momentum.yaml \
-    --snapshot data/snapshots/snapshot_20260122_010523 \
+    --snapshot data/snapshots/snapshot_latest \
     --dry-run 

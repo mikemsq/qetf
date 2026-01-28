@@ -89,10 +89,13 @@ def create_snapshot(
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         snapshot_name = f"snapshot_{timestamp}"
 
-    # Create snapshot directory
+    # Create snapshot directory (replace if exists)
     snapshots_dir = Path(__file__).parent.parent / "data" / "snapshots"
     snapshot_dir = snapshots_dir / snapshot_name
-    snapshot_dir.mkdir(parents=True, exist_ok=False)
+    if snapshot_dir.exists():
+        logger.info(f"Replacing existing snapshot: {snapshot_name}")
+        shutil.rmtree(snapshot_dir)
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
 
     logger.info(f"Creating snapshot: {snapshot_name}")
 
@@ -168,7 +171,16 @@ def find_latest_curated(universe_name: str) -> tuple:
     """
     curated_dir = Path(__file__).parent.parent / "data" / "curated"
 
-    # Find all matching parquet files
+    # First check for simple filename (used by daily ingestion)
+    simple_path = curated_dir / f"{universe_name}.parquet"
+    if simple_path.exists():
+        metadata = simple_path.with_suffix('.metadata.yaml')
+        if not metadata.exists():
+            logger.warning(f"Metadata file not found: {metadata}")
+            return simple_path, None
+        return simple_path, metadata
+
+    # Fall back to timestamped files for historical data
     pattern = f"{universe_name}_*.parquet"
     parquet_files = sorted(curated_dir.glob(pattern), reverse=True)
 

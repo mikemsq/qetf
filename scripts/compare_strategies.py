@@ -102,7 +102,7 @@ Examples:
     parser.add_argument(
         '--snapshot',
         type=str,
-        default='data/snapshots/snapshot_5yr_20etfs',
+        default='data/snapshots/snapshot_latest',
         help='Snapshot directory for running new backtests (used with --configs)'
     )
 

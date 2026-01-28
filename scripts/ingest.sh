@@ -23,8 +23,7 @@ PYTHON="${VENV_PYTHON:-python3}"
 UNIVERSE="tier4_broad_200"
 
 "$PYTHON" scripts/ingest_etf_data.py \
-  --universe "$UNIVERSE" \
-  #--lookback-years 5
+  --universe "$UNIVERSE"
 
 # Ingest FRED data
 "$PYTHON" scripts/ingest_fred_data.py

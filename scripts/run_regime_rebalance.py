@@ -78,7 +78,7 @@ Examples:
     parser.add_argument(
         "--snapshot",
         type=str,
-        default="data/snapshots/snapshot_20260115_*/data.parquet",
+        default="data/snapshots/snapshot_latest/data.parquet",
         help="Path to data snapshot",
     )
     parser.add_argument(

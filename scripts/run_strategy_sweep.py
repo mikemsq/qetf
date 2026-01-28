@@ -87,8 +87,8 @@ Examples:
     parser.add_argument(
         '--snapshot',
         type=str,
-        default='data/snapshots/snapshot_5yr_20etfs',
-        help='Path to snapshot directory (default: data/snapshots/snapshot_5yr_20etfs)'
+        default='data/snapshots/snapshot_latest',
+        help='Path to snapshot directory (default: data/snapshots/snapshot_latest)'
     )
 
     parser.add_argument(

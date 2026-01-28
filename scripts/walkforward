@@ -14,7 +14,7 @@ if [ -x "$SCRIPT_DIR/run_walk_forward.sh" ]; then
 fi
 
 exec "$PYTHON" scripts/walk_forward_test.py \
-  --snapshot "data/snapshots/snapshot_20260122_010523" \
+  --snapshot "data/snapshots/snapshot_latest" \
   --train-years 2 \
   --test-years 1 \
   --step-months 6 \
