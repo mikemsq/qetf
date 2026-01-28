@@ -89,14 +89,39 @@ def fetch_etf_data(
 
     logger.info(f"Fetching data for {len(tickers)} tickers from {start_date} to {end_date}")
 
-    data = provider.fetch_prices(tickers, start_date, end_date)
-
-    if data is None or data.empty:
-        logger.error("Failed to fetch data or received empty DataFrame")
+    # Download tickers in batches, logging and skipping failures
+    batch_size = 10
+    all_data = []
+    failed_tickers = []
+    for i in range(0, len(tickers), batch_size):
+        batch = tickers[i:i+batch_size]
+        data = provider.fetch_prices(batch, start_date, end_date)
+        if data is None or data.empty:
+            logger.warning(f"Failed to fetch data for tickers: {batch}")
+            failed_tickers.extend(batch)
+            continue
+        # Remove tickers with all-NaN columns (yfinance returns them for failed tickers)
+        valid_tickers = [t for t in batch if not data[t].dropna(how='all').empty]
+        for t in batch:
+            if t not in valid_tickers:
+                logger.warning(f"No data for ticker: {t}")
+                failed_tickers.append(t)
+        # Keep only valid tickers
+        if valid_tickers:
+            all_data.append(data[valid_tickers])
+    if not all_data:
+        logger.error("Failed to fetch data for all tickers.")
         return None
-
-    logger.info(f"Successfully fetched {len(data)} rows of data")
-    return data
+    # Concatenate all valid data
+    result = pd.concat(all_data, axis=1)
+    if failed_tickers:
+        logger.warning(f"Failed tickers: {failed_tickers}")
+        # Log to file
+        with open("failed_tickers.log", "w") as f:
+            for t in failed_tickers:
+                f.write(f"{t}\n")
+    logger.info(f"Successfully fetched {len(result)} rows of data for {len(result.columns.get_level_values('Ticker').unique())} tickers")
+    return result
 
 
 def validate_ticker_data(df: pd.DataFrame, ticker: str) -> dict:

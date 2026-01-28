@@ -167,7 +167,10 @@ def create_combined_macro_dataset(
         if parquet_file.name == "macro.parquet":
             continue
         df = pd.read_parquet(parquet_file)
-        df.columns = [parquet_file.stem]
+        if len(df.columns) == 1:
+            df.columns = [parquet_file.stem]
+        else:
+            df.columns = [f"{parquet_file.stem}_{col}" for col in df.columns]
         dfs.append(df)
 
     if not dfs:
@@ -276,7 +279,7 @@ Examples:
     if results:
         create_combined_macro_dataset(
             data_dir=output_dir,
-            output_dir=Path("data/curated"),
+            output_dir=Path("data/snapshots"),
         )
 
     return 0

@@ -31,4 +31,7 @@ UNIVERSE="tier4_broad_200"
 
 # Create a snapshot from the default universe (from snapshot script)
 "$PYTHON" scripts/create_snapshot.py \
-  --universe "$UNIVERSE"
+  --universe "$UNIVERSE" \
+  --name snapshot_latest
+
+  
