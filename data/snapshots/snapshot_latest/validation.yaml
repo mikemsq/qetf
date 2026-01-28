@@ -1,0 +1,1368 @@
+validation_timestamp: '2026-01-28T01:31:46.548440'
+tickers_validated: 195
+details:
+- ticker: AGG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ANGL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ARKW
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BCI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BKLN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BND
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BNDX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: BOTZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: COMT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: CPER
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBEF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBEM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBEU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DBJP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DDM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DGRO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DHS
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DIA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DJP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DOG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DSI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: DVY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ECH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EEM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EFA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EFZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EIDO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EMB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EPU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ESGD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ESGU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ESGV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EUM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWJ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWS
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWW
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EWZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: EZA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FALN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FEZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FINX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FLOT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FVD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: FXI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: GCC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: GLD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: GSG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: GUNR
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HACK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HDV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HEEM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HEFA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HEWJ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HEZU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: HYG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IAU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IBB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ICLN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IDV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IEF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IEMG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IGIB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IGM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IGN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IGV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IHF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IHI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: INDA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ITB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IVV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IWM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IXC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IXJ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IXN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYR
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYW
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: IYZ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: JNK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: JPST
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: KBE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: KRE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: KRMA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: LIT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: LQD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MCHI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MINT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MOO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MTUM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MUB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MVV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: MYY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: NEAR
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: NOBL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PALL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PAVE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PBW
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PCY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PDBC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PFF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PPLT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: PSQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QLD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QQQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: QUAL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: REET
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: ROM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: RSX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 7
+    extreme_changes: 0
+    zero_volume: 7
+- ticker: RWM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: RXL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SCHD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SCHP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SDY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SHY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SHYG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SIZE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SJB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SJNK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SKYY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SMH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SOXX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPIB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SPY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SRLN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SSO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SUSA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: SUSL
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TAN
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TBF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TBT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: THD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TIP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TLT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: TUR
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: UCC
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: UNG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: URE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USDU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USMV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: USSG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: UWM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: UYG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VCIT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VCSH
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VEA
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VGK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VIG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VIXY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VLUE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VMBS
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VNM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VNQ
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VSGX
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VTI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VTV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VUG
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VWO
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: VYM
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: WOOD
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XHB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLB
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLE
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLF
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLI
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLK
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLP
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLU
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLV
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XLY
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
+- ticker: XRT
+  valid: true
+  error: null
+  anomalies:
+    suspicious_days: 0
+    extreme_changes: 0
+    zero_volume: 0
