@@ -6,29 +6,37 @@
 # This file serves as a fallback and documentation of expected behavior.
 
 version: "1.0"
-created: "2026-01-24"
-generated_by: "manual_default"
 
 # Default mapping (hypothesis - to be validated empirically)
 mapping:
-  uptrend_low_vol: "momentum_acceleration"
-  # Rationale: Clean trends favor momentum with acceleration detection
+  uptrend_low_vol:
+    strategy: "momentum_acceleration"
+    rationale: "Clean trends favor momentum with acceleration detection"
+    config_path: "configs/strategies/momentum_acceleration_top5.yaml"
 
-  uptrend_high_vol: "vol_adjusted_momentum"
-  # Rationale: Trends exist but noisy, vol-adjustment helps
+  uptrend_high_vol:
+    strategy: "vol_adjusted_momentum"
+    rationale: "Trends exist but noisy, vol-adjustment helps"
+    config_path: "configs/strategies/vol_adjusted_momentum_top5.yaml"
 
-  downtrend_low_vol: "momentum"
-  # Rationale: Shorter lookback for faster signals in declining market
+  downtrend_low_vol:
+    strategy: "momentum"
+    rationale: "Shorter lookback for faster signals in declining market"
+    config_path: "configs/strategies/momentum_accel_1m_3m_tier1.yaml"
 
-  downtrend_high_vol: "vol_adjusted_momentum"
-  # Rationale: Capital preservation focus, reduce exposure via vol adjustment
+  downtrend_high_vol:
+    strategy: "vol_adjusted_momentum"
+    rationale: "Capital preservation focus, reduce exposure via vol adjustment"
+    config_path: "configs/strategies/vol_adjusted_momentum_top5.yaml"
 
 # Fallback when regime detection fails or data is missing
-# This should be the most robust strategy from optimization
-fallback: "momentum_acceleration"
+fallback:
+  strategy: "momentum_acceleration"
+  rationale: "Best overall performer from optimization"
+  config_path: "configs/strategies/momentum_acceleration_top5.yaml"
 
-# Notes for optimizer
-# When generating empirical mapping, save to:
-#   artifacts/optimization/{timestamp}/regime_mapping.yaml
-# The production system loads the latest optimization mapping,
-# falling back to this file if none exists.
+# Metadata
+metadata:
+  generated_by: "manual"
+  generated_at: "2026-01-24"
+  notes: "Initial defaults based on ADR-001 intuition. Will be updated after regime analysis."

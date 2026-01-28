@@ -1,0 +1,19 @@
+# Regime analysis settings for optimizer
+# See: handoffs/architecture/ADR-001-regime-based-strategy-selection.md
+
+regime_analysis:
+  # Whether to run regime analysis after optimization
+  enabled: true
+
+  # Number of top strategies to analyze for regime mapping
+  num_finalists: 6
+
+  # Metric to optimize for regime mapping
+  # Options: sharpe_ratio, annualized_return, sortino_ratio
+  optimization_metric: "sharpe_ratio"
+
+  # Minimum days in a regime to consider for mapping
+  min_regime_days: 20
+
+  # Whether to generate strategy config files for finalists
+  generate_finalist_configs: true
