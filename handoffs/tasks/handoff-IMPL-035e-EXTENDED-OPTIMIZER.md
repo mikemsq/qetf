@@ -1,12 +1,25 @@
 # Task Handoff: IMPL-035e - Extended Optimizer with Regime Analysis
 
+> ⚠️ **SUPERSEDED BY IMPL-040**
+>
+> This task has been superseded by [IMPL-040 (Optimizer Redesign)](handoff-IMPL-040-OPTIMIZER-REDESIGN.md).
+> IMPL-040 addresses fundamental issues in the optimizer that make this task's approach obsolete:
+> 1. Replaces fake/stub regime analysis with real backtest data
+> 2. Fixes multi-period scoring for quarterly runs
+> 3. Makes `regime_mapping.yaml` the primary output
+>
+> **Do not implement this task. Implement IMPL-040 instead.**
+>
+> See: [IMPL-035-040-ANALYSIS.md](../architecture/IMPL-035-040-ANALYSIS.md) for full rationale.
+
 **Task ID:** IMPL-035e
 **Parent Task:** IMPL-035 (Regime-Based Strategy Selection System)
-**Status:** ready
-**Priority:** HIGH
+**Status:** ~~ready~~ → **SUPERSEDED**
+**Priority:** ~~HIGH~~ → N/A
 **Type:** Enhancement
 **Estimated Effort:** 2-3 hours
 **Dependencies:** IMPL-035d (Regime Analyzer)
+**Superseded By:** IMPL-040
 
 ---
 
