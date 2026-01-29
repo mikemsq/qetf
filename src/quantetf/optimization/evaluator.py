@@ -48,7 +48,7 @@ from quantetf.evaluation.metrics import (
 from quantetf.optimization.grid import StrategyConfig
 from quantetf.portfolio.costs import FlatTransactionCost
 from quantetf.portfolio.equal_weight import EqualWeightTopN
-from quantetf.types import Universe
+from quantetf.types import RegimeMetrics, Universe
 
 logger = logging.getLogger(__name__)
 
@@ -74,6 +74,7 @@ class PeriodMetrics:
         sharpe_ratio: Risk-adjusted return (annualized)
         num_rebalances: Number of portfolio rebalances in period
         evaluation_success: Whether evaluation completed without errors
+        daily_returns: Optional daily returns series for regime analysis
     """
 
     period_name: str
@@ -89,6 +90,7 @@ class PeriodMetrics:
     sharpe_ratio: float
     num_rebalances: int = 0
     evaluation_success: bool = True
+    daily_returns: Optional[pd.Series] = None
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
@@ -385,6 +387,7 @@ class MultiPeriodEvaluator:
             sharpe_ratio=active_metrics['strategy_sharpe'],
             num_rebalances=result.metrics['num_rebalances'],
             evaluation_success=True,
+            daily_returns=strategy_returns,  # Store for regime analysis
         )
 
     def _get_spy_returns(self, dates: pd.DatetimeIndex) -> pd.Series:
@@ -599,3 +602,114 @@ class MultiPeriodEvaluator:
         )
 
         return composite
+
+    def _calculate_trailing_score(
+        self,
+        periods: Dict[str, PeriodMetrics],
+        trailing_days: int = 252,
+    ) -> float:
+        """Calculate score based on trailing window performance only.
+
+        This method is optimized for quarterly re-runs where we want to
+        score strategies based on recent performance rather than long-term
+        multi-period averages.
+
+        Args:
+            periods: Dictionary of period metrics (uses shortest period)
+            trailing_days: Days for trailing window (default: 252 = 1 year)
+
+        Returns:
+            Trailing Sharpe ratio (higher is better)
+        """
+        # Use the shortest evaluation period's returns for trailing calculation
+        min_period = None
+        min_years = float('inf')
+
+        for period_name, metrics in periods.items():
+            if not metrics.evaluation_success:
+                continue
+            # Parse years from period name (e.g., '1yr' -> 1)
+            try:
+                years = int(period_name.replace('yr', ''))
+                if years < min_years:
+                    min_years = years
+                    min_period = metrics
+            except ValueError:
+                continue
+
+        if min_period is None or min_period.daily_returns is None:
+            logger.debug("No valid period with daily returns for trailing score")
+            return float('-inf')
+
+        # Calculate trailing Sharpe ratio
+        returns = min_period.daily_returns
+        if len(returns) < trailing_days:
+            trailing_returns = returns
+        else:
+            trailing_returns = returns.iloc[-trailing_days:]
+
+        if len(trailing_returns) < 20:
+            logger.debug("Insufficient data for trailing score calculation")
+            return float('-inf')
+
+        # Annualize based on rebalance frequency
+        periods_per_year = self._get_periods_per_year(
+            'monthly' if len(returns) < 100 else 'weekly'
+        )
+        mean_return = trailing_returns.mean()
+        std_return = trailing_returns.std()
+
+        if std_return == 0:
+            return 0.0
+
+        trailing_sharpe = (mean_return / std_return) * np.sqrt(periods_per_year)
+
+        logger.debug(f"Trailing score ({trailing_days}d): Sharpe={trailing_sharpe:.3f}")
+        return trailing_sharpe
+
+    def _calculate_regime_weighted_score(
+        self,
+        regime_metrics: Dict[str, RegimeMetrics],
+        regime_weights: Optional[Dict[str, float]] = None,
+    ) -> float:
+        """Calculate regime-weighted composite score.
+
+        This method scores strategies based on their performance across
+        different market regimes, weighted by historical regime frequency.
+
+        Args:
+            regime_metrics: Dict mapping regime name to RegimeMetrics
+            regime_weights: Optional weights for each regime (sum to 1.0).
+                           If not provided, uses equal weights.
+
+        Returns:
+            Regime-weighted score (higher is better)
+        """
+        if not regime_metrics:
+            return float('-inf')
+
+        # Default to equal weights if not provided
+        if regime_weights is None:
+            n_regimes = len(regime_metrics)
+            regime_weights = {r: 1.0 / n_regimes for r in regime_metrics.keys()}
+
+        score = 0.0
+        total_weight = 0.0
+
+        for regime, metrics in regime_metrics.items():
+            weight = regime_weights.get(regime, 0.0)
+            if weight > 0 and metrics.sharpe_ratio != float('-inf'):
+                score += weight * metrics.sharpe_ratio
+                total_weight += weight
+
+        if total_weight == 0:
+            return float('-inf')
+
+        # Normalize by total weight used (in case some regimes are missing)
+        normalized_score = score / total_weight
+
+        logger.debug(
+            f"Regime-weighted score: {normalized_score:.3f} "
+            f"(weights used: {total_weight:.2f})"
+        )
+        return normalized_score

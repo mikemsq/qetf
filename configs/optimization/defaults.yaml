@@ -1,0 +1,52 @@
+# Default optimization settings for quarterly strategy selection
+# See: handoffs/tasks/handoff-IMPL-040-OPTIMIZER-REDESIGN.md
+
+optimization:
+  # Default evaluation periods (in years)
+  # For quarterly runs, typically use shorter periods [1] or [1, 3]
+  periods_years: [1]
+
+  # Number of parallel workers (1 = sequential)
+  # Set to CPU count - 1 for optimal performance
+  max_workers: 8
+
+  # Transaction cost in basis points
+  cost_bps: 10.0
+
+  # Scoring methodology for ranking strategies
+  # Options:
+  #   - 'multi_period': Original avg(IR) - penalty + bonus (for one-time discovery)
+  #   - 'trailing_1y': Score based on trailing 1-year Sharpe (for recent performance)
+  #   - 'regime_weighted': Score weighted by historical regime frequency (RECOMMENDED)
+  scoring_method: "regime_weighted"
+
+  # Days for trailing window evaluation (when using trailing_1y scoring)
+  trailing_days: 252
+
+  # Output directory for optimization results
+  output_dir: "artifacts/optimization"
+
+regime_analysis:
+  # Whether to run regime analysis after optimization
+  enabled: true
+
+  # Number of top strategies to analyze for regime mapping
+  num_finalists: 6
+
+  # Metric to optimize for regime mapping
+  # Options: sharpe_ratio, annualized_return, sortino_ratio
+  optimization_metric: "sharpe_ratio"
+
+  # Minimum days in a regime to consider for mapping
+  min_regime_days: 20
+
+  # Whether to generate strategy config files for finalists
+  generate_finalist_configs: true
+
+# Default regime weights based on historical frequency
+# These are used when actual regime distribution is not available
+default_regime_weights:
+  uptrend_low_vol: 0.55
+  uptrend_high_vol: 0.15
+  downtrend_low_vol: 0.20
+  downtrend_high_vol: 0.10

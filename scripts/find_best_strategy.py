@@ -148,6 +148,21 @@ Examples:
     )
 
     parser.add_argument(
+        '--scoring-method',
+        type=str,
+        choices=['trailing_1y', 'regime_weighted', 'multi_period'],
+        default='regime_weighted',
+        help='Scoring methodology for ranking strategies (default: regime_weighted)',
+    )
+
+    parser.add_argument(
+        '--trailing-days',
+        type=int,
+        default=252,
+        help='Days for trailing window evaluation when using trailing_1y scoring (default: 252)',
+    )
+
+    parser.add_argument(
         '--verbose', '-v',
         action='store_true',
         help='Enable verbose (DEBUG) logging',
@@ -274,6 +289,8 @@ def main() -> int:
             periods_years=periods,
             max_workers=args.parallel,
             cost_bps=args.cost_bps,
+            scoring_method=args.scoring_method,
+            trailing_days=args.trailing_days,
         )
 
         result = optimizer.run(
