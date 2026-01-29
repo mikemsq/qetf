@@ -10,7 +10,7 @@ cd "$PROJECT_DIR"
 PYTHON="${VENV_PYTHON:-python3}"
 SNAP="data/snapshots/snapshot_latest"
 
-exec "$PYTHON" scripts/find_best_strategy.py \
+"$PYTHON" scripts/find_best_strategy.py \
   --snapshot "$SNAP" \
   --periods 1 \
-  --parallel 4
+  --parallel 8
