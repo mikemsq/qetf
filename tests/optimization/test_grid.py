@@ -26,15 +26,17 @@ class TestParameterGrids:
     """Tests for parameter grid definitions."""
 
     def test_weekly_grids_have_all_alpha_types(self):
-        """Weekly grids should have all 4 alpha types."""
+        """Weekly grids should have all 7 alpha types."""
         expected_types = {'momentum', 'momentum_acceleration',
-                         'vol_adjusted_momentum', 'residual_momentum'}
+                         'vol_adjusted_momentum', 'residual_momentum',
+                         'trend_filtered_momentum', 'dual_momentum', 'value_momentum'}
         assert set(PARAMETER_GRIDS_WEEKLY.keys()) == expected_types
 
     def test_monthly_grids_have_all_alpha_types(self):
-        """Monthly grids should have all 4 alpha types."""
+        """Monthly grids should have all 7 alpha types."""
         expected_types = {'momentum', 'momentum_acceleration',
-                         'vol_adjusted_momentum', 'residual_momentum'}
+                         'vol_adjusted_momentum', 'residual_momentum',
+                         'trend_filtered_momentum', 'dual_momentum', 'value_momentum'}
         assert set(PARAMETER_GRIDS_MONTHLY.keys()) == expected_types
 
     def test_weekly_lookbacks_are_shorter(self):
@@ -143,6 +145,7 @@ class TestStrategyConfig:
             alpha_params={'lookback_days': 252, 'min_periods': 200},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -169,6 +172,7 @@ class TestStrategyConfig:
                          'min_periods': 100},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -178,6 +182,7 @@ class TestStrategyConfig:
                          'long_lookback_days': 252},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -335,11 +340,11 @@ class TestCountConfigs:
                 assert alpha not in momentum_counts[schedule]
 
     def test_reasonable_total_count(self):
-        """Total should be in expected range (~300-400)."""
+        """Total should be in expected range (with 7 alpha types and 3 universes)."""
         counts = count_configs()
 
-        # Based on handoff: ~138 weekly + ~216 monthly = ~354
-        assert 250 < counts['total'] < 500
+        # With 7 alpha types and 3 universe tiers, expect larger counts
+        assert 500 < counts['total'] < 2000
 
 
 class TestGetParameterGrid:
@@ -365,13 +370,16 @@ class TestHelperFunctions:
     """Tests for helper functions."""
 
     def test_get_alpha_types_returns_all(self):
-        """get_alpha_types should return all 4 types."""
+        """get_alpha_types should return all 7 types."""
         types = get_alpha_types()
-        assert len(types) == 4
+        assert len(types) == 7
         assert 'momentum' in types
         assert 'momentum_acceleration' in types
         assert 'vol_adjusted_momentum' in types
         assert 'residual_momentum' in types
+        assert 'trend_filtered_momentum' in types
+        assert 'dual_momentum' in types
+        assert 'value_momentum' in types
 
     def test_get_schedule_names_returns_both(self):
         """get_schedule_names should return weekly and monthly."""

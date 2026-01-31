@@ -108,6 +108,7 @@ class TestMultiPeriodResult:
             alpha_params={'lookback_days': 252, 'min_periods': 200},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -235,6 +236,7 @@ class TestMultiPeriodEvaluatorUnit:
             alpha_params={'lookback_days': 252, 'min_periods': 200},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -426,6 +428,7 @@ class TestMultiPeriodEvaluatorUnit:
             },
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -471,6 +474,7 @@ class TestMultiPeriodEvaluatorIntegration:
             alpha_params={'lookback_days': 126, 'min_periods': 50},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -493,6 +497,7 @@ class TestMultiPeriodEvaluatorIntegration:
             alpha_params={'lookback_days': 126, 'min_periods': 50},
             top_n=5,
             universe_path='configs/universes/tier3_expanded_100.yaml',
+            universe_name='tier3',
             schedule_path='configs/schedules/monthly_rebalance.yaml',
             schedule_name='monthly',
         )
@@ -586,3 +591,112 @@ def _get_periods_per_year_helper(schedule_name: str) -> int:
         return 12
     else:
         return 12
+
+
+class TestLoadUniverseTickers:
+    """Tests for the _load_universe_tickers method."""
+
+    def test_load_tier2_universe(self, tmp_path):
+        """Test loading tier2 universe from YAML."""
+        # Create a mock universe YAML file
+        universe_yaml = tmp_path / "test_universe.yaml"
+        universe_yaml.write_text("""
+name: test_universe
+source:
+  type: static_list
+  tickers:
+    - SPY
+    - QQQ
+    - IWM
+    - EEM
+    - GLD
+""")
+
+        # Create a mock evaluator to test the method
+        mock_prices = MagicMock()
+        mock_prices.get_available_tickers.return_value = ['SPY', 'QQQ', 'IWM', 'EEM', 'GLD']
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+
+        mock_ctx = MagicMock()
+        mock_ctx.prices = mock_prices
+
+        evaluator = MultiPeriodEvaluator(data_access=mock_ctx)
+
+        tickers = evaluator._load_universe_tickers(str(universe_yaml))
+
+        assert tickers == ['SPY', 'QQQ', 'IWM', 'EEM', 'GLD']
+        assert len(tickers) == 5
+
+    def test_load_real_tier2_universe(self):
+        """Test loading real tier2 universe file."""
+        universe_path = 'configs/universes/tier2_core_50.yaml'
+        if not Path(universe_path).exists():
+            pytest.skip("Tier2 universe config not found")
+
+        mock_prices = MagicMock()
+        mock_prices.get_available_tickers.return_value = ['SPY', 'QQQ']
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+
+        mock_ctx = MagicMock()
+        mock_ctx.prices = mock_prices
+
+        evaluator = MultiPeriodEvaluator(data_access=mock_ctx)
+
+        tickers = evaluator._load_universe_tickers(universe_path)
+
+        assert 'SPY' in tickers
+        assert 'QQQ' in tickers
+        assert len(tickers) == 50  # tier2 has 50 ETFs
+
+    def test_load_missing_universe_raises_error(self, tmp_path):
+        """Test that loading missing universe file raises ValueError."""
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+
+        mock_ctx = MagicMock()
+        mock_ctx.prices = mock_prices
+
+        evaluator = MultiPeriodEvaluator(data_access=mock_ctx)
+
+        with pytest.raises(ValueError, match="Universe config not found"):
+            evaluator._load_universe_tickers(str(tmp_path / "nonexistent.yaml"))
+
+    def test_load_universe_missing_source_raises_error(self, tmp_path):
+        """Test that universe missing 'source' section raises ValueError."""
+        universe_yaml = tmp_path / "bad_universe.yaml"
+        universe_yaml.write_text("""
+name: bad_universe
+# No source section
+""")
+
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+
+        mock_ctx = MagicMock()
+        mock_ctx.prices = mock_prices
+
+        evaluator = MultiPeriodEvaluator(data_access=mock_ctx)
+
+        with pytest.raises(ValueError, match="missing 'source' section"):
+            evaluator._load_universe_tickers(str(universe_yaml))
+
+    def test_load_universe_empty_tickers_raises_error(self, tmp_path):
+        """Test that universe with empty tickers raises ValueError."""
+        universe_yaml = tmp_path / "empty_universe.yaml"
+        universe_yaml.write_text("""
+name: empty_universe
+source:
+  type: static_list
+  tickers: []
+""")
+
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+
+        mock_ctx = MagicMock()
+        mock_ctx.prices = mock_prices
+
+        evaluator = MultiPeriodEvaluator(data_access=mock_ctx)
+
+        with pytest.raises(ValueError, match="empty ticker list"):
+            evaluator._load_universe_tickers(str(universe_yaml))

@@ -32,10 +32,12 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
+import yaml
 
 from quantetf.alpha.factory import create_alpha_model
 from quantetf.backtest.simple_engine import BacktestConfig, BacktestResult, SimpleBacktestEngine
@@ -303,8 +305,23 @@ class MultiPeriodEvaluator:
 
         logger.debug(f"Period {period_name}: {start_date} to {self.end_date}")
 
-        # Get tickers from price accessor
-        tickers = self.data_access.prices.get_available_tickers()
+        # Load universe tickers from config
+        universe_tickers = self._load_universe_tickers(config.universe_path)
+
+        # Filter to tickers that exist in our data
+        available_tickers = set(self.data_access.prices.get_available_tickers())
+        valid_tickers = [t for t in universe_tickers if t in available_tickers]
+
+        if not valid_tickers:
+            raise ValueError(
+                f"No valid tickers found for universe '{config.universe_name}'. "
+                f"Universe has {len(universe_tickers)} tickers, none available in data."
+            )
+
+        logger.debug(
+            f"Universe '{config.universe_name}': {len(valid_tickers)}/{len(universe_tickers)} "
+            f"tickers available in data"
+        )
 
         # Create backtest components
         alpha_config = {
@@ -315,8 +332,8 @@ class MultiPeriodEvaluator:
         portfolio_constructor = EqualWeightTopN(top_n=config.top_n)
         cost_model = FlatTransactionCost(cost_bps=self.cost_bps)
 
-        # Create universe
-        universe = Universe(as_of=self.end_date, tickers=tuple(tickers))
+        # Create universe with filtered tickers from config
+        universe = Universe(as_of=self.end_date, tickers=tuple(valid_tickers))
 
         # Create backtest config
         backtest_config = BacktestConfig(
@@ -485,6 +502,38 @@ class MultiPeriodEvaluator:
             return 12
         else:
             return 12  # Default to monthly
+
+    def _load_universe_tickers(self, universe_path: str) -> List[str]:
+        """Load ticker list from universe YAML config.
+
+        Args:
+            universe_path: Path to the universe YAML configuration file
+
+        Returns:
+            List of ticker symbols from the universe configuration
+
+        Raises:
+            ValueError: If the universe config file is not found or has invalid format
+        """
+        config_path = Path(universe_path)
+        if not config_path.exists():
+            raise ValueError(f"Universe config not found: {universe_path}")
+
+        with open(config_path) as f:
+            universe_config = yaml.safe_load(f)
+
+        if 'source' not in universe_config:
+            raise ValueError(f"Universe config missing 'source' section: {universe_path}")
+
+        if 'tickers' not in universe_config['source']:
+            raise ValueError(f"Universe config missing 'source.tickers': {universe_path}")
+
+        tickers = universe_config['source']['tickers']
+        if not tickers:
+            raise ValueError(f"Universe config has empty ticker list: {universe_path}")
+
+        logger.debug(f"Loaded {len(tickers)} tickers from {universe_path}")
+        return tickers
 
     def _create_failed_metrics(
         self,
