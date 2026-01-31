@@ -1,0 +1,22 @@
+name: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days63_top7_tier2_monthly
+universe: configs/universes/tier2_core_50.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+alpha_model:
+  type: momentum_acceleration
+  short_lookback_days: 63
+  long_lookback_days: 126
+  min_periods: 100
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 7
+  constraints:
+    max_weight: 0.6
+    min_weight: 0.0
+_optimization_metadata:
+  description: Auto-discovered strategy that beats SPY across 1yr periods. Generated
+    by strategy optimizer on 20260130_213658.
+  composite_score: 2.8394
+  optimization_run: '20260130_213658'
+  periods_evaluated:
+  - 1
