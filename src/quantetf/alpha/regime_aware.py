@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from quantetf.data.store import DataStore
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
 
 
 class RegimeDetector:

@@ -24,6 +24,7 @@ from quantetf.data.access import DataAccessContext
 from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
 
 
 class DualMomentum(AlphaModel):

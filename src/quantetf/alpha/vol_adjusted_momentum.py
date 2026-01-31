@@ -19,6 +19,7 @@ from quantetf.types import AlphaScores, DatasetVersion, FeatureFrame, Universe
 from quantetf.data.access import DataAccessContext
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
 
 
 class VolAdjustedMomentumAlpha(AlphaModel):

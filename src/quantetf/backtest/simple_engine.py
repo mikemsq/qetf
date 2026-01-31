@@ -157,7 +157,7 @@ class SimpleBacktestEngine:
 
         # 3. Event loop - iterate through rebalance dates
         for i, rebalance_date in enumerate(rebalance_dates):
-            logger.info(f"Rebalance {i+1}/{len(rebalance_dates)}: {rebalance_date}")
+            # logger.info(f"Rebalance {i+1}/{len(rebalance_dates)}: {rebalance_date}")
 
             # 3a. Get prices (T-1 data only!)
             try:
