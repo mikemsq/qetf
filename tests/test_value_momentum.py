@@ -7,7 +7,6 @@ These tests verify the value-momentum blend strategy correctly:
 4. Handles edge cases gracefully
 """
 
-import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -15,24 +14,27 @@ import pandas as pd
 import pytest
 
 from quantetf.alpha.value_momentum import ValueMomentum
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
-def create_test_snapshot(prices_df: pd.DataFrame) -> Path:
-    """Create a temporary snapshot from price data."""
-    tmpdir = tempfile.mkdtemp()
-    snapshot_path = Path(tmpdir) / 'test_snapshot'
-    snapshot_path.mkdir()
-    parquet_path = snapshot_path / 'prices.parquet'
+def create_test_data_access(prices_df: pd.DataFrame, tmp_path: Path):
+    """Create a DataAccessContext from price data."""
+    snapshot_path = tmp_path / 'test_snapshot'
+    snapshot_path.mkdir(exist_ok=True)
+    parquet_path = snapshot_path / 'data.parquet'
     prices_df.to_parquet(parquet_path)
-    return snapshot_path
+
+    return DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False
+    )
 
 
 class TestValueMomentum:
     """Tests for ValueMomentum alpha model."""
 
-    def test_equal_weight_blend(self):
+    def test_equal_weight_blend(self, tmp_path):
         """Test 50/50 blend of momentum and value signals."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -57,46 +59,34 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(
+            momentum_weight=0.5,
+            value_weight=0.5,
+            momentum_lookback=252,
+            value_lookback=252,
+            min_periods=50,
+        )
 
-            model = ValueMomentum(
-                momentum_weight=0.5,
-                value_weight=0.5,
-                momentum_lookback=252,
-                value_lookback=252,
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B', 'C')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B', 'C')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # All three should have scores
+        assert not pd.isna(scores.scores['A'])
+        assert not pd.isna(scores.scores['B'])
+        assert not pd.isna(scores.scores['C'])
 
-            # All three should have scores
-            assert not pd.isna(scores.scores['A'])
-            assert not pd.isna(scores.scores['B'])
-            assert not pd.isna(scores.scores['C'])
-
-            # With equal weights:
-            # A has high momentum (pos) but low value (neg)
-            # B has low momentum (neg) but high value (pos)
-            # C should be near zero on both signals
-            # The blend should moderate the extremes
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_momentum_only(self):
+    def test_momentum_only(self, tmp_path):
         """Test with 100% momentum weight."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -116,36 +106,30 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(
+            momentum_weight=1.0,
+            value_weight=0.0,
+            min_periods=50,
+        )
 
-            model = ValueMomentum(
-                momentum_weight=1.0,
-                value_weight=0.0,
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # A (winner) should have higher score than B (loser)
+        assert scores.scores['A'] > scores.scores['B']
 
-            # A (winner) should have higher score than B (loser)
-            assert scores.scores['A'] > scores.scores['B']
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_value_only(self):
+    def test_value_only(self, tmp_path):
         """Test with 100% value weight."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -165,34 +149,28 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(
+            momentum_weight=0.0,
+            value_weight=1.0,
+            min_periods=50,
+        )
 
-            model = ValueMomentum(
-                momentum_weight=0.0,
-                value_weight=1.0,
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
-
-            # B (loser) should have higher value score than A (winner)
-            assert scores.scores['B'] > scores.scores['A']
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
+        # B (loser) should have higher value score than A (winner)
+        assert scores.scores['B'] > scores.scores['A']
 
     def test_weight_normalization(self):
         """Test that weights are normalized to sum to 1."""
@@ -205,7 +183,7 @@ class TestValueMomentum:
         assert model.momentum_weight == pytest.approx(0.75)
         assert model.value_weight == pytest.approx(0.25)
 
-    def test_different_lookbacks(self):
+    def test_different_lookbacks(self, tmp_path):
         """Test using different lookback periods for momentum and value."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -229,36 +207,30 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(
+            momentum_lookback=60,  # Short-term (will see downtrend)
+            value_lookback=200,  # Long-term (will see uptrend)
+            min_periods=50,
+        )
 
-            model = ValueMomentum(
-                momentum_lookback=60,  # Short-term (will see downtrend)
-                value_lookback=200,  # Long-term (will see uptrend)
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A',)
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A',)
-            )
+        # Should be able to get scores
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            # Should be able to get scores
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        assert not pd.isna(scores.scores['A'])
 
-            assert not pd.isna(scores.scores['A'])
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_signal_components(self):
+    def test_signal_components(self, tmp_path):
         """Test get_signal_components returns individual signals."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -278,38 +250,32 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(min_periods=50)
 
-            model = ValueMomentum(min_periods=50)
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B')
-            )
+        components = model.get_signal_components(
+            data_access=data_access,
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe
+        )
 
-            components = model.get_signal_components(
-                store=store,
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe
-            )
+        assert 'momentum_z' in components
+        assert 'value_z' in components
+        assert 'blended' in components
 
-            assert 'momentum_z' in components
-            assert 'value_z' in components
-            assert 'blended' in components
+        # Momentum z-scores should show A > B
+        assert components['momentum_z']['A'] > components['momentum_z']['B']
 
-            # Momentum z-scores should show A > B
-            assert components['momentum_z']['A'] > components['momentum_z']['B']
+        # Value z-scores should show B > A
+        assert components['value_z']['B'] > components['value_z']['A']
 
-            # Value z-scores should show B > A
-            assert components['value_z']['B'] > components['value_z']['A']
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_insufficient_data(self):
+    def test_insufficient_data(self, tmp_path):
         """Test handling of insufficient data."""
         dates = pd.date_range('2020-01-01', periods=50, freq='D')
 
@@ -326,33 +292,27 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = ValueMomentum(min_periods=200)
 
-            model = ValueMomentum(min_periods=200)
+        universe = Universe(
+            as_of=pd.Timestamp('2020-02-15'),
+            tickers=('A', 'B')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-02-15'),
-                tickers=('A', 'B')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-02-15'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-02-15'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Should return NaN for both tickers
+        assert pd.isna(scores.scores['A'])
+        assert pd.isna(scores.scores['B'])
 
-            # Should return NaN for both tickers
-            assert pd.isna(scores.scores['A'])
-            assert pd.isna(scores.scores['B'])
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_zscore_with_no_variance(self):
+    def test_zscore_with_no_variance(self, tmp_path):
         """Test z-score handles zero variance gracefully."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -370,55 +330,29 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
-
-            model = ValueMomentum(min_periods=50)
-
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B', 'C')
-            )
-
-            # Should not raise, should return zeros
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
-
-            # All should be zero (no variance to z-score)
-            assert scores.scores['A'] == 0.0
-            assert scores.scores['B'] == 0.0
-            assert scores.scores['C'] == 0.0
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_wrong_store_type_raises(self):
-        """Should raise TypeError if not using SnapshotDataStore."""
-        model = ValueMomentum()
+        model = ValueMomentum(min_periods=50)
 
         universe = Universe(
-            as_of=pd.Timestamp('2020-10-01'),
-            tickers=('A', 'B')
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B', 'C')
         )
 
-        class FakeStore:
-            pass
+        # Should not raise, should return zeros
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-        with pytest.raises(TypeError, match="SnapshotDataStore"):
-            model.score(
-                as_of=pd.Timestamp('2020-10-01'),
-                universe=universe,
-                features=None,
-                store=FakeStore()
-            )
+        # All should be zero (no variance to z-score)
+        assert scores.scores['A'] == 0.0
+        assert scores.scores['B'] == 0.0
+        assert scores.scores['C'] == 0.0
 
-    def test_blended_score_correctness(self):
+    def test_blended_score_correctness(self, tmp_path):
         """Verify blended scores are calculated correctly."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -443,36 +377,30 @@ class TestValueMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        # Use 60/40 momentum/value blend
+        model = ValueMomentum(
+            momentum_weight=0.6,
+            value_weight=0.4,
+            min_periods=50,
+        )
 
-            # Use 60/40 momentum/value blend
-            model = ValueMomentum(
-                momentum_weight=0.6,
-                value_weight=0.4,
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),
+            tickers=('A', 'B', 'C')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),
-                tickers=('A', 'B', 'C')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
-
-            # With 60% momentum weight:
-            # A should still have relatively high score (momentum dominates)
-            # B should have moderate score (value partially compensates)
-            assert scores.scores['A'] > scores.scores['C']
-            # C is middle ground
-            assert scores.scores['C'] > scores.scores['B']
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
+        # With 60% momentum weight:
+        # A should still have relatively high score (momentum dominates)
+        # B should have moderate score (value partially compensates)
+        assert scores.scores['A'] > scores.scores['C']
+        # C is middle ground
+        assert scores.scores['C'] > scores.scores['B']

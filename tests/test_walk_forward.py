@@ -133,6 +133,7 @@ def mock_window_result():
             "annualized_return": 0.10,
         },
         config=train_config,
+        rebalance_dates=[],
     )
 
     test_result = BacktestResult(
@@ -146,6 +147,7 @@ def mock_window_result():
             "annualized_return": 0.08,
         },
         config=test_config,
+        rebalance_dates=[],
     )
 
     return WalkForwardWindowResult(
@@ -317,6 +319,7 @@ def test_analyze_results_multiple_windows(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.5 + i * 0.1, "total_return": 0.15 + i * 0.05},
             config=train_config,
+            rebalance_dates=[],
         )
         test_result = BacktestResult(
             equity_curve=pd.DataFrame({"nav": [100000, 105000]}),
@@ -324,6 +327,7 @@ def test_analyze_results_multiple_windows(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.0 + i * 0.1, "total_return": 0.10 + i * 0.03},
             config=test_config,
+            rebalance_dates=[],
         )
 
         results.append(
@@ -392,6 +396,7 @@ def test_analyze_results_handles_nan():
         weights_history=pd.DataFrame(),
         metrics={"sharpe_ratio": np.nan, "total_return": 0.10},
         config=train_config,
+        rebalance_dates=[],
     )
     test_result = BacktestResult(
         equity_curve=pd.DataFrame(),
@@ -399,6 +404,7 @@ def test_analyze_results_handles_nan():
         weights_history=pd.DataFrame(),
         metrics={"sharpe_ratio": 1.2, "total_return": np.nan},
         config=test_config,
+        rebalance_dates=[],
     )
 
     result = WalkForwardWindowResult(
@@ -464,6 +470,7 @@ def test_summary_table_multiple_windows(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.5, "total_return": 0.15, "max_drawdown": -0.10},
             config=train_config,
+            rebalance_dates=[],
         )
         test_result = BacktestResult(
             equity_curve=pd.DataFrame(),
@@ -471,6 +478,7 @@ def test_summary_table_multiple_windows(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.2, "total_return": 0.12, "max_drawdown": -0.12},
             config=test_config,
+            rebalance_dates=[],
         )
         results.append(
             WalkForwardWindowResult(
@@ -598,6 +606,7 @@ def test_positive_window_percentage(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.5, "total_return": 0.15},
             config=train_config,
+            rebalance_dates=[],
         )
         # 2 positive, 2 negative OOS returns
         oos_return = 0.10 if i < 2 else -0.05
@@ -607,6 +616,7 @@ def test_positive_window_percentage(mock_window_result):
             weights_history=pd.DataFrame(),
             metrics={"sharpe_ratio": 1.0, "total_return": oos_return},
             config=test_config,
+            rebalance_dates=[],
         )
         results.append(
             WalkForwardWindowResult(

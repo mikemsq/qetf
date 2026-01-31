@@ -7,13 +7,13 @@ from pathlib import Path
 
 from quantetf.evaluation import benchmarks
 from quantetf.backtest.simple_engine import BacktestConfig
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
 @pytest.fixture
-def mock_store(tmp_path):
-    """Create a mock SnapshotDataStore with synthetic data."""
+def data_access(tmp_path):
+    """Create a DataAccessContext with synthetic data."""
     # Create synthetic price data
     dates = pd.date_range('2020-01-01', '2020-12-31', freq='B')  # Business days
     tickers = ['SPY', 'AGG', 'ETF1', 'ETF2', 'ETF3', 'ETF4', 'ETF5']
@@ -43,7 +43,10 @@ def mock_store(tmp_path):
     parquet_path = snapshot_dir / 'data.parquet'
     data.to_parquet(parquet_path)
 
-    return SnapshotDataStore(parquet_path)
+    return DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False
+    )
 
 
 @pytest.fixture
@@ -63,9 +66,9 @@ def basic_config():
 
 # Test SPY Benchmark
 
-def test_spy_benchmark_basic(mock_store, basic_config):
+def test_spy_benchmark_basic(data_access, basic_config):
     """Test SPY benchmark runs successfully."""
-    result = benchmarks.run_spy_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_spy_benchmark(config=basic_config, data_access=data_access)
 
     assert result.name == 'SPY Buy-and-Hold'
     assert result.description == '100% SPY passive allocation'
@@ -76,17 +79,17 @@ def test_spy_benchmark_basic(mock_store, basic_config):
     assert 'final_nav' in result.metrics
 
 
-def test_spy_benchmark_returns_positive_nav(mock_store, basic_config):
+def test_spy_benchmark_returns_positive_nav(data_access, basic_config):
     """Test SPY benchmark returns positive NAV values."""
-    result = benchmarks.run_spy_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_spy_benchmark(config=basic_config, data_access=data_access)
 
     assert (result.equity_curve['nav'] > 0).all()
     assert result.metrics['final_nav'] > 0
 
 
-def test_spy_benchmark_holdings_constant(mock_store, basic_config):
+def test_spy_benchmark_holdings_constant(data_access, basic_config):
     """Test SPY benchmark maintains constant holdings (buy-and-hold)."""
-    result = benchmarks.run_spy_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_spy_benchmark(config=basic_config, data_access=data_access)
 
     # SPY shares should be constant (buy and hold)
     spy_holdings = result.holdings_history['SPY']
@@ -95,9 +98,9 @@ def test_spy_benchmark_holdings_constant(mock_store, basic_config):
 
 # Test 60/40 Benchmark
 
-def test_60_40_benchmark_basic(mock_store, basic_config):
+def test_60_40_benchmark_basic(data_access, basic_config):
     """Test 60/40 benchmark runs successfully."""
-    result = benchmarks.run_60_40_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_60_40_benchmark(config=basic_config, data_access=data_access)
 
     assert result.name == '60/40 Portfolio'
     assert '60% SPY, 40% AGG' in result.description
@@ -105,11 +108,11 @@ def test_60_40_benchmark_basic(mock_store, basic_config):
     assert 'total_return' in result.metrics
 
 
-def test_60_40_benchmark_weights(mock_store, basic_config):
+def test_60_40_benchmark_weights(data_access, basic_config):
     """Test 60/40 benchmark maintains target weights."""
     result = benchmarks.run_60_40_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         rebalance_frequency='monthly'
     )
 
@@ -129,18 +132,18 @@ def test_60_40_benchmark_weights(mock_store, basic_config):
 
 # Test Equal Weight Benchmark
 
-def test_equal_weight_benchmark_basic(mock_store, basic_config):
+def test_equal_weight_benchmark_basic(data_access, basic_config):
     """Test equal weight benchmark runs successfully."""
-    result = benchmarks.run_equal_weight_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_equal_weight_benchmark(config=basic_config, data_access=data_access)
 
     assert result.name == 'Equal Weight Universe'
     assert len(result.equity_curve) > 0
     assert result.metrics['universe_size'] == len(basic_config.universe.tickers)
 
 
-def test_equal_weight_benchmark_weights_sum_to_one(mock_store, basic_config):
+def test_equal_weight_benchmark_weights_sum_to_one(data_access, basic_config):
     """Test equal weight benchmark weights sum to 1."""
-    result = benchmarks.run_equal_weight_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_equal_weight_benchmark(config=basic_config, data_access=data_access)
 
     weights = result.weights_history
     # Exclude CASH column if present
@@ -152,9 +155,9 @@ def test_equal_weight_benchmark_weights_sum_to_one(mock_store, basic_config):
     assert np.allclose(weight_sums, 1.0, atol=1e-6)
 
 
-def test_equal_weight_benchmark_equal_allocation(mock_store, basic_config):
+def test_equal_weight_benchmark_equal_allocation(data_access, basic_config):
     """Test equal weight benchmark allocates equally."""
-    result = benchmarks.run_equal_weight_benchmark(config=basic_config, store=mock_store)
+    result = benchmarks.run_equal_weight_benchmark(config=basic_config, data_access=data_access)
 
     weights = result.weights_history
     # Exclude cash column
@@ -175,11 +178,11 @@ def test_equal_weight_benchmark_equal_allocation(mock_store, basic_config):
 
 # Test Random Selection Benchmark
 
-def test_random_selection_benchmark_basic(mock_store, basic_config):
+def test_random_selection_benchmark_basic(data_access, basic_config):
     """Test random selection benchmark runs successfully."""
     result = benchmarks.run_random_selection_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3,
         n_trials=10,
         seed=42
@@ -191,11 +194,11 @@ def test_random_selection_benchmark_basic(mock_store, basic_config):
     assert result.metrics['n_trials'] == 10
 
 
-def test_random_selection_benchmark_reproducible(mock_store, basic_config):
+def test_random_selection_benchmark_reproducible(data_access, basic_config):
     """Test random selection benchmark is reproducible with seed."""
     result1 = benchmarks.run_random_selection_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3,
         n_trials=10,
         seed=42
@@ -203,7 +206,7 @@ def test_random_selection_benchmark_reproducible(mock_store, basic_config):
 
     result2 = benchmarks.run_random_selection_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3,
         n_trials=10,
         seed=42
@@ -213,11 +216,11 @@ def test_random_selection_benchmark_reproducible(mock_store, basic_config):
     assert np.allclose(result1.equity_curve['nav'], result2.equity_curve['nav'])
 
 
-def test_random_selection_benchmark_includes_std(mock_store, basic_config):
+def test_random_selection_benchmark_includes_std(data_access, basic_config):
     """Test random selection benchmark includes standard deviation."""
     result = benchmarks.run_random_selection_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3,
         n_trials=10,
         seed=42
@@ -227,12 +230,12 @@ def test_random_selection_benchmark_includes_std(mock_store, basic_config):
     assert 'std_final_nav' in result.metrics
 
 
-def test_random_selection_benchmark_invalid_n(mock_store, basic_config):
+def test_random_selection_benchmark_invalid_n(data_access, basic_config):
     """Test random selection benchmark raises error for invalid N."""
     with pytest.raises(ValueError, match="n_selections.*universe size"):
         benchmarks.run_random_selection_benchmark(
             config=basic_config,
-            store=mock_store,
+            data_access=data_access,
             n_selections=100,  # More than universe size
             n_trials=10
         )
@@ -240,11 +243,11 @@ def test_random_selection_benchmark_invalid_n(mock_store, basic_config):
 
 # Test Oracle Benchmark
 
-def test_oracle_benchmark_basic(mock_store, basic_config):
+def test_oracle_benchmark_basic(data_access, basic_config):
     """Test oracle benchmark runs successfully."""
     result = benchmarks.run_oracle_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3
     )
 
@@ -254,11 +257,11 @@ def test_oracle_benchmark_basic(mock_store, basic_config):
     assert result.metrics['n_selections'] == 3
 
 
-def test_oracle_benchmark_outperforms_random(mock_store, basic_config):
+def test_oracle_benchmark_outperforms_random(data_access, basic_config):
     """Test oracle benchmark should outperform random selection."""
     random_result = benchmarks.run_random_selection_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3,
         n_trials=50,
         seed=42
@@ -266,7 +269,7 @@ def test_oracle_benchmark_outperforms_random(mock_store, basic_config):
 
     oracle_result = benchmarks.run_oracle_benchmark(
         config=basic_config,
-        store=mock_store,
+        data_access=data_access,
         n_selections=3
     )
 
@@ -321,7 +324,7 @@ def test_generate_rebalance_dates_invalid_frequency():
 
 # Edge Cases
 
-def test_benchmark_with_empty_date_range(mock_store):
+def test_benchmark_with_empty_date_range(data_access):
     """Test benchmarks handle empty date range."""
     config = BacktestConfig(
         start_date=pd.Timestamp('2020-06-01'),
@@ -334,7 +337,7 @@ def test_benchmark_with_empty_date_range(mock_store):
     )
 
     with pytest.raises(ValueError, match="No valid dates"):
-        benchmarks.run_spy_benchmark(config=config, store=mock_store)
+        benchmarks.run_spy_benchmark(config=config, data_access=data_access)
 
 
 def test_benchmark_result_dataclass():

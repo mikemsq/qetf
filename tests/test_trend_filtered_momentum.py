@@ -15,25 +15,29 @@ import pandas as pd
 import pytest
 
 from quantetf.alpha.trend_filtered_momentum import TrendFilteredMomentum
-from quantetf.data.snapshot_store import SnapshotDataStore
+from quantetf.data.access import DataAccessFactory
 from quantetf.types import Universe
 
 
-def create_test_snapshot(prices_df: pd.DataFrame) -> Path:
-    """Create a temporary snapshot from price data.
+def create_test_data_access(prices_df: pd.DataFrame, tmp_path: Path):
+    """Create a DataAccessContext from price data.
 
     Args:
         prices_df: DataFrame with MultiIndex columns (Ticker, Price)
+        tmp_path: Temporary directory for snapshot
 
     Returns:
-        Path to the snapshot directory
+        DataAccessContext for testing
     """
-    tmpdir = tempfile.mkdtemp()
-    snapshot_path = Path(tmpdir) / 'test_snapshot'
-    snapshot_path.mkdir()
-    parquet_path = snapshot_path / 'prices.parquet'
+    snapshot_path = tmp_path / 'test_snapshot'
+    snapshot_path.mkdir(exist_ok=True)
+    parquet_path = snapshot_path / 'data.parquet'
     prices_df.to_parquet(parquet_path)
-    return snapshot_path
+
+    return DataAccessFactory.create_context(
+        config={"snapshot_path": str(parquet_path)},
+        enable_caching=False
+    )
 
 
 def create_bullish_data(num_days: int = 300) -> pd.DataFrame:
@@ -109,79 +113,65 @@ def create_bearish_data(num_days: int = 300) -> pd.DataFrame:
 class TestTrendFilteredMomentum:
     """Tests for TrendFilteredMomentum alpha model."""
 
-    def test_bullish_regime_uses_momentum(self):
+    def test_bullish_regime_uses_momentum(self, tmp_path):
         """When SPY > MA200, should use momentum scores."""
         prices = create_bullish_data()
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(
+            momentum_lookback=60,
+            ma_period=50,  # Short MA to ensure bullish
+            min_periods=50,
+        )
 
-            model = TrendFilteredMomentum(
-                momentum_lookback=60,
-                ma_period=50,  # Short MA to ensure bullish
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-01'),
+            tickers=('SPY', 'QQQ', 'AGG', 'TLT')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-01'),
-                tickers=('SPY', 'QQQ', 'AGG', 'TLT')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-01'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-01'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Should have scores for all tickers
+        assert len(scores.scores) == 4
+        # Momentum scores should vary (not all the same)
+        assert scores.scores.nunique() > 1
 
-            # Should have scores for all tickers
-            assert len(scores.scores) == 4
-            # Momentum scores should vary (not all the same)
-            assert scores.scores.nunique() > 1
-            # QQQ should likely have higher score (more momentum in test data)
-            # Note: depends on random seed
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_bearish_regime_uses_defensive(self):
+    def test_bearish_regime_uses_defensive(self, tmp_path):
         """When SPY < MA200, should score defensive assets."""
         prices = create_bearish_data()
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(
+            ma_period=200,
+            defensive_tickers=['AGG', 'TLT'],
+            min_periods=50,
+        )
 
-            model = TrendFilteredMomentum(
-                ma_period=200,
-                defensive_tickers=['AGG', 'TLT'],
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-20'),
+            tickers=('SPY', 'QQQ', 'AGG', 'TLT')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-20'),
-                tickers=('SPY', 'QQQ', 'AGG', 'TLT')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-20'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-20'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Defensive tickers should have high scores
+        assert scores.scores['AGG'] == 1.0
+        assert scores.scores['TLT'] == 1.0
+        # Non-defensive should have zero
+        assert scores.scores['SPY'] == 0.0
+        assert scores.scores['QQQ'] == 0.0
 
-            # Defensive tickers should have high scores
-            assert scores.scores['AGG'] == 1.0
-            assert scores.scores['TLT'] == 1.0
-            # Non-defensive should have zero
-            assert scores.scores['SPY'] == 0.0
-            assert scores.scores['QQQ'] == 0.0
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_regime_detection_bullish(self):
+    def test_regime_detection_bullish(self, tmp_path):
         """Test regime detection returns BULLISH correctly."""
         # Create deterministic bullish data where SPY is clearly above MA
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
@@ -201,44 +191,32 @@ class TestTrendFilteredMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(ma_period=50)
 
-            model = TrendFilteredMomentum(ma_period=50)
+        regime = model.get_regime(
+            data_access=data_access,
+            as_of=pd.Timestamp('2020-10-01')
+        )
 
-            regime = model.get_regime(
-                store=store,
-                as_of=pd.Timestamp('2020-10-01')
-            )
+        assert regime == "BULLISH"
 
-            assert regime == "BULLISH"
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_regime_detection_defensive(self):
+    def test_regime_detection_defensive(self, tmp_path):
         """Test regime detection returns DEFENSIVE correctly."""
         prices = create_bearish_data()
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(ma_period=200)
 
-            model = TrendFilteredMomentum(ma_period=200)
+        regime = model.get_regime(
+            data_access=data_access,
+            as_of=pd.Timestamp('2020-10-20')
+        )
 
-            regime = model.get_regime(
-                store=store,
-                as_of=pd.Timestamp('2020-10-20')
-            )
+        assert regime == "DEFENSIVE"
 
-            assert regime == "DEFENSIVE"
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_insufficient_data_returns_nan(self):
+    def test_insufficient_data_returns_nan(self, tmp_path):
         """Should return NaN when insufficient data for momentum."""
         dates = pd.date_range('2020-01-01', periods=50, freq='D')
 
@@ -255,32 +233,26 @@ class TestTrendFilteredMomentum:
         prices = pd.concat(data, axis=1)
         prices.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(min_periods=200)
 
-            model = TrendFilteredMomentum(min_periods=200)
+        universe = Universe(
+            as_of=pd.Timestamp('2020-02-15'),
+            tickers=('SPY', 'QQQ')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-02-15'),
-                tickers=('SPY', 'QQQ')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-02-15'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-02-15'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Should return NaN due to insufficient data
+        assert pd.isna(scores.scores['QQQ'])
 
-            # Should return NaN due to insufficient data
-            assert pd.isna(scores.scores['QQQ'])
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_missing_trend_ticker_defaults_to_bullish(self):
+    def test_missing_trend_ticker_defaults_to_bullish(self, tmp_path):
         """Should default to bullish if trend ticker is missing."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -299,76 +271,64 @@ class TestTrendFilteredMomentum:
         prices = pd.concat(data, axis=1)
         prices.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        model = TrendFilteredMomentum(
+            trend_ticker='SPY',  # SPY not in data
+            min_periods=50,
+            momentum_lookback=60,
+        )
 
-            model = TrendFilteredMomentum(
-                trend_ticker='SPY',  # SPY not in data
-                min_periods=50,
-                momentum_lookback=60,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-01'),
+            tickers=('QQQ',)
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-01'),
-                tickers=('QQQ',)
-            )
+        # Should not raise, should use momentum (bullish default)
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-01'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            # Should not raise, should use momentum (bullish default)
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-01'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Should have a score
+        assert len(scores.scores) > 0
+        # With missing trend ticker, defaults to bullish, so we should get momentum scores
+        # With steadily rising prices over 60 days, we should have positive momentum
+        assert not pd.isna(scores.scores['QQQ'])
+        assert scores.scores['QQQ'] > 0  # Should be positive (price went up)
 
-            # Should have a score
-            assert len(scores.scores) > 0
-            # With missing trend ticker, defaults to bullish, so we should get momentum scores
-            # With steadily rising prices over 60 days, we should have positive momentum
-            assert not pd.isna(scores.scores['QQQ'])
-            assert scores.scores['QQQ'] > 0  # Should be positive (price went up)
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_custom_defensive_tickers(self):
+    def test_custom_defensive_tickers(self, tmp_path):
         """Test that custom defensive tickers are respected."""
         prices = create_bearish_data()
-        snapshot_path = create_test_snapshot(prices)
+        data_access = create_test_data_access(prices, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
+        # Only AGG as defensive (not TLT)
+        model = TrendFilteredMomentum(
+            ma_period=200,
+            defensive_tickers=['AGG'],
+            min_periods=50,
+        )
 
-            # Only AGG as defensive (not TLT)
-            model = TrendFilteredMomentum(
-                ma_period=200,
-                defensive_tickers=['AGG'],
-                min_periods=50,
-            )
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-20'),
+            tickers=('SPY', 'QQQ', 'AGG', 'TLT')
+        )
 
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-20'),
-                tickers=('SPY', 'QQQ', 'AGG', 'TLT')
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-20'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
 
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-20'),
-                universe=universe,
-                features=None,
-                store=store
-            )
+        # Only AGG should have high score
+        assert scores.scores['AGG'] == 1.0
+        # TLT should be zero (not in defensive list)
+        assert scores.scores['TLT'] == 0.0
 
-            # Only AGG should have high score
-            assert scores.scores['AGG'] == 1.0
-            # TLT should be zero (not in defensive list)
-            assert scores.scores['TLT'] == 0.0
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_momentum_calculation_correctness(self):
+    def test_momentum_calculation_correctness(self, tmp_path):
         """Verify momentum is calculated correctly in bullish regime."""
         dates = pd.date_range('2020-01-01', periods=300, freq='D')
 
@@ -403,56 +363,49 @@ class TestTrendFilteredMomentum:
         combined = pd.concat(data, axis=1)
         combined.columns.names = ['Ticker', 'Price']
 
-        snapshot_path = create_test_snapshot(combined)
+        data_access = create_test_data_access(combined, tmp_path)
 
-        try:
-            store = SnapshotDataStore(snapshot_path)
-
-            model = TrendFilteredMomentum(
-                momentum_lookback=60,
-                ma_period=50,
-                min_periods=50,
-            )
-
-            universe = Universe(
-                as_of=pd.Timestamp('2020-10-27'),  # After 300 days
-                tickers=('A', 'B')
-            )
-
-            scores = model.score(
-                as_of=pd.Timestamp('2020-10-27'),
-                universe=universe,
-                features=None,
-                store=store
-            )
-
-            # A should have higher score than B
-            assert scores.scores['A'] > scores.scores['B']
-            # A should be close to 0.20 (20% return)
-            assert scores.scores['A'] == pytest.approx(0.20, rel=0.1)
-            # B should be close to 0.10 (10% return)
-            assert scores.scores['B'] == pytest.approx(0.10, rel=0.1)
-        finally:
-            import shutil
-            shutil.rmtree(snapshot_path.parent, ignore_errors=True)
-
-    def test_wrong_store_type_raises(self):
-        """Should raise TypeError if not using SnapshotDataStore."""
-        model = TrendFilteredMomentum()
-
-        universe = Universe(
-            as_of=pd.Timestamp('2020-10-01'),
-            tickers=('SPY', 'QQQ')
+        model = TrendFilteredMomentum(
+            momentum_lookback=60,
+            ma_period=50,
+            min_periods=50,
         )
 
-        # Create a mock store that's not SnapshotDataStore
-        class FakeStore:
-            pass
+        universe = Universe(
+            as_of=pd.Timestamp('2020-10-27'),  # After 300 days
+            tickers=('A', 'B')
+        )
 
-        with pytest.raises(TypeError, match="SnapshotDataStore"):
-            model.score(
-                as_of=pd.Timestamp('2020-10-01'),
-                universe=universe,
-                features=None,
-                store=FakeStore()
-            )
+        scores = model.score(
+            as_of=pd.Timestamp('2020-10-27'),
+            universe=universe,
+            features=None,
+            data_access=data_access
+        )
+
+        # A should have higher score than B
+        assert scores.scores['A'] > scores.scores['B']
+        # A should be close to 0.20 (20% return)
+        assert scores.scores['A'] == pytest.approx(0.20, rel=0.1)
+        # B should be close to 0.10 (10% return)
+        assert scores.scores['B'] == pytest.approx(0.10, rel=0.1)
+
+    def test_model_initialization(self):
+        """Test model can be initialized with various parameters."""
+        model = TrendFilteredMomentum()
+        assert model.momentum_lookback == 252
+        assert model.ma_period == 200
+        assert model.trend_ticker == 'SPY'
+
+        model2 = TrendFilteredMomentum(
+            momentum_lookback=60,
+            ma_period=100,
+            trend_ticker='QQQ',
+            defensive_tickers=['TLT'],
+            min_periods=30
+        )
+        assert model2.momentum_lookback == 60
+        assert model2.ma_period == 100
+        assert model2.trend_ticker == 'QQQ'
+        assert model2.defensive_tickers == ['TLT']
+        assert model2.min_periods == 30
