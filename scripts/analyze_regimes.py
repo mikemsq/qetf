@@ -97,7 +97,15 @@ def main() -> int:
             return 1
         snapshot_path = data_file
 
+    # Find macro data directory (needed for regime analysis)
+    macro_data_dir = Path("data/raw/macro")
+    if not macro_data_dir.exists():
+        logger.error(f"Macro data directory not found: {macro_data_dir}")
+        logger.error("Regime analysis requires VIX and other macro data.")
+        return 1
+
     logger.info(f"Loading results from: {results_path}")
+    logger.info(f"Using macro data from: {macro_data_dir}")
 
     try:
         # Load saved results
@@ -110,7 +118,10 @@ def main() -> int:
 
         # Create data access for regime analysis
         data_access = DataAccessFactory.create_context(
-            config={"snapshot_path": str(snapshot_path)},
+            config={
+                "snapshot_path": str(snapshot_path),
+                "macro_data_dir": str(macro_data_dir),
+            },
             enable_caching=True,
         )
 
