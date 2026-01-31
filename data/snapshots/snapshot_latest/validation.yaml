@@ -1,4 +1,4 @@
-validation_timestamp: '2026-01-28T01:31:46.548440'
+validation_timestamp: '2026-01-31T20:58:04.047187'
 tickers_validated: 195
 details:
 - ticker: AGG
@@ -887,9 +887,9 @@ details:
   valid: true
   error: null
   anomalies:
-    suspicious_days: 7
+    suspicious_days: 3
     extreme_changes: 0
-    zero_volume: 7
+    zero_volume: 3
 - ticker: RWM
   valid: true
   error: null

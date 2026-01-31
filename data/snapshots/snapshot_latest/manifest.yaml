@@ -1,6 +1,6 @@
 snapshot_name: snapshot_latest
-created_at: '2026-01-28T01:31:54.242706'
-git_commit: b2d6b4c1f752e6990d91ae91dd985ed4581ad175
+created_at: '2026-01-31T20:58:09.348818'
+git_commit: ffcab2ff1135419d50ebf446257f8a694ecbc514
 source_files:
   curated_data: tier4_broad_200.parquet
   curated_metadata: tier4_broad_200.metadata.yaml
@@ -208,10 +208,10 @@ data_summary:
   - XLV
   - XLY
   - XRT
-  num_rows: 2521
+  num_rows: 2524
   date_range:
     start: '2016-01-15T00:00:00'
-    end: '2026-01-26T00:00:00'
+    end: '2026-01-29T00:00:00'
   columns_format: MultiIndex (Ticker, Price)
   price_fields:
   - Close
@@ -223,5 +223,5 @@ validation_summary:
   total_tickers: 195
   valid_tickers: 195
   failed_tickers: 0
-  total_anomalies: 14
+  total_anomalies: 6
 notes: Immutable snapshot for reproducible backtesting
