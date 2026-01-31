@@ -19,6 +19,7 @@ __pycache__/
 data/raw/*
 data/curated/*
 data/state/*
+!data/raw/macro/
 !data/raw/README.md
 !data/curated/README.md
 !data/state/README.md
