@@ -34,6 +34,7 @@ Example:
 from __future__ import annotations
 
 import logging
+import pickle
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime
@@ -249,6 +250,141 @@ class StrategyOptimizer:
             raise RuntimeError("Run not started - call run() first")
         return self._run_timestamp
 
+    def save_backtest_results(
+        self,
+        results: List[MultiPeriodResult],
+        path: Path,
+    ) -> None:
+        """Save raw backtest results including daily returns.
+
+        Saves results to pickle format to preserve pandas Series objects
+        in daily_returns fields, which are required for regime analysis.
+
+        Args:
+            results: List of MultiPeriodResult from backtest runs
+            path: Path to save the pickle file
+        """
+        data = {
+            'results': results,
+            'timestamp': self._run_timestamp,
+            'periods_years': self.periods_years,
+            'cost_bps': self.cost_bps,
+            'version': '1.0',
+        }
+        with open(path, 'wb') as f:
+            pickle.dump(data, f)
+        logger.info(f"Saved backtest results to {path} ({len(results)} strategies)")
+
+    @staticmethod
+    def load_backtest_results(path: Path) -> Dict[str, Any]:
+        """Load previously saved backtest results.
+
+        Args:
+            path: Path to the saved pickle file
+
+        Returns:
+            Dict containing:
+            - results: List[MultiPeriodResult]
+            - timestamp: Original run timestamp
+            - periods_years: Evaluation periods used
+            - cost_bps: Transaction cost in basis points
+            - version: Format version string
+        """
+        with open(path, 'rb') as f:
+            data = pickle.load(f)
+        logger.info(
+            f"Loaded backtest results from {path}: "
+            f"{len(data['results'])} strategies, timestamp={data.get('timestamp')}"
+        )
+        return data
+
+    def run_backtests(
+        self,
+        max_configs: Optional[int] = None,
+        schedule_names: Optional[List[str]] = None,
+        alpha_types: Optional[List[str]] = None,
+        progress_callback: Optional[Callable[[int, int], None]] = None,
+    ) -> Tuple[List[MultiPeriodResult], int, int, List[StrategyConfig]]:
+        """Run backtests only, without ranking or regime analysis.
+
+        Args:
+            max_configs: Optional limit on configs to test (for debugging)
+            schedule_names: Optional list of schedules to test (default: all)
+            alpha_types: Optional list of alpha types to test (default: all)
+            progress_callback: Optional callback(current, total) for progress
+
+        Returns:
+            Tuple of (results, total_configs, failed_count, configs_list)
+        """
+        # Create run directory with timestamp if not already created
+        if self._run_timestamp is None:
+            self._run_timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            self._run_dir = self.output_dir / self._run_timestamp
+            self._run_dir.mkdir(parents=True, exist_ok=True)
+
+        logger.info(f"Starting backtest run: {self._run_timestamp}")
+        logger.info(f"Output directory: {self._run_dir}")
+
+        # Generate all configurations
+        configs = generate_configs(
+            schedule_names=schedule_names,
+            alpha_types=alpha_types,
+        )
+        total_configs = len(configs)
+        logger.info(f"Generated {total_configs} configurations")
+
+        # Apply max_configs limit if specified
+        if max_configs is not None and max_configs < len(configs):
+            configs = configs[:max_configs]
+            logger.info(f"Limited to {max_configs} configurations for testing")
+
+        # Run evaluations
+        if self.max_workers > 1:
+            results, failed = self._run_parallel(configs, progress_callback)
+        else:
+            results, failed = self._run_sequential(configs, progress_callback)
+
+        return results, total_configs, failed, configs
+
+    def rank_results(
+        self,
+        results: List[MultiPeriodResult],
+        scoring_method: Optional[str] = None,
+        regime_distribution: Optional[Dict[str, float]] = None,
+    ) -> Tuple[List[MultiPeriodResult], List[MultiPeriodResult]]:
+        """Apply ranking to backtest results.
+
+        Args:
+            results: List of MultiPeriodResult from backtests
+            scoring_method: Override scoring method (uses self.scoring_method if None)
+            regime_distribution: Optional regime weights for regime_weighted scoring
+
+        Returns:
+            Tuple of (all_results_sorted, winners_sorted)
+        """
+        method = scoring_method or self.scoring_method
+
+        # Make copies to avoid modifying original
+        all_results = list(results)
+
+        # Find winners (beat SPY in all periods)
+        winners = [r for r in all_results if r.beats_spy_all_periods]
+        logger.info(f"Found {len(winners)} strategies that beat SPY in all periods")
+
+        # Apply scoring method
+        if method == 'trailing_1y':
+            self._apply_trailing_scores(all_results, self.trailing_days)
+            self._apply_trailing_scores(winners, self.trailing_days)
+        elif method == 'regime_weighted' and regime_distribution:
+            self._apply_regime_weighted_scores(all_results, regime_distribution)
+            self._apply_regime_weighted_scores(winners, regime_distribution)
+
+        # Sort by composite score (descending)
+        all_results.sort(key=lambda r: r.composite_score, reverse=True)
+        winners.sort(key=lambda r: r.composite_score, reverse=True)
+
+        return all_results, winners
+
     def run(
         self,
         max_configs: Optional[int] = None,
@@ -368,24 +504,74 @@ class StrategyOptimizer:
     ) -> None:
         """Recalculate composite scores using trailing window method.
 
+        Calculates trailing Sharpe ratio directly from stored daily returns,
+        without needing data_access.
+
         Args:
             results: List of results to update (modified in place)
             trailing_days: Number of days for trailing window
         """
-        from quantetf.optimization.evaluator import MultiPeriodEvaluator
-
-        # Create a temporary evaluator for scoring
-        evaluator = MultiPeriodEvaluator(
-            data_access=self.data_access,
-            cost_bps=self.cost_bps,
-        )
+        import numpy as np
 
         for result in results:
-            new_score = evaluator._calculate_trailing_score(
-                result.periods, trailing_days
-            )
+            new_score = self._calculate_trailing_score(result.periods, trailing_days)
             # Update the composite score (note: MultiPeriodResult is a dataclass)
             object.__setattr__(result, 'composite_score', new_score)
+
+    def _calculate_trailing_score(
+        self,
+        periods: Dict[str, Any],
+        trailing_days: int,
+    ) -> float:
+        """Calculate trailing Sharpe score from period metrics.
+
+        Args:
+            periods: Dict mapping period name to PeriodMetrics
+            trailing_days: Number of days for trailing window
+
+        Returns:
+            Trailing Sharpe ratio
+        """
+        import numpy as np
+
+        # Find the shortest period with valid returns
+        min_period = None
+        min_years = float('inf')
+
+        for period_name, metrics in periods.items():
+            if not metrics.evaluation_success:
+                continue
+            try:
+                years = int(period_name.replace('yr', ''))
+                if years < min_years:
+                    min_years = years
+                    min_period = metrics
+            except ValueError:
+                continue
+
+        if min_period is None or min_period.daily_returns is None:
+            return float('-inf')
+
+        returns = min_period.daily_returns
+        if len(returns) < trailing_days:
+            trailing_returns = returns
+        else:
+            trailing_returns = returns.iloc[-trailing_days:]
+
+        if len(trailing_returns) < 20:
+            return float('-inf')
+
+        mean_return = trailing_returns.mean()
+        std_return = trailing_returns.std()
+
+        if std_return == 0:
+            return 0.0
+
+        # Annualize based on approximate rebalance frequency
+        periods_per_year = 52 if len(returns) > 100 else 12
+        trailing_sharpe = (mean_return / std_return) * np.sqrt(periods_per_year)
+
+        return trailing_sharpe
 
     def _apply_regime_weighted_scores(
         self,

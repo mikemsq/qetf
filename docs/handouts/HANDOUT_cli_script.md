@@ -1,263 +1,219 @@
-# Task 4: CLI Script
+# Task 4: CLI Scripts for Strategy Optimization
 
-## File to Create
-`scripts/find_best_strategy.py`
+## Overview
 
-## Purpose
-Command-line interface for running the strategy optimizer.
+The strategy optimization pipeline is split into three modular scripts, orchestrated by a shell script:
 
-## Implementation
+| Script | Purpose |
+|--------|---------|
+| `run_backtests.py` | Run backtests, save results to pickle |
+| `rank_strategies.py` | Load results, apply ranking criteria |
+| `analyze_regimes.py` | Load results, run regime analysis |
+| `optimize.sh` | Orchestrate all three steps |
 
-```python
-#!/usr/bin/env python
-"""
-Find the best strategy that beats SPY across multiple time periods.
+## Files
 
-Usage:
-    python scripts/find_best_strategy.py \
-        --snapshot data/snapshots/snapshot_20260113_232157 \
-        --output artifacts/optimization \
-        --periods 3,5,10 \
-        --max-configs 500 \
-        --parallel 4
-"""
-import argparse
-import logging
-import sys
-from pathlib import Path
-
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root / 'src'))
-
-from quantetf.optimization.optimizer import StrategyOptimizer
-from quantetf.optimization.grid import count_configs
-
-
-def setup_logging(verbose: bool = False):
-    """Configure logging."""
-    level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(
-        level=level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.StreamHandler(),
-        ]
-    )
-
-
-def parse_args():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(
-        description='Find strategies that beat SPY across multiple time periods'
-    )
-
-    parser.add_argument(
-        '--snapshot',
-        type=str,
-        required=True,
-        help='Path to data snapshot directory'
-    )
-
-    parser.add_argument(
-        '--output',
-        type=str,
-        default='artifacts/optimization',
-        help='Output directory for results (default: artifacts/optimization)'
-    )
-
-    parser.add_argument(
-        '--periods',
-        type=str,
-        default='3,5,10',
-        help='Comma-separated evaluation periods in years (default: 3,5,10)'
-    )
-
-    parser.add_argument(
-        '--max-configs',
-        type=int,
-        default=None,
-        help='Maximum number of configs to test (for debugging)'
-    )
-
-    parser.add_argument(
-        '--parallel',
-        type=int,
-        default=1,
-        help='Number of parallel workers (default: 1 = sequential)'
-    )
-
-    parser.add_argument(
-        '--verbose', '-v',
-        action='store_true',
-        help='Enable verbose logging'
-    )
-
-    parser.add_argument(
-        '--dry-run',
-        action='store_true',
-        help='Just count configs without running optimization'
-    )
-
-    return parser.parse_args()
-
-
-def main():
-    """Main entry point."""
-    args = parse_args()
-    setup_logging(args.verbose)
-
-    logger = logging.getLogger(__name__)
-
-    # Parse periods
-    periods = [int(p.strip()) for p in args.periods.split(',')]
-    logger.info(f"Evaluation periods: {periods} years")
-
-    # Validate snapshot exists
-    snapshot_path = Path(args.snapshot)
-    if not snapshot_path.exists():
-        logger.error(f"Snapshot not found: {snapshot_path}")
-        sys.exit(1)
-
-    # Count configs
-    counts = count_configs()
-    logger.info(f"Configuration count by schedule:")
-    logger.info(f"  Weekly: {counts['weekly']}")
-    logger.info(f"  Monthly: {counts['monthly']}")
-    logger.info(f"  Total: {counts['total']}")
-
-    if args.dry_run:
-        print("\nDry run complete. Use without --dry-run to execute optimization.")
-        return
-
-    # Run optimization
-    logger.info("Starting optimization...")
-
-    optimizer = StrategyOptimizer(
-        snapshot_path=str(snapshot_path),
-        output_dir=args.output,
-        periods_years=periods,
-        max_workers=args.parallel
-    )
-
-    result = optimizer.run(max_configs=args.max_configs)
-
-    # Print summary
-    print("\n" + "=" * 60)
-    print("OPTIMIZATION COMPLETE")
-    print("=" * 60)
-    print(f"Total configs tested: {result.successful_configs}")
-    print(f"Failed configs: {result.failed_configs}")
-    print(f"Strategies that beat SPY in ALL periods: {len(result.winners)}")
-
-    if result.winners:
-        print(f"\nBest strategy: {result.best_config.generate_name()}")
-        best = result.winners[0]
-        print(f"  Composite score: {best.composite_score:.3f}")
-        for period_name, metrics in best.periods.items():
-            print(f"  {period_name}: {metrics.active_return*100:.1f}% excess return, IR={metrics.information_ratio:.2f}")
-
-        print(f"\nResults saved to: {optimizer.run_dir}")
-        print(f"  - all_results.csv ({len(result.all_results)} strategies)")
-        print(f"  - winners.csv ({len(result.winners)} strategies)")
-        print(f"  - best_strategy.yaml")
-        print(f"  - optimization_report.md")
-    else:
-        print("\nNo strategy beat SPY in all periods.")
-        print(f"Results saved to: {optimizer.run_dir}")
-
-
-if __name__ == '__main__':
-    main()
+```
+scripts/
+├── run_backtests.py      # Step 1: Run backtests
+├── rank_strategies.py    # Step 2: Rank strategies
+├── analyze_regimes.py    # Step 3: Regime analysis
+└── optimize.sh           # Orchestration script
 ```
 
-## Usage Examples
+## Usage
 
-### Basic run (sequential)
+### Full Pipeline (Recommended)
+
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
-    --output artifacts/optimization
+# Run complete optimization pipeline
+./scripts/optimize.sh
+
+# With options
+./scripts/optimize.sh --max-configs 100 --scoring-method trailing_1y
+
+# Quick test
+./scripts/optimize.sh --max-configs 20
+
+# Show help
+./scripts/optimize.sh --help
 ```
 
-### Parallel execution with 4 workers
+### Individual Scripts
+
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
-    --output artifacts/optimization \
-    --parallel 4
+# Step 1: Run backtests only
+python scripts/run_backtests.py \
+    --snapshot data/snapshots/snapshot_latest \
+    --periods 1,3 \
+    --parallel 8
+
+# Step 2: Rank with different criteria (no rerun needed)
+python scripts/rank_strategies.py \
+    --results artifacts/optimization/.../backtest_results.pkl \
+    --scoring-method multi_period
+
+python scripts/rank_strategies.py \
+    --results artifacts/optimization/.../backtest_results.pkl \
+    --scoring-method trailing_1y
+
+# Step 3: Regime analysis
+python scripts/analyze_regimes.py \
+    --results artifacts/optimization/.../backtest_results.pkl \
+    --snapshot data/snapshots/snapshot_latest
 ```
 
-### Quick test with 20 configs
+## Script Details
+
+### run_backtests.py
+
+Runs all strategy backtests and saves comprehensive results.
+
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
-    --max-configs 20 \
-    --verbose
+python scripts/run_backtests.py --help
 ```
 
-### Dry run (just count configs)
+**Key Options:**
+- `--snapshot PATH` - Data snapshot path (required)
+- `--output PATH` - Output directory (default: artifacts/optimization)
+- `--periods LIST` - Evaluation periods in years (default: 1,3)
+- `--parallel N` - Number of parallel workers (default: 1)
+- `--max-configs N` - Limit configs for testing
+- `--dry-run` - Just count configs
+
+**Output:**
+- `backtest_results.pkl` - Full results with daily returns (for regime analysis)
+- `backtest_results.csv` - Human-readable metrics
+
+### rank_strategies.py
+
+Loads saved backtest results and applies ranking without rerunning backtests.
+
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
-    --dry-run
+python scripts/rank_strategies.py --help
 ```
 
-### Custom evaluation periods
+**Key Options:**
+- `--results PATH` - Path to backtest_results.pkl (required)
+- `--output PATH` - Output directory
+- `--scoring-method METHOD` - One of: multi_period, trailing_1y, regime_weighted
+
+**Output:**
+- `all_results.csv` - All strategies ranked
+- `winners.csv` - Strategies beating SPY
+- `best_strategy.yaml` - Top strategy config
+
+### analyze_regimes.py
+
+Runs regime analysis on saved backtest results.
+
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260113_232157 \
-    --periods 1,3,5
+python scripts/analyze_regimes.py --help
 ```
 
-## Expected Output
+**Key Options:**
+- `--results PATH` - Path to backtest_results.pkl (required)
+- `--snapshot PATH` - Data snapshot for macro data (required)
+- `--output PATH` - Output directory
+
+**Output:**
+- `regime_mapping.yaml` - Regime → strategy mapping
+- `regime_analysis.csv` - Per-strategy per-regime metrics
+- `regime_history.parquet` - Daily regime labels
+
+### optimize.sh
+
+Orchestrates all three steps in sequence.
+
+```bash
+./scripts/optimize.sh --help
+```
+
+**Key Options:**
+- `--snapshot PATH` - Data snapshot (default: data/snapshots/snapshot_latest)
+- `--output PATH` - Output directory (default: artifacts/optimization)
+- `--periods LIST` - Evaluation periods (default: 1)
+- `--parallel N` - Parallel workers (default: 8)
+- `--scoring-method M` - Scoring method (default: regime_weighted)
+- `--max-configs N` - Limit configs
+- `--skip-regime` - Skip regime analysis step
+- `--dry-run` - Preview only
+
+## Example Output
 
 ```
-2026-01-14 14:30:22 - quantetf.optimization.optimizer - INFO - Generated 354 configurations
-2026-01-14 14:30:22 - __main__ - INFO - Configuration count by schedule:
-2026-01-14 14:30:22 - __main__ - INFO -   Weekly: {'momentum': 36, 'momentum_acceleration': 18, ...}
-2026-01-14 14:30:22 - __main__ - INFO -   Monthly: {'momentum': 36, 'momentum_acceleration': 27, ...}
-2026-01-14 14:30:22 - __main__ - INFO -   Total: 354
-2026-01-14 14:30:22 - __main__ - INFO - Starting optimization...
-Evaluating strategies: 100%|████████████████| 354/354 [15:42<00:00,  2.66s/it]
+============================================================
+STRATEGY OPTIMIZATION PIPELINE
+============================================================
+Snapshot:       data/snapshots/snapshot_latest
+Output:         artifacts/optimization
+Periods:        1 years
+Parallel:       8 workers
+Scoring:        regime_weighted
+Started:        2026-01-31 20:30:14
+============================================================
+
+>>> Step 1/3: Running backtests...
+[Progress output...]
 
 ============================================================
-OPTIMIZATION COMPLETE
+BACKTEST RUN COMPLETE
 ============================================================
-Total configs tested: 354
-Failed configs: 3
-Strategies that beat SPY in ALL periods: 12
+Total configs tested:     1314
+Failed configs:           0
+Strategies that beat SPY: 245
 
-Best strategy: vol_adjusted_momentum_lookback63_vol0.01_min50_top5_monthly
-  Composite score: 1.247
-  3yr: 18.4% excess return, IR=0.89
-  5yr: 22.1% excess return, IR=0.95
-  10yr: 31.2% excess return, IR=0.87
+>>> Step 2/3: Ranking strategies...
+[Ranking output...]
 
-Results saved to: artifacts/optimization/20260114_143022
-  - all_results.csv (351 strategies)
-  - winners.csv (12 strategies)
-  - best_strategy.yaml
-  - optimization_report.md
+>>> Step 3/3: Running regime analysis...
+[Regime output...]
+
+============================================================
+PIPELINE COMPLETE
+============================================================
+Started:  2026-01-31 20:30:14
+Ended:    2026-01-31 21:45:32
+Duration: 01:15:18
+
+Results:  artifacts/optimization/20260131_203014
+============================================================
+```
+
+## Benefits of Modular Design
+
+1. **No rerunning backtests** - Rank with different methods using saved results
+2. **Separate regime analysis** - Can run independently
+3. **Composable** - Run steps individually or combine
+4. **Shell orchestration** - Easy to modify workflow
+5. **Debugging** - Run just the failing step
+
+## Output Directory Structure
+
+```
+artifacts/optimization/[timestamp]/
+├── [backtest_timestamp]/
+│   ├── backtest_results.pkl     # Raw results with daily returns
+│   └── backtest_results.csv     # Human-readable metrics
+├── ranked_[timestamp]/
+│   ├── all_results.csv          # Ranked strategies
+│   ├── winners.csv              # SPY-beaters
+│   └── best_strategy.yaml       # Top strategy
+└── regime_[timestamp]/
+    ├── regime_mapping.yaml      # Regime → strategy
+    ├── regime_analysis.csv      # Per-regime metrics
+    └── regime_history.parquet   # Daily regime labels
 ```
 
 ## Dependencies
 
-- `argparse` (stdlib)
-- `pathlib` (stdlib)
-- `logging` (stdlib)
-- `quantetf.optimization.optimizer`
-- `quantetf.optimization.grid`
-
-## Make it Executable
-
-```bash
-chmod +x scripts/find_best_strategy.py
-```
+- Python 3.8+
+- pandas, numpy, pyyaml
+- quantetf package
 
 ## Notes
 
-- Always test with `--max-configs 10 --verbose` first
-- Use `--dry-run` to verify config count before long runs
-- Parallel execution may not work well with all backtest engines due to pickling
-- Results are timestamped so you can run multiple times without overwriting
+- Always test with `--max-configs 20` first
+- Use `--dry-run` to verify config count
+- Results are timestamped, won't overwrite
+- Pickle format preserves daily returns for regime analysis
