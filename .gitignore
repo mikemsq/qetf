@@ -25,6 +25,7 @@ data/state/*
 # Note: snapshots are tracked in git for reproducibility
 artifacts/*
 !artifacts/README.md
+!artifacts/optimization/
 
 # Notebooks
 .ipynb_checkpoints/

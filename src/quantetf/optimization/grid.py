@@ -106,9 +106,11 @@ PORTFOLIO_GRIDS: Dict[str, List[Any]] = {
 }
 
 # Universe options - focusing on Tier 3 (100 liquid ETFs)
-UNIVERSE_OPTIONS: List[str] = [
-    'configs/universes/tier3_expanded_100.yaml',
-]
+UNIVERSE_OPTIONS: Dict[str, str] = {
+    'tier2': 'configs/universes/tier2_core_50.yaml',
+    'tier3': 'configs/universes/tier3_expanded_100.yaml',
+    'tier4': 'configs/universes/tier4_broad_200.yaml',
+}
 
 # Schedule options
 SCHEDULE_OPTIONS: Dict[str, str] = {
@@ -136,6 +138,7 @@ class StrategyConfig:
         alpha_params: Dictionary of parameters for the alpha model
         top_n: Number of top-ranked assets to include in portfolio
         universe_path: Path to universe configuration YAML file
+        universe_name: Universe name
         schedule_path: Path to schedule configuration YAML file
         schedule_name: Schedule identifier ('weekly' or 'monthly')
         cost_config_path: Path to cost model configuration (default: flat_10bps)
@@ -145,6 +148,7 @@ class StrategyConfig:
     alpha_params: Dict[str, Any]
     top_n: int
     universe_path: str
+    universe_name: str
     schedule_path: str
     schedule_name: str
     cost_config_path: str = field(default=DEFAULT_COST_CONFIG)
@@ -211,7 +215,7 @@ class StrategyConfig:
         # Sort params by key for consistent naming
         sorted_params = sorted(self.alpha_params.items())
         param_str = '_'.join(f"{k}{v}" for k, v in sorted_params)
-        return f"{self.alpha_type}_{param_str}_top{self.top_n}_{self.schedule_name}"
+        return f"{self.alpha_type}_{param_str}_top{self.top_n}_{self.universe_name}_{self.schedule_name}"
 
     def __repr__(self) -> str:
         """Return a concise string representation."""
@@ -303,7 +307,7 @@ def get_parameter_grid(schedule_name: str) -> Dict[str, Dict[str, List[Any]]]:
 def generate_configs(
     schedule_names: Optional[List[str]] = None,
     alpha_types: Optional[List[str]] = None,
-    universe_paths: Optional[List[str]] = None,
+    universes: Optional[Dict[str, str]] = None,
 ) -> List[StrategyConfig]:
     """Generate all valid strategy configurations.
 
@@ -331,8 +335,8 @@ def generate_configs(
     if schedule_names is None:
         schedule_names = list(SCHEDULE_OPTIONS.keys())
 
-    if universe_paths is None:
-        universe_paths = UNIVERSE_OPTIONS
+    if universes is None:
+        universes = UNIVERSE_OPTIONS
 
     configs: List[StrategyConfig] = []
 
@@ -363,13 +367,15 @@ def generate_configs(
                     continue
 
                 # Generate configs for each top_n and universe combination
+                universe_names = list(universes.keys())
                 for top_n in PORTFOLIO_GRIDS['top_n']:
-                    for universe_path in universe_paths:
+                    for universe_name in universe_names:
                         config = StrategyConfig(
                             alpha_type=alpha_type,
                             alpha_params=params,
                             top_n=top_n,
-                            universe_path=universe_path,
+                            universe_path=universes[universe_name],
+                            universe_name=universe_name,
                             schedule_path=schedule_path,
                             schedule_name=schedule_name,
                         )
