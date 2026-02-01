@@ -1,7 +1,7 @@
 # QuantETF Project Status
 
-**Last Updated:** January 28, 2026
-**Current Phase:** Strategy Optimization Execution
+**Last Updated:** February 1, 2026
+**Current Phase:** Walk-Forward Optimizer Implementation
 **Branch:** main
 
 ---
@@ -15,7 +15,7 @@
 | Primary Universe | Tier 4 (200 ETFs) |
 | Data Period | 10 years (2016-2026) |
 | Success Criterion | >=80% of rebalance cycles with positive active return |
-| Evaluation Periods | 1yr AND 3yr |
+| Evaluation Periods | Walk-forward OOS validation |
 
 ---
 
@@ -30,11 +30,31 @@
 | Data Access Layer | Complete | IMPL-019 through IMPL-031 (13 tasks) |
 | Regime Strategy System | Complete | IMPL-035 (4-regime system) |
 | Bug Fixes | Complete | BUG-001 SPY benchmark calculation fixed |
-| Strategy Optimizer | Ready | Ready to run on Tier 4 data |
+| Strategy Optimizer | **BLOCKED** | Requires IMPL-036 (walk-forward integration) |
 
 ---
 
 ## Recent Progress
+
+### February 1, 2026: Overfitting Problem Identified
+
+**Critical Finding**: The current optimizer selects strategies based on in-sample performance, leading to severe overfitting.
+
+**Evidence**:
+- Optimization selected `momentum_acceleration_126_63_top7_tier3` with +12.4% active return (1yr)
+- 10-year backtest of same strategy: +46.6% total return vs SPY ~200% (massive underperformance)
+- Strategy shows Sharpe 0.35 over 10 years (very poor)
+
+**Root Cause**: Optimizer evaluated strategies on trailing 1-year window and selected parameters that fit that specific period.
+
+**Solution**: IMPL-036 - Integrate walk-forward validation into optimizer
+- Evaluate strategies on out-of-sample (OOS) test windows
+- Score by average OOS active return, not in-sample
+- Filter strategies with negative OOS performance
+
+**Handout**: [docs/handouts/HANDOUT_walk_forward_optimizer.md](docs/handouts/HANDOUT_walk_forward_optimizer.md)
+
+---
 
 ### January 28, 2026: IMPL-035 & BUG-001 Complete
 

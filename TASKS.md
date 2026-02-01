@@ -1,6 +1,6 @@
 # Task Queue - QuantETF
 
-**Last Updated:** January 28, 2026
+**Last Updated:** February 1, 2026
 **Active Phase:** Strategy Optimization Execution
 
 ## Primary Goal
@@ -32,17 +32,49 @@
 
 ### Strategy Optimizer
 
-#### SEARCH-001: Run Strategy Optimizer on Tier 4
+#### IMPL-036: Walk-Forward Optimizer Implementation
 **Status:** ready
 **Priority:** CRITICAL
-**Dependencies:** DATA-001 (completed)
+**Dependencies:** None
+**Handout:** [docs/handouts/HANDOUT_walk_forward_optimizer.md](docs/handouts/HANDOUT_walk_forward_optimizer.md)
 
-Run strategy optimizer on Tier 4 data with 1yr/3yr evaluation periods.
+Modify the strategy optimizer to use walk-forward validation internally, scoring strategies by out-of-sample (OOS) performance instead of in-sample metrics. This addresses the overfitting problem discovered when a 1-year optimized strategy underperformed over 10 years.
+
+**Key changes:**
+1. Create `WalkForwardEvaluator` that generates train/test windows
+2. Evaluate strategies on TEST periods only (train provides warmup)
+3. Score by average OOS active return, OOS Sharpe, and win rate
+4. Filter strategies with negative OOS active return
+
+**Sub-tasks:**
+- IMPL-036-A: Create dataclasses (WalkForwardEvaluatorConfig, WalkForwardEvaluationResult)
+- IMPL-036-B: Implement WalkForwardEvaluator.evaluate()
+- IMPL-036-C: Unit tests for window generation
+- IMPL-036-D: Unit tests for single-window evaluation
+- IMPL-036-E: Modify StrategyOptimizer to use WalkForwardEvaluator
+- IMPL-036-F: Update composite scoring to use OOS metrics
+- IMPL-036-G: Add filtering for negative OOS strategies
+- IMPL-036-H: Update CLI with walk-forward arguments
+- IMPL-036-I: Update output format
+- IMPL-036-J: Validation run and documentation
+
+---
+
+#### SEARCH-001: Run Strategy Optimizer on Tier 4
+**Status:** blocked
+**Priority:** HIGH
+**Dependencies:** IMPL-036 (walk-forward optimizer required)
+**Blocked Reason:** Current optimizer uses in-sample evaluation which leads to overfitting. Must complete IMPL-036 first.
+
+Run strategy optimizer on Tier 4 data using walk-forward validation.
 
 ```bash
-python scripts/find_best_strategy.py \
-    --snapshot data/snapshots/snapshot_20260115_* \
-    --periods 1,3 \
+python scripts/run_backtests.py \
+    --snapshot data/snapshots/snapshot_latest \
+    --walk-forward \
+    --train-years 3 \
+    --test-years 1 \
+    --step-months 6 \
     --parallel 4
 ```
 
@@ -128,9 +160,10 @@ Script to audit data quality and detect anomalies.
 ---
 
 #### EXP-004: Walk-Forward Validation
-**Status:** blocked
-**Priority:** HIGH
-**Dependencies:** EXP-001, EXP-002
+**Status:** superseded
+**Priority:** N/A
+**Dependencies:** N/A
+**Note:** Superseded by IMPL-036 which integrates walk-forward into the optimizer
 
 ---
 
