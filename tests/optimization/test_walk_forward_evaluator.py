@@ -447,3 +447,311 @@ class TestAggregateResults:
 
         # Check degradation
         assert result.sharpe_degradation == pytest.approx(0.4, abs=0.01)
+
+
+class TestWindowGeneration:
+    """Tests for window generation (IMPL-036-C)."""
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create mock DataAccessContext with 10 years of data."""
+        mock = Mock()
+        dates = pd.date_range("2016-01-01", "2026-01-01", freq="B")
+        prices = pd.DataFrame(
+            {
+                "SPY": np.exp(np.cumsum(np.random.randn(len(dates)) * 0.01)),
+                "QQQ": np.exp(np.cumsum(np.random.randn(len(dates)) * 0.015)),
+            },
+            index=dates,
+        )
+        mock.prices.read_prices_as_of = Mock(return_value=prices)
+        mock.prices.get_available_tickers = Mock(return_value=["SPY", "QQQ"])
+        return mock
+
+    @pytest.fixture
+    def evaluator(self, mock_data_access):
+        """Create evaluator with 2yr train, 1yr test, 6mo step."""
+        return WalkForwardEvaluator(
+            data_access=mock_data_access,
+            wf_config=WalkForwardEvaluatorConfig(
+                train_years=2,
+                test_years=1,
+                step_months=6,
+                min_windows=2,
+            ),
+            cost_bps=10.0,
+        )
+
+    def test_window_generation_basic(self, evaluator):
+        """Test that windows are generated correctly."""
+        windows = evaluator._generate_windows()
+
+        assert len(windows) >= 2
+        for w in windows:
+            # Test start should equal train end (no gap)
+            assert w.test_start == w.train_end
+            # Test period should be ~1 year (300-400 days)
+            test_days = (w.test_end - w.test_start).days
+            assert 300 < test_days < 400
+
+    def test_windows_cached(self, evaluator):
+        """Test that windows are cached after first generation."""
+        windows1 = evaluator._generate_windows()
+        windows2 = evaluator._generate_windows()
+        assert windows1 is windows2  # Same object reference
+
+    def test_window_generation_sequential_ids(self, evaluator):
+        """Test that window IDs are sequential starting from 0."""
+        windows = evaluator._generate_windows()
+
+        for i, window in enumerate(windows):
+            assert window.window_id == i
+
+    def test_window_generation_train_period_length(self, evaluator):
+        """Test that training periods are approximately correct length."""
+        windows = evaluator._generate_windows()
+
+        for w in windows:
+            train_days = (w.train_end - w.train_start).days
+            # 2 years = ~730 days, allow some variance
+            assert 700 < train_days < 760
+
+    def test_window_generation_step_forward(self, evaluator):
+        """Test that windows step forward by configured months."""
+        windows = evaluator._generate_windows()
+
+        if len(windows) >= 2:
+            # Each window should start 6 months after the previous
+            expected_step = pd.DateOffset(months=6)
+            assert windows[1].train_start == windows[0].train_start + expected_step
+
+    def test_window_generation_insufficient_windows(self, mock_data_access):
+        """Test error when min_windows cannot be met."""
+        # Create evaluator requiring 20 windows (impossible with 10yr data)
+        evaluator = WalkForwardEvaluator(
+            data_access=mock_data_access,
+            wf_config=WalkForwardEvaluatorConfig(
+                train_years=3,
+                test_years=1,
+                step_months=6,
+                min_windows=20,  # Too many
+            ),
+        )
+
+        with pytest.raises(ValueError, match="Insufficient data"):
+            evaluator._generate_windows()
+
+
+class TestSingleWindowEvaluation:
+    """Tests for single-window evaluation (IMPL-036-D)."""
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create mock DataAccessContext."""
+        mock = Mock()
+        np.random.seed(42)
+        dates = pd.date_range("2016-01-01", "2026-01-01", freq="B")
+
+        # Create SPY prices with realistic growth
+        spy_returns = np.random.randn(len(dates)) * 0.01 + 0.0003  # Slight positive drift
+        spy_prices = 100 * np.exp(np.cumsum(spy_returns))
+
+        prices = pd.DataFrame({"SPY": spy_prices}, index=dates)
+        mock.prices.read_prices_as_of = Mock(return_value=prices)
+        mock.prices.get_available_tickers = Mock(return_value=["SPY"])
+        return mock
+
+    @pytest.fixture
+    def evaluator(self, mock_data_access):
+        """Create evaluator instance."""
+        return WalkForwardEvaluator(
+            data_access=mock_data_access,
+            wf_config=WalkForwardEvaluatorConfig(
+                train_years=2,
+                test_years=1,
+                step_months=6,
+                min_windows=2,
+            ),
+            cost_bps=10.0,
+        )
+
+    def test_get_spy_return_for_window(self, evaluator):
+        """Test SPY return calculation for a window."""
+        from quantetf.evaluation.walk_forward import WalkForwardWindow
+
+        window = WalkForwardWindow(
+            train_start=pd.Timestamp("2020-01-01"),
+            train_end=pd.Timestamp("2022-01-01"),
+            test_start=pd.Timestamp("2022-01-01"),
+            test_end=pd.Timestamp("2023-01-01"),
+            window_id=0,
+        )
+
+        spy_return = evaluator._get_spy_return_for_window(window)
+
+        # Should be a float representing the return
+        assert isinstance(spy_return, float)
+        # SPY return should be reasonable (between -50% and +100%)
+        assert -0.5 < spy_return < 1.0
+
+    def test_get_spy_return_for_window_empty_data(self, mock_data_access):
+        """Test SPY return with empty data returns 0."""
+        # Override mock to return empty DataFrame
+        mock_data_access.prices.read_prices_as_of = Mock(return_value=pd.DataFrame())
+
+        evaluator = WalkForwardEvaluator(
+            data_access=mock_data_access,
+            wf_config=WalkForwardEvaluatorConfig(min_windows=1),
+        )
+
+        from quantetf.evaluation.walk_forward import WalkForwardWindow
+
+        window = WalkForwardWindow(
+            train_start=pd.Timestamp("2020-01-01"),
+            train_end=pd.Timestamp("2022-01-01"),
+            test_start=pd.Timestamp("2022-01-01"),
+            test_end=pd.Timestamp("2023-01-01"),
+            window_id=0,
+        )
+
+        spy_return = evaluator._get_spy_return_for_window(window)
+        assert spy_return == 0.0
+
+    def test_extract_period_returns_basic(self, evaluator):
+        """Test extracting returns for a specific period."""
+        # Create a mock backtest result with equity curve
+        dates = pd.date_range("2020-01-01", "2023-01-01", freq="B")
+        equity_values = 100000 * np.exp(np.cumsum(np.random.randn(len(dates)) * 0.01))
+        equity_curve = pd.DataFrame({"portfolio_value": equity_values}, index=dates)
+
+        from quantetf.backtest.simple_engine import BacktestResult, BacktestConfig
+
+        mock_result = Mock(spec=BacktestResult)
+        mock_result.equity_curve = equity_curve
+
+        # Extract returns for 2021
+        returns = evaluator._extract_period_returns(
+            mock_result,
+            pd.Timestamp("2021-01-01"),
+            pd.Timestamp("2021-12-31"),
+        )
+
+        assert isinstance(returns, pd.Series)
+        assert len(returns) > 0
+        # Returns should be within reasonable bounds
+        assert returns.min() > -0.5
+        assert returns.max() < 0.5
+
+    def test_extract_period_returns_empty_period(self, evaluator):
+        """Test extracting returns for period with no data."""
+        dates = pd.date_range("2020-01-01", "2020-12-31", freq="B")
+        equity_curve = pd.DataFrame(
+            {"portfolio_value": np.linspace(100000, 110000, len(dates))},
+            index=dates,
+        )
+
+        mock_result = Mock()
+        mock_result.equity_curve = equity_curve
+
+        # Extract returns for period outside data range
+        returns = evaluator._extract_period_returns(
+            mock_result,
+            pd.Timestamp("2025-01-01"),
+            pd.Timestamp("2025-12-31"),
+        )
+
+        assert isinstance(returns, pd.Series)
+        assert len(returns) == 0
+
+    def test_calculate_metrics_positive_returns(self, evaluator):
+        """Test metrics with consistent positive returns."""
+        # Consistent 1% daily returns
+        returns = pd.Series([0.01] * 252)
+        metrics = evaluator._calculate_metrics(returns)
+
+        assert metrics["total_return"] > 0
+        # With zero volatility, sharpe is undefined (returns 0)
+        assert metrics["sharpe"] == 0.0
+        assert metrics["volatility"] == 0.0  # No variance
+        assert metrics["max_drawdown"] == 0.0  # No drawdown
+
+    def test_calculate_metrics_mixed_returns(self, evaluator):
+        """Test metrics with realistic mixed returns."""
+        np.random.seed(42)
+        returns = pd.Series(np.random.randn(252) * 0.01 + 0.0003)
+        metrics = evaluator._calculate_metrics(returns)
+
+        assert "total_return" in metrics
+        assert "sharpe" in metrics
+        assert "volatility" in metrics
+        assert metrics["volatility"] > 0
+        assert "max_drawdown" in metrics
+        assert metrics["max_drawdown"] <= 0  # Drawdown is negative or zero
+
+    def test_calculate_metrics_single_value(self, evaluator):
+        """Test metrics with single return value returns zeros."""
+        returns = pd.Series([0.05])
+        metrics = evaluator._calculate_metrics(returns)
+
+        # With only one return, metrics are set to 0 (need >=2 for meaningful stats)
+        assert metrics["total_return"] == 0.0
+        assert metrics["sharpe"] == 0.0
+        assert metrics["volatility"] == 0.0
+        assert metrics["max_drawdown"] == 0.0
+
+
+class TestEvaluatorIntegration:
+    """Integration tests for WalkForwardEvaluator."""
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create mock DataAccessContext with MultiIndex columns."""
+        mock = Mock()
+        np.random.seed(42)
+        dates = pd.date_range("2016-01-01", "2026-01-01", freq="B")
+
+        # Create realistic price data
+        spy_returns = np.random.randn(len(dates)) * 0.01 + 0.0003
+        spy_prices = 100 * np.exp(np.cumsum(spy_returns))
+
+        # Create DataFrame with MultiIndex columns like real data
+        columns = pd.MultiIndex.from_tuples(
+            [("SPY", "Close")], names=["Ticker", "Price"]
+        )
+        prices = pd.DataFrame(spy_prices, index=dates, columns=columns)
+
+        # Also support simple column access
+        def mock_read_prices(as_of, tickers):
+            simple_prices = pd.DataFrame({"SPY": spy_prices}, index=dates)
+            mask = dates <= as_of
+            return simple_prices[mask]
+
+        mock.prices.read_prices_as_of = Mock(side_effect=mock_read_prices)
+        mock.prices.get_available_tickers = Mock(return_value=["SPY"])
+        return mock
+
+    def test_evaluator_handles_failed_window_gracefully(self, mock_data_access):
+        """Test that evaluator continues if individual window fails."""
+        evaluator = WalkForwardEvaluator(
+            data_access=mock_data_access,
+            wf_config=WalkForwardEvaluatorConfig(
+                train_years=2,
+                test_years=1,
+                step_months=6,
+                min_windows=2,
+            ),
+        )
+
+        # Mock strategy config that will fail
+        mock_config = Mock()
+        mock_config.generate_name = Mock(return_value="failing_strategy")
+
+        # Make _evaluate_window raise an exception
+        with patch.object(
+            evaluator, "_evaluate_window", side_effect=Exception("Window failed")
+        ):
+            result = evaluator.evaluate(mock_config)
+
+        # Should return a failed result, not crash
+        assert result.num_windows == 0
+        assert result.composite_score == float("-inf")
