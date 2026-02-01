@@ -1,0 +1,23 @@
+finalists:
+- composite_score: 3.6638297393084795
+  config_name: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days63_top7_tier3_monthly
+  rank: 1
+- composite_score: 3.5080872935522405
+  config_name: momentum_acceleration_long_lookback_days126_min_periods50_short_lookback_days42_top7_tier3_monthly
+  rank: 2
+- composite_score: 3.5080872935522405
+  config_name: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days42_top7_tier3_monthly
+  rank: 3
+- composite_score: 3.162043366604158
+  config_name: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days63_top5_tier3_monthly
+  rank: 4
+- composite_score: 2.894169994208351
+  config_name: vol_adjusted_momentum_lookback_days63_min_periods30_vol_floor0.005_top3_tier3_weekly
+  rank: 5
+- composite_score: 2.894169994208351
+  config_name: vol_adjusted_momentum_lookback_days63_min_periods50_vol_floor0.005_top3_tier3_weekly
+  rank: 6
+generated_at: '2026-01-31T18:48:50.774539'
+num_finalists: 6
+selection_metric: composite_score
+version: '1.0'

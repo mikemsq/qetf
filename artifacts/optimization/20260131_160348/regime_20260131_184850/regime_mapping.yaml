@@ -1,0 +1,41 @@
+version: '2.0'
+generated_at: '2026-01-31T18:48:50.777768'
+optimization_run: '20260131_184850'
+evaluation_period: trailing_1y
+regime_distribution:
+  uptrend_low_vol: 0.804
+  downtrend_high_vol: 0.128
+  downtrend_low_vol: 0.044
+  uptrend_high_vol: 0.024
+mapping:
+  uptrend_low_vol:
+    strategy: vol_adjusted_momentum_lookback_days63_min_periods30_vol_floor0.005_top3_tier3_weekly
+    regime_sharpe: !!python/object/apply:numpy._core.multiarray.scalar
+    - &id001 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - false
+      - true
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - !!binary |
+      XI/C9Si8QEA=
+    regime_return: !!python/object/apply:numpy._core.multiarray.scalar
+    - *id001
+    - !!binary |
+      NIC3QILCJ0A=
+    regime_max_dd: !!python/object/apply:numpy._core.multiarray.scalar
+    - *id001
+    - !!binary |
+      ke18PzVeqr8=
+    num_days_evaluated: 40
+fallback:
+  strategy: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days63_top7_tier3_monthly
+  rationale: Highest regime-weighted composite score
