@@ -59,6 +59,36 @@ Key features:
 - Earlier entry/exit signals
 - Expected: Higher CAGR, better timing
 
+---
+
+## Walk-Forward Optimizer Handouts (NEW)
+
+### HANDOUT_wf_evaluator_dataclasses.md
+**Status**: Complete
+**Task**: IMPL-036-A
+**Complexity**: LOW
+**Creates**: `WalkForwardEvaluatorConfig`, `WindowResult`, `WalkForwardEvaluationResult` dataclasses
+
+### HANDOUT_wf_evaluator_core.md
+**Status**: Complete
+**Task**: IMPL-036-B/C/D
+**Complexity**: MEDIUM
+**Creates**: `WalkForwardEvaluator` class with `evaluate()`, `_evaluate_window()`, `_calculate_composite_score()`
+
+### HANDOUT_wf_optimizer_integration.md
+**Status**: Complete
+**Task**: IMPL-036-E/F/G
+**Complexity**: MEDIUM
+**Modifies**: `StrategyOptimizer` to use walk-forward evaluation
+
+### HANDOUT_wf_cli_updates.md
+**Status**: Complete
+**Task**: IMPL-036-H/I/J
+**Complexity**: LOW
+**Modifies**: `scripts/run_backtests.py` with walk-forward CLI arguments
+
+---
+
 ## Implementation Order
 
 ### Recommended (by computational simplicity):
@@ -113,6 +143,40 @@ Each strategy must meet:
 - **Max Drawdown**: < 40%
 - **Code Coverage**: > 90%
 - **All Tests Passing**: 8+ test cases per strategy
+
+---
+
+## Walk-Forward Optimizer Handouts (IMPL-036)
+
+These handouts implement walk-forward validation for the strategy optimizer, replacing in-sample scoring with out-of-sample metrics to prevent overfitting.
+
+### Implementation Order
+
+| Task | Handout | Purpose | Complexity |
+|------|---------|---------|------------|
+| IMPL-036-A | `HANDOUT_wf_evaluator_dataclasses.md` | Config and result dataclasses | LOW |
+| IMPL-036-B/C/D | `HANDOUT_wf_evaluator_core.md` | Core WalkForwardEvaluator class | MEDIUM |
+| IMPL-036-E/F/G | `HANDOUT_wf_optimizer_integration.md` | Modify StrategyOptimizer | MEDIUM |
+| IMPL-036-H/I/J | `HANDOUT_wf_cli_updates.md` | CLI arguments and output format | LOW |
+
+### Master Reference
+
+See `HANDOUT_walk_forward_optimizer.md` for the complete specification including:
+- Problem statement and rationale
+- Architecture overview
+- Detailed requirements
+- Success criteria
+- Testing strategy
+- Composite score formulas
+
+### Quick Start
+
+1. Start with `HANDOUT_wf_evaluator_dataclasses.md` - create the data structures
+2. Then `HANDOUT_wf_evaluator_core.md` - implement the evaluator
+3. Then `HANDOUT_wf_optimizer_integration.md` - integrate with optimizer
+4. Finally `HANDOUT_wf_cli_updates.md` - add CLI support
+
+---
 
 ## Related Documents
 
