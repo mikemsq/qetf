@@ -183,7 +183,7 @@ class StrategyOptimizer:
         num_finalists: int = 6,
         scoring_method: str = "regime_weighted",
         trailing_days: int = 252,
-        use_walk_forward: bool = False,
+        use_walk_forward: bool = True,  # Default to walk-forward
         wf_config: Optional[WalkForwardEvaluatorConfig] = None,
     ):
         """Initialize the optimizer.
@@ -217,6 +217,16 @@ class StrategyOptimizer:
         self.trailing_days = trailing_days
         self.use_walk_forward = use_walk_forward
         self.wf_config = wf_config or WalkForwardEvaluatorConfig()
+
+        # Deprecation warning for periods_years with legacy mode
+        if not use_walk_forward and periods_years is not None:
+            import warnings
+            warnings.warn(
+                "periods_years parameter is deprecated. "
+                "Use use_walk_forward=True with wf_config instead.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         # Validate scoring method
         valid_methods = ['multi_period', 'trailing_1y', 'regime_weighted']
@@ -566,11 +576,92 @@ class StrategyOptimizer:
             output_dir=self._run_dir,
         )
 
+        # Print console summary
+        if self.use_walk_forward:
+            self._print_walk_forward_summary(result)
+        else:
+            self._print_legacy_summary(result)
+
         # Save outputs
         self._save_results(result, configs)
 
         logger.info("Optimization complete")
         return result
+
+    def _print_walk_forward_summary(self, result: OptimizationResult) -> None:
+        """Print console summary for walk-forward optimization."""
+        # Get number of windows from first result if available
+        num_windows = 0
+        if result.all_results:
+            first_result = result.all_results[0]
+            if hasattr(first_result, 'num_windows'):
+                num_windows = first_result.num_windows
+
+        filtered_count = result.successful_configs - len(result.winners)
+        pct_passed = 100 * len(result.winners) / max(result.successful_configs, 1)
+
+        lines = [
+            "",
+            "=" * 80,
+            "WALK-FORWARD OPTIMIZATION RESULTS",
+            "=" * 80,
+            "Walk-Forward Config:",
+            f"  Train Period: {self.wf_config.train_years} years",
+            f"  Test Period:  {self.wf_config.test_years} years",
+            f"  Step Size:    {self.wf_config.step_months} months",
+            f"  Windows:      {num_windows}",
+            "",
+            f"Strategies Evaluated:    {result.successful_configs:,}",
+            f"Strategies Passed OOS:     {len(result.winners):,}  ({pct_passed:.1f}%)",
+            f"Strategies Filtered:       {filtered_count:,}  (negative OOS active return)",
+            "",
+        ]
+
+        if result.winners:
+            lines.extend([
+                "TOP 10 STRATEGIES (by OOS composite score):",
+                "-" * 80,
+                f"{'Rank':<6}{'Strategy':<44}{'OOS_Sharpe':>12}{'OOS_Active':>12}{'Win%':>8}",
+                "-" * 80,
+            ])
+            for i, winner in enumerate(result.winners[:10], 1):
+                name = winner.config_name[:42]
+                lines.append(
+                    f"{i:<6}{name:<44}{winner.oos_sharpe_mean:>12.2f}"
+                    f"{winner.oos_active_return_mean:>+11.1%}{winner.oos_win_rate:>8.0%}"
+                )
+        else:
+            lines.append("No strategies passed OOS active return filter.")
+
+        lines.append("=" * 80)
+        print("\n".join(lines))
+
+    def _print_legacy_summary(self, result: OptimizationResult) -> None:
+        """Print console summary for legacy multi-period optimization."""
+        lines = [
+            "",
+            "=" * 60,
+            "Strategy Optimization Results",
+            "=" * 60,
+            f"Run timestamp: {result.run_timestamp}",
+            f"Total configurations: {result.total_configs:,}",
+            f"Successful evaluations: {result.successful_configs:,}",
+            f"Failed evaluations: {result.failed_configs:,}",
+            f"Strategies that beat SPY (all periods): {len(result.winners):,}",
+            "",
+        ]
+
+        if result.best_config and result.winners:
+            lines.extend([
+                "Best Strategy:",
+                f"  Name: {result.best_config.generate_name()}",
+                f"  Composite Score: {result.winners[0].composite_score:.4f}",
+            ])
+        else:
+            lines.append("No winning strategies found.")
+
+        lines.append("=" * 60)
+        print("\n".join(lines))
 
     def _apply_trailing_scores(
         self,
@@ -734,7 +825,7 @@ class StrategyOptimizer:
         self,
         configs: List[StrategyConfig],
         progress_callback: Optional[Callable[[int, int], None]] = None,
-    ) -> Tuple[List[MultiPeriodResult], int]:
+    ) -> Tuple[List, int]:
         """Run evaluations in parallel.
 
         Note: Parallel execution requires the evaluator and all dependencies
@@ -746,8 +837,10 @@ class StrategyOptimizer:
 
         Returns:
             Tuple of (results list, failed count)
+            Results are either MultiPeriodResult or WalkForwardEvaluationResult
+            depending on use_walk_forward mode.
         """
-        results: List[MultiPeriodResult] = []
+        results: List = []
         failed = 0
         total = len(configs)
 
@@ -761,11 +854,26 @@ class StrategyOptimizer:
             )
             return self._run_sequential(configs, progress_callback)
 
-        # Package arguments for worker function
-        eval_args = [
-            (config, snapshot_path, self.periods_years, self.cost_bps)
-            for config in configs
-        ]
+        # Package arguments for worker function based on mode
+        if self.use_walk_forward:
+            # Walk-forward mode - include wf_config as dict for pickling
+            wf_config_dict = {
+                'train_years': self.wf_config.train_years,
+                'test_years': self.wf_config.test_years,
+                'step_months': self.wf_config.step_months,
+                'min_windows': self.wf_config.min_windows,
+                'require_positive_oos': self.wf_config.require_positive_oos,
+            }
+            eval_args = [
+                (config, snapshot_path, self.cost_bps, True, wf_config_dict)
+                for config in configs
+            ]
+        else:
+            # Legacy mode
+            eval_args = [
+                (config, snapshot_path, self.cost_bps, False, self.periods_years)
+                for config in configs
+            ]
 
         with ProcessPoolExecutor(max_workers=self.max_workers) as executor:
             # Submit all tasks
@@ -1522,22 +1630,26 @@ def _get_snapshot_path_from_accessor(data_access: DataAccessContext) -> Optional
 
 
 def _evaluate_config_worker(
-    args: Tuple[StrategyConfig, Path, List[int], float],
-) -> Optional[MultiPeriodResult]:
+    args: Tuple,
+) -> Optional[Any]:
     """Worker function for parallel evaluation.
 
     This function is called in a separate process for parallel execution.
     Creates a fresh DataAccessContext for each worker to avoid serialization issues.
 
+    Handles both walk-forward and legacy modes based on the args:
+    - Walk-forward: (config, snapshot_path, cost_bps, True, wf_config_dict)
+    - Legacy: (config, snapshot_path, cost_bps, False, periods_years)
+
     Args:
-        args: Tuple of (config, snapshot_path, periods_years, cost_bps)
+        args: Tuple with mode-specific arguments
 
     Returns:
-        MultiPeriodResult or None if evaluation failed
+        WalkForwardEvaluationResult or MultiPeriodResult, or None if evaluation failed
     """
     from quantetf.data.access import DataAccessFactory
 
-    config, snapshot_path, periods_years, cost_bps = args
+    config, snapshot_path, cost_bps, use_walk_forward, mode_config = args
 
     try:
         # Create fresh DataAccessContext in worker process
@@ -1545,11 +1657,23 @@ def _evaluate_config_worker(
             config={"snapshot_path": str(snapshot_path)},
             enable_caching=False  # Caching not useful in separate processes
         )
-        evaluator = MultiPeriodEvaluator(
-            data_access=data_access,
-            cost_bps=cost_bps,
-        )
-        return evaluator.evaluate(config, periods_years)
+
+        if use_walk_forward:
+            # Walk-forward mode
+            wf_config = WalkForwardEvaluatorConfig(**mode_config)
+            evaluator = WalkForwardEvaluator(
+                data_access=data_access,
+                wf_config=wf_config,
+                cost_bps=cost_bps,
+            )
+            return evaluator.evaluate(config)
+        else:
+            # Legacy mode
+            evaluator = MultiPeriodEvaluator(
+                data_access=data_access,
+                cost_bps=cost_bps,
+            )
+            return evaluator.evaluate(config, mode_config)  # mode_config is periods_years
     except Exception as e:
         logger.warning(f"Worker failed for {config.generate_name()}: {e}")
         return None

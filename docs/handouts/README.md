@@ -75,8 +75,8 @@ Key features:
 **Complexity**: MEDIUM
 **Creates**: `WalkForwardEvaluator` class with `evaluate()`, `_evaluate_window()`, `_calculate_composite_score()`
 
-### HANDOUT_wf_optimizer_integration.md
-**Status**: Complete
+### ✅ HANDOUT_wf_optimizer_integration.md
+**Status**: Implemented
 **Task**: IMPL-036-E/F/G
 **Complexity**: MEDIUM
 **Modifies**: `StrategyOptimizer` to use walk-forward evaluation
@@ -86,6 +86,12 @@ Key features:
 **Task**: IMPL-036-H/I/J
 **Complexity**: LOW
 **Modifies**: `scripts/run_backtests.py` with walk-forward CLI arguments
+
+### HANDOUT_wf_validation.md
+**Status**: Complete
+**Task**: IMPL-036-K/L/M
+**Complexity**: LOW
+**Purpose**: Run validation, compare to previous results, document findings
 
 ---
 
@@ -158,6 +164,7 @@ These handouts implement walk-forward validation for the strategy optimizer, rep
 | IMPL-036-B/C/D | `HANDOUT_wf_evaluator_core.md` | Core WalkForwardEvaluator class | MEDIUM |
 | IMPL-036-E/F/G | `HANDOUT_wf_optimizer_integration.md` | Modify StrategyOptimizer | MEDIUM |
 | IMPL-036-H/I/J | `HANDOUT_wf_cli_updates.md` | CLI arguments and output format | LOW |
+| IMPL-036-K/L/M | `HANDOUT_wf_validation.md` | Run validation, compare, document | LOW |
 
 ### Master Reference
 
@@ -171,10 +178,11 @@ See `HANDOUT_walk_forward_optimizer.md` for the complete specification including
 
 ### Quick Start
 
-1. Start with `HANDOUT_wf_evaluator_dataclasses.md` - create the data structures
-2. Then `HANDOUT_wf_evaluator_core.md` - implement the evaluator
-3. Then `HANDOUT_wf_optimizer_integration.md` - integrate with optimizer
-4. Finally `HANDOUT_wf_cli_updates.md` - add CLI support
+1. `HANDOUT_wf_evaluator_dataclasses.md` - create the data structures
+2. `HANDOUT_wf_evaluator_core.md` - implement the evaluator
+3. `HANDOUT_wf_optimizer_integration.md` - integrate with optimizer
+4. `HANDOUT_wf_cli_updates.md` - add CLI support
+5. `HANDOUT_wf_validation.md` - run validation and document
 
 ---
 

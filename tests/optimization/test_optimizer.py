@@ -293,6 +293,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -320,6 +321,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -352,6 +354,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run(max_configs=3)
@@ -379,6 +382,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -411,6 +415,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -438,6 +443,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -472,6 +478,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -527,6 +534,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -588,6 +596,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run()
@@ -631,6 +640,7 @@ class TestStrategyOptimizerRun:
         optimizer = StrategyOptimizer(
             data_access=mock_data_access,
             output_dir=temp_dirs['output_dir'],
+            use_walk_forward=False,  # Use legacy mode for this test
         )
 
         result = optimizer.run(progress_callback=progress_callback)
@@ -772,7 +782,9 @@ class TestEvaluateConfigWorker:
         )
 
         # Non-existent path will cause failure
-        args = (config, Path('/nonexistent/path.parquet'), [3, 5, 10], 10.0)
+        # New format: (config, snapshot_path, cost_bps, use_walk_forward, mode_config)
+        # For legacy mode: mode_config = periods_years
+        args = (config, Path('/nonexistent/path.parquet'), 10.0, False, [3, 5, 10])
 
         result = _evaluate_config_worker(args)
 
@@ -860,3 +872,150 @@ class TestStrategyOptimizerIntegration:
         # All configs should use momentum alpha
         for r in result.all_results:
             assert 'momentum' in r.config_name
+
+
+class TestOptimizerWalkForward:
+    """Tests for walk-forward optimization mode."""
+
+    @pytest.fixture
+    def mock_data_access(self):
+        """Create mock DataAccessContext."""
+        mock_ctx = MagicMock()
+        mock_prices = MagicMock()
+        mock_prices.get_latest_price_date.return_value = pd.Timestamp('2024-01-01')
+        mock_prices.get_available_tickers.return_value = ['SPY', 'QQQ', 'IWM']
+        mock_prices.snapshot_path = Path('/tmp/mock/data.parquet')
+        mock_ctx.prices = mock_prices
+        return mock_ctx
+
+    def test_default_uses_walk_forward(self, mock_data_access):
+        """Test that walk-forward is default mode."""
+        optimizer = StrategyOptimizer(
+            data_access=mock_data_access,
+            output_dir="/tmp/test_opt",
+        )
+        assert optimizer.use_walk_forward is True
+
+    def test_legacy_mode_with_flag(self, mock_data_access):
+        """Test legacy mode can be enabled."""
+        import warnings
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            optimizer = StrategyOptimizer(
+                data_access=mock_data_access,
+                output_dir="/tmp/test_opt",
+                use_walk_forward=False,
+                periods_years=[3, 5, 10],
+            )
+            # Check deprecation warning was issued
+            assert len(w) == 1
+            assert issubclass(w[0].category, DeprecationWarning)
+            assert "periods_years" in str(w[0].message)
+
+        assert optimizer.use_walk_forward is False
+        assert optimizer.periods_years == [3, 5, 10]
+
+    def test_custom_wf_config(self, mock_data_access):
+        """Test custom walk-forward configuration."""
+        from quantetf.optimization.walk_forward_evaluator import WalkForwardEvaluatorConfig
+
+        wf_config = WalkForwardEvaluatorConfig(
+            train_years=2,
+            test_years=1,
+            step_months=12,
+        )
+        optimizer = StrategyOptimizer(
+            data_access=mock_data_access,
+            output_dir="/tmp/test_opt",
+            wf_config=wf_config,
+        )
+        assert optimizer.wf_config.train_years == 2
+        assert optimizer.wf_config.step_months == 12
+
+    def test_rank_walk_forward_filters_negative(self, mock_data_access):
+        """Test that negative OOS active return strategies are filtered."""
+        from quantetf.optimization.walk_forward_evaluator import (
+            WalkForwardEvaluationResult,
+        )
+
+        optimizer = StrategyOptimizer(
+            data_access=mock_data_access,
+            output_dir="/tmp/test_opt",
+        )
+
+        # Create mock results
+        good_result = WalkForwardEvaluationResult(
+            config_name="good_strategy",
+            oos_active_return_mean=0.05,
+            oos_sharpe_mean=1.0,
+            oos_win_rate=0.6,
+            composite_score=1.5,
+            num_windows=5,
+        )
+        bad_result = WalkForwardEvaluationResult(
+            config_name="bad_strategy",
+            oos_active_return_mean=-0.02,
+            oos_sharpe_mean=0.5,
+            oos_win_rate=0.4,
+            composite_score=0.3,
+            num_windows=5,
+        )
+        results = [good_result, bad_result]
+
+        all_sorted, winners = optimizer._rank_walk_forward_results(results)
+
+        assert len(winners) == 1
+        assert winners[0].config_name == "good_strategy"
+
+    def test_rank_walk_forward_sorts_by_composite(self, mock_data_access):
+        """Test that results are sorted by composite score."""
+        from quantetf.optimization.walk_forward_evaluator import (
+            WalkForwardEvaluationResult,
+        )
+
+        optimizer = StrategyOptimizer(
+            data_access=mock_data_access,
+            output_dir="/tmp/test_opt",
+        )
+
+        # Create mock results with different scores
+        second_result = WalkForwardEvaluationResult(
+            config_name="second",
+            oos_active_return_mean=0.03,
+            oos_sharpe_mean=0.8,
+            oos_win_rate=0.5,
+            composite_score=1.0,
+            num_windows=5,
+        )
+        first_result = WalkForwardEvaluationResult(
+            config_name="first",
+            oos_active_return_mean=0.05,
+            oos_sharpe_mean=1.2,
+            oos_win_rate=0.7,
+            composite_score=1.5,
+            num_windows=5,
+        )
+        results = [second_result, first_result]
+
+        all_sorted, winners = optimizer._rank_walk_forward_results(results)
+
+        assert all_sorted[0].config_name == "first"
+        assert winners[0].config_name == "first"
+
+    def test_no_deprecation_warning_without_periods_years(self, mock_data_access):
+        """Test no warning when using walk-forward mode without periods_years."""
+        import warnings
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            optimizer = StrategyOptimizer(
+                data_access=mock_data_access,
+                output_dir="/tmp/test_opt",
+                use_walk_forward=False,
+                # Not specifying periods_years
+            )
+            # No deprecation warnings expected
+            deprecation_warnings = [
+                warning for warning in w
+                if issubclass(warning.category, DeprecationWarning)
+            ]
+            assert len(deprecation_warnings) == 0
