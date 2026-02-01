@@ -1,0 +1,29 @@
+name: momentum_acceleration_long_lookback_days126_min_periods100_short_lookback_days63_top7_tier3_monthly
+universe: configs/universes/tier3_expanded_100.yaml
+schedule: configs/schedules/monthly_rebalance.yaml
+cost_model: configs/costs/flat_10bps.yaml
+alpha_model:
+  type: momentum_acceleration
+  short_lookback_days: 63
+  long_lookback_days: 126
+  min_periods: 100
+portfolio_construction:
+  type: equal_weight_top_n
+  top_n: 7
+  constraints:
+    max_weight: 0.6
+    min_weight: 0.0
+
+description: |
+  Best strategy from optimization run 20260131_174726.
+  Momentum acceleration with:
+  - Long lookback: 126 days (~6 months)
+  - Short lookback: 63 days (~3 months)
+  - Min periods: 100
+  - Top 7 holdings from Tier 3 universe (100 ETFs)
+  - Monthly rebalancing
+  
+  Optimization metrics:
+  - Scoring method: regime_weighted
+  - Composite score: 3.6638
+  - Source: artifacts/optimization/20260131_160348/ranked_20260131_174726/
