@@ -47,6 +47,11 @@ import yaml
 from quantetf.data.access import DataAccessContext
 from quantetf.optimization.evaluator import MultiPeriodEvaluator, MultiPeriodResult
 from quantetf.optimization.grid import StrategyConfig, generate_configs
+from quantetf.optimization.walk_forward_evaluator import (
+    WalkForwardEvaluator,
+    WalkForwardEvaluatorConfig,
+    WalkForwardEvaluationResult,
+)
 
 # Regime analysis imports (optional - graceful degradation if not available)
 try:
@@ -178,13 +183,16 @@ class StrategyOptimizer:
         num_finalists: int = 6,
         scoring_method: str = "regime_weighted",
         trailing_days: int = 252,
+        use_walk_forward: bool = False,
+        wf_config: Optional[WalkForwardEvaluatorConfig] = None,
     ):
         """Initialize the optimizer.
 
         Args:
             data_access: DataAccessContext for historical prices and macro data
             output_dir: Base directory for output files (run subdirectory created)
-            periods_years: Evaluation periods in years (default: [3, 5, 10])
+            periods_years: Evaluation periods in years (default: [3, 5, 10]).
+                Only used when use_walk_forward=False.
             max_workers: Number of parallel workers (1 = sequential)
             cost_bps: Transaction cost in basis points (default: 10)
             regime_analysis_enabled: Whether to run regime analysis on winners
@@ -194,6 +202,9 @@ class StrategyOptimizer:
                 - 'trailing_1y': Score based on trailing 1-year Sharpe
                 - 'regime_weighted': Score weighted by historical regime frequency
             trailing_days: Days for trailing window evaluation (default: 252 = 1 year)
+            use_walk_forward: If True, use WalkForwardEvaluator for OOS evaluation.
+                If False, use legacy MultiPeriodEvaluator.
+            wf_config: Walk-forward configuration. Uses defaults if None.
         """
         self.data_access = data_access
         self.output_dir = Path(output_dir)
@@ -204,6 +215,8 @@ class StrategyOptimizer:
         self.num_finalists = num_finalists
         self.scoring_method = scoring_method
         self.trailing_days = trailing_days
+        self.use_walk_forward = use_walk_forward
+        self.wf_config = wf_config or WalkForwardEvaluatorConfig()
 
         # Validate scoring method
         valid_methods = ['multi_period', 'trailing_1y', 'regime_weighted']
@@ -217,8 +230,8 @@ class StrategyOptimizer:
         self._run_dir: Optional[Path] = None
         self._run_timestamp: Optional[str] = None
 
-        # Initialize regime components if enabled
-        if self.regime_analysis_enabled:
+        # Initialize regime components if enabled (only for legacy mode)
+        if self.regime_analysis_enabled and not use_walk_forward:
             config = load_thresholds()
             self.regime_detector = RegimeDetector(config)
             self.regime_indicators = RegimeIndicators(data_access)
@@ -229,12 +242,21 @@ class StrategyOptimizer:
         else:
             self.regime_analyzer = None
 
-        logger.info(
-            f"StrategyOptimizer initialized: "
-            f"periods={self.periods_years}, max_workers={max_workers}, "
-            f"regime_analysis={self.regime_analysis_enabled}, "
-            f"scoring_method={self.scoring_method}"
-        )
+        if use_walk_forward:
+            logger.info(
+                f"StrategyOptimizer initialized (walk-forward mode): "
+                f"train={self.wf_config.train_years}yr, "
+                f"test={self.wf_config.test_years}yr, "
+                f"step={self.wf_config.step_months}mo, "
+                f"max_workers={max_workers}"
+            )
+        else:
+            logger.info(
+                f"StrategyOptimizer initialized (legacy mode): "
+                f"periods={self.periods_years}, max_workers={max_workers}, "
+                f"regime_analysis={self.regime_analysis_enabled}, "
+                f"scoring_method={self.scoring_method}"
+            )
 
     @property
     def run_dir(self) -> Path:
@@ -348,11 +370,68 @@ class StrategyOptimizer:
 
     def rank_results(
         self,
+        results: List,
+        scoring_method: Optional[str] = None,
+        regime_distribution: Optional[Dict[str, float]] = None,
+    ) -> Tuple[List, List]:
+        """Apply ranking to backtest results.
+
+        Handles both MultiPeriodResult (legacy) and WalkForwardEvaluationResult.
+
+        Args:
+            results: List of results from backtests
+            scoring_method: Override scoring method (uses self.scoring_method if None)
+            regime_distribution: Optional regime weights for regime_weighted scoring
+
+        Returns:
+            Tuple of (all_results_sorted, winners_sorted)
+        """
+        if self.use_walk_forward:
+            return self._rank_walk_forward_results(results)
+        else:
+            return self._rank_multi_period_results(
+                results, scoring_method, regime_distribution
+            )
+
+    def _rank_walk_forward_results(
+        self,
+        results: List[WalkForwardEvaluationResult],
+    ) -> Tuple[List[WalkForwardEvaluationResult], List[WalkForwardEvaluationResult]]:
+        """Rank results from walk-forward evaluation.
+
+        Filters strategies with negative OOS active return, then ranks
+        by composite score (OOS-based).
+
+        Args:
+            results: List of WalkForwardEvaluationResult
+
+        Returns:
+            Tuple of (all_results_sorted, winners_sorted)
+        """
+        # Filter: require positive OOS active return
+        winners = [r for r in results if r.oos_active_return_mean > 0]
+
+        filtered_count = len(results) - len(winners)
+        if filtered_count > 0:
+            logger.info(
+                f"Filtered {filtered_count} strategies with negative OOS active return"
+            )
+
+        logger.info(f"Found {len(winners)} strategies with positive OOS active return")
+
+        # Sort all results by composite score (higher is better)
+        all_sorted = sorted(results, key=lambda r: r.composite_score, reverse=True)
+        winners_sorted = sorted(winners, key=lambda r: r.composite_score, reverse=True)
+
+        return all_sorted, winners_sorted
+
+    def _rank_multi_period_results(
+        self,
         results: List[MultiPeriodResult],
         scoring_method: Optional[str] = None,
         regime_distribution: Optional[Dict[str, float]] = None,
     ) -> Tuple[List[MultiPeriodResult], List[MultiPeriodResult]]:
-        """Apply ranking to backtest results.
+        """Legacy ranking for multi-period results.
 
         Args:
             results: List of MultiPeriodResult from backtests
@@ -410,7 +489,14 @@ class StrategyOptimizer:
 
         logger.info(f"Starting optimization run: {self._run_timestamp}")
         logger.info(f"Output directory: {self._run_dir}")
-        logger.info(f"Scoring method: {self.scoring_method}")
+        if self.use_walk_forward:
+            logger.info(
+                f"Evaluation mode: Walk-Forward (train={self.wf_config.train_years}yr, "
+                f"test={self.wf_config.test_years}yr, step={self.wf_config.step_months}mo)"
+            )
+        else:
+            logger.info(f"Evaluation mode: Multi-Period ({self.periods_years}yr)")
+            logger.info(f"Scoring method: {self.scoring_method}")
 
         # Generate all configurations
         configs = generate_configs(
@@ -431,23 +517,12 @@ class StrategyOptimizer:
         else:
             results, failed = self._run_sequential(configs, progress_callback)
 
-        # Find winners (beat SPY in all periods)
-        winners = [r for r in results if r.beats_spy_all_periods]
-        logger.info(f"Found {len(winners)} strategies that beat SPY in all periods")
+        # Rank results based on evaluation mode
+        results, winners = self.rank_results(results)
 
-        # Apply scoring method
-        if self.scoring_method == 'trailing_1y':
-            # Recalculate scores using trailing window
-            self._apply_trailing_scores(results, self.trailing_days)
-            self._apply_trailing_scores(winners, self.trailing_days)
-
-        # Sort by composite score (descending)
-        results.sort(key=lambda r: r.composite_score, reverse=True)
-        winners.sort(key=lambda r: r.composite_score, reverse=True)
-
-        # Run regime analysis on finalists if enabled
+        # Run regime analysis on finalists if enabled (only for legacy mode)
         regime_outputs = None
-        if self.regime_analysis_enabled and winners and self.regime_analyzer:
+        if not self.use_walk_forward and self.regime_analysis_enabled and winners and self.regime_analyzer:
             try:
                 regime_outputs = self._run_regime_analysis(winners, configs)
 
@@ -603,7 +678,7 @@ class StrategyOptimizer:
         self,
         configs: List[StrategyConfig],
         progress_callback: Optional[Callable[[int, int], None]] = None,
-    ) -> Tuple[List[MultiPeriodResult], int]:
+    ) -> Tuple[List, int]:
         """Run evaluations sequentially.
 
         Args:
@@ -612,15 +687,24 @@ class StrategyOptimizer:
 
         Returns:
             Tuple of (results list, failed count)
+            Results are either MultiPeriodResult or WalkForwardEvaluationResult
+            depending on use_walk_forward mode.
         """
-        results: List[MultiPeriodResult] = []
+        results: List = []
         failed = 0
 
-        # Create evaluator
-        evaluator = MultiPeriodEvaluator(
-            data_access=self.data_access,
-            cost_bps=self.cost_bps,
-        )
+        # Create evaluator based on mode
+        if self.use_walk_forward:
+            evaluator = WalkForwardEvaluator(
+                data_access=self.data_access,
+                wf_config=self.wf_config,
+                cost_bps=self.cost_bps,
+            )
+        else:
+            evaluator = MultiPeriodEvaluator(
+                data_access=self.data_access,
+                cost_bps=self.cost_bps,
+            )
 
         # Create iterator with optional progress bar
         total = len(configs)
@@ -631,7 +715,10 @@ class StrategyOptimizer:
 
         for i, config in enumerate(iterator):
             try:
-                result = evaluator.evaluate(config, self.periods_years)
+                if self.use_walk_forward:
+                    result = evaluator.evaluate(config)
+                else:
+                    result = evaluator.evaluate(config, self.periods_years)
                 results.append(result)
             except Exception as e:
                 logger.warning(f"Config {config.generate_name()} failed: {e}")
@@ -955,7 +1042,10 @@ class StrategyOptimizer:
             self._save_regime_outputs(result)
 
     def _save_all_results_csv(self, result: OptimizationResult) -> None:
-        """Save all results to CSV."""
+        """Save all results to CSV.
+
+        For walk-forward mode, reorders columns to show OOS metrics first.
+        """
         if not result.all_results:
             logger.warning("No results to save to all_results.csv")
             return
@@ -965,6 +1055,13 @@ class StrategyOptimizer:
 
         # Sort by composite score descending
         df = df.sort_values('composite_score', ascending=False)
+
+        # Reorder columns for walk-forward mode
+        if self.use_walk_forward:
+            oos_cols = [c for c in df.columns if c.startswith('oos_')]
+            is_cols = [c for c in df.columns if c.startswith('is_')]
+            other_cols = [c for c in df.columns if c not in oos_cols + is_cols]
+            df = df[other_cols + oos_cols + is_cols]
 
         csv_path = self.run_dir / 'all_results.csv'
         df.to_csv(csv_path, index=False)
@@ -995,11 +1092,33 @@ class StrategyOptimizer:
         # Get the base config dict
         config_dict = result.best_config.to_dict()
 
-        # Add optimization metadata
-        periods_str = ', '.join(f'{y}yr' for y in self.periods_years)
+        # Add optimization metadata (mode-specific)
         best_score = result.winners[0].composite_score if result.winners else 0.0
 
-        config_dict['_optimization_metadata'] = {
+        if self.use_walk_forward:
+            best_result = result.winners[0] if result.winners else None
+            config_dict['_optimization_metadata'] = {
+                'description': (
+                    f"Walk-forward validated strategy with OOS Sharpe {best_result.oos_sharpe_mean:.2f}. "
+                    f"Generated by strategy optimizer on {result.run_timestamp}."
+                    if best_result else "No walk-forward results available."
+                ),
+                'evaluation_mode': 'walk_forward',
+                'composite_score': round(best_score, 4),
+                'oos_sharpe_mean': round(best_result.oos_sharpe_mean, 3) if best_result else 0.0,
+                'oos_active_return_mean': round(best_result.oos_active_return_mean, 4) if best_result else 0.0,
+                'oos_win_rate': round(best_result.oos_win_rate, 2) if best_result else 0.0,
+                'num_windows': best_result.num_windows if best_result else 0,
+                'optimization_run': result.run_timestamp,
+                'wf_config': {
+                    'train_years': self.wf_config.train_years,
+                    'test_years': self.wf_config.test_years,
+                    'step_months': self.wf_config.step_months,
+                },
+            }
+        else:
+            periods_str = ', '.join(f'{y}yr' for y in self.periods_years)
+            config_dict['_optimization_metadata'] = {
             'description': (
                 f"Auto-discovered strategy that beats SPY across {periods_str} periods. "
                 f"Generated by strategy optimizer on {result.run_timestamp}."
@@ -1017,11 +1136,136 @@ class StrategyOptimizer:
 
     def _save_report(self, result: OptimizationResult) -> None:
         """Generate and save summary report in Markdown format."""
-        periods_str = ', '.join(f'{y}yr' for y in self.periods_years)
-
         # Try to get snapshot path for report
         snapshot_info = _get_snapshot_path_from_accessor(self.data_access)
         snapshot_str = str(snapshot_info) if snapshot_info else "DataAccessContext"
+
+        if self.use_walk_forward:
+            lines = self._generate_walk_forward_report(result, snapshot_str)
+        else:
+            lines = self._generate_legacy_report(result, snapshot_str)
+
+        report_path = self.run_dir / 'optimization_report.md'
+        with open(report_path, 'w') as f:
+            f.write('\n'.join(lines))
+
+        logger.info("Saved optimization_report.md")
+
+    def _generate_walk_forward_report(
+        self,
+        result: OptimizationResult,
+        snapshot_str: str,
+    ) -> List[str]:
+        """Generate report for walk-forward mode."""
+        lines = [
+            "# Walk-Forward Optimization Report",
+            "",
+            f"**Run timestamp:** {result.run_timestamp}",
+            f"**Evaluation mode:** Walk-Forward Validation",
+            f"**Data source:** {snapshot_str}",
+            "",
+            "## Walk-Forward Configuration",
+            "",
+            f"- Training Period: {self.wf_config.train_years} years",
+            f"- Test Period: {self.wf_config.test_years} years",
+            f"- Step Size: {self.wf_config.step_months} months",
+            f"- Minimum Windows: {self.wf_config.min_windows}",
+            "",
+            "## Summary",
+            "",
+            f"- Total configurations tested: {result.total_configs}",
+            f"- Successful evaluations: {result.successful_configs}",
+            f"- Failed evaluations: {result.failed_configs}",
+            f"- **Strategies with positive OOS active return: {len(result.winners)}** "
+            f"({100 * len(result.winners) / max(result.successful_configs, 1):.1f}%)",
+            f"- Strategies filtered: {result.successful_configs - len(result.winners)}",
+            "",
+        ]
+
+        if result.winners:
+            lines.extend(self._generate_walk_forward_winners_section(result))
+            lines.extend(self._generate_degradation_section(result))
+        else:
+            lines.extend([
+                "## No Winners Found",
+                "",
+                "No strategy achieved positive OOS active return.",
+                "",
+                "### Recommendations",
+                "",
+                "- Try different alpha models or parameter ranges",
+                "- Consider shorter training/test periods",
+                "- Review data quality and date range",
+                "",
+            ])
+
+        # Add output files section
+        lines.extend([
+            "## Output Files",
+            "",
+            "- `all_results.csv` - All configurations with OOS metrics",
+            "- `winners.csv` - Configurations with positive OOS active return",
+            "- `best_strategy.yaml` - Ready-to-use config for best strategy",
+            "- `optimization_report.md` - This report",
+            "",
+        ])
+
+        return lines
+
+    def _generate_walk_forward_winners_section(
+        self,
+        result: OptimizationResult,
+    ) -> List[str]:
+        """Generate winners section for walk-forward mode."""
+        lines = [
+            "## Top 10 Strategies (by OOS Composite Score)",
+            "",
+            "| Rank | Strategy | OOS Sharpe | OOS Active | Win Rate | Windows |",
+            "|------|----------|------------|------------|----------|---------|",
+        ]
+
+        for i, winner in enumerate(result.winners[:10], 1):
+            name = winner.config_name[:40]
+            lines.append(
+                f"| {i} | {name} | {winner.oos_sharpe_mean:.2f} | "
+                f"{winner.oos_active_return_mean:+.1%} | "
+                f"{winner.oos_win_rate:.0%} | {winner.num_windows} |"
+            )
+
+        lines.append("")
+        return lines
+
+    def _generate_degradation_section(
+        self,
+        result: OptimizationResult,
+    ) -> List[str]:
+        """Generate degradation analysis section."""
+        lines = [
+            "## Degradation Analysis (IS vs OOS)",
+            "",
+            "Lower degradation indicates more robust strategies that generalize well.",
+            "",
+            "| Strategy | IS Sharpe | OOS Sharpe | Degradation |",
+            "|----------|-----------|------------|-------------|",
+        ]
+
+        for winner in result.winners[:5]:
+            name = winner.config_name[:40]
+            lines.append(
+                f"| {name} | {winner.is_sharpe_mean:.2f} | "
+                f"{winner.oos_sharpe_mean:.2f} | {winner.sharpe_degradation:+.2f} |"
+            )
+
+        lines.append("")
+        return lines
+
+    def _generate_legacy_report(
+        self,
+        result: OptimizationResult,
+        snapshot_str: str,
+    ) -> List[str]:
+        """Generate report for legacy multi-period mode."""
+        periods_str = ', '.join(f'{y}yr' for y in self.periods_years)
 
         lines = [
             "# Strategy Optimization Report",
@@ -1068,11 +1312,7 @@ class StrategyOptimizer:
             "",
         ])
 
-        report_path = self.run_dir / 'optimization_report.md'
-        with open(report_path, 'w') as f:
-            f.write('\n'.join(lines))
-
-        logger.info("Saved optimization_report.md")
+        return lines
 
     def _generate_winners_section(self, result: OptimizationResult) -> List[str]:
         """Generate the Top Winners section of the report."""

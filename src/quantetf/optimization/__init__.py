@@ -53,6 +53,13 @@ from quantetf.optimization.optimizer import (
     StrategyOptimizer,
 )
 
+from quantetf.optimization.walk_forward_evaluator import (
+    WalkForwardEvaluatorConfig,
+    WalkForwardEvaluationResult,
+    WalkForwardEvaluator,
+    WindowResult,
+)
+
 __all__ = [
     # Grid module
     'generate_configs',
@@ -74,4 +81,9 @@ __all__ = [
     # Optimizer module
     'OptimizationResult',
     'StrategyOptimizer',
+    # Walk-forward evaluator module
+    'WalkForwardEvaluatorConfig',
+    'WalkForwardEvaluationResult',
+    'WalkForwardEvaluator',
+    'WindowResult',
 ]
